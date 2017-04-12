@@ -12,12 +12,18 @@ public class AdminController {
 	@RequestMapping("admin.yo")
 	public ModelAndView admin() {
 		ModelAndView mav = new ModelAndView();
-		return Page.setAdminViewPage(mav, "");
+		return Page.setAdminViewPage(mav, "main/dashboard.jsp");
 	}
 	
-	@RequestMapping("goodsList.yo")
-	public ModelAndView goosList() {
+	@RequestMapping("admin.goods.list.yo")
+	public ModelAndView goodsList() {
 		ModelAndView mav = new ModelAndView();
-		return Page.setAdminViewPage(mav, "goodsList.jsp");
+		return Page.setAdminViewPage(mav, "goods/list.jsp");
+	}
+	
+	@RequestMapping("admin.goods.insert.yo")
+	public ModelAndView goodsinsertForm() {
+		ModelAndView mav = new ModelAndView();
+		return Page.setAdminViewPage(mav, "goods/insert.jsp");
 	}
 }

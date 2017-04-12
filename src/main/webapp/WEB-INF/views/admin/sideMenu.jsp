@@ -38,8 +38,8 @@
 							<span class="fa fa-chevron-down"></span>
 						</a>
 						<ul class="nav child_menu">
-							<li><a href="#">상품 목록</a></li>
-							<li><a href="#">상품 등록</a></li>
+							<li><a href="admin.goods.list.yo">상품 목록</a></li>
+							<li><a href="admin.goods.insert.yo">상품 등록</a></li>
 						</ul>
 					</li>
 					<li>
