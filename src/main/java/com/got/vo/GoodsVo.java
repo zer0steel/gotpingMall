@@ -1,10 +1,8 @@
 package com.got.vo;
 
-import com.got.enums.Category;
-
 public class GoodsVo {
 	private int g_no;
-	private Category g_category;
+	private String g_category;
 	private String g_title;
 	private String g_detail;
 	private int g_count;
@@ -17,11 +15,11 @@ public class GoodsVo {
 	public void setG_no(int g_no) {
 		this.g_no = g_no;
 	}
-	public Category getG_category() {
+	public String getG_category() {
 		return g_category;
 	}
 	public void setG_category(String g_category) {
-		this.g_category = Category.of(g_category);
+		this.g_category = g_category;
 	}
 	public String getG_title() {
 		return g_title;

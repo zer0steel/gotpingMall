@@ -1,8 +1,11 @@
 package com.got.vo;
 
+import java.security.PrivateKey;
 import java.util.List;
 
 import com.got.enums.Grade;
+import com.got.util.BCrypt;
+import com.got.util.RSA;
 
 /**
  * @author Jang
@@ -16,6 +19,7 @@ public class MemberVo {
 	private String m_email;
 	private String m_addr;
 	
+	private boolean isLoginSuccess = false;
 	private Grade grade;
 	private List<MemberGradeVo> mg_history;
 	
@@ -56,17 +60,8 @@ public class MemberVo {
 		this.m_addr = m_addr;
 	}
 	
-	public void addHistory(int point, String reason) {
-		MemberGradeVo mg = new MemberGradeVo();
-		mg.setMg_point(point).setMg_reason(reason);
-		mg_history.add(mg);
-	}
-	
-	public void addHistory(MemberGradeVo mg) {
-		mg_history.add(mg);
-	}
-	
-	public Grade getGrade() {
+	/*직접 제작 메서드*/
+	public Grade getM_grade() {
 		return grade;
 	}
 	public void setGrade(Grade grade) {
@@ -76,12 +71,29 @@ public class MemberVo {
 		this.grade = Grade.of(grade);
 	}
 	
-	public boolean isSelected() {
-		if(this.m_id == null)
-			return false;
-		else if(this.m_id.equals(""))
-			return false;
-		else
-			return true;
+	public void setLogin() {
+		this.isLoginSuccess = true;
+		this.m_name = null;
+		this.m_pwd = null;
+		this.m_addr = null;
+	}
+	
+	public boolean isLogin() {
+		return this.isLoginSuccess;
+	}
+	
+	/**
+	 * rsa로 암호화된 패스워드를 복호화한뒤 BCrypt로 암호화 되어있는 기존의 패스워드와 비교한다.
+	 * @param rsaPwd rsa로 암호화된 패스워드
+	 * @param privateKey rsa privateKey
+	 * @return 둘다 같을경우 true
+	 */
+	public boolean isEqualsPwd(String rsaPwd, PrivateKey privateKey) {
+		if(this.m_pwd == null || rsaPwd == null)
+			throw new NullPointerException("m_pwd null is " + (m_pwd == null) + " | " + "rsaPwd null is " + (rsaPwd == null));
+		else if(this.m_pwd.isEmpty() || rsaPwd.isEmpty())
+			throw new IllegalArgumentException("m_pwd empty is " + m_pwd.isEmpty() + " | " + "rsaPwd empty is " + rsaPwd.isEmpty());
+		String pwd = RSA.decryptRsa(rsaPwd, privateKey);
+		return BCrypt.checkpw(pwd, this.m_pwd);
 	}
 }

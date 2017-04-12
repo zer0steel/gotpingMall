@@ -7,7 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div class="page-title">
+	<div class="title_left">
+		<h3>상품 등록</h3>
+	</div>
+</div>
+<div class="clearfix"></div>
 <form id="" data-parsley-validate class="form-horizontal form-label-left">
 
 	<div class="form-group">
@@ -71,8 +76,6 @@
 		상품 공개 여부
 		</label>
 		<p>
-		공개 <input type="radio" class="flat" name="g_display" id="" value="true" checked="checked" /> 
-		비공개 <input type="radio" class="flat" name="g_display" id="" value="false" />
 		</p>
 	</div>
 	

@@ -2,7 +2,6 @@ package com.got.controller;
 
 import java.io.IOException;
 import java.security.PrivateKey;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,13 +39,10 @@ public class MemberController {
 			@RequestParam(defaultValue = "") String pwd) throws IOException {
 		PrivateKey privateKey = (PrivateKey)session.getAttribute(RSA.PRIVATE_KEY);
 		session.removeAttribute(RSA.PRIVATE_KEY);
-		Map<String, Object> loginMember = s.login(id, pwd, privateKey);
-		if(loginMember.isEmpty())
-			res.getWriter().print(false);
-		else {
-			session.setAttribute("lm", loginMember);
-			res.getWriter().print(true);
-		}
+		MemberVo m = s.login(id, pwd, privateKey);
+		if(m.isLogin()) 
+			session.setAttribute("lm", m);
+		res.getWriter().print(m.isLogin());
 	}
 	
 	@RequestMapping("logout.yo")

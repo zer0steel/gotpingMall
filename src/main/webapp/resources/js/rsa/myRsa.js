@@ -13,8 +13,8 @@ var myRsa = {
 				url : "rsakey.yo",
 				dataType : "json"
 			}).done(function(key) {
-				myrsa.modulus = key.publicKeyModulus;
-				myrsa.exponent = key.publicKeyExponent;
+				myrsa.modulus = key.modulus;
+				myrsa.exponent = key.exponent;
 				resolve();
 			}).fail(function(err) {
 				reject(err);

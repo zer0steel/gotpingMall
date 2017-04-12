@@ -1,8 +1,6 @@
 package com.got.service;
 
 import java.security.PrivateKey;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,36 +42,23 @@ public class MemberService {
 		return false;
 	}
 
-	public Map<String, Object> login(String id, String pwd, PrivateKey privateKey) {
+	public MemberVo login(String id, String pwd, PrivateKey privateKey) {
+		if(privateKey.isDestroyed())
+			throw new SecurityException("privateKey is destroyed");
 		if(id.isEmpty() || pwd.isEmpty()) 
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("id empty is " + id.isEmpty() + " | " + "pwd empty is " + pwd.isEmpty());
+		
 		MemberVo m = dao.selectOneWithM_Id(id);
 		if(m == null)
-			return new HashMap<String, Object>();
-		else if( !m.isSelected() )
-			return new HashMap<String, Object>();
+			return m;
 		else {
-			if(checkWithBCrypt(m.getM_pwd(), pwd, privateKey)) {
-				Map<String, Object> loginMember = new HashMap<>();
-				loginMember.put("m_id", m.getM_id());
-				loginMember.put("m_grade", m.getGrade());
-				return loginMember;
+			if(m.isEqualsPwd(pwd, privateKey)) {
+				m.setLogin();
+				return m;
 			}
 			else
-				return new HashMap<String, Object>();
+				return m;
 		}
-	}
-	
-	
-	/**
-	 * RSA로 암호화 되어있는 패스워드를 BCrypt로 암호화 되어있는 패스워드와 비교한다.
-	 * @param RSAPwd
-	 * @param privateKey
-	 * @return
-	 */
-	private boolean checkWithBCrypt(String BCryptPwd,String RSAPwd,PrivateKey privateKey) {
-		String pwd = RSA.decryptRsa(RSAPwd, privateKey);
-		return BCrypt.checkpw(pwd, BCryptPwd);
 	}
 	
 	/**
