@@ -6,9 +6,9 @@ public class MemberGradeVo {
 	
 	private int m_no;
 	private Timestamp mg_date;
-	private int mg_grade;
-	private int mg_point;
-	private String mg_reason;
+	private int grade;
+	private int point;
+	private String reason;
 	
 	public int getM_no() {
 		return m_no;
@@ -19,29 +19,25 @@ public class MemberGradeVo {
 	public Timestamp getMg_date() {
 		return mg_date;
 	}
-	public MemberGradeVo setMg_date(Timestamp mg_date) {
+	public void setMg_date(Timestamp mg_date) {
 		this.mg_date = mg_date;
-		return this;
 	}
-	public int getMg_grade() {
-		return mg_grade;
+	public int getGrade() {
+		return grade;
 	}
-	public MemberGradeVo setMg_grade(int mg_grade) {
-		this.mg_grade = mg_grade;
-		return this;
+	public void setGrade(int grade) {
+		this.grade = grade;
 	}
-	public int getMg_point() {
-		return mg_point;
+	public int getPoint() {
+		return point;
 	}
-	public MemberGradeVo setMg_point(int mg_point) {
-		this.mg_point = mg_point;
-		return this;
+	public void setPoint(int point) {
+		this.point = point;
 	}
-	public String getMg_reason() {
-		return mg_reason;
+	public String getReason() {
+		return reason;
 	}
-	public MemberGradeVo setMg_reason(String mg_reason) {
-		this.mg_reason = mg_reason;
-		return this;
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 }

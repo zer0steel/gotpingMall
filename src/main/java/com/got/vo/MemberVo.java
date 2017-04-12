@@ -1,7 +1,6 @@
 package com.got.vo;
 
 import java.security.PrivateKey;
-import java.util.List;
 
 import com.got.enums.Grade;
 import com.got.util.BCrypt;
@@ -13,15 +12,14 @@ import com.got.util.RSA;
  */
 public class MemberVo {
 	private int m_no;
-	private String m_id;
-	private String m_name;
-	private String m_pwd;
-	private String m_email;
-	private String m_addr;
+	private String id;
+	private String name;
+	private String pwd;
+	private String email;
+	private String addr;
 	
 	private boolean isLoginSuccess = false;
 	private Grade grade;
-	private List<MemberGradeVo> mg_history;
 	
 	public int getM_no() {
 		return m_no;
@@ -29,53 +27,49 @@ public class MemberVo {
 	public void setM_no(int m_no) {
 		this.m_no = m_no;
 	}
-	public String getM_id() {
-		return m_id;
+	public String getId() {
+		return id;
 	}
-	public void setM_id(String m_id) {
-		this.m_id = m_id;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getM_name() {
-		return m_name;
+	public String getName() {
+		return name;
 	}
-	public void setM_name(String m_name) {
-		this.m_name = m_name;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getM_pwd() {
-		return m_pwd;
+	public String getPwd() {
+		return pwd;
 	}
-	public void setM_pwd(String m_pwd) {
-		this.m_pwd = m_pwd;
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
-	public String getM_email() {
-		return m_email;
+	public String getEmail() {
+		return email;
 	}
-	public void setM_email(String m_email) {
-		this.m_email = m_email;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getM_addr() {
-		return m_addr;
+	public String getAddr() {
+		return addr;
 	}
-	public void setM_addr(String m_addr) {
-		this.m_addr = m_addr;
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
-	
 	/*직접 제작 메서드*/
-	public Grade getM_grade() {
+	public Grade getGrade() {
 		return grade;
 	}
-	public void setGrade(Grade grade) {
-		this.grade = grade;
-	}
-	public void setM_grade(int grade) {
+	public void setGrade(int grade) {
 		this.grade = Grade.of(grade);
 	}
 	
 	public void setLogin() {
 		this.isLoginSuccess = true;
-		this.m_name = null;
-		this.m_pwd = null;
-		this.m_addr = null;
+		this.name = null;
+		this.pwd = null;
+		this.addr = null;
 	}
 	
 	public boolean isLogin() {
@@ -89,11 +83,11 @@ public class MemberVo {
 	 * @return 둘다 같을경우 true
 	 */
 	public boolean isEqualsPwd(String rsaPwd, PrivateKey privateKey) {
-		if(this.m_pwd == null || rsaPwd == null)
-			throw new NullPointerException("m_pwd null is " + (m_pwd == null) + " | " + "rsaPwd null is " + (rsaPwd == null));
-		else if(this.m_pwd.isEmpty() || rsaPwd.isEmpty())
-			throw new IllegalArgumentException("m_pwd empty is " + m_pwd.isEmpty() + " | " + "rsaPwd empty is " + rsaPwd.isEmpty());
+		if(this.pwd == null || rsaPwd == null)
+			throw new NullPointerException("pwd null is " + (pwd == null) + " | " + "rsaPwd null is " + (rsaPwd == null));
+		else if(this.pwd.isEmpty() || rsaPwd.isEmpty())
+			throw new IllegalArgumentException("pwd empty is " + pwd.isEmpty() + " | " + "rsaPwd empty is " + rsaPwd.isEmpty());
 		String pwd = RSA.decryptRsa(rsaPwd, privateKey);
-		return BCrypt.checkpw(pwd, this.m_pwd);
+		return BCrypt.checkpw(pwd, this.pwd);
 	}
 }

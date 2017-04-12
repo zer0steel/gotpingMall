@@ -33,9 +33,10 @@ public class MemberService {
 	 * @param m
 	 * @return 
 	 */
-	public boolean joinMember(MemberVo m, PrivateKey privateKey) {
-		m.setM_pwd(encryptWithBCrypt(m.getM_pwd(),privateKey));
-		MemberGradeVo mg = new MemberGradeVo().setMg_reason("신규 가입");
+	public boolean join(MemberVo m, PrivateKey privateKey) {
+		m.setPwd(encryptWithBCrypt(m.getPwd(),privateKey));
+		MemberGradeVo mg = new MemberGradeVo();
+		mg.setReason("신규 가입");
 		int insertedCount = dao.insertNewMember(m, mg);
 		if(insertedCount == 1)
 			return true;

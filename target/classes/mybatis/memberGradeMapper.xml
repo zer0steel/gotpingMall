@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mg">
 	<insert id="insert">
-		INSERT INTO member_grade(m_no, mg_date, mg_grade, mg_point, mg_reason)
-		VALUES(${m_no}, sysdate, #{mg_grade}, #{mg_point}, #{mg_reason})
+		INSERT INTO member_grade(m_no, mg_date, grade, point, reason)
+		VALUES(${m_no}, sysdate, #{grade}, #{point}, #{reason})
 	</insert>
 </mapper>

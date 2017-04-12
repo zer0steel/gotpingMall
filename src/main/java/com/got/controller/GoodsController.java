@@ -12,17 +12,19 @@ import com.got.service.GoodsService;
 import com.got.vo.GoodsVo;
 
 @Controller
-public class AdminController {
+public class GoodsController {
 	
-	@RequestMapping("admin.yo")
-	public ModelAndView admin() {
+	@Autowired private GoodsService gs;
+	
+	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.GET)
+	public ModelAndView insertGoodsForm() {
 		ModelAndView mav = new ModelAndView();
-		return Page.setAdminViewPage(mav, "main/dashboard.jsp");
+		return Page.setAdminViewPage(mav, "goods/insert.jsp");
 	}
 	
-	@RequestMapping("admin/goods/list.yo")
-	public ModelAndView goodsList() {
-		ModelAndView mav = new ModelAndView();
-		return Page.setAdminViewPage(mav, "goods/list.jsp");
+	@ResponseBody
+	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
+	public void insertGoodsSubmit(GoodsVo g) {
+		boolean b = gs.enroll(g);
 	}
 }

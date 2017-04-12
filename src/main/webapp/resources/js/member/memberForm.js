@@ -21,7 +21,7 @@ window.onload = function() {
 		checkId = false;
 		if(validation.checkId(id)) {
 			
-			validation.getOverlapCount("m_id",id).done(function(overlapCnt) {
+			validation.getOverlapCount("id",id).done(function(overlapCnt) {
 				if(overlapCnt == 0) {
 					$("#p-id").html(MESSAGE.OK);
 					checkId = true;
@@ -77,7 +77,7 @@ window.onload = function() {
 		var email = $(this).val();
 		checkEmail = false;
 		if(validation.checkEmail(email)) {
-			validation.getOverlapCount("m_email",email).done(function(overlapCnt) {
+			validation.getOverlapCount("email",email).done(function(overlapCnt) {
 				if(overlapCnt == 0) {
 					$("#p-email").html(MESSAGE.OK);
 					checkEmail = true;

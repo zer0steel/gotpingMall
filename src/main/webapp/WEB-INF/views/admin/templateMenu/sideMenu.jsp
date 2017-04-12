@@ -4,7 +4,7 @@
 <div class="col-md-3 left_col">
 	<div class="left_col scroll-view">
 		<div class="navbar nav_title" style="border: 0;">
-			<a href="front.yo" class="site_title">
+			<a href="${pageContext.request.contextPath}/front.yo" class="site_title">
 				<i class="fa fa-paw"></i>
 				<span>GOTPINGMALL!</span>
 			</a>
@@ -38,8 +38,8 @@
 							<span class="fa fa-chevron-down"></span>
 						</a>
 						<ul class="nav child_menu">
-							<li><a href="admin.goods.list.yo">상품 목록</a></li>
-							<li><a href="admin.goods.insert.yo">상품 등록</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/goods/list.yo">상품 목록</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/goods/insert.yo">상품 등록</a></li>
 						</ul>
 					</li>
 					<li>

@@ -69,7 +69,7 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		PrivateKey privateKey = (PrivateKey)session.getAttribute(RSA.PRIVATE_KEY);
 		session.invalidate();
-		if(s.joinMember(m, privateKey))
+		if(s.join(m, privateKey))
 			return Page.setViewPage(mav, "member/joinComplete.jsp");
 		else
 			return Page.setViewPage(mav, "member/joinError.jsp");

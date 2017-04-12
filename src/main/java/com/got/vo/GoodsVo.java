@@ -2,12 +2,15 @@ package com.got.vo;
 
 public class GoodsVo {
 	private int g_no;
-	private String g_category;
-	private String g_title;
-	private String g_detail;
-	private int g_count;
-	private int g_price;
-	private int g_mileage;
+	private String category;
+	private String name;
+	private String detail;
+	private int stock;
+	private int purchase_price;
+	private int sell_price;
+	private int discount_rate;
+	private int saving_mileage;
+	private boolean show;
 	
 	public int getG_no() {
 		return g_no;
@@ -15,40 +18,65 @@ public class GoodsVo {
 	public void setG_no(int g_no) {
 		this.g_no = g_no;
 	}
-	public String getG_category() {
-		return g_category;
+	public String getCategory() {
+		return category;
 	}
-	public void setG_category(String g_category) {
-		this.g_category = g_category;
+	public void setCategory(String category) {
+		this.category = category;
 	}
-	public String getG_title() {
-		return g_title;
+	public String getName() {
+		return name;
 	}
-	public void setG_title(String g_title) {
-		this.g_title = g_title;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getG_detail() {
-		return g_detail;
+	public String getDetail() {
+		return detail;
 	}
-	public void setG_detail(String g_detail) {
-		this.g_detail = g_detail;
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
-	public int getG_count() {
-		return g_count;
+	public int getStock() {
+		return stock;
 	}
-	public void setG_count(int g_count) {
-		this.g_count = g_count;
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
-	public int getG_price() {
-		return g_price;
+	public int getPurchase_price() {
+		return purchase_price;
 	}
-	public void setG_price(int g_price) {
-		this.g_price = g_price;
+	public void setPurchase_price(int purchase_price) {
+		this.purchase_price = purchase_price;
 	}
-	public int getG_mileage() {
-		return g_mileage;
+	public int getSell_price() {
+		return sell_price;
 	}
-	public void setG_mileage(int g_mileage) {
-		this.g_mileage = g_mileage;
+	public void setSell_price(int sell_price) {
+		this.sell_price = sell_price;
 	}
+	public int getDiscount_rate() {
+		return discount_rate;
+	}
+	public void setDiscount_rate(int discount_rate) {
+		this.discount_rate = discount_rate;
+	}
+	public int getSaving_mileage() {
+		return saving_mileage;
+	}
+	public void setSaving_mileage(int saving_mileage) {
+		this.saving_mileage = saving_mileage;
+	}
+	public boolean isShow() {
+		return show;
+	}
+	public void setShow(boolean show) {
+		this.show = show;
+	}
+	@Override
+	public String toString() {
+		return "GoodsVo [g_no=" + g_no + ", category=" + category + ", name=" + name + ", detail=" + detail + ", stock="
+				+ stock + ", purchase_price=" + purchase_price + ", sell_price=" + sell_price + ", discount_rate="
+				+ discount_rate + ", saving_mileage=" + saving_mileage + ", show=" + show + "]";
+	}
+	
 }

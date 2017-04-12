@@ -8,12 +8,12 @@
 <script type="text/javascript" src="resources/js/member/memberForm.js"></script>
 <h2>회원가입</h2>
 <form action="join.yo" method="post" id="form-join">
-<input type="hidden" id="hidden-pwd" name="m_pwd">
-<input type="hidden" id="hidden-addr" name="m_addr">
+<input type="hidden" id="hidden-pwd" name="pwd">
+<input type="hidden" id="hidden-addr" name="addr">
 	<table>
 	<tr>
 		<td>
-			<input type="text" placeholder="아이디" id="input-id" name="m_id" >
+			<input type="text" placeholder="아이디" id="input-id" name="id" >
 			<p id="p-id"></p>
 		</td>
 	</tr>
@@ -31,13 +31,13 @@
 	</tr>
 	<tr>
 		<td>
-			<input type="text" placeholder="이름" id="input-name" name="m_name">
+			<input type="text" placeholder="이름" id="input-name" name="name">
 			<p id="p-name"></p>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<input type="text" placeholder="이메일" id="input-email" name="m_email">
+			<input type="text" placeholder="이메일" id="input-email" name="email">
 			<p id="p-email"></p>
 		</td>
 	</tr>

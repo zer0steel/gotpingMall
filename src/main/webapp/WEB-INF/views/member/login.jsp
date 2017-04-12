@@ -46,7 +46,7 @@ window.onload = function() {
 }
 </script>
 <h2>로그인</h2>
-<input type="text" placeholder="아이디" name="m_id" id="input-id"><br>
-<input type="password" placeholder="비밀번호" name="m_pwd" id="input-pwd">
+<input type="text" placeholder="아이디" name="id" id="input-id"><br>
+<input type="password" placeholder="비밀번호" name="pwd" id="input-pwd">
 <p id="p-msg"></p>
 <button id="btn-login">로그인</button>

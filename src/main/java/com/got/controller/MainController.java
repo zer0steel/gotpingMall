@@ -11,7 +11,7 @@ import com.got.enums.Page;
 @Controller
 public class MainController {
 
-	@Autowired MemberDao dao;
+	@Autowired private MemberDao dao;
 	
 	@RequestMapping("front.yo")
 	public ModelAndView front() {
