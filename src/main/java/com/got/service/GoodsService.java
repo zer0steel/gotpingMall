@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.got.dao.GoodsDao;
-import com.got.vo.GoodsVo;
+import com.got.vo.GoodsVO;
 
 @Service
 public class GoodsService {
 	
 	@Autowired private GoodsDao dao;
 
-	public boolean enroll(GoodsVo g) {
-		return false;
+	public int enroll(GoodsVO g) {
+		return dao.insert(g);
 	}
 }

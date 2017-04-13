@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.got.dao.MemberDao;
 import com.got.util.BCrypt;
 import com.got.util.RSA;
-import com.got.vo.MemberGradeVo;
-import com.got.vo.MemberVo;
+import com.got.vo.MemberGradeVO;
+import com.got.vo.MemberVO;
 
 @Service
 public class MemberService {
@@ -33,9 +33,9 @@ public class MemberService {
 	 * @param m
 	 * @return 
 	 */
-	public boolean join(MemberVo m, PrivateKey privateKey) {
+	public boolean join(MemberVO m, PrivateKey privateKey) {
 		m.setPwd(encryptWithBCrypt(m.getPwd(),privateKey));
-		MemberGradeVo mg = new MemberGradeVo();
+		MemberGradeVO mg = new MemberGradeVO();
 		mg.setReason("신규 가입");
 		int insertedCount = dao.insertNewMember(m, mg);
 		if(insertedCount == 1)
@@ -43,13 +43,13 @@ public class MemberService {
 		return false;
 	}
 
-	public MemberVo login(String id, String pwd, PrivateKey privateKey) {
+	public MemberVO login(String id, String pwd, PrivateKey privateKey) {
 		if(privateKey.isDestroyed())
 			throw new SecurityException("privateKey is destroyed");
 		if(id.isEmpty() || pwd.isEmpty()) 
 			throw new IllegalArgumentException("id empty is " + id.isEmpty() + " | " + "pwd empty is " + pwd.isEmpty());
 		
-		MemberVo m = dao.selectOneWithM_Id(id);
+		MemberVO m = dao.selectOneWithM_Id(id);
 		if(m == null)
 			return m;
 		else {

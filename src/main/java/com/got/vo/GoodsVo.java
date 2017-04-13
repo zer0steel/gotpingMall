@@ -1,8 +1,7 @@
 package com.got.vo;
 
-public class GoodsVo {
+public class GoodsVO extends CategoryVO{
 	private int g_no;
-	private String category;
 	private String name;
 	private String detail;
 	private int stock;
@@ -17,12 +16,6 @@ public class GoodsVo {
 	}
 	public void setG_no(int g_no) {
 		this.g_no = g_no;
-	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
 	}
 	public String getName() {
 		return name;
@@ -72,11 +65,4 @@ public class GoodsVo {
 	public void setShow(boolean show) {
 		this.show = show;
 	}
-	@Override
-	public String toString() {
-		return "GoodsVo [g_no=" + g_no + ", category=" + category + ", name=" + name + ", detail=" + detail + ", stock="
-				+ stock + ", purchase_price=" + purchase_price + ", sell_price=" + sell_price + ", discount_rate="
-				+ discount_rate + ", saving_mileage=" + saving_mileage + ", show=" + show + "]";
-	}
-	
 }

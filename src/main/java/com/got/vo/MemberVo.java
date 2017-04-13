@@ -6,11 +6,7 @@ import com.got.enums.Grade;
 import com.got.util.BCrypt;
 import com.got.util.RSA;
 
-/**
- * @author Jang
- *
- */
-public class MemberVo {
+public class MemberVO {
 	private int m_no;
 	private String id;
 	private String name;

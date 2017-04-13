@@ -1,0 +1,7 @@
+CREATE SEQUENCE m_no NOCACHE;
+CREATE SEQUENCE g_no NOCACHE;
+CREATE SEQUENCE c_no NOCACHE;
+
+INSERT INTO category VALUES(c_no.nextval, '상의', 0);
+INSERT INTO category VALUES(c_no.nextval, '하의', 0);
+INSERT INTO category VALUES(c_no.nextval, '신발', 0);

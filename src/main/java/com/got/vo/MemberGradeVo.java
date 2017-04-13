@@ -2,7 +2,7 @@ package com.got.vo;
 
 import java.security.Timestamp;
 
-public class MemberGradeVo {
+public class MemberGradeVO {
 	
 	private int m_no;
 	private Timestamp mg_date;

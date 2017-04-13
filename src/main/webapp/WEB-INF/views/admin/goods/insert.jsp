@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,6 @@
 </div>
 <div class="clearfix"></div>
 <form id="goods-form" data-parsley-validate class="form-horizontal form-label-left">
-
 	<div class="form-group">
 		<label class="control-label col-md-3 col-sm-3 col-xs-12">
 		상품명
@@ -29,18 +29,12 @@
 		상품 분류
 		</label>
 		<div class="col-md-6 col-sm-6 col-xs-12">
-			<select name="category" class="form-control" required>
+			<select name="c_no" class="form-control" required>
 				<option value="">눌러서 선택하세요</option>
+				<c:forEach items="${categorys }" var="c">
+					<option value="${c.c_no }">${c.title }</option>
+				</c:forEach>
 			</select>
-		</div>
-	</div>
-	
-	<div class="form-group">
-		<label class="control-label col-md-3 col-sm-3 col-xs-12">
-		재고량
-		</label>
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<input type="number" name="stock" class="form-control col-md-7 col-xs-12" required>
 		</div>
 	</div>
 	
@@ -58,7 +52,16 @@
 		판매가격
 		</label>
 		<div class="col-md-6 col-sm-6 col-xs-12">
-			<input name="sell_price" type="number" class="form-control col-md-7 col-xs-12">
+			<input name="sell_price" type="number" class="form-control col-md-7 col-xs-12" required>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="control-label col-md-3 col-sm-3 col-xs-12">
+		재고량
+		</label>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<input type="number" name="stock" class="form-control col-md-7 col-xs-12" required>
 		</div>
 	</div>
 	
@@ -67,7 +70,7 @@
 		할인율
 		</label>
 		<div class="col-md-6 col-sm-6 col-xs-12">
-			<input name="discount_rate" type="number" class="form-control col-md-7 col-xs-12">
+			<input name="discount_rate" type="number" class="form-control col-md-7 col-xs-12" value="0">
 		</div>
 	</div>
 	
@@ -76,7 +79,7 @@
 		마일리지 적립률
 		</label>
 		<div class="col-md-6 col-sm-6 col-xs-12">
-			<input name="saving_mileage" type="text" class="form-control col-md-7 col-xs-12">
+			<input name="saving_mileage" type="text" class="form-control col-md-7 col-xs-12" value="0">
 		</div>
 	</div>
 	
@@ -109,19 +112,33 @@
 
 </form>
 <script type="text/javascript">
+$("input[type=number]").focusout(function() {
+	if($(this).val().length == 0)
+		$(this).val(0);
+});
+
 $("#btn-enroll").click(function() {
 	var goodsData = $("#goods-form").serializeArray();
-	console.log(goodsData)
+	insertGoods(goodsData);
+});
+
+function insertGoods(goodsData) {
 	$.ajax({
 		url : "insert.yo",
 		type : "post",
 		data : goodsData
 	}).done(function(insertedCount) {
-		
+		if(insertedCount == 1)
+			alert("등록 성공");
+		else if(insertedCount == 0)
+			alert("등록 실패");
+		else
+			alert("여러번 등록되었습니다")
 	}).fail(function(err) {
-		
+		alert("잠시후 다시 시도해 주세요.")
+		console.log(err);
 	});
-});
+}
 </script>
 </body>
 </html>

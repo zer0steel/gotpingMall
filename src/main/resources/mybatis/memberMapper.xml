@@ -3,14 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="m">
-	<select id="selectAll" resultType="com.got.vo.MemberVo">
+	<select id="selectAll" resultType="com.got.vo.MemberVO">
 		SELECT * FROM member
 	</select>
-	<select id="selectOneColumn" resultType="com.got.vo.MemberVo">
+	<select id="selectOneColumn" resultType="com.got.vo.MemberVO">
 		SELECT * FROM member WHERE ${column} = #{value}
 	</select>
 	
-	<select id="selectOneWithM_id" resultType="com.got.vo.MemberVo">
+	<select id="selectOneWithM_id" resultType="com.got.vo.MemberVO">
 		SELECT mg.grade, m.* 
 		FROM member_grade mg, (SELECT * FROM member WHERE id = #{id}) m 
 		WHERE mg.m_no = m.m_no AND ROWNUM = 1
@@ -18,7 +18,7 @@
 	
 	<insert id="insert">
 		<selectKey keyProperty="m_no" resultType="int" order="BEFORE" >
-			SELECT seq_m_no.nextval FROM DUAL
+			SELECT m_no.nextval FROM DUAL
 		</selectKey>
 		INSERT INTO member(m_no, id, pwd, name, email, addr) 
 		VALUES(#{m_no}, #{id}, #{pwd}, #{name}, #{email}, #{addr})

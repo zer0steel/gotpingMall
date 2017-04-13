@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.got.enums.Page;
 import com.got.service.MemberService;
 import com.got.util.RSA;
-import com.got.vo.MemberVo;
+import com.got.vo.MemberVO;
 
 @Controller
 public class MemberController {
@@ -26,8 +26,7 @@ public class MemberController {
 	
 	@RequestMapping("login.yo")
 	public ModelAndView loginForm() {
-		ModelAndView mav = new ModelAndView();
-		return Page.setViewPage(mav, "member/login.jsp");
+		return Page.setViewPage(new ModelAndView(), "member/login.jsp");
 	}
 	
 	@ResponseBody
@@ -39,7 +38,7 @@ public class MemberController {
 			@RequestParam(defaultValue = "") String pwd) throws IOException {
 		PrivateKey privateKey = (PrivateKey)session.getAttribute(RSA.PRIVATE_KEY);
 		session.removeAttribute(RSA.PRIVATE_KEY);
-		MemberVo m = s.login(id, pwd, privateKey);
+		MemberVO m = s.login(id, pwd, privateKey);
 		if(m.isLogin()) 
 			session.setAttribute("lm", m);
 		res.getWriter().print(m.isLogin());
@@ -48,31 +47,28 @@ public class MemberController {
 	@RequestMapping("logout.yo")
 	public ModelAndView logout(HttpSession session) {
 		session.invalidate();
-		ModelAndView mav = new ModelAndView();
-		return Page.setViewPage(mav, "front.jsp");
+		return Page.setViewPage(new ModelAndView(), "front.jsp");
 	}
 	
 	@RequestMapping("agreement.yo")
 	public ModelAndView agreeForm() {
-		ModelAndView mav = new ModelAndView();
-		return Page.setViewPage(mav, "member/agreement.jsp");
+		return Page.setViewPage(new ModelAndView(), "member/agreement.jsp");
 	}
 	
 	@RequestMapping("join.yo")
 	public ModelAndView joinForm() {
-		ModelAndView mav = new ModelAndView();
-		return Page.setViewPage(mav, "member/join.jsp");
+		return Page.setViewPage(new ModelAndView(), "member/join.jsp");
 	}
 	
 	@RequestMapping(value = "join.yo", method = RequestMethod.POST)
-	public ModelAndView joinSubmit(HttpSession session,MemberVo m) {
-		ModelAndView mav = new ModelAndView();
+	public ModelAndView joinSubmit(HttpSession session,MemberVO m) {
 		PrivateKey privateKey = (PrivateKey)session.getAttribute(RSA.PRIVATE_KEY);
 		session.invalidate();
+		
 		if(s.join(m, privateKey))
-			return Page.setViewPage(mav, "member/joinComplete.jsp");
+			return Page.setViewPage(new ModelAndView(), "member/joinComplete.jsp");
 		else
-			return Page.setViewPage(mav, "member/joinError.jsp");
+			return Page.setViewPage(new ModelAndView(), "member/joinError.jsp");
 	}
 	
 	@ResponseBody
