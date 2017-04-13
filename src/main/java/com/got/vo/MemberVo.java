@@ -8,12 +8,7 @@ import com.got.util.RSA;
 
 public class MemberVO {
 	private int m_no;
-	private String id;
-	private String name;
-	private String pwd;
-	private String email;
-	private String addr;
-	
+	private String id, name, pwd, email, addr;
 	private boolean isLoginSuccess = false;
 	private Grade grade;
 	

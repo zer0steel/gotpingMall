@@ -1,0 +1,535 @@
+/* 회원 */
+CREATE TABLE member (
+	m_no NUMBER NOT NULL, /* 고객번호 */
+	id VARCHAR2(50) NOT NULL, /* 아이디 */
+	name VARCHAR2(50) NOT NULL, /* 이름 */
+	pwd VARCHAR2(72) NOT NULL, /* 비밀번호 */
+	email VARCHAR2(40) NOT NULL, /* 이메일 */
+	addr VARCHAR2(255) /* 주소 */
+);
+
+CREATE UNIQUE INDEX member
+	ON member (
+		m_no ASC
+	);
+
+ALTER TABLE member
+	ADD
+		CONSTRAINT member
+		PRIMARY KEY (
+			m_no
+		);
+
+/* 게시판 */
+CREATE TABLE board (
+	b_no NUMBER NOT NULL, /* 게시판번호 */
+	b_title VARCHAR2(50), /* 게시판이름 */
+	b_regdate DATE /* 생성일 */
+);
+
+CREATE UNIQUE INDEX PK_board
+	ON board (
+		b_no ASC
+	);
+
+ALTER TABLE board
+	ADD
+		CONSTRAINT PK_board
+		PRIMARY KEY (
+			b_no
+		);
+
+/* 상품 */
+CREATE TABLE goods (
+	g_no NUMBER NOT NULL, /* 상품번호 */
+	c_no NUMBER, /* 분류번호 */
+	name VARCHAR2(50), /* 상품명 */
+	detail VARCHAR2(1000), /* 상세설명 */
+	stock NUMBER, /* 재고량 */
+	purchase_price NUMBER, /* 매입가격 */
+	sell_price NUMBER, /* 판매가격 */
+	discount_rate NUMBER, /* 할인율 */
+	saving_mileage NUMBER, /* 마일리지 적립율 */
+	show VARCHAR2(5) /* 공개 여부 */
+);
+
+CREATE UNIQUE INDEX PK_goods
+	ON goods (
+		g_no ASC
+	);
+
+ALTER TABLE goods
+	ADD
+		CONSTRAINT PK_goods
+		PRIMARY KEY (
+			g_no
+		);
+
+/* 주문상세 */
+CREATE TABLE order_detail (
+	od_no NUMBER NOT NULL, /* 주문상세번호 */
+	amount NUMBER, /* 구매수량 */
+	total_price NUMBER, /* 총구매가격 */
+	g_no NUMBER, /* 상품번호 */
+	o_no NUMBER /* 주문번호 */
+);
+
+CREATE UNIQUE INDEX PK_order_detail
+	ON order_detail (
+		od_no ASC
+	);
+
+ALTER TABLE order_detail
+	ADD
+		CONSTRAINT PK_order_detail
+		PRIMARY KEY (
+			od_no
+		);
+
+/* 상품주문 */
+CREATE TABLE orders (
+	o_no NUMBER NOT NULL, /* 주문번호 */
+	m_no NUMBER, /* 고객번호 */
+	total_price NUMBER, /* 총금액 */
+	pay VARCHAR2(5), /* 결제 유/무 */
+	regdate DATE, /* 등록일 */
+	recipient VARCHAR2(50), /* 받는사람 이름 */
+	addr VARCHAR2(255), /* 주소 */
+	message VARCHAR2(255) /* 배송메시지 */
+);
+
+CREATE UNIQUE INDEX PK_orders
+	ON orders (
+		o_no ASC
+	);
+
+ALTER TABLE orders
+	ADD
+		CONSTRAINT PK_orders
+		PRIMARY KEY (
+			o_no
+		);
+
+/* 비회원 */
+CREATE TABLE non_member (
+	nm_no NUMBER NOT NULL, /* 고객번호 */
+	name VARCHAR2(50), /* 이름 */
+	email VARCHAR2(40), /* 이메일 */
+	pwd VARCHAR2(72) /* 주문비밀번호 */
+);
+
+CREATE UNIQUE INDEX PK_non_member
+	ON non_member (
+		nm_no ASC
+	);
+
+ALTER TABLE non_member
+	ADD
+		CONSTRAINT PK_non_member
+		PRIMARY KEY (
+			nm_no
+		);
+
+/* 결제 */
+CREATE TABLE payment (
+	o_no NUMBER NOT NULL, /* 주문번호 */
+	price NUMBER, /* 지불한 금액 */
+	regdate DATE, /* 결제일 */
+	py_no NUMBER /* 결제수단번호 */
+);
+
+CREATE UNIQUE INDEX PK_payment
+	ON payment (
+		o_no ASC
+	);
+
+ALTER TABLE payment
+	ADD
+		CONSTRAINT PK_payment
+		PRIMARY KEY (
+			o_no
+		);
+
+/* 마일리지 */
+CREATE TABLE mileage (
+	m_no NUMBER NOT NULL, /* 고객번호 */
+	m_date DATE NOT NULL, /* 변동날짜 */
+	total_mileage NUMBER, /* 현재 마일리지 */
+	change_amount NUMBER, /* 적립/사용 된 마일리지 */
+	reason VARCHAR2(150), /* 변동 사유 */
+	o_no NUMBER /* 주문번호 */
+);
+
+CREATE UNIQUE INDEX PK_mileage
+	ON mileage (
+		m_no ASC,
+		m_date ASC
+	);
+
+ALTER TABLE mileage
+	ADD
+		CONSTRAINT PK_mileage
+		PRIMARY KEY (
+			m_no,
+			m_date
+		);
+
+/* 주문확인 */
+CREATE TABLE order_check (
+	o_no NUMBER NOT NULL, /* 주문번호 */
+	state VARCHAR2(20), /* 주문상태 */
+	regdate DATE /* 처리일자 */
+);
+
+CREATE UNIQUE INDEX PK_order_check
+	ON order_check (
+		o_no ASC
+	);
+
+ALTER TABLE order_check
+	ADD
+		CONSTRAINT PK_order_check
+		PRIMARY KEY (
+			o_no
+		);
+
+/* 결제수단 */
+CREATE TABLE payment_way (
+	py_no NUMBER NOT NULL, /* 결제수단번호 */
+	name VARCHAR2(30) /* 결제수단명 */
+);
+
+CREATE UNIQUE INDEX PK_payment_way
+	ON payment_way (
+		py_no ASC
+	);
+
+ALTER TABLE payment_way
+	ADD
+		CONSTRAINT PK_payment_way
+		PRIMARY KEY (
+			py_no
+		);
+
+/* 게시글 */
+CREATE TABLE post (
+	p_no NUMBER NOT NULL, /* 글번호 */
+	p_title VARCHAR2(250), /* 제목 */
+	p_content VARCHAR2(2000), /* 내용 */
+	p_writer VARCHAR2(50), /* 작성자 */
+	p_regdate DATE, /* 등록일 */
+	b_no NUMBER /* 게시판번호 */
+);
+
+CREATE UNIQUE INDEX PK_post
+	ON post (
+		p_no ASC
+	);
+
+ALTER TABLE post
+	ADD
+		CONSTRAINT PK_post
+		PRIMARY KEY (
+			p_no
+		);
+
+/* 장바구니 */
+CREATE TABLE basket (
+	m_no NUMBER NOT NULL, /* 고객번호 */
+	g_no NUMBER NOT NULL, /* 상품번호 */
+	amount NUMBER /* 수량 */
+);
+
+CREATE UNIQUE INDEX PK_basket
+	ON basket (
+		m_no ASC,
+		g_no ASC
+	);
+
+ALTER TABLE basket
+	ADD
+		CONSTRAINT PK_basket
+		PRIMARY KEY (
+			m_no,
+			g_no
+		);
+
+/* 회원등급 */
+CREATE TABLE member_grade (
+	m_no NUMBER NOT NULL, /* 고객번호 */
+	mg_date DATE NOT NULL, /* 변동날짜 */
+	grade NUMBER, /* 회원등급 */
+	point NUMBER, /* 포인트 */
+	reason VARCHAR2(150) /* 변동사유 */
+);
+
+CREATE UNIQUE INDEX PK_member_grade
+	ON member_grade (
+		m_no ASC,
+		mg_date ASC
+	);
+
+ALTER TABLE member_grade
+	ADD
+		CONSTRAINT PK_member_grade
+		PRIMARY KEY (
+			m_no,
+			mg_date
+		);
+
+/* 파일 */
+CREATE TABLE files (
+	f_no NUMBER NOT NULL, /* 파일번호 */
+	name VARCHAR2(50), /* 파일이름 */
+	save_path VARCHAR2(255), /* 저장경로 */
+	regdate DATE /* 등록날짜 */
+);
+
+CREATE UNIQUE INDEX PK_files
+	ON files (
+		f_no ASC
+	);
+
+ALTER TABLE files
+	ADD
+		CONSTRAINT PK_files
+		PRIMARY KEY (
+			f_no
+		);
+
+/* 상품이미지 */
+CREATE TABLE goods_image (
+	g_no NUMBER NOT NULL, /* 상품번호 */
+	f_no NUMBER NOT NULL, /* 파일번호 */
+	location VARCHAR2(255) /* 이미지 위치 */
+);
+
+CREATE UNIQUE INDEX PK_goods_image
+	ON goods_image (
+		g_no ASC,
+		f_no ASC
+	);
+
+ALTER TABLE goods_image
+	ADD
+		CONSTRAINT PK_goods_image
+		PRIMARY KEY (
+			g_no,
+			f_no
+		);
+
+/* 입출고내역 */
+CREATE TABLE shipping_receiving (
+	sr_no NUMBER NOT NULL, /* 입출고번호 */
+	g_no NUMBER NOT NULL, /* 상품번호 */
+	category VARCHAR2(20), /* 분류 */
+	detail VARCHAR2(50), /* 내용 */
+	amount NUMBER, /* 수량 */
+	price NUMBER, /* 단가 */
+	regdate DATE /* 날짜 */
+);
+
+CREATE UNIQUE INDEX PK_shipping_receiving
+	ON shipping_receiving (
+		sr_no ASC,
+		g_no ASC
+	);
+
+ALTER TABLE shipping_receiving
+	ADD
+		CONSTRAINT PK_shipping_receiving
+		PRIMARY KEY (
+			sr_no,
+			g_no
+		);
+
+/* 분류 */
+CREATE TABLE category (
+	c_no NUMBER NOT NULL, /* 분류번호 */
+	title VARCHAR2(50), /* 분류명 */
+	parent_no NUMBER, /* 상위분류번호 */
+	step NUMBER, /* 분류레벨 */
+	in_use VARCHAR2(5) /* 사용여부 */
+);
+
+CREATE UNIQUE INDEX PK_category
+	ON category (
+		c_no ASC
+	);
+
+ALTER TABLE category
+	ADD
+		CONSTRAINT PK_category
+		PRIMARY KEY (
+			c_no
+		);
+
+ALTER TABLE goods
+	ADD
+		CONSTRAINT FK_category_TO_goods
+		FOREIGN KEY (
+			c_no
+		)
+		REFERENCES category (
+			c_no
+		);
+
+ALTER TABLE order_detail
+	ADD
+		CONSTRAINT FK_goods_TO_order_detail
+		FOREIGN KEY (
+			g_no
+		)
+		REFERENCES goods (
+			g_no
+		);
+
+ALTER TABLE order_detail
+	ADD
+		CONSTRAINT FK_orders_TO_order_detail
+		FOREIGN KEY (
+			o_no
+		)
+		REFERENCES orders (
+			o_no
+		);
+
+ALTER TABLE orders
+	ADD
+		CONSTRAINT FK_member_TO_orders
+		FOREIGN KEY (
+			m_no
+		)
+		REFERENCES member (
+			m_no
+		);
+
+ALTER TABLE orders
+	ADD
+		CONSTRAINT FK_non_member_TO_orders
+		FOREIGN KEY (
+			m_no
+		)
+		REFERENCES non_member (
+			nm_no
+		);
+
+ALTER TABLE payment
+	ADD
+		CONSTRAINT FK_payment_way_TO_payment
+		FOREIGN KEY (
+			py_no
+		)
+		REFERENCES payment_way (
+			py_no
+		);
+
+ALTER TABLE payment
+	ADD
+		CONSTRAINT FK_orders_TO_payment
+		FOREIGN KEY (
+			o_no
+		)
+		REFERENCES orders (
+			o_no
+		);
+
+ALTER TABLE mileage
+	ADD
+		CONSTRAINT FK_member_TO_mileage
+		FOREIGN KEY (
+			m_no
+		)
+		REFERENCES member (
+			m_no
+		);
+
+ALTER TABLE mileage
+	ADD
+		CONSTRAINT FK_payment_TO_mileage
+		FOREIGN KEY (
+			o_no
+		)
+		REFERENCES payment (
+			o_no
+		);
+
+ALTER TABLE order_check
+	ADD
+		CONSTRAINT FK_payment_TO_order_check
+		FOREIGN KEY (
+			o_no
+		)
+		REFERENCES payment (
+			o_no
+		);
+
+ALTER TABLE post
+	ADD
+		CONSTRAINT FK_board_TO_post
+		FOREIGN KEY (
+			b_no
+		)
+		REFERENCES board (
+			b_no
+		);
+
+ALTER TABLE basket
+	ADD
+		CONSTRAINT FK_member_TO_basket
+		FOREIGN KEY (
+			m_no
+		)
+		REFERENCES member (
+			m_no
+		);
+
+ALTER TABLE basket
+	ADD
+		CONSTRAINT FK_goods_TO_basket
+		FOREIGN KEY (
+			g_no
+		)
+		REFERENCES goods (
+			g_no
+		);
+
+ALTER TABLE member_grade
+	ADD
+		CONSTRAINT FK_member_TO_member_grade
+		FOREIGN KEY (
+			m_no
+		)
+		REFERENCES member (
+			m_no
+		);
+
+ALTER TABLE goods_image
+	ADD
+		CONSTRAINT FK_goods_TO_goods_image
+		FOREIGN KEY (
+			g_no
+		)
+		REFERENCES goods (
+			g_no
+		);
+
+ALTER TABLE goods_image
+	ADD
+		CONSTRAINT FK_files_TO_goods_image
+		FOREIGN KEY (
+			f_no
+		)
+		REFERENCES files (
+			f_no
+		);
+
+ALTER TABLE shipping_receiving
+	ADD
+		CONSTRAINT FK_goods_TO_shipping_receiving
+		FOREIGN KEY (
+			g_no
+		)
+		REFERENCES goods (
+			g_no
+		);

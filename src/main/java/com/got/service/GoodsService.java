@@ -1,5 +1,7 @@
 package com.got.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +15,9 @@ public class GoodsService {
 
 	public int enroll(GoodsVO g) {
 		return dao.insert(g);
+	}
+
+	public List<GoodsVO> getAll() {
+		return dao.selectAll();
 	}
 }

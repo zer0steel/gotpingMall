@@ -2,8 +2,13 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="gc">
+<mapper namespace="c">
 	<select id="selectAll" resultType="com.got.vo.CategoryVO">
 		SELECT * FROM category
 	</select>
+	
+	<insert id="insert">
+		INSERT INTO category(c_no, parent_no, title, step, in_use) 
+		VALUES(c_no.nextval, #{parent_no}, #{title}, #{step}, #{in_use})
+	</insert>
 </mapper>

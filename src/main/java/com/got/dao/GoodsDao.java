@@ -1,6 +1,8 @@
 package com.got.dao;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +15,9 @@ public class GoodsDao {
 
 	public int insert(GoodsVO g) {
 		return dao.insert("g.insert", g);
+	}
+
+	public List<GoodsVO> selectAll() {
+		return dao.selectList("g.selectAll");
 	}
 }

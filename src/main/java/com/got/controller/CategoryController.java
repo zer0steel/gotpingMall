@@ -14,31 +14,26 @@ import org.springframework.web.servlet.ModelAndView;
 import com.got.enums.Page;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
+import com.got.vo.CategoryVO;
 import com.got.vo.GoodsVO;
 
 @Controller
-public class GoodsController {
+public class CategoryController {
 	
-	@Autowired private GoodsService gs;
 	@Autowired private CategoryService gcs;
 	
-	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.GET)
-	public ModelAndView insertGoodsForm() {
+	@RequestMapping("admin/goods/category.yo")
+	public ModelAndView category() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("categories", gcs.getAll());
-		return Page.setAdminViewPage(mav, "goods/insert.jsp");
+		return Page.setAdminViewPage(mav, "goods/category.jsp");
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
-	public void insertGoodsSubmit(HttpServletResponse res, GoodsVO g) throws IOException {
-		res.getWriter().print(gs.enroll(g));
-	}
-	
-	@RequestMapping("admin/goods/list.yo")
-	public ModelAndView goodsList() {
+	@RequestMapping(value = "admin/goods/insertCategory.yo", method = RequestMethod.POST)
+	public ModelAndView insertCategorySubmit(CategoryVO c) {
+		int re = gcs.enroll(c);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("goods", gs.getAll());
-		return Page.setAdminViewPage(mav, "goods/list.jsp");
+		mav.setViewName("redirect:/admin/goods/category.yo");
+		return mav;
 	}
 }

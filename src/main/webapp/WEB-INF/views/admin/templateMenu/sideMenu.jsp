@@ -20,7 +20,7 @@
 		<!-- /menu profile quick info -->
 
 		<br/>
-		
+		<div class="clearfix"></div>
 		<!-- sidebar menu -->
 		<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 			<div class="menu_section">
@@ -40,6 +40,7 @@
 						<ul class="nav child_menu">
 							<li><a href="${pageContext.request.contextPath}/admin/goods/list.yo">상품 목록</a></li>
 							<li><a href="${pageContext.request.contextPath}/admin/goods/insert.yo">상품 등록</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/goods/category.yo">상품 분류 편집</a></li>
 						</ul>
 					</li>
 					<li>

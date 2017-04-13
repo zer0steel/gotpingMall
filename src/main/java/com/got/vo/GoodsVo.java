@@ -1,14 +1,8 @@
 package com.got.vo;
 
 public class GoodsVO extends CategoryVO{
-	private int g_no;
-	private String name;
-	private String detail;
-	private int stock;
-	private int purchase_price;
-	private int sell_price;
-	private int discount_rate;
-	private int saving_mileage;
+	private int g_no, stock, purchase_price, sell_price, discount_rate, saving_mileage;
+	private String name, detail;
 	private boolean show;
 	
 	public int getG_no() {

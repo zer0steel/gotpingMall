@@ -3,6 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="g">
+	<select id="selectAll" resultType="com.got.vo.GoodsVO">
+		SELECT * FROM goods g, category c WHERE g.c_no = c.c_no
+	</select>
+
 	<insert id="insert">
 		INSERT INTO goods(g_no, c_no, name, detail, stock, 
 		purchase_price, sell_price, discount_rate, saving_mileage, show)

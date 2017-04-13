@@ -14,7 +14,11 @@ public class CategoryDao {
 	@Autowired private DaoTemplate dao;
 	
 	public List<CategoryVO> selectAll() {
-		return dao.selectList("gc.selectAll");
+		return dao.selectList("c.selectAll");
+	}
+
+	public int insertOne(CategoryVO c) {
+		return dao.insert("c.insert", c);
 	}
 
 }

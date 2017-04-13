@@ -51,7 +51,7 @@ public class MemberService {
 		
 		MemberVO m = dao.selectOneWithM_Id(id);
 		if(m == null)
-			return m;
+			return new MemberVO();
 		else {
 			if(m.isEqualsPwd(pwd, privateKey)) {
 				m.setLogin();

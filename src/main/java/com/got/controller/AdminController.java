@@ -14,10 +14,5 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView();
 		return Page.setAdminViewPage(mav, "main/dashboard.jsp");
 	}
-	
-	@RequestMapping("admin/goods/list.yo")
-	public ModelAndView goodsList() {
-		ModelAndView mav = new ModelAndView();
-		return Page.setAdminViewPage(mav, "goods/list.jsp");
-	}
+
 }
