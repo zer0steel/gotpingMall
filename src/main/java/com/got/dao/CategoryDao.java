@@ -21,4 +21,16 @@ public class CategoryDao {
 		return dao.insert("c.insert", c);
 	}
 
+	public CategoryVO selectOne(int c_no) {
+		return dao.selectOne("c.selectOne", c_no);
+	}
+
+	public int deleteOne(int c_no) {
+		return dao.delete("c.deleteOne", c_no);
+	}
+
+	public int updateOne(CategoryVO c) {
+		return dao.update("c.updateOne", c);
+	}
+
 }

@@ -7,12 +7,14 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.got.dao.template.DaoTemplate;
+
 public class MybatisUtil {
 	private static final SqlSessionFactory FACTORY;
-		
+	private static final String MYBATIS_PATH = "mybatis/sqlMapConfig.xml"; 
 	static {
 		try {
-			Reader reader = Resources.getResourceAsReader("mybatis/sqlMapConfig.xml");
+			Reader reader = Resources.getResourceAsReader(MYBATIS_PATH);
 			FACTORY = new SqlSessionFactoryBuilder().build(reader);
 		} catch(Exception e) {
 			System.err.println(e);

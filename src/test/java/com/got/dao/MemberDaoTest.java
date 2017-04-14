@@ -10,6 +10,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.controller.RsaController;
 import com.got.service.MemberService;
+import com.got.vo.MemberVO;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,4 +22,9 @@ public class MemberDaoTest {
 	@Autowired MemberDao dao;
 	@Autowired MemberService s;
 	@Autowired RsaController rsa;
+	
+	@Test
+	public void test() {
+		
+	}
 }

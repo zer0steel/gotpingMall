@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.got.vo.CategoryVO;
 
 @WebAppConfiguration
@@ -30,19 +31,19 @@ public class CategoryTest {
 		c1 = new CategoryVO();
 		c1.setIn_use(false);
 		c1.setParent_no(0);
-		c1.setStep(2);
+		c1.setMenu_level(2);
 		c1.setTitle("슬리퍼");
 		
 		c2 = new CategoryVO();
 		c2.setIn_use(true);
 		c2.setParent_no(3);
-		c2.setStep(1);
+		c2.setMenu_level(1);
 		c2.setTitle("");
 		
 		c3 = new CategoryVO();
 		c3.setIn_use(false);
 		c3.setParent_no(0);
-		c3.setStep(1);
+		c3.setMenu_level(1);
 		c3.setTitle("슬리퍼");
 	}
 	
@@ -53,9 +54,14 @@ public class CategoryTest {
 	}
 	
 	@Test
-	public void insertTest() {
+	public void insertErrorTest() {
 		cs.enroll(c1);
-//		cs.enroll(c2);
-//		cs.enroll(c3);
+		cs.enroll(c2);
+		cs.enroll(c3);
+	}
+	
+	@Test
+	public void getOneTest() {
+		System.out.println(cs.getOneWithJSON(10));
 	}
 }

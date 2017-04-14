@@ -15,6 +15,25 @@
 	</div>
 </div>
 <div class="clearfix"></div>
+<!-- 상품 분류 -->
+<div class="row">
+	<div class="col-md-12">
+		<div class="x_panel">
+		
+			<div class="x_title">
+				<h2 id="">목록</h2>
+				<div class="clearfix"></div>
+			</div>
+			
+			<div class="x_content">
+				<jsp:include page="categorySelectNode.jsp"></jsp:include>
+				<br>
+				<a href="${pageContext.request.contextPath}/admin/goods/category.yo" class="btn btn-success btn-sm">분류 편집 하기</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 상품 분류 끝 -->
 <div class="row">
 	<div class="col-md-6">
 		<div class="x_panel">
@@ -24,20 +43,7 @@
 			</div>
 			<div class="x_content">
 				<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left">
-				<div class="form-group">
-					<label class="control-label col-md-3 col-sm-3">
-					상품 분류
-					</label>
-					<div class="col-md-6 col-sm-6 col-xs-12">
-						<select name="c_no" class="form-control" required>
-							<option value="">눌러서 선택하세요</option>
-							<c:forEach items="${categories }" var="c">
-								<option value="${c.c_no }">${c.title }</option>
-							</c:forEach>
-						</select>
-					</div>
-				</div>
-				
+				<input type="hidden" name="c_no" id="c_no" required>
 				<div class="form-group">
 					<label class="control-label col-md-3 col-sm-3">
 					상품명
@@ -128,12 +134,25 @@
 </div>
 <script src="${pageContext.request.contextPath}/resources/vendors/dropzone/dist/min/dropzone.min.js"></script>
 <script type="text/javascript">
+$("#category-title").html("상품 분류");
+$("select").change(function() {
+	var c_no = $(this).val();
+	$("#c_no").val( c_no );
+});
+
 $("input[type=number]").focusout(function() {
 	if($(this).val().length == 0)
 		$(this).val(0);
 });
 
 $("#btn-enroll").click(function() {
+	var emptyFields = $("input[required]").filter(function() {
+		return $(this).val() === "";
+	}).length;
+	if(emptyFields > 0) {
+		alert("입력 되지 않은 항목이 있습니다.");
+		return;
+	}
 	var goodsData = $("#goods-form").serializeArray();
 	insertGoods(goodsData);
 });

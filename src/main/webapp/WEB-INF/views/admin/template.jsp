@@ -33,7 +33,9 @@
 		<jsp:include page="templateMenu/topMenu.jsp"></jsp:include>
 		<!-- page content -->
 		<div class="right_col" role="main">
-			<jsp:include page="${viewPage }"></jsp:include>
+			<div class="">
+				<jsp:include page="${viewPage }"></jsp:include>
+			</div>
 		</div>
 		<!-- /page content -->
 	</div>

@@ -1,8 +1,6 @@
 package com.got.controller;
 
-import java.io.IOException;
 
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,27 +11,51 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.got.enums.Page;
 import com.got.service.CategoryService;
-import com.got.service.GoodsService;
 import com.got.vo.CategoryVO;
-import com.got.vo.GoodsVO;
 
 @Controller
 public class CategoryController {
 	
-	@Autowired private CategoryService gcs;
+	@Autowired private CategoryService cs;
 	
 	@RequestMapping("admin/goods/category.yo")
-	public ModelAndView category() {
+	public ModelAndView category(String msg) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("categories", gcs.getAll());
+		mav.addObject("categories", cs.getAll());
+		mav.addObject("msg", msg);
 		return Page.setAdminViewPage(mav, "goods/category.jsp");
 	}
 	
-	@RequestMapping(value = "admin/goods/insertCategory.yo", method = RequestMethod.POST)
-	public ModelAndView insertCategorySubmit(CategoryVO c) {
-		int re = gcs.enroll(c);
+	@RequestMapping(value = "admin/goods/category/insert.yo", method = RequestMethod.POST)
+	public ModelAndView insertCategory(CategoryVO c) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", cs.enroll(c));
 		mav.setViewName("redirect:/admin/goods/category.yo");
 		return mav;
+	}
+	
+	@RequestMapping(value = "admin/goods/category/delete.yo", method = RequestMethod.POST)
+	public ModelAndView deteteCategory(int c_no) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", cs.delete(c_no));
+		mav.setViewName("redirect:/admin/goods/category.yo");
+		return mav;
+	}
+	
+	@RequestMapping(value = "admin/goods/category/update.yo", method = RequestMethod.POST)
+	public ModelAndView updateCategory(CategoryVO c) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", cs.update(c));
+		mav.setViewName("redirect:/admin/goods/category.yo");
+		return mav;
+	}
+	
+	@ResponseBody
+	@RequestMapping(
+			value = "admin/goods/category/detail.yo", 
+			method = RequestMethod.POST, 
+			produces = "application/json; charset=UTF-8")
+	public String detailCategory(int c_no) {
+		return cs.getOneWithJSON(c_no);
 	}
 }

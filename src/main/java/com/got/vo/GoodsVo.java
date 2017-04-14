@@ -59,4 +59,10 @@ public class GoodsVO extends CategoryVO{
 	public void setShow(boolean show) {
 		this.show = show;
 	}
+	@Override
+	public String toString() {
+		return "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
+				+ sell_price + ", discount_rate=" + discount_rate + ", saving_mileage=" + saving_mileage + ", name="
+				+ name + ", detail=" + detail + ", show=" + show + "]";
+	}
 }
