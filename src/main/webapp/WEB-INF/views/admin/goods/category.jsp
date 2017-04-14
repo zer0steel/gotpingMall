@@ -33,7 +33,7 @@
 		<div class="x_panel">
 			<!-- 박스 상단 타이틀 -->
 			<div class="x_title">
-				<h2>등록 / 수정</h2>
+				<h2>등록 / 수정 / 삭제</h2>
 				<!-- 툴박스 -->
 				<ul class="nav navbar-right panel_toolbox">
 					<li>${msg }</li>
@@ -151,7 +151,7 @@
 </div>
 
 <script type="text/javascript">
-$("select").change(function() {
+$("select[data-menu_level]").change(function() {
 	var c_no = $(this).val();
 	$("input[name=c_no]").val(c_no);
 	$.ajax({
