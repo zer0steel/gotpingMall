@@ -1,7 +1,7 @@
 package com.got.vo;
 
 public class CategoryVO {
-	public static final int BIG = 0, MIDDLE = 1, SMALL = 2;
+	public static final int BIG = 1, MIDDLE = 2, SMALL = 3;
 	private int c_no, parent_no, menu_level;
 	private String title, menu_levelName;
 	private boolean in_use;
@@ -28,13 +28,13 @@ public class CategoryVO {
 		return menu_level;
 	}
 	public void setMenu_level(int menu_level) {
-		if(menu_level > 2 || menu_level < 0)
-			throw new IllegalArgumentException("분류 범위는 0 ~ 2까지. input value : " + menu_level);
+		if(menu_level > SMALL || menu_level < BIG)
+			throw new IllegalArgumentException("분류 범위는 1 ~ 3까지. input value : " + menu_level);
 		this.menu_level = menu_level;
 		switch (menu_level) {
-			case 0: this.menu_levelName = "대분류"; break;
-			case 1: this.menu_levelName = "중분류"; break;
-			case 2: this.menu_levelName = "소분류"; break;
+			case BIG: this.menu_levelName = "대분류"; break;
+			case MIDDLE: this.menu_levelName = "중분류"; break;
+			case SMALL: this.menu_levelName = "소분류"; break;
 		}
 	}
 	public boolean isIn_use() {
@@ -46,5 +46,17 @@ public class CategoryVO {
 	
 	public String getmenu_levelName() {
 		return this.menu_levelName;
+	}
+	
+	public int getBIG() {
+		return CategoryVO.BIG;
+	}
+	
+	public int getMIDDLE() {
+		return CategoryVO.MIDDLE;
+	}
+	
+	public int getSMALL() {
+		return CategoryVO.SMALL;
 	}
 }

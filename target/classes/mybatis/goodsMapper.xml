@@ -9,8 +9,8 @@
 
 	<insert id="insert">
 		INSERT INTO goods(g_no, c_no, name, detail, stock, 
-		purchase_price, sell_price, discount_rate, saving_mileage, show)
+		purchase_price, sell_price, discount_rate, saving_mileage, status)
 		VALUES(g_no.nextval, #{c_no}, #{name}, #{detail}, #{stock}, 
-		#{purchase_price}, #{sell_price}, #{discount_rate}, #{saving_mileage}, #{show})
+		#{purchase_price}, #{sell_price}, #{discount_rate}, #{saving_mileage}, #{status})
 	</insert>
 </mapper>

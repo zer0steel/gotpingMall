@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="page-title">
-	<div class="page-left">
+	<div class="title_left">
 		<h3>상품 목록</h3>
 	</div>
 </div>

@@ -2,8 +2,7 @@ package com.got.vo;
 
 public class GoodsVO extends CategoryVO{
 	private int g_no, stock, purchase_price, sell_price, discount_rate, saving_mileage;
-	private String name, detail;
-	private boolean show;
+	private String name, detail, status;
 	
 	public int getG_no() {
 		return g_no;
@@ -53,16 +52,10 @@ public class GoodsVO extends CategoryVO{
 	public void setSaving_mileage(int saving_mileage) {
 		this.saving_mileage = saving_mileage;
 	}
-	public boolean isShow() {
-		return show;
+	public String getStatus() {
+		return status;
 	}
-	public void setShow(boolean show) {
-		this.show = show;
-	}
-	@Override
-	public String toString() {
-		return "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
-				+ sell_price + ", discount_rate=" + discount_rate + ", saving_mileage=" + saving_mileage + ", name="
-				+ name + ", detail=" + detail + ", show=" + show + "]";
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

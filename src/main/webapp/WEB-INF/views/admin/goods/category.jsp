@@ -3,11 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="page-title">
-	<div class="page-left">
+	<div class="title_left">
 		<h3>상품 분류</h3>
 	</div>
 </div>
-<br />
 <br />
 <div class="clearfix"></div>
 <!-- 상품 분류 -->
@@ -20,7 +19,9 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<jsp:include page="categorySelectNode.jsp"></jsp:include>
+				<jsp:include page="include/categorySelectNode.jsp"></jsp:include>
+				<button type="submit" class="btn btn-warning" id="btn-update" data-target="#updateModal" data-toggle="modal">수정</button>
+				<button type="submit" class="btn btn-danger" id="btn-delete">삭제</button>
 			</div>
 		</div>
 	</div>
@@ -33,7 +34,7 @@
 		<div class="x_panel">
 			<!-- 박스 상단 타이틀 -->
 			<div class="x_title">
-				<h2>등록 / 수정 / 삭제</h2>
+				<h2>등록</h2>
 				<!-- 툴박스 -->
 				<ul class="nav navbar-right panel_toolbox">
 					<li>${msg }</li>
@@ -50,64 +51,12 @@
 			
 			<!-- 박스 내용 -->
 			<div class="x_content">
-				<form id="category-form" data-parsley-validate class="form-horizontal form-label-left" method="post">
-					<input type="hidden" name="c_no">
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3">
-						분류 레벨
-						</label>
-						<div class="col-md-6 col-sm-6">
-							<select name="menu_level" class="form-control" required>
-								<option value="">눌러서 선택하세요</option>
-								<option value="0">대분류</option>
-								<option value="1">중분류</option>
-								<option value="2">소분류</option>
-							</select>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3">
-						상위 분류
-						</label>
-						<div class="col-md-6 col-sm-6">
-							<select name="parent_no" class="form-control" disabled="disabled">
-							<option value="">눌러서 선택하세요</option>
-							<c:forEach items="${categories }" var="c">
-								<c:if test="${c.menu_level != Category.SMALL }">
-									<option value="${c.c_no }" data-menu_level="${c.menu_level }">
-										${c.title }
-									</option>
-								</c:if>
-							</c:forEach>
-							</select>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3">
-						분류명
-						</label>
-						<div class="col-md-6 col-sm-6">
-							<input type="text" name="title" class="form-control" value="" required>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3">
-						사용 여부
-						</label>
-						<div class="col-md-6 col-sm-6">
-							사용 : <input type="radio" name="in_use" value="true">
-							미사용 : <input type="radio" name="in_use" value="false">
-						</div>
-					</div>
-					
+				<form id="category-insertForm" data-parsley-validate 
+					class="form-horizontal form-label-left" method="post" action="category/insert.yo">
+					<jsp:include page="include/categoryInsertForm.jsp"></jsp:include>
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<button type="submit" class="btn btn-success" id="btn-enroll" formaction="category/insert.yo">등록</button>
-							<button type="submit" class="btn btn-warning" id="btn-update" formaction="category/update.yo">수정</button>
-							<button type="submit" class="btn btn-danger" id="btn-delete" formaction="category/delete.yo">삭제</button>
+							<button type="submit" class="btn btn-success" id="btn-enroll">등록</button>
 							<button type="reset" class="btn btn-primary">입력 초기화</button>
 						</div>
 					</div>
@@ -150,6 +99,37 @@
 	</div>
 </div>
 
+<div class="modal fade" id="updateModal" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- header -->
+			<div class="modal-header">
+				<!-- 닫기(x) 버튼 -->
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<!-- header title -->
+				<h4 class="modal-title">수정</h4>
+			</div>
+			<!-- body -->
+			<div class="modal-body">
+				<form id="category-updateForm" data-parsley-validate 
+					class="form-horizontal form-label-left" method="post">
+					
+					<jsp:include page="include/categoryInsertForm.jsp"></jsp:include>
+					
+					<div class="form-group">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button type="submit" class="btn btn-warning">수정</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <script type="text/javascript">
 $("select[data-menu_level]").change(function() {
 	var c_no = $(this).val();
@@ -160,37 +140,65 @@ $("select[data-menu_level]").change(function() {
 		type : "post",
 		dataType : "json"
 	}).done(function(category) {
-		if(category.menu_level != Category.BIG)
-			$("select[name=parent_no]").removeAttr("disabled");
-		else
-			$("select[name=parent_no]").attr("disabled","disabled");
-			
-		$("select[name=menu_level]").val(category.menu_level);
-		if(category.parent_no == 0)
-			category.parent_no = "";
-		$("select[name=parent_no]").val(category.parent_no);
-		$("input[name=title]").val(category.title);
-		$("input[name=in_use][value='"+ category.in_use +"']").attr("checked", "checked");
-		setParentCategoryInputBox();
+		setParentCategorySelectBox();
+		setInsertForm(category);
+		setUpdateForm(category);
 	});
 });
 
-$("select[name=menu_level]").change(function() {
-	setParentCategoryInputBox();
+function setInsertForm(category) {
+	var subMenu_level = category.menu_level + 1;
+	subMenu_level = subMenu_level > category.SMALL ? 0 : subMenu_level;
+	$("#category-insertForm select[name=menu_level]").val(subMenu_level);
+	$("#category-insertForm select[name=parent_no]").val(category.c_no);
+	var c = Category.setMenu_level(subMenu_level);
+	if( c.isSubMenu_level() )
+		$("#category-insertForm select[name=parent_no]").removeAttr("disabled");
+	else
+		$("#category-updateForm select[name=parent_no]").attr("disabled", true);
+}
+
+function setUpdateForm(category) {
+	var c = Category.setCategory(category);
+	c.isSubMenu_level() ? 
+		$("#category-updateForm select[name=parent_no]").removeAttr("disabled") :
+		$("#category-updateForm select[name=parent_no]").prop("disabled", true);
+	$("#category-updateForm select[name=menu_level]").val(category.menu_level);
+	$("#category-updateForm select[name=parent_no]").val(category.parent_no);
+	$("#category-updateForm input[name=title]").val(category.title);
+	$("#category-updateForm input[name=in_use][value='"+ category.in_use +"']").attr("checked", "checked");
+}
+
+$("#category-insertForm select[name=menu_level]").change(function() {
+	setParentCategorySelectBox();
 });
 
-function setParentCategoryInputBox() {
-	var menu_level = $("select[name=menu_level]").val();
+function setParentCategorySelectBox() {
+	var menu_level = $("#category-insertForm select[name=menu_level]").val();
 	var c = Category.setMenu_level(menu_level);
 	if( c.isSubMenu_level() ) {
-		$("select[name=parent_no]").attr("required","required").removeAttr("disabled");
-		$("select[name=parent_no]").children("option").each(function() {
-			var menu_level = $(this).data("menu_level");
-			if( c.checkSuperMenu_level( menu_level ) ) 
-				$(this).css("display","block");
-			else
-				$(this).css("display","none");
-		});
+		showSuperCategory($("#category-insertForm select[name=parent_no]"), c);
 	}
+	else {
+		$("#category-insertForm select[name=parent_no]").val("-1")
+		.attr("selected", true).attr("disabled",true);
+	}
+}
+
+function showSuperCategory(selectNode, selectedCategory) {
+	var categoryCount = 0;
+	selectNode.children("option").each(function() {
+		var superMenu_level = $(this).data("menu_level");
+		if( selectedCategory.checkSuperMenu_level( superMenu_level ) ) {
+			$(this).css("display","block");
+			categoryCount++;
+		}
+		else
+			$(this).css("display","none");
+	});
+	if( categoryCount > 0)
+		$("#category-insertForm select[name=parent_no]").attr("required","required").removeAttr("disabled").val("0");
+	else
+		$("#category-insertForm select[name=parent_no]").attr("disabled",true).val("-2");
 }
 </script>

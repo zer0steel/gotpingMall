@@ -67,9 +67,9 @@ public class CategoryService {
 	private void validationCheck(CategoryVO c) {
 		if(c.getTitle().equals(""))
 			throw new IllegalArgumentException("c.getTitle() is empty ");
-		if(c.getMenu_level() == 0 && c.getParent_no() != 0)
+		if(c.getMenu_level() == CategoryVO.BIG && c.getParent_no() > 0)
 			throw new IllegalArgumentException("대분류인데 부모번호를 가지고 있음.");
-		if(c.getMenu_level() != 0 && c.getParent_no() == 0)
+		if(c.getMenu_level() > CategoryVO.BIG && c.getParent_no() == 0)
 			throw new IllegalArgumentException("하위분류인데 부모번호가 없음.");
 	}
 }

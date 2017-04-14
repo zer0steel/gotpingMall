@@ -1,19 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <link href="${pageContext.request.contextPath}/resources/vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
-</head>
-<body>
 <div class="page-title">
 	<div class="title_left">
 		<h3>상품 등록</h3>
 	</div>
 </div>
+<br />
 <div class="clearfix"></div>
 <!-- 상품 분류 -->
 <div class="row">
@@ -26,7 +20,7 @@
 			</div>
 			
 			<div class="x_content">
-				<jsp:include page="categorySelectNode.jsp"></jsp:include>
+				<jsp:include page="include/categorySelectNode.jsp"></jsp:include>
 				<br>
 				<a href="${pageContext.request.contextPath}/admin/goods/category.yo" class="btn btn-success btn-sm">분류 편집 하기</a>
 			</div>
@@ -175,5 +169,3 @@ function insertGoods(goodsData) {
 	});
 }
 </script>
-</body>
-</html>

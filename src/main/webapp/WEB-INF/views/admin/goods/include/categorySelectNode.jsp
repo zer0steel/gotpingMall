@@ -7,9 +7,9 @@
 	<div class="col-md-3 form-group has-feedback">
 		<h2>대분류</h2>
 		<span>
-			<select name="big" size="6" class="form-control" data-menu_level="0">
+			<select name="big" size="6" class="form-control" data-menu_level="1">
 			<c:forEach items="${categories }" var="c">
-			<c:if test="${c.menu_level == 0 }">
+			<c:if test="${c.menu_level == c.BIG }">
 				<option value="${c.c_no }">${c.title }</option>
 			</c:if>
 			</c:forEach>
@@ -20,9 +20,9 @@
 	<div class="col-md-3 form-group has-feedback">
 		<h2>중분류</h2>
 		<span>
-			<select name="middle" size="6" class="form-control subMenu_level" data-menu_level="1" disabled>
+			<select name="middle" size="6" class="form-control subMenu_level" data-menu_level="2" disabled>
 			<c:forEach items="${categories }" var="c">
-			<c:if test="${c.menu_level == 1 }">
+			<c:if test="${c.menu_level == c.MIDDLE }">
 				<option value="${c.c_no }" data-parent_no="${c.parent_no }">${c.title }</option>
 			</c:if>
 			</c:forEach>
@@ -33,9 +33,9 @@
 	<div class="col-md-3 form-group has-feedback">
 		<h2>소분류</h2>
 		<span>
-			<select name="small" size="6" class="form-control subMenu_level" data-menu_level="2" disabled>
+			<select name="small" size="6" class="form-control subMenu_level" data-menu_level="3" disabled>
 			<c:forEach items="${categories }" var="c">
-			<c:if test="${c.menu_level == 2 }">
+			<c:if test="${c.menu_level == c.SMALL }">
 				<option value="${c.c_no }" data-parent_no="${c.parent_no }">${c.title }</option>
 			</c:if>
 			</c:forEach>
@@ -45,4 +45,4 @@
 	
 </form>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/goods/category.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/goods/category.js?"></script>
