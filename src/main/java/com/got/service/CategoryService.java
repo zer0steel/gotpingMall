@@ -9,6 +9,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.got.dao.CategoryDao;
 import com.got.dao.GoodsDao;
+import com.got.enums.Menu_level;
+import com.got.util.CommonUtil;
 import com.got.vo.CategoryVO;
 import com.got.vo.GoodsVO;
 
@@ -33,14 +35,7 @@ public class CategoryService {
 	}
 
 	public String getOneWithJSON(int c_no) {
-		ObjectMapper mapper = new ObjectMapper();
-		String jsonString = null;
-		try {
-			jsonString = mapper.writeValueAsString(dao.selectOne(c_no));
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return jsonString;
+		return CommonUtil.convertToJSON(dao.selectOne(c_no));
 	}
 
 	/**
@@ -60,6 +55,8 @@ public class CategoryService {
 	 */
 	public String update(CategoryVO c) {
 		validationCheck(c);
+		if(c.getC_no() == 0)
+			throw new IllegalArgumentException("분류 업데이트에서 PK값인 c_no 가 값이 0임");
 		return (dao.updateOne(c) == 1) ? 
 				"수정했습니다." : "수정에 실패했습니다.";
 	}
@@ -67,9 +64,9 @@ public class CategoryService {
 	private void validationCheck(CategoryVO c) {
 		if(c.getTitle().equals(""))
 			throw new IllegalArgumentException("c.getTitle() is empty ");
-		if(c.getMenu_level() == CategoryVO.BIG && c.getParent_no() > 0)
+		if(c.getMenu_level() == Menu_level.BIG && c.getParent_no() > 0)
 			throw new IllegalArgumentException("대분류인데 부모번호를 가지고 있음.");
-		if(c.getMenu_level() > CategoryVO.BIG && c.getParent_no() == 0)
+		if(c.getMenu_level() != Menu_level.BIG && c.getParent_no() == 0)
 			throw new IllegalArgumentException("하위분류인데 부모번호가 없음.");
 	}
 }

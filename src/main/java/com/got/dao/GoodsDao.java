@@ -20,4 +20,8 @@ public class GoodsDao {
 	public List<GoodsVO> selectAll() {
 		return dao.selectList("g.selectAll");
 	}
+	
+	public GoodsVO selectOneWithG_no(int g_no) {
+		return dao.selectOne("g.selectOne", g_no);
+	}
 }

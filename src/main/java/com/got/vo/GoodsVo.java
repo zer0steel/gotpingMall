@@ -1,8 +1,16 @@
 package com.got.vo;
 
-public class GoodsVO extends CategoryVO{
+import java.util.List;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.got.enums.GoodsStatus;
+
+public class GoodsVO extends CategoryVO {
 	private int g_no, stock, purchase_price, sell_price, discount_rate, saving_mileage;
-	private String name, detail, status;
+	private String name, detail;
+	private GoodsStatus status;
+	private List<ShippingReceivingVO> history;
 	
 	public int getG_no() {
 		return g_no;
@@ -52,10 +60,22 @@ public class GoodsVO extends CategoryVO{
 	public void setSaving_mileage(int saving_mileage) {
 		this.saving_mileage = saving_mileage;
 	}
-	public String getStatus() {
+	public int getStatus_code() {
+		return status.getCode();
+	}
+	public void setStatus_code(int status) {
+		this.status = GoodsStatus.of(status);
+	}
+	public GoodsStatus getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(GoodsStatus status) {
 		this.status = status;
+	}
+	public List<ShippingReceivingVO> getHistory() {
+		return history;
+	}
+	public void setHistory(List<ShippingReceivingVO> history) {
+		this.history = history;
 	}
 }

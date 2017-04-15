@@ -19,8 +19,8 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<jsp:include page="include/categorySelectNode.jsp"></jsp:include>
-				<button type="submit" class="btn btn-warning" id="btn-update" data-target="#updateModal" data-toggle="modal">수정</button>
+				<jsp:include page="include/categorySelectBox.jsp"></jsp:include>
+				<button type="submit" class="btn btn-warning" id="btn-update">수정</button>
 				<button type="submit" class="btn btn-danger" id="btn-delete">삭제</button>
 			</div>
 		</div>
@@ -53,7 +53,7 @@
 			<div class="x_content">
 				<form id="category-insertForm" data-parsley-validate 
 					class="form-horizontal form-label-left" method="post" action="category/insert.yo">
-					<jsp:include page="include/categoryInsertForm.jsp"></jsp:include>
+					<jsp:include page="include/categoryForm.jsp"></jsp:include>
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 							<button type="submit" class="btn btn-success" id="btn-enroll">등록</button>
@@ -112,9 +112,19 @@
 			<!-- body -->
 			<div class="modal-body">
 				<form id="category-updateForm" data-parsley-validate 
-					class="form-horizontal form-label-left" method="post">
+					class="form-horizontal form-label-left" method="post" action="category/update.yo">
 					
-					<jsp:include page="include/categoryInsertForm.jsp"></jsp:include>
+					<jsp:include page="include/categoryForm.jsp"></jsp:include>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">
+						사용 여부
+						</label>
+						<div class="col-md-6 col-sm-6">
+							사용 : <input type="radio" name="in_use" value="true" checked>
+							미사용 : <input type="radio" name="in_use" value="false">
+						</div>
+					</div>
 					
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -131,20 +141,37 @@
 
 
 <script type="text/javascript">
-$("select[data-menu_level]").change(function() {
+$("#btn-update").click(function() {
+	var big = $("select[name=big]").val();
+	var middle = $("select[name=middle]").val();
+	var small = $("select[name=small]").val();
+	if(big == null && middle == null && small == null) {
+		alert("선택된 분류가 없습니다");
+		return;
+	}
+	$("div.modal").modal();
+});
+
+$("select[data-menu_level]").click(function() {
 	var c_no = $(this).val();
+	if( c_no == null )
+		return;
 	$("input[name=c_no]").val(c_no);
-	$.ajax({
-		url : "category/detail.yo",
-		data : {c_no : c_no },
-		type : "post",
-		dataType : "json"
-	}).done(function(category) {
-		setParentCategorySelectBox();
+	requestDetailCategory(c_no).done(function(category) {
+		setSuperCategorySelectBox();
 		setInsertForm(category);
 		setUpdateForm(category);
 	});
 });
+
+function requestDetailCategory(c_no) {
+	return $.ajax({
+		url : "category/detail.yo",
+		data : {c_no : c_no },
+		type : "post",
+		dataType : "json"
+	});
+}
 
 function setInsertForm(category) {
 	var subMenu_level = category.menu_level + 1;
@@ -162,43 +189,10 @@ function setUpdateForm(category) {
 	var c = Category.setCategory(category);
 	c.isSubMenu_level() ? 
 		$("#category-updateForm select[name=parent_no]").removeAttr("disabled") :
-		$("#category-updateForm select[name=parent_no]").prop("disabled", true);
+		$("#category-updateForm select[name=parent_no]").attr("disabled", true);
 	$("#category-updateForm select[name=menu_level]").val(category.menu_level);
 	$("#category-updateForm select[name=parent_no]").val(category.parent_no);
 	$("#category-updateForm input[name=title]").val(category.title);
 	$("#category-updateForm input[name=in_use][value='"+ category.in_use +"']").attr("checked", "checked");
-}
-
-$("#category-insertForm select[name=menu_level]").change(function() {
-	setParentCategorySelectBox();
-});
-
-function setParentCategorySelectBox() {
-	var menu_level = $("#category-insertForm select[name=menu_level]").val();
-	var c = Category.setMenu_level(menu_level);
-	if( c.isSubMenu_level() ) {
-		showSuperCategory($("#category-insertForm select[name=parent_no]"), c);
-	}
-	else {
-		$("#category-insertForm select[name=parent_no]").val("-1")
-		.attr("selected", true).attr("disabled",true);
-	}
-}
-
-function showSuperCategory(selectNode, selectedCategory) {
-	var categoryCount = 0;
-	selectNode.children("option").each(function() {
-		var superMenu_level = $(this).data("menu_level");
-		if( selectedCategory.checkSuperMenu_level( superMenu_level ) ) {
-			$(this).css("display","block");
-			categoryCount++;
-		}
-		else
-			$(this).css("display","none");
-	});
-	if( categoryCount > 0)
-		$("#category-insertForm select[name=parent_no]").attr("required","required").removeAttr("disabled").val("0");
-	else
-		$("#category-insertForm select[name=parent_no]").attr("disabled",true).val("-2");
 }
 </script>

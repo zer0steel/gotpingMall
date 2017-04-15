@@ -20,12 +20,12 @@ import com.got.vo.GoodsVO;
 public class GoodsController {
 	
 	@Autowired private GoodsService gs;
-	@Autowired private CategoryService gcs;
+	@Autowired private CategoryService cs;
 	
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.GET)
 	public ModelAndView insertGoodsForm() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("categories", gcs.getAll());
+		mav.addObject("categories", cs.getAll());
 		return Page.setAdminViewPage(mav, "goods/insert.jsp");
 	}
 	
@@ -38,7 +38,14 @@ public class GoodsController {
 	@RequestMapping("admin/goods/list.yo")
 	public ModelAndView goodsList() {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("categories", cs.getAll());
 		mav.addObject("goods", gs.getAll());
 		return Page.setAdminViewPage(mav, "goods/list.jsp");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "admin/goods/detail.yo", produces = "application/json; charset=UTF-8")
+	public String detailGoods(int g_no) throws IOException {
+		return gs.detailAndSRHistory(g_no);
 	}
 }

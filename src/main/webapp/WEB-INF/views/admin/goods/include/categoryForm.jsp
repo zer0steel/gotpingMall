@@ -7,7 +7,7 @@
 	분류 레벨
 	</label>
 	<div class="col-md-6 col-sm-6">
-		<select name="menu_level" class="form-control" required>
+		<select name="menu_level" class="form-control category" required>
 			<option value="0">눌러서 선택하세요</option>
 			<option value="1">대분류</option>
 			<option value="2">중분류</option>
@@ -21,7 +21,7 @@
 	상위 분류
 	</label>
 	<div class="col-md-6 col-sm-6">
-		<select name="parent_no" class="form-control" disabled="disabled">
+		<select name="parent_no" class="form-control category" disabled="disabled">
 		<option value=""></option>
 		<option value="-2" style="display: none">상위 분류가 존재하지 않습니다.</option>
 		<option value="-1" style="display: none">선택하실수 없습니다.</option>
@@ -46,13 +46,37 @@
 	</div>
 </div>
 
-<div class="form-group">
-	<label class="control-label col-md-3 col-sm-3">
-	사용 여부
-	</label>
-	<div class="col-md-6 col-sm-6">
-		사용 : <input type="radio" name="in_use" value="true" checked>
-		미사용 : <input type="radio" name="in_use" value="false">
-	</div>
-</div>
+<script type="text/javascript">
+$("select[name=menu_level]").change(function() {
+	setSuperCategorySelectBox();
+});
 
+function setSuperCategorySelectBox() {
+	var menu_level = $("select[name=menu_level]").val();
+	var c = Category.setMenu_level(menu_level);
+	
+	if( c.isSubMenu_level() ) 
+		showSuperCategory($("select[name=parent_no]"), c);
+	
+	else 
+		$("select[name=parent_no]").val("-1")
+		.attr("selected", true).attr("disabled",true);
+}
+
+function showSuperCategory(selectNode, selectedCategory) {
+	var categoryCount = 0;
+	selectNode.children("option").each(function() {
+		var superMenu_level = $(this).data("menu_level");
+		if( selectedCategory.checkSuperMenu_level( superMenu_level ) ) {
+			$(this).css("display","block");
+			categoryCount++;
+		}
+		else
+			$(this).css("display","none");
+	});
+	if( categoryCount > 0)
+		$("select[name=parent_no]").attr("required","required").removeAttr("disabled").val("0");
+	else
+		$("select[name=parent_no]").attr("disabled",true).val("-2");
+}
+</script>
