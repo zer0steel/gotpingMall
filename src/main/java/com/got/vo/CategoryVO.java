@@ -26,16 +26,20 @@ public class CategoryVO {
 	public void setParent_no(int parent_no) {
 		this.parent_no = parent_no;
 	}
-	public Menu_level getMenu_level() {
-		return menu_level;
-	}
-	public void setMenu_level(int menu_level) {
-		this.menu_level = Menu_level.of(menu_level);
-	}
 	public boolean isIn_use() {
 		return in_use;
 	}
 	public void setIn_use(boolean in_use) {
 		this.in_use = in_use;
+	}
+	
+	public int getMenu_level() {
+		return menu_level.getCode();
+	}
+	public void setMenu_level(int menu_level) {
+		this.menu_level = Menu_level.of(menu_level);
+	}
+	public Menu_level getMenuLevel() {
+		return menu_level;
 	}
 }

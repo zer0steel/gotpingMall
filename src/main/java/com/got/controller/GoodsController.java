@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.got.enums.GoodsStatus;
 import com.got.enums.Page;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
@@ -25,7 +26,7 @@ public class GoodsController {
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.GET)
 	public ModelAndView insertGoodsForm() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("categories", cs.getAll());
+		cs.setEnumsInMAV(mav);
 		return Page.setAdminViewPage(mav, "goods/insert.jsp");
 	}
 	
@@ -38,14 +39,15 @@ public class GoodsController {
 	@RequestMapping("admin/goods/list.yo")
 	public ModelAndView goodsList() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("categories", cs.getAll());
+		cs.setEnumsInMAV(mav);
+		mav.addObject("status", GoodsStatus.values());
 		mav.addObject("goods", gs.getAll());
 		return Page.setAdminViewPage(mav, "goods/list.jsp");
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "admin/goods/detail.yo", produces = "application/json; charset=UTF-8")
-	public String detailGoods(int g_no) throws IOException {
+	public String detailGoods(int g_no) {
 		return gs.detailAndSRHistory(g_no);
 	}
 }

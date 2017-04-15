@@ -1,28 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link href="${pageContext.request.contextPath}/resources/css/goods/category.css" rel="stylesheet">
 <form class="form-horizontal form-label-left">
 
 	<div class="col-md-3 form-group has-feedback">
 		<h2>대분류</h2>
 		<span>
-			<select name="big" size="6" class="form-control" data-menu_level="1">
-			<c:forEach items="${categories }" var="c">
-			<c:if test="${c.menu_level.code == 1 }">
-				<option value="${c.c_no }">${c.title }</option>
-			</c:if>
+			<select name="big" size="6" class="form-control" data-menu_level="${big.code }">
+			<c:forEach items="${big.categories }" var="c">
+				<option value="${c.key }">${c.value.title }</option>
 			</c:forEach>
 			</select>
 		</span>
 	</div>
+	
 	<div class="col-md-3 form-group has-feedback">
 		<h2>중분류</h2>
 		<span>
-			<select name="middle" size="6" class="form-control subMenu_level" data-menu_level="2" disabled>
-			<c:forEach items="${categories }" var="c">
-			<c:if test="${c.menu_level.code == 2 }">
-				<option value="${c.c_no }" data-parent_no="${c.parent_no }">${c.title }</option>
-			</c:if>
+			<select name="middle" size="6" class="form-control subMenu_level" data-menu_level="${middle.code }" disabled>
+			<c:forEach items="${middle.categories }" var="c">
+				<option value="${c.key }" data-parent_no="${c.value.parent_no }">${c.value.title }</option>
 			</c:forEach>
 			</select>
 		</span>
@@ -31,11 +28,9 @@
 	<div class="col-md-3 form-group has-feedback">
 		<h2>소분류</h2>
 		<span>
-			<select name="small" size="6" class="form-control subMenu_level" data-menu_level="3" disabled>
-			<c:forEach items="${categories }" var="c">
-			<c:if test="${c.menu_level.code == 3 }">
-				<option value="${c.c_no }" data-parent_no="${c.parent_no }">${c.title }</option>
-			</c:if>
+			<select name="small" size="6" class="form-control subMenu_level" data-menu_level="${small.code }" disabled>
+			<c:forEach items="${small.categories }" var="c">
+				<option value="${c.key }" data-parent_no="${c.value.parent_no }">${c.value.title }</option>
 			</c:forEach>
 			</select>
 		</span>

@@ -38,10 +38,4 @@ public class GoodsService {
 		g.setHistory(srDao.selectListWithG_no(goods_no, DETAIL_GOODS_SHOW_HISTORY_COUNT));
 		return CommonUtil.convertToJSON(g);
 	}
-	
-	public GoodsVO detail(int goods_no) {
-		GoodsVO g = dao.selectOneWithG_no(goods_no);
-		g.setHistory(srDao.selectListWithG_no(goods_no, DETAIL_GOODS_SHOW_HISTORY_COUNT));
-		return g;
-	}
 }

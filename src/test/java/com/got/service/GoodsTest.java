@@ -1,7 +1,6 @@
 package com.got.service;
 
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.got.vo.GoodsVO;
-
+import com.got.enums.GoodsStatus;
+import com.got.util.CommonUtil;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,10 +20,12 @@ public class GoodsTest {
 	@Autowired GoodsService gs;
 	
 	@Test
+	public void statusTest() {
+		System.out.println(CommonUtil.convertToJSON(GoodsStatus.values()));
+	}
+	
+	@Test
 	public void getOneTest() {
 		System.out.println(gs.detailAndSRHistory(13));
-		GoodsVO g = gs.detail(13);
-		System.out.println(g.getMenu_level());
-		System.out.println(g.getMenu_level().getCode());
 	}
 }

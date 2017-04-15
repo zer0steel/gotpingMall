@@ -3,6 +3,10 @@ package com.got.enums;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
+@JsonFormat(shape = Shape.OBJECT)
 public enum GoodsStatus {
 	FOR_SALE("판매 중", 1), STAND_BY("판매 대기중", 2), NOT_IN_STOCK("재고 없음", 3);
 	

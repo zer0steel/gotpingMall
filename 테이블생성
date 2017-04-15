@@ -50,7 +50,7 @@ CREATE TABLE goods (
 	sell_price NUMBER, /* 판매가격 */
 	discount_rate NUMBER, /* 할인율 */
 	saving_mileage NUMBER, /* 마일리지 적립율 */
-	show VARCHAR2(5) /* 공개 여부 */
+	status NUMBER(1) /* 상태 */
 );
 
 CREATE UNIQUE INDEX PK_goods
@@ -177,7 +177,7 @@ ALTER TABLE mileage
 /* 주문확인 */
 CREATE TABLE order_check (
 	o_no NUMBER NOT NULL, /* 주문번호 */
-	state VARCHAR2(20), /* 주문상태 */
+	status VARCHAR2(20), /* 주문상태 */
 	regdate DATE /* 처리일자 */
 );
 
@@ -348,7 +348,7 @@ CREATE TABLE category (
 	c_no NUMBER NOT NULL, /* 분류번호 */
 	title VARCHAR2(50), /* 분류명 */
 	parent_no NUMBER, /* 상위분류번호 */
-	step NUMBER, /* 분류레벨 */
+	menu_level NUMBER, /* 분류레벨 */
 	in_use VARCHAR2(5) /* 사용여부 */
 );
 

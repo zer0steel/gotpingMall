@@ -1,7 +1,5 @@
 package com.got.controller;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.got.enums.Menu_level;
 import com.got.enums.Page;
 import com.got.service.CategoryService;
 import com.got.vo.CategoryVO;
@@ -22,8 +19,7 @@ public class CategoryController {
 	@RequestMapping("admin/goods/category.yo")
 	public ModelAndView category(String msg) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("categories", cs.getAll());
-		mav.addObject("msg", msg);
+		cs.setEnumsInMAV(mav).addObject("msg", msg);
 		return Page.setAdminViewPage(mav, "goods/category.jsp");
 	}
 	
