@@ -1,12 +1,12 @@
 package com.got.vo;
 
-import com.got.enums.Menu_level;
+import com.got.enums.MenuLevel;
 
 public class CategoryVO {
 	private int c_no, parent_no;
 	private String title;
 	private boolean in_use;
-	private Menu_level menu_level;
+	private MenuLevel menu_level;
 	
 	public int getC_no() {
 		return c_no;
@@ -37,9 +37,14 @@ public class CategoryVO {
 		return menu_level.getCode();
 	}
 	public void setMenu_level(int menu_level) {
-		this.menu_level = Menu_level.of(menu_level);
+		this.menu_level = MenuLevel.of(menu_level);
 	}
-	public Menu_level getMenuLevel() {
+	public MenuLevel getMenuLevel() {
 		return menu_level;
+	}
+	@Override
+	public String toString() {
+		return "CategoryVO [c_no=" + c_no + ", parent_no=" + parent_no + ", title=" + title + ", in_use=" + in_use
+				+ ", menu_level=" + menu_level + "]";
 	}
 }

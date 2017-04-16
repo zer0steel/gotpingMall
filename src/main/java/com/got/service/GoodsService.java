@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.got.dao.GoodsDao;
 import com.got.dao.ShippingReceivingDao;
 import com.got.enums.GoodsStatus;
@@ -29,9 +28,9 @@ public class GoodsService {
 
 	private static final int DETAIL_GOODS_SHOW_HISTORY_COUNT = 5;
 	/**
-	 * »óÇ° »ó¼¼Á¤º¸¸¦ ÃÖ±Ù 5°³ °Å·¡³»¿ª°ú ÇÔ²² °¡Á®¿Â´Ù
+	 * ìµœê·¼ 5ê°œ ë‚´ì—­ê³¼ í•¨ê»˜ ìƒí’ˆ ìƒì„¸ ì •ë³´ë¥¼ JSON Stringìœ¼ë¡œ ë°˜í™˜í•œë‹¤.
 	 * @param goods_no
-	 * @return json À¸·Î Ç¥ÇöÇÑ »óÇ° Á¤º¸
+	 * @return json String
 	 */
 	public String detailAndSRHistory(int goods_no) {
 		GoodsVO g = dao.selectOneWithG_no(goods_no);

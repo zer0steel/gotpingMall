@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.got.dao.CategoryDao;
-import com.got.enums.Menu_level;
+import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
 import com.got.vo.CategoryVO;
 
@@ -25,78 +25,72 @@ public class CategoryService {
 	}
 	
 	/**
-	 * »õ·Î¿î ºÐ·ù¸¦ µî·ÏÇÑ´Ù.
 	 * @param c
-	 * @return ¼º°ø, ½ÇÆÐ ¸Þ½ÃÁö
+	 * @return ì„±ê³µ, ì‹¤íŒ¨ ë©”ì‹œì§€
 	 */
 	public String enroll(CategoryVO c) {
 		validationCheck(c);
 		if(dao.insertOne(c) == 1) {
-			Menu_level.addCategory(c);
-			return "µî·ÏÇÏ¼Ì½À´Ï´Ù.";
+			MenuLevel.addCategory(c);
+			return "ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.";
 		}
-		return "µî·Ï¿¡ ½ÇÆÐÇß½À´Ï´Ù.";
+		return "ë“±ë¡ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.";
 	}
 
 	/**
-	 * ÇØ´ç ¹øÈ£ÀÇ ºÐ·ù¸¦ »èÁ¦ÇÑ´Ù
 	 * @param c_no
-	 * @return ¼º°ø, ½ÇÆÐ ¸Þ½ÃÁö
+	 * @return ì„±ê³µ, ì‹¤íŒ¨ ë©”ì‹œì§€
 	 */
 	public String delete(int c_no) {
 		if(dao.deleteOne(c_no) == 1) {
-			Menu_level.deleteCategory(c_no);
-			return "»èÁ¦Çß½À´Ï´Ù.";
+			MenuLevel.deleteCategory(c_no);
+			return "ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.";
 		}
-		return "»èÁ¦¿¡ ½ÇÆÐÇß½À´Ï´Ù.";
+		return "ì‚­ì œ ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.";
 	}
 
 	/**
-	 * ºÐ·ù ³»¿ëÀ» ¹Ù²Û´Ù.
 	 * @param c
-	 * @return ¼º°ø, ½ÇÆÐ ¸Þ½ÃÁö
+	 * @return ì„±ê³µ, ì‹¤íŒ¨ ë©”ì‹œì§€
 	 */
 	public String update(CategoryVO c) {
 		validationCheck(c);
 		if(c.getC_no() == 0)
-			throw new IllegalArgumentException("ºÐ·ù ¾÷µ¥ÀÌÆ®¿¡¼­ PK°ªÀÎ c_no °¡ °ªÀÌ 0ÀÓ");
+			throw new IllegalArgumentException("ë¶„ë¥˜ ìˆ˜ì •í•´ì•¼ í•˜ëŠ”ë° PK c_no ê°’ì´ 0 ì´ë‹¤.");
 		if(dao.updateOne(c) == 1) {
-			Menu_level.updateCategory(c);
-			return "¼öÁ¤Çß½À´Ï´Ù.";
+			MenuLevel.updateCategory(c);
+			return "ìˆ˜ì •í–ˆìŠµë‹ˆë‹¤.";
 		}
-		return "¼öÁ¤¿¡ ½ÇÆÐÇß½À´Ï´Ù.";
+		return "ìˆ˜ì •ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.";
 	}
 	
 	/**
-	 * ModelAndView¿¡ ºÐ·ù·¹º§µéÀ» ¼¼ÆÃÇÑ´Ù.
+	 * ModelAndViewì— ë¶„ë¥˜ë ˆë²¨ì„ ì €ìž¥í•œë‹¤.
 	 * @param mav
-	 * @return big, middle, small °ªÀÌ µî·ÏµÈ ModelAndView
+	 * @return big, middle, small ê°€ ì €ìž¥ëœ ModelAndView
 	 */
 	public ModelAndView setEnumsInMAV(ModelAndView mav) {
 		setEnum();
-		mav.addObject("big", Menu_level.BIG);
-		mav.addObject("middle", Menu_level.MIDDLE);
-		mav.addObject("small", Menu_level.SMALL);
+		mav.addObject("big", MenuLevel.BIG);
+		mav.addObject("middle", MenuLevel.MIDDLE);
+		mav.addObject("small", MenuLevel.SMALL);
 		return mav;
 	}
 	
-	private static boolean isSetting = false;
 	/**
-	 * Enum class Menu_level ¿¡ µ¥ÀÌÅÍ º£ÀÌ½º¿¡ Á¸ÀçÇÏ´Â ºÐ·ùµéÀ» ºÐ·ù·¹º§¿¡ ¸ÂÃç¼­ ºÐ·ùÇÑ´Ù.
+	 * Enum class Menu_levelì— ë¶„ë¥˜ë ˆë²¨ë³„ë¡œ ìƒì„¸ë¶„ë¥˜ë“¤ì„ ì €ìž¥í•œë‹¤.
 	 */
 	private void setEnum() {
-		if(!isSetting) {
-			Menu_level.groupingCategories(dao.selectAll());
-			isSetting = true;
-		}
+		if( !MenuLevel.isSetting() ) 
+			MenuLevel.groupingCategories(dao.selectAll());
 	}
 	
 	private void validationCheck(CategoryVO c) {
 		if(c.getTitle().equals(""))
 			throw new IllegalArgumentException("c.getTitle() is empty ");
-		if(c.getMenuLevel() == Menu_level.BIG && c.getParent_no() > 0)
-			throw new IllegalArgumentException("´ëºÐ·ùÀÎµ¥ ºÎ¸ð¹øÈ£¸¦ °¡Áö°í ÀÖÀ½.");
-		if(c.getMenuLevel() != Menu_level.BIG && c.getParent_no() == 0)
-			throw new IllegalArgumentException("ÇÏÀ§ºÐ·ùÀÎµ¥ ºÎ¸ð¹øÈ£°¡ ¾øÀ½.");
+		if(c.getMenuLevel() == MenuLevel.BIG && c.getParent_no() > 0)
+			throw new IllegalArgumentException("ìµœìƒìœ„ ë¶„ë¥˜ì¸ë° ìƒìœ„ë¶„ë¥˜ ë²ˆí˜¸ë¥¼ ê°€ì§€ê³  ìžˆìŒ. ê°ì²´ ì •ë³´ : " + c);
+		if(c.getMenuLevel() != MenuLevel.BIG && c.getParent_no() == 0)
+			throw new IllegalArgumentException("ìµœìƒìœ„ ë¶„ë¥˜ê°€ ì•„ë‹Œë° ë¶€ëª¨ ë²ˆí˜¸ê°€ ì¡´ìž¬í•˜ì§€ ì•ŠìŒ. ê°ì²´ ì •ë³´ : " + c);
 	}
 }

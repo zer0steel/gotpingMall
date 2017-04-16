@@ -44,6 +44,10 @@ var Category = {
 		this.menu_level = category.menu_level;
 		return this;
 	},
+	setSubMenu_level : function(menu_level) {
+		this.menu_level = menu_level + 1;
+		return this;
+	},
 	
 	/**
 	 * 자기자신이 부모 분류인지 확인한다.
@@ -51,8 +55,14 @@ var Category = {
 	 */
 	isParents : function(p_no) { return this.c_no == p_no; },
 	
-	/* 자기자신이 하위 분류인지 확인한다. */
+	/* 자기자신이 하위 분류레벨인지 확인한다. */
 	isSubMenu_level : function() { return this.menu_level > this.BIG && this.menu_level <= this.SMALL; },
+	/* 자기자신이 최상위 분류레벨인지 확인한다. */
+	isBigMenu_level : function() { return this.menu_level == this.BIG;	},
+	/* 자기자신의 분류레벨이 존재하는 분류레벨인지 확인한다. */
+	isExisting : function() {
+		return this.menu_level >= this.BIG && this.menu_level <= this.SMALL;
+	},
 	
 	/**
 	 * 파라메터 menu_level이 바로 아랫단계 분류인지 확인한다.

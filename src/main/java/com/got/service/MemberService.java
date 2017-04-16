@@ -17,10 +17,10 @@ public class MemberService {
 	@Autowired private MemberDao dao;
 	
 	/**
-	 * ÇØ´ç ÄÃ·³ÀÇ µ¿ÀÏÇÑ °ªÀ» °¡Áö´Â ·¹ÄÚµåÀÇ ¼ıÀÚ¸¦ ¹İÈ¯ÇÑ´Ù.
+	 * íŒŒë¼ë©”í„° ì»¬ëŸ¼ì„ ê¸°ì¤€ìœ¼ë¡œ valueê°’ì„ ê°€ì§€ëŠ” íšŒì›ì„ ê²€ìƒ‰í•œë‹¤.
 	 * @param column
 	 * @param value
-	 * @return
+	 * @return ê²€ìƒ‰ëœ íšŒì›ì˜ ìˆ˜
 	 */
 	public int getOverlapCount(String column, String value) {
 		if(column.isEmpty() || value.isEmpty())
@@ -28,15 +28,10 @@ public class MemberService {
 		return dao.selectOneColumn(column, value).size();
 	}
 	
-	/**
-	 * È¸¿ø µî·Ï
-	 * @param m
-	 * @return 
-	 */
 	public boolean join(MemberVO m, PrivateKey privateKey) {
 		m.setPwd(encryptWithBCrypt(m.getPwd(),privateKey));
 		MemberGradeVO mg = new MemberGradeVO();
-		mg.setReason("½Å±Ô °¡ÀÔ");
+		mg.setReason("ï¿½Å±ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		int insertedCount = dao.insertNewMember(m, mg);
 		if(insertedCount == 1)
 			return true;
@@ -63,7 +58,7 @@ public class MemberService {
 	}
 	
 	/**
-	 * RSA·Î ¾ÏÈ£È­ µÇ¾îÀÖ´Â ÆĞ½º¿öµå¸¦ BCrypt·Î ¾ÏÈ£È­ÇÑ´Ù.
+	 * RSAì•”í˜¸í™”ëœ ë¹„ë°€ë²ˆí˜¸ë¥¼ BCryptë¡œ ì•”í˜¸í™”í•œë‹¤.
 	 * @param RSAPwd
 	 * @param privateKey
 	 * @return

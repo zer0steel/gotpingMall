@@ -48,12 +48,12 @@ public class DaoTemplate {
 	}
 	
 	/**
-	 * Æ®·£Àè¼ÇÀ» Áö¿øÇÏ´Â DBÁ¢¼Ó ÅÛÇÃ¸´ÀÌ´Ù.
-	 * SqlCallback ÀÎÅÍÆäÀÌ½º¸¦ ±¸ÇöÇÒ ¶§, rollback ÇØ¾ß ÇÏ´Â »óÈ²ÀÌ ³ªÅ¸³ª¸é
-	 * TransactionExceptionÀ» ´øÁ®¾ß ÇÑ´Ù.
-	 * ¾Æ¹« ¿¡·¯ ¾øÀÌ º¯µ¿µÈ ÄÃ·³ÀÇ ¼ö¸¦ ¹İÈ¯ÇÏ¸é commitÀÌ µÈ´Ù.
+	 * íŠ¸ëœì­ì…˜ì„ ì§€ì›í•˜ëŠ” DBì ‘ì† í…œí”Œë¦¿ì´ë‹¤.
+	 * SqlCallback ì¸í„°í˜ì´ìŠ¤ë¥¼ êµ¬í˜„í•  ë•Œ, rollback í•´ì•¼ í•˜ëŠ” ìƒí™©ì´ ë‚˜íƒ€ë‚˜ë©´
+	 * TransactionExceptionì„ ë˜ì ¸ì•¼ í•œë‹¤.
+	 * ì•„ë¬´ ì—ëŸ¬ ì—†ì´ ë³€ë™ëœ ì»¬ëŸ¼ì˜ ìˆ˜ë¥¼ ë°˜í™˜í•˜ë©´ commitì´ ëœë‹¤.
 	 * @param callback
-	 * @return Ãß°¡, »èÁ¦, ¼öÁ¤ µÈ ÄÃ·³ÀÇ °³¼ö
+	 * @return ì¶”ê°€, ì‚­ì œ, ìˆ˜ì • ëœ ì»¬ëŸ¼ì˜ ê°œìˆ˜
 	 */
 	public int transactionTemplate(SqlCallback callback) {
 		SqlSession session = MybatisUtil.openTransactionSession();

@@ -11,7 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.got.enums.Menu_level;
+import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
 import com.got.vo.CategoryVO;
 
@@ -32,7 +32,7 @@ public class CategoryTest {
 		c1.setIn_use(false);
 		c1.setParent_no(0);
 		c1.setMenu_level(1);
-		c1.setTitle("½½¸®ÆÛ");
+		c1.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		
 		c2 = new CategoryVO();
 		c2.setIn_use(true);
@@ -44,7 +44,7 @@ public class CategoryTest {
 		c3.setIn_use(false);
 		c3.setParent_no(0);
 		c3.setMenu_level(1);
-		c3.setTitle("½½¸®ÆÛ");
+		c3.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 	}
 	
 //	@Test
@@ -67,8 +67,8 @@ public class CategoryTest {
 	
 	@Test
 	public void enumTest() {
-		System.out.println(Menu_level.BIG.getCategories().size());
-		System.out.println(Menu_level.MIDDLE.getCategories().size());
-		System.out.println(Menu_level.SMALL.getCategories().size());
+		System.out.println(MenuLevel.BIG.getCategories().size());
+		System.out.println(MenuLevel.MIDDLE.getCategories().size());
+		System.out.println(MenuLevel.SMALL.getCategories().size());
 	}
 }

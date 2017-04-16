@@ -24,7 +24,7 @@ public enum Grade {
 	public static Grade of(int grade) {
 		Grade g = map.get(grade);
 		if(g == null)
-			throw new IllegalArgumentException("Á¸ÀçÇÏÁö ¾Ê´Â È¸¿øµî±Þ : " + grade);
+			throw new IllegalArgumentException("ì¡´ìž¬í•˜ì§€ ì•ŠëŠ” ë“±ê¸‰ ë²ˆí˜¸ : " + grade);
 		return g;
 	}
 	

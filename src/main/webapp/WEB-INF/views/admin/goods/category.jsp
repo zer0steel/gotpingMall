@@ -53,10 +53,11 @@
 			<div class="x_content">
 				<form id="category-insertForm" data-parsley-validate 
 					class="form-horizontal form-label-left" method="post" action="category/insert.yo">
+					
 					<jsp:include page="include/categoryForm.jsp"></jsp:include>
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<button type="submit" class="btn btn-success" id="btn-enroll">등록</button>
+							<button type="button" class="btn btn-success" id="btn-enroll">등록</button>
 							<button type="reset" class="btn btn-primary">입력 초기화</button>
 						</div>
 					</div>
@@ -79,16 +80,30 @@
 						<tr>
 							<th>분류명</th>
 							<th>분류레벨</th>
-							<th>분류번호</th>
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="c" items="${categories }">
-					<c:if test="${c.in_use == false }">
+					<c:forEach var="c" items="${big.categories }">
+					<c:if test="${c.value.in_use == false }">
 						<tr>
-							<td>${c.title }</td>
-							<td>${c.menu_levelName }</td>
-							<td>${c.c_no }</td>
+							<td>${c.value.title }</td>
+							<td>${c.value.menuLevel.korName }</td>
+						</tr>
+					</c:if>
+					</c:forEach>
+					<c:forEach var="c" items="${middle.categories }">
+					<c:if test="${c.value.in_use == false }">
+						<tr>
+							<td>${c.value.title }</td>
+							<td>${c.value.menuLevel.korName }</td>
+						</tr>
+					</c:if>
+					</c:forEach>
+					<c:forEach var="c" items="${small.categories }">
+					<c:if test="${c.value.in_use == false }">
+						<tr>
+							<td>${c.value.title }</td>
+							<td>${c.value.menuLevel.korName }</td>
 						</tr>
 					</c:if>
 					</c:forEach>
@@ -98,7 +113,7 @@
 		</div>
 	</div>
 </div>
-
+<!-- 수정 모달 -->
 <div class="modal fade" id="updateModal" >
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -113,18 +128,7 @@
 			<div class="modal-body">
 				<form id="category-updateForm" data-parsley-validate 
 					class="form-horizontal form-label-left" method="post" action="category/update.yo">
-					
 					<jsp:include page="include/categoryForm.jsp"></jsp:include>
-					
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3">
-						사용 여부
-						</label>
-						<div class="col-md-6 col-sm-6">
-							사용 : <input type="radio" name="in_use" value="true" checked>
-							미사용 : <input type="radio" name="in_use" value="false">
-						</div>
-					</div>
 					
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -138,27 +142,36 @@
 		</div>
 	</div>
 </div>
-
-
+<!-- 수정 모달 끝 -->
 <script type="text/javascript">
+$("#btn-enroll").click(function() {
+	$("#category-insertForm").find("select[name=parent_no]").removeAttr("disabled");
+	$("#category-insertForm").submit();
+});
+
 $("#btn-update").click(function() {
+	if( checkCategorySelected() )
+		$("div.modal").modal();
+});
+
+function checkCategorySelected() {
 	var big = $("select[name=big]").val();
 	var middle = $("select[name=middle]").val();
 	var small = $("select[name=small]").val();
 	if(big == null && middle == null && small == null) {
 		alert("선택된 분류가 없습니다");
-		return;
+		return false;
 	}
-	$("div.modal").modal();
-});
+	return true;
+}
 
 $("select[data-menu_level]").click(function() {
 	var c_no = $(this).val();
 	if( c_no == null )
 		return;
-	$("input[name=c_no]").val(c_no);
+	$("#category-updateForm input[name=c_no]").val(c_no);
 	requestDetailCategory(c_no).done(function(category) {
-		setSuperCategorySelectBox();
+		/* setSuperCategorySelectBox(); */
 		setInsertForm(category);
 		setUpdateForm(category);
 	});
@@ -174,15 +187,20 @@ function requestDetailCategory(c_no) {
 }
 
 function setInsertForm(category) {
-	var subMenu_level = category.menu_level + 1;
-	subMenu_level = subMenu_level > category.SMALL ? 0 : subMenu_level;
-	$("#category-insertForm select[name=menu_level]").val(subMenu_level);
-	$("#category-insertForm select[name=parent_no]").val(category.c_no);
-	var c = Category.setMenu_level(subMenu_level);
-	if( c.isSubMenu_level() )
-		$("#category-insertForm select[name=parent_no]").removeAttr("disabled");
-	else
-		$("#category-updateForm select[name=parent_no]").attr("disabled", true);
+	var insertForm = $("#category-insertForm");
+	var subCategory = Category.setSubMenu_level( category.menu_level );
+	if( subCategory.isExisting() ) {
+		insertForm.find("select[name=parent_no]").val( category.c_no );
+		insertForm.find("select[name=menu_level]").val( subCategory.menu_level ).removeAttr("disabled");
+		insertForm.find("input[name=title]").removeAttr("disabled");
+		insertForm.find("#btn-enroll").removeAttr("disabled");
+	}
+	else {
+		insertForm.find("select[name=parent_no]").val(-1).attr("disabled", true);
+		insertForm.find("select[name=menu_level]").val(-1).attr("disabled", true);
+		insertForm.find("input[name=title]").attr("disabled", true);
+		insertForm.find("#btn-enroll").attr("disabled", true);
+	}
 }
 
 function setUpdateForm(category) {

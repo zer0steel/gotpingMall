@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @JsonFormat(shape = Shape.OBJECT)
 public enum GoodsStatus {
-	FOR_SALE("ÆÇ¸Å Áß", 1), STAND_BY("ÆÇ¸Å ´ë±âÁß", 2), NOT_IN_STOCK("Àç°í ¾øÀ½", 3);
+	FOR_SALE("íŒë§¤ ì¤‘", 1), STAND_BY("íŒë§¤ ëŒ€ê¸°ì¤‘", 2), NOT_IN_STOCK("ì¬ê³  ì—†ìŒ", 3);
 	
 	private static final Map<Integer, GoodsStatus> map = new HashMap<>();
 	static {
@@ -33,7 +33,7 @@ public enum GoodsStatus {
 	public static GoodsStatus of(int code) {
 		GoodsStatus s = map.get(code);
 		if(s == null)
-			throw new IllegalArgumentException("Á¸ÀçÇÏÁö ¾Ê´Â ÄÚµå");
+			throw new IllegalArgumentException("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ìƒíƒœ ì½”ë“œ : " + code);
 		return s;
 	}
 }
