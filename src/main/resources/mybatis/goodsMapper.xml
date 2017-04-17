@@ -17,4 +17,17 @@
 		VALUES(g_no.nextval, #{c_no}, #{name}, #{detail}, #{stock}, 
 		#{purchase_price}, #{sell_price}, #{discount_rate}, #{saving_mileage}, #{status_code})
 	</insert>
+	
+	<update id="updateStock">
+		UPDATE goods SET stock = #{stock} WHERE g_no = #{g_no}
+	</update>
+	
+	<update id="update">
+		UPDATE goods SET 
+			c_no = #{c_no}, name = #{name}, 
+			detail = #{detail}, purchase_price = #{purchase_price}, 
+			sell_price = #{sell_price}, discount_rate = #{discount_rate}, 
+			saving_mileage = #{saving_mileage}, status_code = #{status_code}
+		WHERE g_no = #{g_no}
+	</update>
 </mapper>

@@ -1,11 +1,11 @@
-/* È¸¿ø */
+/* È¸ï¿½ï¿½ */
 CREATE TABLE member (
-	m_no NUMBER NOT NULL, /* °í°´¹øÈ£ */
-	id VARCHAR2(50) NOT NULL, /* ¾ÆÀÌµð */
-	name VARCHAR2(50) NOT NULL, /* ÀÌ¸§ */
-	pwd VARCHAR2(72) NOT NULL, /* ºñ¹Ð¹øÈ£ */
-	email VARCHAR2(40) NOT NULL, /* ÀÌ¸ÞÀÏ */
-	addr VARCHAR2(255) /* ÁÖ¼Ò */
+	m_no NUMBER NOT NULL, /* ï¿½ï¿½ï¿½ï¿½È£ */
+	id VARCHAR2(50) NOT NULL, /* ï¿½ï¿½ï¿½Ìµï¿½ */
+	name VARCHAR2(50) NOT NULL, /* ï¿½Ì¸ï¿½ */
+	pwd VARCHAR2(72) NOT NULL, /* ï¿½ï¿½Ð¹ï¿½È£ */
+	email VARCHAR2(40) NOT NULL, /* ï¿½Ì¸ï¿½ï¿½ï¿½ */
+	addr VARCHAR2(255) /* ï¿½Ö¼ï¿½ */
 );
 
 CREATE UNIQUE INDEX member
@@ -20,11 +20,11 @@ ALTER TABLE member
 			m_no
 		);
 
-/* °Ô½ÃÆÇ */
+/* ï¿½Ô½ï¿½ï¿½ï¿½ */
 CREATE TABLE board (
-	b_no NUMBER NOT NULL, /* °Ô½ÃÆÇ¹øÈ£ */
-	b_title VARCHAR2(50), /* °Ô½ÃÆÇÀÌ¸§ */
-	b_regdate DATE /* »ý¼ºÀÏ */
+	b_no NUMBER NOT NULL, /* ï¿½Ô½ï¿½ï¿½Ç¹ï¿½È£ */
+	b_title VARCHAR2(50), /* ï¿½Ô½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ */
+	b_regdate DATE /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 );
 
 CREATE UNIQUE INDEX PK_board
@@ -39,18 +39,18 @@ ALTER TABLE board
 			b_no
 		);
 
-/* »óÇ° */
+/* ï¿½ï¿½Ç° */
 CREATE TABLE goods (
-	g_no NUMBER NOT NULL, /* »óÇ°¹øÈ£ */
-	c_no NUMBER, /* ºÐ·ù¹øÈ£ */
-	name VARCHAR2(50), /* »óÇ°¸í */
-	detail VARCHAR2(1000), /* »ó¼¼¼³¸í */
-	stock NUMBER, /* Àç°í·® */
-	purchase_price NUMBER, /* ¸ÅÀÔ°¡°Ý */
-	sell_price NUMBER, /* ÆÇ¸Å°¡°Ý */
-	discount_rate NUMBER, /* ÇÒÀÎÀ² */
-	saving_mileage NUMBER, /* ¸¶ÀÏ¸®Áö Àû¸³À² */
-	status NUMBER(1) /* »óÅÂ */
+	g_no NUMBER NOT NULL, /* ï¿½ï¿½Ç°ï¿½ï¿½È£ */
+	c_no NUMBER, /* ï¿½Ð·ï¿½ï¿½ï¿½È£ */
+	name VARCHAR2(50), /* ï¿½ï¿½Ç°ï¿½ï¿½ */
+	detail VARCHAR2(1000), /* ï¿½ó¼¼¼ï¿½ï¿½ï¿½ */
+	stock NUMBER, /* ï¿½ï¿½ï¿½ */
+	purchase_price NUMBER, /* ï¿½ï¿½ï¿½Ô°ï¿½ï¿½ï¿½ */
+	sell_price NUMBER, /* ï¿½Ç¸Å°ï¿½ï¿½ï¿½ */
+	discount_rate NUMBER, /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	saving_mileage NUMBER, /* ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	status NUMBER(1) /* ï¿½ï¿½ï¿½ï¿½ */
 );
 
 CREATE UNIQUE INDEX PK_goods
@@ -65,13 +65,13 @@ ALTER TABLE goods
 			g_no
 		);
 
-/* ÁÖ¹®»ó¼¼ */
+/* ï¿½Ö¹ï¿½ï¿½ï¿½ */
 CREATE TABLE order_detail (
-	od_no NUMBER NOT NULL, /* ÁÖ¹®»ó¼¼¹øÈ£ */
-	amount NUMBER, /* ±¸¸Å¼ö·® */
-	total_price NUMBER, /* ÃÑ±¸¸Å°¡°Ý */
-	g_no NUMBER, /* »óÇ°¹øÈ£ */
-	o_no NUMBER /* ÁÖ¹®¹øÈ£ */
+	od_no NUMBER NOT NULL, /* ï¿½Ö¹ï¿½ï¿½ó¼¼¹ï¿½È£ */
+	amount NUMBER, /* ï¿½ï¿½ï¿½Å¼ï¿½ï¿½ï¿½ */
+	total_price NUMBER, /* ï¿½Ñ±ï¿½ï¿½Å°ï¿½ï¿½ï¿½ */
+	g_no NUMBER, /* ï¿½ï¿½Ç°ï¿½ï¿½È£ */
+	o_no NUMBER /* ï¿½Ö¹ï¿½ï¿½ï¿½È£ */
 );
 
 CREATE UNIQUE INDEX PK_order_detail
@@ -86,16 +86,16 @@ ALTER TABLE order_detail
 			od_no
 		);
 
-/* »óÇ°ÁÖ¹® */
+/* ï¿½ï¿½Ç°ï¿½Ö¹ï¿½ */
 CREATE TABLE orders (
-	o_no NUMBER NOT NULL, /* ÁÖ¹®¹øÈ£ */
-	m_no NUMBER, /* °í°´¹øÈ£ */
-	total_price NUMBER, /* ÃÑ±Ý¾× */
-	pay VARCHAR2(5), /* °áÁ¦ À¯/¹« */
-	regdate DATE, /* µî·ÏÀÏ */
-	recipient VARCHAR2(50), /* ¹Þ´Â»ç¶÷ ÀÌ¸§ */
-	addr VARCHAR2(255), /* ÁÖ¼Ò */
-	message VARCHAR2(255) /* ¹è¼Û¸Þ½ÃÁö */
+	o_no NUMBER NOT NULL, /* ï¿½Ö¹ï¿½ï¿½ï¿½È£ */
+	m_no NUMBER, /* ï¿½ï¿½ï¿½ï¿½È£ */
+	total_price NUMBER, /* ï¿½Ñ±Ý¾ï¿½ */
+	pay VARCHAR2(5), /* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½/ï¿½ï¿½ */
+	regdate DATE, /* ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	recipient VARCHAR2(50), /* ï¿½Þ´Â»ï¿½ï¿½ ï¿½Ì¸ï¿½ */
+	addr VARCHAR2(255), /* ï¿½Ö¼ï¿½ */
+	message VARCHAR2(255) /* ï¿½ï¿½Û¸Þ½ï¿½ï¿½ï¿½ */
 );
 
 CREATE UNIQUE INDEX PK_orders
@@ -110,12 +110,12 @@ ALTER TABLE orders
 			o_no
 		);
 
-/* ºñÈ¸¿ø */
+/* ï¿½ï¿½È¸ï¿½ï¿½ */
 CREATE TABLE non_member (
-	nm_no NUMBER NOT NULL, /* °í°´¹øÈ£ */
-	name VARCHAR2(50), /* ÀÌ¸§ */
-	email VARCHAR2(40), /* ÀÌ¸ÞÀÏ */
-	pwd VARCHAR2(72) /* ÁÖ¹®ºñ¹Ð¹øÈ£ */
+	nm_no NUMBER NOT NULL, /* ï¿½ï¿½ï¿½ï¿½È£ */
+	name VARCHAR2(50), /* ï¿½Ì¸ï¿½ */
+	email VARCHAR2(40), /* ï¿½Ì¸ï¿½ï¿½ï¿½ */
+	pwd VARCHAR2(72) /* ï¿½Ö¹ï¿½ï¿½ï¿½Ð¹ï¿½È£ */
 );
 
 CREATE UNIQUE INDEX PK_non_member
@@ -130,12 +130,12 @@ ALTER TABLE non_member
 			nm_no
 		);
 
-/* °áÁ¦ */
+/* ï¿½ï¿½ï¿½ï¿½ */
 CREATE TABLE payment (
-	o_no NUMBER NOT NULL, /* ÁÖ¹®¹øÈ£ */
-	price NUMBER, /* ÁöºÒÇÑ ±Ý¾× */
-	regdate DATE, /* °áÁ¦ÀÏ */
-	py_no NUMBER /* °áÁ¦¼ö´Ü¹øÈ£ */
+	o_no NUMBER NOT NULL, /* ï¿½Ö¹ï¿½ï¿½ï¿½È£ */
+	price NUMBER, /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¾ï¿½ */
+	regdate DATE, /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	py_no NUMBER /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½È£ */
 );
 
 CREATE UNIQUE INDEX PK_payment
@@ -150,14 +150,14 @@ ALTER TABLE payment
 			o_no
 		);
 
-/* ¸¶ÀÏ¸®Áö */
+/* ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ */
 CREATE TABLE mileage (
-	m_no NUMBER NOT NULL, /* °í°´¹øÈ£ */
-	m_date DATE NOT NULL, /* º¯µ¿³¯Â¥ */
-	total_mileage NUMBER, /* ÇöÀç ¸¶ÀÏ¸®Áö */
-	change_amount NUMBER, /* Àû¸³/»ç¿ë µÈ ¸¶ÀÏ¸®Áö */
-	reason VARCHAR2(150), /* º¯µ¿ »çÀ¯ */
-	o_no NUMBER /* ÁÖ¹®¹øÈ£ */
+	m_no NUMBER NOT NULL, /* ï¿½ï¿½ï¿½ï¿½È£ */
+	m_date DATE NOT NULL, /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¥ */
+	total_mileage NUMBER, /* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ */
+	change_amount NUMBER, /* ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ */
+	reason VARCHAR2(150), /* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
+	o_no NUMBER /* ï¿½Ö¹ï¿½ï¿½ï¿½È£ */
 );
 
 CREATE UNIQUE INDEX PK_mileage
@@ -174,11 +174,11 @@ ALTER TABLE mileage
 			m_date
 		);
 
-/* ÁÖ¹®È®ÀÎ */
+/* ï¿½Ö¹ï¿½È®ï¿½ï¿½ */
 CREATE TABLE order_check (
-	o_no NUMBER NOT NULL, /* ÁÖ¹®¹øÈ£ */
-	status VARCHAR2(20), /* ÁÖ¹®»óÅÂ */
-	regdate DATE /* Ã³¸®ÀÏÀÚ */
+	o_no NUMBER NOT NULL, /* ï¿½Ö¹ï¿½ï¿½ï¿½È£ */
+	status VARCHAR2(20), /* ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	regdate DATE /* Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 );
 
 CREATE UNIQUE INDEX PK_order_check
@@ -193,10 +193,10 @@ ALTER TABLE order_check
 			o_no
 		);
 
-/* °áÁ¦¼ö´Ü */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 CREATE TABLE payment_way (
-	py_no NUMBER NOT NULL, /* °áÁ¦¼ö´Ü¹øÈ£ */
-	name VARCHAR2(30) /* °áÁ¦¼ö´Ü¸í */
+	py_no NUMBER NOT NULL, /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½È£ */
+	name VARCHAR2(30) /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¸ï¿½ */
 );
 
 CREATE UNIQUE INDEX PK_payment_way
@@ -211,14 +211,14 @@ ALTER TABLE payment_way
 			py_no
 		);
 
-/* °Ô½Ã±Û */
+/* ï¿½Ô½Ã±ï¿½ */
 CREATE TABLE post (
-	p_no NUMBER NOT NULL, /* ±Û¹øÈ£ */
-	p_title VARCHAR2(250), /* Á¦¸ñ */
-	p_content VARCHAR2(2000), /* ³»¿ë */
-	p_writer VARCHAR2(50), /* ÀÛ¼ºÀÚ */
-	p_regdate DATE, /* µî·ÏÀÏ */
-	b_no NUMBER /* °Ô½ÃÆÇ¹øÈ£ */
+	p_no NUMBER NOT NULL, /* ï¿½Û¹ï¿½È£ */
+	p_title VARCHAR2(250), /* ï¿½ï¿½ï¿½ï¿½ */
+	p_content VARCHAR2(2000), /* ï¿½ï¿½ï¿½ï¿½ */
+	p_writer VARCHAR2(50), /* ï¿½Û¼ï¿½ï¿½ï¿½ */
+	p_regdate DATE, /* ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	b_no NUMBER /* ï¿½Ô½ï¿½ï¿½Ç¹ï¿½È£ */
 );
 
 CREATE UNIQUE INDEX PK_post
@@ -233,11 +233,11 @@ ALTER TABLE post
 			p_no
 		);
 
-/* Àå¹Ù±¸´Ï */
+/* ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ */
 CREATE TABLE basket (
-	m_no NUMBER NOT NULL, /* °í°´¹øÈ£ */
-	g_no NUMBER NOT NULL, /* »óÇ°¹øÈ£ */
-	amount NUMBER /* ¼ö·® */
+	m_no NUMBER NOT NULL, /* ï¿½ï¿½ï¿½ï¿½È£ */
+	g_no NUMBER NOT NULL, /* ï¿½ï¿½Ç°ï¿½ï¿½È£ */
+	amount NUMBER /* ï¿½ï¿½ï¿½ï¿½ */
 );
 
 CREATE UNIQUE INDEX PK_basket
@@ -254,13 +254,13 @@ ALTER TABLE basket
 			g_no
 		);
 
-/* È¸¿øµî±Þ */
+/* È¸ï¿½ï¿½ï¿½ï¿½ï¿½ */
 CREATE TABLE member_grade (
-	m_no NUMBER NOT NULL, /* °í°´¹øÈ£ */
-	mg_date DATE NOT NULL, /* º¯µ¿³¯Â¥ */
-	grade NUMBER, /* È¸¿øµî±Þ */
-	point NUMBER, /* Æ÷ÀÎÆ® */
-	reason VARCHAR2(150) /* º¯µ¿»çÀ¯ */
+	m_no NUMBER NOT NULL, /* ï¿½ï¿½ï¿½ï¿½È£ */
+	mg_date DATE NOT NULL, /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¥ */
+	grade NUMBER, /* È¸ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	point NUMBER, /* ï¿½ï¿½ï¿½ï¿½Æ® */
+	reason VARCHAR2(150) /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 );
 
 CREATE UNIQUE INDEX PK_member_grade
@@ -277,12 +277,12 @@ ALTER TABLE member_grade
 			mg_date
 		);
 
-/* ÆÄÀÏ */
+/* ï¿½ï¿½ï¿½ï¿½ */
 CREATE TABLE files (
-	f_no NUMBER NOT NULL, /* ÆÄÀÏ¹øÈ£ */
-	name VARCHAR2(50), /* ÆÄÀÏÀÌ¸§ */
-	save_path VARCHAR2(255), /* ÀúÀå°æ·Î */
-	regdate DATE /* µî·Ï³¯Â¥ */
+	f_no NUMBER NOT NULL, /* ï¿½ï¿½ï¿½Ï¹ï¿½È£ */
+	name VARCHAR2(50), /* ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ */
+	save_path VARCHAR2(255), /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	regdate DATE /* ï¿½ï¿½Ï³ï¿½Â¥ */
 );
 
 CREATE UNIQUE INDEX PK_files
@@ -297,11 +297,11 @@ ALTER TABLE files
 			f_no
 		);
 
-/* »óÇ°ÀÌ¹ÌÁö */
+/* ï¿½ï¿½Ç°ï¿½Ì¹ï¿½ï¿½ï¿½ */
 CREATE TABLE goods_image (
-	g_no NUMBER NOT NULL, /* »óÇ°¹øÈ£ */
-	f_no NUMBER NOT NULL, /* ÆÄÀÏ¹øÈ£ */
-	location VARCHAR2(255) /* ÀÌ¹ÌÁö À§Ä¡ */
+	g_no NUMBER NOT NULL, /* ï¿½ï¿½Ç°ï¿½ï¿½È£ */
+	f_no NUMBER NOT NULL, /* ï¿½ï¿½ï¿½Ï¹ï¿½È£ */
+	location VARCHAR2(255) /* ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ */
 );
 
 CREATE UNIQUE INDEX PK_goods_image
@@ -318,15 +318,15 @@ ALTER TABLE goods_image
 			f_no
 		);
 
-/* ÀÔÃâ°í³»¿ª */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 CREATE TABLE shipping_receiving (
-	sr_no NUMBER NOT NULL, /* ÀÔÃâ°í¹øÈ£ */
-	g_no NUMBER NOT NULL, /* »óÇ°¹øÈ£ */
-	category VARCHAR2(20), /* ºÐ·ù */
-	detail VARCHAR2(50), /* ³»¿ë */
-	amount NUMBER, /* ¼ö·® */
-	price NUMBER, /* ´Ü°¡ */
-	regdate DATE /* ³¯Â¥ */
+	sr_no NUMBER NOT NULL, /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ */
+	g_no NUMBER NOT NULL, /* ï¿½ï¿½Ç°ï¿½ï¿½È£ */
+	category NUMBER(1), /* ï¿½Ð·ï¿½ */
+	detail VARCHAR2(50), /* ï¿½ï¿½ï¿½ï¿½ */
+	amount NUMBER, /* ï¿½ï¿½ï¿½ï¿½ */
+	price NUMBER, /* ï¿½Ü°ï¿½ */
+	regdate DATE /* ï¿½ï¿½Â¥ */
 );
 
 CREATE UNIQUE INDEX PK_shipping_receiving
@@ -343,13 +343,13 @@ ALTER TABLE shipping_receiving
 			g_no
 		);
 
-/* ºÐ·ù */
+/* ï¿½Ð·ï¿½ */
 CREATE TABLE category (
-	c_no NUMBER NOT NULL, /* ºÐ·ù¹øÈ£ */
-	title VARCHAR2(50), /* ºÐ·ù¸í */
-	parent_no NUMBER, /* »óÀ§ºÐ·ù¹øÈ£ */
-	menu_level NUMBER, /* ºÐ·ù·¹º§ */
-	in_use VARCHAR2(5) /* »ç¿ë¿©ºÎ */
+	c_no NUMBER NOT NULL, /* ï¿½Ð·ï¿½ï¿½ï¿½È£ */
+	title VARCHAR2(50), /* ï¿½Ð·ï¿½ï¿½ï¿½ */
+	parent_no NUMBER, /* ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½È£ */
+	menu_level NUMBER, /* ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ */
+	in_use VARCHAR2(5) /* ï¿½ï¿½ë¿©ï¿½ï¿½ */
 );
 
 CREATE UNIQUE INDEX PK_category

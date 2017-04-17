@@ -45,17 +45,7 @@
 	분류명
 	</label>
 	<div class="col-md-6 col-sm-6">
-		<input type="text" name="title" class="form-control" value="" required>
-	</div>
-</div>
-
-<div class="form-group">
-	<label class="control-label col-md-3 col-sm-3">
-	사용 여부
-	</label>
-	<div class="col-md-6 col-sm-6">
-		사용 : <input type="radio" name="in_use" value="true" checked>
-		미사용 : <input type="radio" name="in_use" value="false">
+		<input type="text" name="title" class="form-control" value="${g.title }" required>
 	</div>
 </div>
 

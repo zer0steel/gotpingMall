@@ -24,4 +24,8 @@ public class GoodsDao {
 	public GoodsVO selectOneWithG_no(int g_no) {
 		return dao.selectOne("g.selectOne", g_no);
 	}
+
+	public int update(GoodsVO g) {
+		return dao.update("g.update", g);
+	}
 }

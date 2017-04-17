@@ -8,29 +8,25 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.got.enums.GoodsStatus;
-import com.got.util.CommonUtil;
+import com.got.enums.HistoryCategory;
+import com.got.vo.ShippingReceivingVO;
+
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
 		"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class GoodsTest {
-	@Autowired GoodsService gs;
+public class SRHistoryTest {
+	@Autowired SRService s;
 	
 	@Test
-	public void statusTest() {
-		System.out.println(CommonUtil.convertToJSON(GoodsStatus.values()));
-	}
-	
-	@Test
-	public void getOneTest() {
-		System.out.println(gs.detailAndSRHistory(29));
-	}
-	
-	@Test
-	public void getAllTest() {
-		System.out.println(gs.getAll().size());
+	public void insertTest() {
+		ShippingReceivingVO sr = new ShippingReceivingVO();
+		sr.setEnumCategory(HistoryCategory.FREE);
+		sr.setAmount(1);
+		sr.setG_no(29);
+		sr.setDetail("");
+		s.addHistory(sr);
 	}
 }

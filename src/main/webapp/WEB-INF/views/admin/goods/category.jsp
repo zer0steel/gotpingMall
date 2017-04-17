@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <div class="page-title">
 	<div class="title_left">
 		<h3>상품 분류</h3>
@@ -20,8 +19,11 @@
 			</div>
 			<div class="x_content">
 				<jsp:include page="include/categorySelectBox.jsp"></jsp:include>
-				<button type="submit" class="btn btn-warning" id="btn-update">수정</button>
-				<button type="submit" class="btn btn-danger" id="btn-delete">삭제</button>
+				<button class="btn btn-warning" id="btn-update">수정</button>
+				<button class="btn btn-danger" id="btn-delete">삭제</button>
+				<form action="category/delete.yo" id="category-deleteForm" method="post">
+					<input type="hidden" name="c_no">
+				</form>
 			</div>
 		</div>
 	</div>
@@ -55,6 +57,16 @@
 					class="form-horizontal form-label-left" method="post" action="category/insert.yo">
 					
 					<jsp:include page="include/categoryForm.jsp"></jsp:include>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">
+						사용 여부
+						</label>
+						<div class="col-md-6 col-sm-6">
+							사용 : <input type="radio" name="in_use" value="true" checked>
+							미사용 : <input type="radio" name="in_use" value="false">
+						</div>
+					</div>
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 							<button type="button" class="btn btn-success" id="btn-enroll">등록</button>
@@ -131,6 +143,16 @@
 					<jsp:include page="include/categoryForm.jsp"></jsp:include>
 					
 					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">
+						사용 여부
+						</label>
+						<div class="col-md-6 col-sm-6">
+							사용 : <input type="radio" name="in_use" value="true" checked>
+							미사용 : <input type="radio" name="in_use" value="false">
+						</div>
+					</div>
+					
+					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 							<button type="submit" class="btn btn-warning">수정</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
@@ -154,6 +176,19 @@ $("#btn-update").click(function() {
 		$("div.modal").modal();
 });
 
+$("#btn-delete").click(function() {
+	var c_no = $("#category-updateForm input[name=c_no]").val();
+	if(c_no > 0) {
+		if(confirm("정말로 해당 분류를 삭제하시겠습니까?")) {
+			$("input[name=c_no]").val(c_no)
+			$("#category-deleteForm").submit();
+		}
+	}
+	else {
+		alert("선택된 분류가 없습니다.")
+	}
+});
+
 function checkCategorySelected() {
 	var big = $("select[name=big]").val();
 	var middle = $("select[name=middle]").val();
@@ -164,12 +199,12 @@ function checkCategorySelected() {
 	}
 	return true;
 }
-
+/* 상단의 상품 분류 select box 클릭시 동작 */
 $("select[data-menu_level]").click(function() {
 	var c_no = $(this).val();
 	if( c_no == null )
 		return;
-	$("#category-updateForm input[name=c_no]").val(c_no);
+	
 	requestDetailCategory(c_no).done(function(category) {
 		/* setSuperCategorySelectBox(); */
 		setInsertForm(category);
@@ -212,5 +247,6 @@ function setUpdateForm(category) {
 	$("#category-updateForm select[name=parent_no]").val(category.parent_no);
 	$("#category-updateForm input[name=title]").val(category.title);
 	$("#category-updateForm input[name=in_use][value='"+ category.in_use +"']").attr("checked", "checked");
+	$("#category-updateForm input[name=c_no]").val(category.c_no);
 }
 </script>

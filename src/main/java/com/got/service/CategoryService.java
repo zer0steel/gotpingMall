@@ -42,6 +42,8 @@ public class CategoryService {
 	 * @return 성공, 실패 메시지
 	 */
 	public String delete(int c_no) {
+		if( MenuLevel.isExistingSubCategory(c_no) )
+			return "하위 분류가 존재해서 삭제할수 없습니다.";
 		if(dao.deleteOne(c_no) == 1) {
 			MenuLevel.deleteCategory(c_no);
 			return "삭제되었습니다.";

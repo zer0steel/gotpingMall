@@ -105,4 +105,19 @@ public enum MenuLevel {
 		}
 		return false;
 	}
+
+	public static boolean isExistingSubCategory(int c_no) {
+		for(MenuLevel lvl : values())
+			if(findCategory(lvl, c_no).getC_no() > 0)
+				return true;
+		throw new IllegalArgumentException("분류배열 안에 해당 PK값 c_no로 저장된 분류가 존재하지 않음 : " + c_no);
+	}
+
+	private static CategoryVO findCategory(MenuLevel lvl, int c_no) {
+		CategoryVO c = lvl.categories.get(c_no);
+		if(c != null)
+			return c;
+		else
+			return new CategoryVO();
+	}
 }

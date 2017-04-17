@@ -16,6 +16,8 @@ public class CategoryController {
 	
 	@Autowired private CategoryService cs;
 	
+	private static final String REDIRECT_CATEGORY_PAGE = "redirect:/admin/goods/category.yo";
+	
 	@RequestMapping("admin/goods/category.yo")
 	public ModelAndView category(String msg) {
 		ModelAndView mav = new ModelAndView();
@@ -27,7 +29,7 @@ public class CategoryController {
 	public ModelAndView insertCategory(CategoryVO c) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", cs.enroll(c));
-		mav.setViewName("redirect:/admin/goods/category.yo");
+		mav.setViewName(REDIRECT_CATEGORY_PAGE);
 		return mav;
 	}
 	
@@ -35,7 +37,7 @@ public class CategoryController {
 	public ModelAndView deteteCategory(int c_no) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", cs.delete(c_no));
-		mav.setViewName("redirect:/admin/goods/category.yo");
+		mav.setViewName(REDIRECT_CATEGORY_PAGE);
 		return mav;
 	}
 	
@@ -43,7 +45,7 @@ public class CategoryController {
 	public ModelAndView updateCategory(CategoryVO c) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", cs.update(c));
-		mav.setViewName("redirect:/admin/goods/category.yo");
+		mav.setViewName(REDIRECT_CATEGORY_PAGE);
 		return mav;
 	}
 	

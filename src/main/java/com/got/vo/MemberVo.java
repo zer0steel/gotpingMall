@@ -48,7 +48,7 @@ public class MemberVO {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	/*Á÷Á¢ Á¦ÀÛ ¸Þ¼­µå*/
+	/*ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½*/
 	public Grade getGrade() {
 		return grade;
 	}
@@ -67,12 +67,6 @@ public class MemberVO {
 		return this.isLoginSuccess;
 	}
 	
-	/**
-	 * rsa·Î ¾ÏÈ£È­µÈ ÆÐ½º¿öµå¸¦ º¹È£È­ÇÑµÚ BCrypt·Î ¾ÏÈ£È­ µÇ¾îÀÖ´Â ±âÁ¸ÀÇ ÆÐ½º¿öµå¿Í ºñ±³ÇÑ´Ù.
-	 * @param rsaPwd rsa·Î ¾ÏÈ£È­µÈ ÆÐ½º¿öµå
-	 * @param privateKey rsa privateKey
-	 * @return µÑ´Ù °°À»°æ¿ì true
-	 */
 	public boolean isEqualsPwd(String rsaPwd, PrivateKey privateKey) {
 		if(this.pwd == null || rsaPwd == null)
 			throw new NullPointerException("pwd null is " + (pwd == null) + " | " + "rsaPwd null is " + (rsaPwd == null));
@@ -80,5 +74,9 @@ public class MemberVO {
 			throw new IllegalArgumentException("pwd empty is " + pwd.isEmpty() + " | " + "rsaPwd empty is " + rsaPwd.isEmpty());
 		String pwd = RSA.decryptRsa(rsaPwd, privateKey);
 		return BCrypt.checkpw(pwd, this.pwd);
+	}
+	public void encyptPwd(PrivateKey privateKey) {
+		String pwd = RSA.decryptRsa(this.pwd, privateKey);
+		this.pwd = BCrypt.hashpw(pwd,BCrypt.gensalt(12));
 	}
 }

@@ -76,4 +76,32 @@ public class GoodsVO extends CategoryVO {
 	public void setHistory(List<ShippingReceivingVO> history) {
 		this.history = history;
 	}
+	
+	/**
+	 * 재고를 업데이트한다. <br>
+	 * 계산후 재고값이 음수이면 값을 업데이트 하지 않고 false를 반환한다.
+	 * @param sr
+	 * @return
+	 */
+	public boolean updateStock(ShippingReceivingVO sr) {
+		int updatedStock = this.stock + sr.getAmount();
+		if(updatedStock < 0) 
+			return false;
+		this.stock = updatedStock;
+		return true;
+	}
+	
+	public boolean updateStock(int amount) {
+		int updatedStock = this.stock + amount;
+		if(updatedStock < 0) 
+			return false;
+		this.stock = updatedStock;
+		return true;
+	}
+	@Override
+	public String toString() {
+		return "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
+				+ sell_price + ", discount_rate=" + discount_rate + ", saving_mileage=" + saving_mileage + ", name="
+				+ name + ", detail=" + detail + ", status=" + status + ", history=" + history + "]";
+	}
 }

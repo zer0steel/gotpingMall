@@ -32,5 +32,4 @@ public class CategoryDao {
 	public int updateOne(CategoryVO c) {
 		return dao.update("c.updateOne", c);
 	}
-
 }

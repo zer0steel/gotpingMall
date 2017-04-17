@@ -26,15 +26,38 @@ public class GoodsService {
 		return dao.selectAll();
 	}
 
-	private static final int DETAIL_GOODS_SHOW_HISTORY_COUNT = 5;
 	/**
-	 * 최근 5개 내역과 함께 상품 상세 정보를 JSON String으로 반환한다.
+	 * 최근 5개 내역과 함께 상품 상세 정보를 반환한다.
 	 * @param goods_no
-	 * @return json String
+	 * @return goodsVO
 	 */
-	public String detailAndSRHistory(int goods_no) {
+	public GoodsVO detailAndSRHistory(int goods_no) {
 		GoodsVO g = dao.selectOneWithG_no(goods_no);
-		g.setHistory(srDao.selectListWithG_no(goods_no, DETAIL_GOODS_SHOW_HISTORY_COUNT));
-		return CommonUtil.convertToJSON(g);
+		g.setHistory(srDao.selectListWithG_no(goods_no, SRService.DETAIL_GOODS_SHOW_HISTORY_COUNT));
+		return g;
+	}
+	
+	
+	/**
+	 * 공사중
+	 * @param g_no
+	 * @param amount
+	 * @return
+	 */
+	public String updateStock(int g_no, int amount) {
+		GoodsVO g = dao.selectOneWithG_no(g_no);
+		if(g.updateStock(amount)) {
+			return null;
+		}
+		else 
+			return "재고 값이 음수가 되어 수정할 수 없습니다.";
+	}
+
+	public void updateGoods(GoodsVO g) {
+		if(g.getG_no() == 0)
+			throw new IllegalArgumentException("PK값 g_no 가 0임");
+		if(dao.update(g) == 1)
+			return;
+		throw new RuntimeException("수정 실패");
 	}
 }

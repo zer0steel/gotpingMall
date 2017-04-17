@@ -8,10 +8,14 @@
 	</select>
 	
 	<select id="selectWithG_no" resultType="com.got.vo.ShippingReceivingVO">
-		SELECT r.* FROM (SELECT * FROM shipping_receiving WHERE g_no = #{g_no} ORDER BY regdate) r
+		SELECT r.* FROM (SELECT * FROM shipping_receiving WHERE g_no = #{g_no} ORDER BY regdate DESC) r
 		<if test="count != null">
 			<![CDATA[WHERE ROWNUM <= #{count}]]>
 		</if>
 	</select>
 	
+	<insert id="insertOne">
+		INSERT INTO shipping_receiving(sr_no, g_no, category, detail, amount, price, regdate) 
+		VALUES(sr_no.nextval, #{g_no}, #{category}, #{detail}, #{amount}, #{price}, sysdate)
+	</insert>
 </mapper>

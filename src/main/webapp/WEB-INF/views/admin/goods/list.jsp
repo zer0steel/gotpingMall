@@ -7,6 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.modal-dialog.modal-fullsize{
+	width: 50%; height: 50%; 
+}
+</style>
 </head>
 <body>
 <div class="page-title">
@@ -58,7 +63,7 @@
 				<c:forEach var="g" items="${goods }">
 					<tr class="goods" data-g_no="${g.g_no }">
 						<td>${g.title }</td>
-						<td>${g.name }</td>
+						<td><a href="detail.yo?g_no=${g.g_no }">${g.name }</a></td>
 						<td>${g.stock } 개</td>
 						<td>${g.sell_price } 원</td>
 						<td>${g.status.kor }</td>
@@ -69,62 +74,19 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="detailModal" >
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<!-- header -->
-			<div class="modal-header">
-				<!-- 닫기(x) 버튼 -->
-				<button type="button" class="close" data-dismiss="modal">×</button>
-				<!-- header title -->
-				<h4 class="modal-title">상품 상세 정보</h4>
-			</div>
-			<!-- body -->
-			<div class="modal-body">
-				<form id="goods-form" data-parsley-validate 
-					class="form-horizontal form-label-left" method="post" action="#">
-					<input type="hidden" name="g_no">
-					<img alt="상품 사진 없음">
-					<jsp:include page="include/categoryForm.jsp"></jsp:include>
-					<jsp:include page="include/goodsForm.jsp"></jsp:include>	
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">
-						상품 상태
-						</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<select name="status" class="form-control" required>
-							<c:forEach var="s" items="${status }">
-								<option value="${s.code }">${s.kor }</option>
-							</c:forEach>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<button type="submit" class="btn btn-warning">수정 하기</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-						</div>
-					</div>
-					
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
 <script type="text/javascript">
-$("input").attr("readonly", true);
-$(".category").attr("disabled", true);
+
 
 $(".goods").click(function() {
 	var g_no = $(this).data("g_no");
 	requesetDetailGoods(g_no).done(function(goods) {
 		setGoodsForm(goods);
 	});
-	$("#detailModal").modal();
 });
 
 function setGoodsForm(g) {
-	$("select[name=menu_level]").val(g.menu_level.code);
+	$("input[name=g_no]").val(g.g_no);
+	$("select[name=menu_level]").val(g.menuLevel.code);
 	$("select[name=parent_no]").val(g.parent_no);
 	$("input[name=title]").val(g.title);
 	$("input[name=c_no]").val(g.c_no);
@@ -133,7 +95,22 @@ function setGoodsForm(g) {
 	$("input[name=sell_price]").val(g.sell_price);
 	$("input[name=discount_rate]").val(g.discount_rate);
 	$("input[name=saving_mileage]").val(g.saving_mileage);
+	$("input[name=stock]").val(g.stock);
 	$("select[name=status]").val(g.status.code)
+	setRecentHistory(g.history);
+}
+
+function setRecentHistory(history) {
+	$("#recentHistory").find("tbody").empty();
+	$(history).each(function() {
+		var data = $(this)[0];
+		var category_td = $("<td />").html(data.category);
+		var amount_td = $("<td />").html(data.amount);
+		var regdate_td = $("<td />").html(data.regdate);
+		var detail_td = $("<td />").html(data.detail);
+		var tr = $("<tr></tr>").append($(category_td), $(amount_td), $(regdate_td), $(detail_td));
+		$("#recentHistory").find("tbody").append($(tr));
+	});
 }
 
 function requesetDetailGoods(g_no) {

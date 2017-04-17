@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.got.dao.MemberDao;
-import com.got.util.BCrypt;
-import com.got.util.RSA;
 import com.got.vo.MemberGradeVO;
 import com.got.vo.MemberVO;
 
@@ -29,9 +27,9 @@ public class MemberService {
 	}
 	
 	public boolean join(MemberVO m, PrivateKey privateKey) {
-		m.setPwd(encryptWithBCrypt(m.getPwd(),privateKey));
+		m.encyptPwd(privateKey);
 		MemberGradeVO mg = new MemberGradeVO();
-		mg.setReason("�ű� ����");
+		mg.setReason("신규 가입");
 		int insertedCount = dao.insertNewMember(m, mg);
 		if(insertedCount == 1)
 			return true;
@@ -57,15 +55,4 @@ public class MemberService {
 		}
 	}
 	
-	/**
-	 * RSA암호화된 비밀번호를 BCrypt로 암호화한다.
-	 * @param RSAPwd
-	 * @param privateKey
-	 * @return
-	 */
-	private String encryptWithBCrypt(String RSAPwd,PrivateKey privateKey) {
-		String pwd = RSA.decryptRsa(RSAPwd, privateKey);
-		String BCryptPwd = BCrypt.hashpw(pwd,BCrypt.gensalt(12));
-		return BCryptPwd;
-	}
 }
