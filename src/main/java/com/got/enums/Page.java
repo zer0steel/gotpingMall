@@ -11,6 +11,11 @@ public enum Page {
 		this.page = page;
 	}
 	
+	public static ModelAndView setNoSideFrame(ModelAndView mav) {
+		mav.addObject("noSideFrame", true);
+		return mav;
+	}
+	
 	public static ModelAndView setViewPage(ModelAndView mav,String viewPage) {
 		mav.addObject("viewPage", viewPage);
 		mav.setViewName(TEMPLAGE.page);

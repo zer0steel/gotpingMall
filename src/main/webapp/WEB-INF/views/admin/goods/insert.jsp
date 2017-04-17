@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link href="${pageContext.request.contextPath}/resources/vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css" rel="stylesheet">
 <div class="page-title">
 	<div class="title_left">
 		<h3>상품 등록</h3>
@@ -55,14 +54,15 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form action="form_upload.html" class="dropzone"></form>
+				<form action="${pageContext.request.contextPath}/file/upload.yo"
+				class="dropzone" id="uploadFile" enctype="multipart/form-data" method="post" data-paramName="file">
+				</form>
 			</div>
 		</div>
 	</div>
-	
 	<div class="ln_solid"></div>
 </div>
-<script src="${pageContext.request.contextPath}/resources/vendors/dropzone/dist/min/dropzone.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
 $("select").change(function() {
 	var c_no = $(this).val();

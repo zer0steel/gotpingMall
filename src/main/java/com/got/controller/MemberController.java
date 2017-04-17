@@ -26,7 +26,9 @@ public class MemberController {
 	
 	@RequestMapping("login.yo")
 	public ModelAndView loginForm() {
-		return Page.setViewPage(new ModelAndView(), "member/login.jsp");
+		ModelAndView mav = new ModelAndView();
+		Page.setNoSideFrame(mav);
+		return Page.setViewPage(mav, "member/login.jsp");
 	}
 	
 	@ResponseBody
@@ -52,12 +54,16 @@ public class MemberController {
 	
 	@RequestMapping("agreement.yo")
 	public ModelAndView agreeForm() {
-		return Page.setViewPage(new ModelAndView(), "member/agreement.jsp");
+		ModelAndView mav = new ModelAndView();
+		Page.setNoSideFrame(mav);
+		return Page.setViewPage(mav, "member/agreement.jsp");
 	}
 	
 	@RequestMapping("join.yo")
 	public ModelAndView joinForm() {
-		return Page.setViewPage(new ModelAndView(), "member/join.jsp");
+		ModelAndView mav = new ModelAndView();
+		Page.setNoSideFrame(mav);
+		return Page.setViewPage(mav, "member/join.jsp");
 	}
 	
 	@RequestMapping(value = "join.yo", method = RequestMethod.POST)
