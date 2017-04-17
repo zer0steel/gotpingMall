@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<style type="text/css">
-.modal-dialog.modal-fullsize{
-	width: 50%; height: 50%; }
-</style>
 <div class="page-title">
 	<div class="title_left">
-		<h3>상품 목록</h3>
+		<h3>회원 관리</h3>
 	</div>
 </div>
 <br />
@@ -24,10 +20,6 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<jsp:include page="include/categorySelectBox.jsp"></jsp:include>
-				<script type="text/javascript">
-					$("select").attr("size",0).val("");
-				</script>
 			</div>
 		</div>
 	</div>
@@ -39,26 +31,24 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="x_content">
-			<table id="goodsTable" class="table table-striped table-bordered">
+			<table id="srTable" class="table table-striped table-bordered">
 				<thead>
 					<tr>
-						<th>상품분류</th>
-						<th>상품명</th>
-						<th>수량</th>
-						<th>판매 가격</th>
-						<th>상태</th>
+						<th>아이디</th>
+						<th>이메일</th>
+						<th>등급</th>
+						<th>등록일</th>
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach var="g" items="${goods }">
-					<tr class="goods" data-g_no="${g.g_no }">
-						<td>${g.title }</td>
-						<td><a href="detail.yo?g_no=${g.g_no }">${g.name }</a></td>
-						<td>${g.stock } 개</td>
-						<td>${g.sell_price } 원</td>
-						<td>${g.status.kor }</td>
+				<%-- <c:forEach var="sr" items="${list }">
+					<tr>
+						<td><a href="${pageContext.request.contextPath }/admin/goods/detail.yo?g_no=${sr.g_no }">${sr.name }</a></td>
+						<td>${sr.amount } 개</td>
+						<td>${sr.change_stock } 개</td>
+						<td>${sr.regdate }</td>
 					</tr>
-				</c:forEach>
+				</c:forEach> --%>
 				</tbody>
 			</table>
 		</div>

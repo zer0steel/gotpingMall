@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.got.enums.HistoryCategory;
 
-public class ShippingReceivingVO {
-	private int sr_no, g_no, amount, price;
+public class ShippingReceivingVO extends GoodsVO {
+	private int sr_no, g_no, amount, price, change_stock;
 	private String detail;
 	@JsonFormat(shape = Shape.STRING, pattern = "m월 dd일 hh시", timezone = "Asia/Seoul")
 	private Timestamp regdate;
@@ -66,14 +66,21 @@ public class ShippingReceivingVO {
 		this.category = category;
 		modifyAmount();
 	}
-	@Override
-	public String toString() {
-		return "ShippingReceivingVO [sr_no=" + sr_no + ", g_no=" + g_no + ", amount=" + amount + ", price=" + price
-				+ ", detail=" + detail + ", regdate=" + regdate + ", category=" + category + "]";
-	}
-	
 	private void modifyAmount() {
 		if( this.category.isMinusStockCategory() ) 
 			this.amount = Math.negateExact(this.amount);
 	}
+	public int getChange_stock() {
+		return change_stock;
+	}
+	public void setChange_stock(int change_stock) {
+		this.change_stock = change_stock;
+	}
+	@Override
+	public String toString() {
+		return "ShippingReceivingVO [sr_no=" + sr_no + ", g_no=" + g_no + ", amount=" + amount + ", price=" + price
+				+ ", change_stock=" + change_stock + ", detail=" + detail + ", regdate=" + regdate + ", category="
+				+ category + "]";
+	}
+	
 }

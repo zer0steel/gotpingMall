@@ -4,7 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sr">
 	<select id="selectAll" resultType="com.got.vo.ShippingReceivingVO">
-		SELECT * FROM shipping_receiving
+		SELECT * 
+		FROM goods g, shipping_receiving sr 
+		WHERE g.g_no = sr.g_no ORDER BY regdate DESC
 	</select>
 	
 	<select id="selectWithG_no" resultType="com.got.vo.ShippingReceivingVO">
@@ -15,7 +17,7 @@
 	</select>
 	
 	<insert id="insertOne">
-		INSERT INTO shipping_receiving(sr_no, g_no, category, detail, amount, price, regdate) 
-		VALUES(sr_no.nextval, #{g_no}, #{category}, #{detail}, #{amount}, #{price}, sysdate)
+		INSERT INTO shipping_receiving(sr_no, g_no, category, detail, amount, price, regdate, change_stock)
+		VALUES(sr_no.nextval, #{g_no}, #{category}, #{detail}, #{amount}, #{price}, sysdate, #{change_stock})
 	</insert>
 </mapper>

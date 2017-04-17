@@ -46,18 +46,24 @@ public class GoodsController {
 	
 	@ResponseBody
 	@RequestMapping("admin/goods/detail.yo")
-	public ModelAndView detailGoods(int g_no) {
+	public ModelAndView detailGoods(int g_no, String msg) {
 		ModelAndView mav = new ModelAndView();
 		cs.setEnumsInMAV(mav).addObject("g",gs.detailAndSRHistory(g_no));
 		mav.addObject("status", GoodsStatus.values());
 		mav.addObject("hc", HistoryCategory.values());
+		mav.addObject("msg", msg);
 		return Page.setAdminViewPage(mav, "goods/detail.jsp");
 	}
 	
 	@RequestMapping(value = "admin/goods/update.yo", method = RequestMethod.POST)
 	public ModelAndView updateGoods(GoodsVO g) {
-		ModelAndView mav = new ModelAndView("redirect:/admin/goods/detail.yo?g_no=" + g.getG_no());
-		gs.updateGoods(g);
-		return mav;
+		gs.update(g);
+		return new ModelAndView("redirect:/admin/goods/detail.yo?g_no=" + g.getG_no());
+	}
+	
+	@RequestMapping("admin/goods/delete.yo")
+	public ModelAndView deleteGoods(int g_no) {
+		gs.delete(g_no);
+		return new ModelAndView("redirect:/admin/goods/list.yo");
 	}
 }

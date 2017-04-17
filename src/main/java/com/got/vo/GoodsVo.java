@@ -80,6 +80,7 @@ public class GoodsVO extends CategoryVO {
 	/**
 	 * 재고를 업데이트한다. <br>
 	 * 계산후 재고값이 음수이면 값을 업데이트 하지 않고 false를 반환한다.
+	 * srVO에 변동후 재고량도 같이 입력된다.
 	 * @param sr
 	 * @return
 	 */
@@ -88,6 +89,7 @@ public class GoodsVO extends CategoryVO {
 		if(updatedStock < 0) 
 			return false;
 		this.stock = updatedStock;
+		sr.setChange_stock(updatedStock);
 		return true;
 	}
 	

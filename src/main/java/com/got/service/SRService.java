@@ -14,13 +14,13 @@ public class SRService {
 	
 	@Autowired private ShippingReceivingDao dao;
 
-	public boolean addHistory(ShippingReceivingVO sr) {
+	public String addHistory(ShippingReceivingVO sr) {
 		validationCheck(sr);
 		int insertedCount = dao.insertOneNewHistory(sr);
 		if(insertedCount == 1) 
-			return true;
+			return "추가되었습니다.";
 		else if(insertedCount == ShippingReceivingDao.UPDATE_STOCK_FAIL) 
-			return false;
+			return "재고값이 음수가 되어 추가할 수 없습니다.";
 		throw new RuntimeException("입출고내역 추가 실패. 객체 정보 : " + sr);
 	}
 	
@@ -40,5 +40,8 @@ public class SRService {
 	public void validationCheck(ShippingReceivingVO sr) {
 		if(sr.getG_no() == 0)
 			throw new IllegalArgumentException("상품 번호가 입력되지 않았음.");
+	}
+	public List<ShippingReceivingVO> getAll() {
+		return dao.selectAll();
 	}
 }

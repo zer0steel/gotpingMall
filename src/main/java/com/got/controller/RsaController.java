@@ -19,6 +19,7 @@ public class RsaController {
 	public String getRsaKey(HttpSession session) {
 		Map<String, Object> rsaKey = RSA.generateKey();
 		session.setAttribute(RSA.PRIVATE_KEY, rsaKey.get(RSA.PRIVATE_KEY));
+		rsaKey.remove(RSA.PRIVATE_KEY);
 		return CommonUtil.convertToJSON(rsaKey);
 	}
 }

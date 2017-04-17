@@ -1,6 +1,7 @@
 package com.got.service;
 
 import java.security.PrivateKey;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,10 @@ public class MemberService {
 			else
 				return m;
 		}
+	}
+
+	public List<MemberVO> getAll() {
+		return dao.selectAll();
 	}
 	
 }

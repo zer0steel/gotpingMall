@@ -38,4 +38,8 @@ public class MemberDao {
 	public MemberVO selectOneWithM_Id(String m_id) {
 		return dao.selectOne("m.selectOneWithM_id", m_id);
 	}
+
+	public List<MemberVO> selectAll() {
+		return dao.selectList("m.selectAll");
+	}
 }

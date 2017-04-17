@@ -53,11 +53,20 @@ public class GoodsService {
 			return "재고 값이 음수가 되어 수정할 수 없습니다.";
 	}
 
-	public void updateGoods(GoodsVO g) {
+	public void update(GoodsVO g) {
 		if(g.getG_no() == 0)
 			throw new IllegalArgumentException("PK값 g_no 가 0임");
 		if(dao.update(g) == 1)
 			return;
 		throw new RuntimeException("수정 실패");
+	}
+
+	public void delete(int g_no) {
+		if(g_no == 0)
+			throw new IllegalArgumentException("PK값 g_no 가 0임");
+		if(dao.deleteOne(g_no) == 1) {
+			return;
+		}
+		throw new RuntimeException("삭제 실패");
 	}
 }

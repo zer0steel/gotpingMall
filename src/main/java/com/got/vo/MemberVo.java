@@ -1,6 +1,7 @@
 package com.got.vo;
 
 import java.security.PrivateKey;
+import java.sql.Timestamp;
 
 import com.got.enums.Grade;
 import com.got.util.BCrypt;
@@ -9,8 +10,9 @@ import com.got.util.RSA;
 public class MemberVO {
 	private int m_no;
 	private String id, name, pwd, email, addr;
-	private boolean isLoginSuccess = false;
+	private Timestamp join_date;
 	private Grade grade;
+	private boolean isLoginSuccess = false;
 	
 	public int getM_no() {
 		return m_no;
@@ -48,7 +50,6 @@ public class MemberVO {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	/*���� ���� �޼���*/
 	public Grade getGrade() {
 		return grade;
 	}
@@ -78,5 +79,11 @@ public class MemberVO {
 	public void encyptPwd(PrivateKey privateKey) {
 		String pwd = RSA.decryptRsa(this.pwd, privateKey);
 		this.pwd = BCrypt.hashpw(pwd,BCrypt.gensalt(12));
+	}
+	public Timestamp getJoin_date() {
+		return join_date;
+	}
+	public void setJoin_date(Timestamp join_date) {
+		this.join_date = join_date;
 	}
 }

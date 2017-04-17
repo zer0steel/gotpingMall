@@ -30,4 +30,8 @@
 			saving_mileage = #{saving_mileage}, status_code = #{status_code}
 		WHERE g_no = #{g_no}
 	</update>
+	
+	<delete id="deleteOne">
+		DELETE goods WHERE g_no = #{g_no}
+	</delete>
 </mapper>

@@ -28,4 +28,8 @@ public class GoodsDao {
 	public int update(GoodsVO g) {
 		return dao.update("g.update", g);
 	}
+
+	public int deleteOne(int g_no) {
+		return dao.delete("g.deleteOne", g_no);
+	}
 }
