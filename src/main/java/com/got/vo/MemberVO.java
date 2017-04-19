@@ -56,6 +56,9 @@ public class MemberVO {
 	public void setGrade(int grade) {
 		this.grade = Grade.of(grade);
 	}
+	public void setEnumGrade(Grade grade) {
+		this.grade = grade;
+	}
 	
 	public void setLogin() {
 		this.isLoginSuccess = true;
@@ -86,4 +89,5 @@ public class MemberVO {
 	public void setJoin_date(Timestamp join_date) {
 		this.join_date = join_date;
 	}
+	
 }

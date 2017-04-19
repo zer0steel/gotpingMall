@@ -129,7 +129,7 @@
 <div class="col-md-6">
 	<jsp:include page="include/shippingReceivingForm.jsp"></jsp:include>
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/goods/category.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/goods/categorySelectBox.js"></script>
 <script type="text/javascript">
 (function() {
 	$("#goods-form input").attr("readonly", true);

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.got.dao.MemberDao;
+import com.got.enums.Grade;
 import com.got.vo.MemberGradeVO;
 import com.got.vo.MemberVO;
 
@@ -29,8 +30,11 @@ public class MemberService {
 	
 	public boolean join(MemberVO m, PrivateKey privateKey) {
 		m.encyptPwd(privateKey);
+		m.setEnumGrade(Grade.UNAUTHORIZED_MEMBER);
+		
 		MemberGradeVO mg = new MemberGradeVO();
 		mg.setReason("신규 가입");
+		
 		int insertedCount = dao.insertNewMember(m, mg);
 		if(insertedCount == 1)
 			return true;

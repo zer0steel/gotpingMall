@@ -28,7 +28,7 @@ public enum Grade {
 		return g;
 	}
 	
-	public int getGradeNum() {
+	public int getCode() {
 		return this.grade;
 	}
 	

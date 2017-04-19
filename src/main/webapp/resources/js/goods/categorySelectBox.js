@@ -26,7 +26,9 @@ $("select[name=big], select[name=middle]").change(function() {
 
 
 var Category = {
-	BIG : 1, MIDDLE : 2, SMALL : 3,
+	BIG : 1, 
+	MIDDLE : 2, 
+	SMALL : 3,
 	/* 분류번호를 저장한다 */
 	setC_no : function(c_no) {
 		this.c_no = c_no;
@@ -44,6 +46,7 @@ var Category = {
 		this.menu_level = category.menu_level;
 		return this;
 	},
+	
 	setSubMenu_level : function(menu_level) {
 		this.menu_level = menu_level + 1;
 		return this;

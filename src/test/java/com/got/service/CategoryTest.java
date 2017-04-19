@@ -26,26 +26,6 @@ public class CategoryTest {
 	CategoryVO c2;
 	CategoryVO c3;
 	
-	@Before
-	public void setup() {
-		c1 = new CategoryVO();
-		c1.setIn_use(false);
-		c1.setParent_no(0);
-		c1.setMenu_level(1);
-		c1.setTitle("������");
-		
-		c2 = new CategoryVO();
-		c2.setIn_use(true);
-		c2.setParent_no(3);
-		c2.setMenu_level(1);
-		c2.setTitle("");
-		
-		c3 = new CategoryVO();
-		c3.setIn_use(false);
-		c3.setParent_no(0);
-		c3.setMenu_level(1);
-		c3.setTitle("������");
-	}
 	
 //	@Test
 //	public void getAllTest() {

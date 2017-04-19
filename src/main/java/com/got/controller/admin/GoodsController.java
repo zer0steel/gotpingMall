@@ -1,8 +1,4 @@
-package com.got.controller;
-
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
+package com.got.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +12,8 @@ import com.got.enums.HistoryCategory;
 import com.got.enums.Page;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
+import com.got.util.CommonUtil;
+import com.got.vo.GoodsImgVO;
 import com.got.vo.GoodsVO;
 
 @Controller
@@ -30,10 +28,10 @@ public class GoodsController {
 		return Page.setAdminViewPage(mav, "goods/insert.jsp");
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
-	public void insertGoodsSubmit(HttpServletResponse res, GoodsVO g) throws IOException {
-		res.getWriter().print(gs.enroll(g));
+	public ModelAndView insertGoodsSubmit(GoodsVO g, String[] fileInfo) {
+		gs.enroll(g, fileInfo);
+		return new ModelAndView("redirect:/admin/goods/insert.yo");
 	}
 	
 	@RequestMapping("admin/goods/list.yo")

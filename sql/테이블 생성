@@ -1,11 +1,13 @@
-/* ȸ�� */
+/* 회원 */
 CREATE TABLE member (
-	m_no NUMBER NOT NULL, /* ����ȣ */
-	id VARCHAR2(50) NOT NULL, /* ���̵� */
-	name VARCHAR2(50) NOT NULL, /* �̸� */
-	pwd VARCHAR2(72) NOT NULL, /* ��й�ȣ */
-	email VARCHAR2(40) NOT NULL, /* �̸��� */
-	addr VARCHAR2(255) /* �ּ� */
+	m_no NUMBER NOT NULL, /* 고객번호 */
+	id VARCHAR2(50) NOT NULL, /* 아이디 */
+	name VARCHAR2(50) NOT NULL, /* 이름 */
+	pwd VARCHAR2(72) NOT NULL, /* 비밀번호 */
+	email VARCHAR2(40) NOT NULL, /* 이메일 */
+	addr VARCHAR2(255), /* 주소 */
+	join_date DATE, /* 가입일 */
+	grade NUMBER /* 등급 */
 );
 
 CREATE UNIQUE INDEX member
@@ -20,11 +22,11 @@ ALTER TABLE member
 			m_no
 		);
 
-/* �Խ��� */
+/* 게시판 */
 CREATE TABLE board (
-	b_no NUMBER NOT NULL, /* �Խ��ǹ�ȣ */
-	b_title VARCHAR2(50), /* �Խ����̸� */
-	b_regdate DATE /* ������ */
+	b_no NUMBER NOT NULL, /* 게시판번호 */
+	b_title VARCHAR2(50), /* 게시판이름 */
+	b_regdate DATE /* 생성일 */
 );
 
 CREATE UNIQUE INDEX PK_board
@@ -39,18 +41,19 @@ ALTER TABLE board
 			b_no
 		);
 
-/* ��ǰ */
+/* 상품 */
 CREATE TABLE goods (
-	g_no NUMBER NOT NULL, /* ��ǰ��ȣ */
-	c_no NUMBER, /* �з���ȣ */
-	name VARCHAR2(50), /* ��ǰ�� */
-	detail VARCHAR2(1000), /* �󼼼��� */
-	stock NUMBER, /* ��� */
-	purchase_price NUMBER, /* ���԰��� */
-	sell_price NUMBER, /* �ǸŰ��� */
-	discount_rate NUMBER, /* ������ */
-	saving_mileage NUMBER, /* ���ϸ��� ������ */
-	status NUMBER(1) /* ���� */
+	g_no NUMBER NOT NULL, /* 상품번호 */
+	c_no NUMBER, /* 분류번호 */
+	name VARCHAR2(50), /* 상품명 */
+	detail VARCHAR2(1000), /* 상세설명 */
+	stock NUMBER, /* 재고량 */
+	purchase_price NUMBER, /* 매입가격 */
+	sell_price NUMBER, /* 판매가격 */
+	discount_rate NUMBER, /* 할인율 */
+	saving_mileage NUMBER, /* 마일리지 적립율 */
+	status_code NUMBER(1), /* 상태 */
+	is_deleted VARCHAR2(5) /* 삭제여부 */
 );
 
 CREATE UNIQUE INDEX PK_goods
@@ -65,13 +68,13 @@ ALTER TABLE goods
 			g_no
 		);
 
-/* �ֹ��� */
+/* 주문상세 */
 CREATE TABLE order_detail (
-	od_no NUMBER NOT NULL, /* �ֹ��󼼹�ȣ */
-	amount NUMBER, /* ���ż��� */
-	total_price NUMBER, /* �ѱ��Ű��� */
-	g_no NUMBER, /* ��ǰ��ȣ */
-	o_no NUMBER /* �ֹ���ȣ */
+	od_no NUMBER NOT NULL, /* 주문상세번호 */
+	amount NUMBER, /* 구매수량 */
+	total_price NUMBER, /* 총구매가격 */
+	g_no NUMBER, /* 상품번호 */
+	o_no NUMBER /* 주문번호 */
 );
 
 CREATE UNIQUE INDEX PK_order_detail
@@ -86,16 +89,16 @@ ALTER TABLE order_detail
 			od_no
 		);
 
-/* ��ǰ�ֹ� */
+/* 상품주문 */
 CREATE TABLE orders (
-	o_no NUMBER NOT NULL, /* �ֹ���ȣ */
-	m_no NUMBER, /* ����ȣ */
-	total_price NUMBER, /* �ѱݾ� */
-	pay VARCHAR2(5), /* ���� ��/�� */
-	regdate DATE, /* ����� */
-	recipient VARCHAR2(50), /* �޴»�� �̸� */
-	addr VARCHAR2(255), /* �ּ� */
-	message VARCHAR2(255) /* ��۸޽��� */
+	o_no NUMBER NOT NULL, /* 주문번호 */
+	m_no NUMBER, /* 고객번호 */
+	total_price NUMBER, /* 총금액 */
+	pay VARCHAR2(5), /* 결제 유/무 */
+	regdate DATE, /* 등록일 */
+	recipient VARCHAR2(50), /* 받는사람 이름 */
+	addr VARCHAR2(255), /* 주소 */
+	message VARCHAR2(255) /* 배송메시지 */
 );
 
 CREATE UNIQUE INDEX PK_orders
@@ -110,12 +113,12 @@ ALTER TABLE orders
 			o_no
 		);
 
-/* ��ȸ�� */
+/* 비회원 */
 CREATE TABLE non_member (
-	nm_no NUMBER NOT NULL, /* ����ȣ */
-	name VARCHAR2(50), /* �̸� */
-	email VARCHAR2(40), /* �̸��� */
-	pwd VARCHAR2(72) /* �ֹ���й�ȣ */
+	nm_no NUMBER NOT NULL, /* 고객번호 */
+	name VARCHAR2(50), /* 이름 */
+	email VARCHAR2(40), /* 이메일 */
+	pwd VARCHAR2(72) /* 주문비밀번호 */
 );
 
 CREATE UNIQUE INDEX PK_non_member
@@ -130,12 +133,12 @@ ALTER TABLE non_member
 			nm_no
 		);
 
-/* ���� */
+/* 결제 */
 CREATE TABLE payment (
-	o_no NUMBER NOT NULL, /* �ֹ���ȣ */
-	price NUMBER, /* ������ �ݾ� */
-	regdate DATE, /* ������ */
-	py_no NUMBER /* �������ܹ�ȣ */
+	o_no NUMBER NOT NULL, /* 주문번호 */
+	price NUMBER, /* 지불한 금액 */
+	regdate DATE, /* 결제일 */
+	py_no NUMBER /* 결제수단번호 */
 );
 
 CREATE UNIQUE INDEX PK_payment
@@ -150,14 +153,14 @@ ALTER TABLE payment
 			o_no
 		);
 
-/* ���ϸ��� */
+/* 마일리지 */
 CREATE TABLE mileage (
-	m_no NUMBER NOT NULL, /* ����ȣ */
-	m_date DATE NOT NULL, /* ������¥ */
-	total_mileage NUMBER, /* ���� ���ϸ��� */
-	change_amount NUMBER, /* ����/��� �� ���ϸ��� */
-	reason VARCHAR2(150), /* ���� ���� */
-	o_no NUMBER /* �ֹ���ȣ */
+	m_no NUMBER NOT NULL, /* 고객번호 */
+	m_date DATE NOT NULL, /* 변동날짜 */
+	total_mileage NUMBER, /* 현재 마일리지 */
+	change_amount NUMBER, /* 적립/사용 된 마일리지 */
+	reason VARCHAR2(150), /* 변동 사유 */
+	o_no NUMBER /* 주문번호 */
 );
 
 CREATE UNIQUE INDEX PK_mileage
@@ -174,11 +177,11 @@ ALTER TABLE mileage
 			m_date
 		);
 
-/* �ֹ�Ȯ�� */
+/* 주문확인 */
 CREATE TABLE order_check (
-	o_no NUMBER NOT NULL, /* �ֹ���ȣ */
-	status VARCHAR2(20), /* �ֹ����� */
-	regdate DATE /* ó������ */
+	o_no NUMBER NOT NULL, /* 주문번호 */
+	status VARCHAR2(20), /* 주문상태 */
+	regdate DATE /* 처리일자 */
 );
 
 CREATE UNIQUE INDEX PK_order_check
@@ -193,10 +196,10 @@ ALTER TABLE order_check
 			o_no
 		);
 
-/* �������� */
+/* 결제수단 */
 CREATE TABLE payment_way (
-	py_no NUMBER NOT NULL, /* �������ܹ�ȣ */
-	name VARCHAR2(30) /* �������ܸ� */
+	py_no NUMBER NOT NULL, /* 결제수단번호 */
+	name VARCHAR2(30) /* 결제수단명 */
 );
 
 CREATE UNIQUE INDEX PK_payment_way
@@ -211,14 +214,14 @@ ALTER TABLE payment_way
 			py_no
 		);
 
-/* �Խñ� */
+/* 게시글 */
 CREATE TABLE post (
-	p_no NUMBER NOT NULL, /* �۹�ȣ */
-	p_title VARCHAR2(250), /* ���� */
-	p_content VARCHAR2(2000), /* ���� */
-	p_writer VARCHAR2(50), /* �ۼ��� */
-	p_regdate DATE, /* ����� */
-	b_no NUMBER /* �Խ��ǹ�ȣ */
+	p_no NUMBER NOT NULL, /* 글번호 */
+	p_title VARCHAR2(250), /* 제목 */
+	p_content VARCHAR2(2000), /* 내용 */
+	p_writer VARCHAR2(50), /* 작성자 */
+	p_regdate DATE, /* 등록일 */
+	b_no NUMBER /* 게시판번호 */
 );
 
 CREATE UNIQUE INDEX PK_post
@@ -233,11 +236,11 @@ ALTER TABLE post
 			p_no
 		);
 
-/* ��ٱ��� */
+/* 장바구니 */
 CREATE TABLE basket (
-	m_no NUMBER NOT NULL, /* ����ȣ */
-	g_no NUMBER NOT NULL, /* ��ǰ��ȣ */
-	amount NUMBER /* ���� */
+	m_no NUMBER NOT NULL, /* 고객번호 */
+	g_no NUMBER NOT NULL, /* 상품번호 */
+	amount NUMBER /* 수량 */
 );
 
 CREATE UNIQUE INDEX PK_basket
@@ -254,13 +257,13 @@ ALTER TABLE basket
 			g_no
 		);
 
-/* ȸ����� */
+/* 회원등급 */
 CREATE TABLE member_grade (
-	m_no NUMBER NOT NULL, /* ����ȣ */
-	mg_date DATE NOT NULL, /* ������¥ */
-	grade NUMBER, /* ȸ����� */
-	point NUMBER, /* ����Ʈ */
-	reason VARCHAR2(150) /* �������� */
+	m_no NUMBER NOT NULL, /* 고객번호 */
+	mg_date DATE NOT NULL, /* 변동날짜 */
+	mg_grade NUMBER, /* 회원등급 */
+	point NUMBER, /* 포인트 */
+	reason VARCHAR2(150) /* 변동사유 */
 );
 
 CREATE UNIQUE INDEX PK_member_grade
@@ -277,12 +280,13 @@ ALTER TABLE member_grade
 			mg_date
 		);
 
-/* ���� */
+/* 파일 */
 CREATE TABLE files (
-	f_no NUMBER NOT NULL, /* ���Ϲ�ȣ */
-	name VARCHAR2(50), /* �����̸� */
-	save_path VARCHAR2(255), /* ������ */
-	regdate DATE /* ��ϳ�¥ */
+	f_no NUMBER NOT NULL, /* 파일번호 */
+	real_name VARCHAR2(50), /* 파일실제이름 */
+	save_name NUMBER, /* 파일이름 */
+	save_path VARCHAR2(255), /* 저장경로 */
+	regdate DATE /* 등록날짜 */
 );
 
 CREATE UNIQUE INDEX PK_files
@@ -297,11 +301,11 @@ ALTER TABLE files
 			f_no
 		);
 
-/* ��ǰ�̹��� */
+/* 상품이미지 */
 CREATE TABLE goods_image (
-	g_no NUMBER NOT NULL, /* ��ǰ��ȣ */
-	f_no NUMBER NOT NULL, /* ���Ϲ�ȣ */
-	location VARCHAR2(255) /* �̹��� ��ġ */
+	g_no NUMBER NOT NULL, /* 상품번호 */
+	f_no NUMBER NOT NULL, /* 파일번호 */
+	location VARCHAR2(255) /* 이미지 위치 */
 );
 
 CREATE UNIQUE INDEX PK_goods_image
@@ -318,38 +322,36 @@ ALTER TABLE goods_image
 			f_no
 		);
 
-/* ������� */
+/* 입출고내역 */
 CREATE TABLE shipping_receiving (
-	sr_no NUMBER NOT NULL, /* ������ȣ */
-	g_no NUMBER NOT NULL, /* ��ǰ��ȣ */
-	category NUMBER(1), /* �з� */
-	detail VARCHAR2(50), /* ���� */
-	amount NUMBER, /* ���� */
-	price NUMBER, /* �ܰ� */
-	regdate DATE /* ��¥ */
+	sr_no NUMBER NOT NULL, /* 입출고번호 */
+	category NUMBER(1), /* 분류 */
+	detail VARCHAR2(50), /* 내용 */
+	amount NUMBER, /* 수량 */
+	change_stock NUMBER, /* 변동후 재고량 */
+	price NUMBER, /* 단가 */
+	regdate DATE, /* 날짜 */
+	g_no NUMBER /* 상품번호 */
 );
 
 CREATE UNIQUE INDEX PK_shipping_receiving
 	ON shipping_receiving (
-		sr_no ASC,
-		g_no ASC
+		sr_no ASC
 	);
 
 ALTER TABLE shipping_receiving
 	ADD
 		CONSTRAINT PK_shipping_receiving
 		PRIMARY KEY (
-			sr_no,
-			g_no
+			sr_no
 		);
 
-/* �з� */
+/* 분류 */
 CREATE TABLE category (
-	c_no NUMBER NOT NULL, /* �з���ȣ */
-	title VARCHAR2(50), /* �з��� */
-	parent_no NUMBER, /* �����з���ȣ */
-	menu_level NUMBER, /* �з����� */
-	in_use VARCHAR2(5) /* ��뿩�� */
+	c_no NUMBER NOT NULL, /* 분류번호 */
+	title VARCHAR2(50), /* 분류명 */
+	super_no NUMBER, /* 상위분류번호 */
+	menu_level NUMBER /* 분류레벨 */
 );
 
 CREATE UNIQUE INDEX PK_category

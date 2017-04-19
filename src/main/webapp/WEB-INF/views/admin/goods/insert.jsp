@@ -35,14 +35,14 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left">
-				<jsp:include page="include/goodsForm.jsp"></jsp:include>				
-				<div class="form-group">
-					<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-						<button type="reset" class="btn btn-primary">입력 초기화</button>
-						<button type="button" class="btn btn-success" id="btn-enroll">등록</button>
+				<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left" action="insert.yo" method="post">
+					<jsp:include page="include/goodsForm.jsp"></jsp:include>				
+					<div class="form-group">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button type="reset" class="btn btn-primary">입력 초기화</button>
+							<button type="button" class="btn btn-success" id="btn-enroll">등록</button>
+						</div>
 					</div>
-				</div>
 				</form>
 			</div>
 		</div>
@@ -64,6 +64,18 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
+Dropzone.autoDiscover = false;
+$("#uploadFile").dropzone({
+	init : function() {
+		this.on("success", function(file, fileInfo) {
+			var data = JSON.stringify(fileInfo);
+			var hiddenFileData = $("<input />").attr({"type":"text", "name":"fileInfo"}).val(data);
+			console.log(data);
+			$("#goods-form").append( hiddenFileData );
+		});
+	}
+});
+
 $("select").change(function() {
 	var c_no = $(this).val();
 	$("input[name=c_no]").val( c_no );
@@ -75,17 +87,16 @@ $("input[type=number]").focusout(function() {
 });
 
 $("#btn-enroll").click(function() {
-	if( !checkEmptyField() ) {
+	var c_no = $("input[name=c_no]").val();
+	if( c_no.length < 1 ) {
+		alert("분류를 지정하셔야 합니다.");
 		return;
 	}
-	var goodsData = $("#goods-form").serializeArray();
-	
-	requestInsertGoods(goodsData).done(function(insertedCount) {
-		showMessage(insertedCount);
-	}).fail(function(err) {
-		alert("잠시후 다시 시도해 주세요.")
-		console.log(err);
-	});
+	else {
+		if( !checkEmptyField() )
+			return;
+		$("#goods-form").submit();
+	}
 });
 
 function checkEmptyField() {

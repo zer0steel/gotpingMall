@@ -1,5 +1,6 @@
 package com.got.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import com.got.dao.GoodsDao;
 import com.got.dao.ShippingReceivingDao;
 import com.got.enums.GoodsStatus;
 import com.got.util.CommonUtil;
+import com.got.util.FileUtil;
+import com.got.vo.GoodsImgVO;
 import com.got.vo.GoodsVO;
 
 @Service
@@ -17,9 +20,21 @@ public class GoodsService {
 	@Autowired private GoodsDao dao;
 	@Autowired private ShippingReceivingDao srDao;
 
-	public int enroll(GoodsVO g) {
+	public int enroll(GoodsVO g, String[] fileInfo) {
+		validationCheck(g);
+		ArrayList<GoodsImgVO> list = CommonUtil.getVO(fileInfo, GoodsImgVO.class);
+		list = FileUtil.moveToSavePath(g.getMenuLevel().getKorName(), list);
 		g.setStatus(GoodsStatus.STAND_BY);
 		return dao.insert(g);
+	}
+
+	private void validationCheck(GoodsVO g) {
+		if(g.getC_no() < 0)
+			throw new IllegalArgumentException("분류번호가 지정안됨.");
+		if(g.getName() == null || (g.getName() != null && g.getName().equals(""))) {
+			throw new IllegalArgumentException("상품명이 없음 : " + g.getName());
+		}
+		
 	}
 
 	public List<GoodsVO> getAll() {

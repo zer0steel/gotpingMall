@@ -1,4 +1,4 @@
-package com.got.controller;
+package com.got.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,7 @@ import com.got.enums.Page;
 import com.got.service.MemberService;
 
 @Controller("adminMemberController")
-public class AdminMemberController {
+public class MemberController {
 	
 	@Autowired private MemberService s;
 	

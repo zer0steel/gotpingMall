@@ -32,4 +32,8 @@ public class CategoryDao {
 	public int updateOne(CategoryVO c) {
 		return dao.update("c.updateOne", c);
 	}
+
+	public List<CategoryVO> selectSub(int c_no) {
+		return dao.selectList("c.sub", c_no);
+	}
 }

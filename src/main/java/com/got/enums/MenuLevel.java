@@ -31,7 +31,6 @@ public enum MenuLevel {
 	private Map<Integer, CategoryVO> categories;
 	private String korName;
 	private int menu_level;
-	private static boolean isSetted = false;
 
 	private MenuLevel(int menu_level, String korName, Map<Integer, CategoryVO> categories) {
 		this.menu_level = menu_level;
@@ -45,8 +44,6 @@ public enum MenuLevel {
 	{	return this.menu_level;	}
 	public Map<Integer, CategoryVO> getCategories() 
 	{	return this.categories;	}
-	public static boolean isSetting() 
-	{	return isSetted;	}
 	
 	/**
 	 * 분류가 나뉘어져있지 않은 모든 분류 list를 분류레벨에 맞게 해당 enum의 map에 넣는다.
@@ -55,7 +52,6 @@ public enum MenuLevel {
 	public static void groupingCategories(List<CategoryVO> categories) {
 		for(CategoryVO c : categories) 
 			c.getMenuLevel().categories.put(c.getC_no(), c);
-		isSetted = true;
 	}
 	
 	public static MenuLevel of(int menu_level) {
@@ -63,61 +59,5 @@ public enum MenuLevel {
 		if(m == null)
 			throw new IllegalArgumentException("존재하지 않는 분류 레벨 : " + menu_level);
 		return m;
-	}
-	
-	/**
-	 * 자기자신(분류)을 소속되어 있는 분류레벨에 넣는다.
-	 * @param c
-	 */
-	public static void addCategory(CategoryVO c) {
-		if(c.getC_no() == 0)
-			throw new IllegalArgumentException("PK컬럼 c_no의 값 : 0");
-		c.getMenuLevel().categories.put(c.getC_no(), c);
-	}
-
-	public static void deleteCategory(int c_no) {
-		for(MenuLevel lvl : values())
-			if(deleteCategory(lvl, c_no)) 
-				return;
-		throw new IllegalArgumentException("분류배열 안에 해당 PK값 c_no로 저장된 분류가 존재하지 않음 : " + c_no);
-	}
-	
-	private static boolean deleteCategory(MenuLevel lvl, int c_no) {
-		if(lvl.categories.get(c_no) != null) {
-			lvl.categories.remove(c_no);
-			return true;
-		}
-		return false;
-	}
-
-	public static void updateCategory(CategoryVO c) {
-		for(MenuLevel lvl : values())
-			if(updateCategory(lvl, c))
-				return;
-		throw new IllegalArgumentException("분류배열 안에 해당 PK값 c_no로 저장된 분류가 존재하지 않음 : " + c.getC_no());
-	}
-	
-	private static boolean updateCategory(MenuLevel lvl, CategoryVO c) {
-		if(lvl.categories.get(c.getC_no()) != null) {
-			lvl.categories.remove(c.getC_no());
-			lvl.categories.put(c.getC_no(), c);
-			return true;
-		}
-		return false;
-	}
-
-	public static boolean isExistingSubCategory(int c_no) {
-		for(MenuLevel lvl : values())
-			if(findCategory(lvl, c_no).getC_no() > 0)
-				return true;
-		throw new IllegalArgumentException("분류배열 안에 해당 PK값 c_no로 저장된 분류가 존재하지 않음 : " + c_no);
-	}
-
-	private static CategoryVO findCategory(MenuLevel lvl, int c_no) {
-		CategoryVO c = lvl.categories.get(c_no);
-		if(c != null)
-			return c;
-		else
-			return new CategoryVO();
 	}
 }

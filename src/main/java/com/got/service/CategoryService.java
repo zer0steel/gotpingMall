@@ -30,11 +30,9 @@ public class CategoryService {
 	 */
 	public String enroll(CategoryVO c) {
 		validationCheck(c);
-		if(dao.insertOne(c) == 1) {
-			MenuLevel.addCategory(c);
+		if(dao.insertOne(c) == 1) 
 			return "등록되었습니다.";
-		}
-		return "등록에 실패했습니다.";
+		throw new RuntimeException("등록 실패");
 	}
 
 	/**
@@ -42,13 +40,11 @@ public class CategoryService {
 	 * @return 성공, 실패 메시지
 	 */
 	public String delete(int c_no) {
-		if( MenuLevel.isExistingSubCategory(c_no) )
-			return "하위 분류가 존재해서 삭제할수 없습니다.";
-		if(dao.deleteOne(c_no) == 1) {
-			MenuLevel.deleteCategory(c_no);
+		if(dao.selectSub(c_no).size() > 0) 
+			return "하위분류가 존재하여 삭제할 수 없습니다.";
+		if(dao.deleteOne(c_no) == 1) 
 			return "삭제되었습니다.";
-		}
-		return "삭제 실패했습니다.";
+		throw new RuntimeException("삭제 실패");
 	}
 
 	/**
@@ -58,12 +54,10 @@ public class CategoryService {
 	public String update(CategoryVO c) {
 		validationCheck(c);
 		if(c.getC_no() == 0)
-			throw new IllegalArgumentException("분류 수정해야 하는데 PK c_no 값이 0 이다.");
-		if(dao.updateOne(c) == 1) {
-			MenuLevel.updateCategory(c);
+			throw new IllegalArgumentException("분류 수정해야 하는데 PK c_no 값이 0");
+		if(dao.updateOne(c) == 1) 
 			return "수정했습니다.";
-		}
-		return "수정실패했습니다.";
+		throw new RuntimeException("수정 실패");
 	}
 	
 	/**
@@ -72,27 +66,23 @@ public class CategoryService {
 	 * @return big, middle, small 가 저장된 ModelAndView
 	 */
 	public ModelAndView setEnumsInMAV(ModelAndView mav) {
-		setEnum();
+		MenuLevel.groupingCategories(dao.selectAll());
 		mav.addObject("big", MenuLevel.BIG);
 		mav.addObject("middle", MenuLevel.MIDDLE);
 		mav.addObject("small", MenuLevel.SMALL);
 		return mav;
 	}
 	
-	/**
-	 * Enum class Menu_level에 분류레벨별로 상세분류들을 저장한다.
-	 */
-	private void setEnum() {
-		if( !MenuLevel.isSetting() ) 
-			MenuLevel.groupingCategories(dao.selectAll());
-	}
-	
 	private void validationCheck(CategoryVO c) {
+		if(c.getMenu_level() < MenuLevel.BIG.getCode() || c.getMenu_level() > MenuLevel.SMALL.getCode())
+			throw new IllegalArgumentException("1보다 작거나 3보다 큰 분류레벨 코드가 들어왔음.");
+		if(c.getSuper_no()< 0)
+			throw new IllegalArgumentException("부모 분류 번호값이 음수");
 		if(c.getTitle().equals(""))
 			throw new IllegalArgumentException("c.getTitle() is empty ");
-		if(c.getMenuLevel() == MenuLevel.BIG && c.getParent_no() > 0)
+		if(c.getMenuLevel() == MenuLevel.BIG && c.getSuper_no() > 0)
 			throw new IllegalArgumentException("최상위 분류인데 상위분류 번호를 가지고 있음. 객체 정보 : " + c);
-		if(c.getMenuLevel() != MenuLevel.BIG && c.getParent_no() == 0)
+		if(c.getMenuLevel() != MenuLevel.BIG && c.getSuper_no() == 0)
 			throw new IllegalArgumentException("최상위 분류가 아닌데 부모 번호가 존재하지 않음. 객체 정보 : " + c);
 	}
 }
