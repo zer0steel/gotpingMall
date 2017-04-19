@@ -4,10 +4,8 @@ import java.security.Timestamp;
 
 public class MemberGradeVO {
 	
-	private int m_no;
+	private int m_no, mg_grade, point;
 	private Timestamp mg_date;
-	private int grade;
-	private int point;
 	private String reason;
 	
 	public int getM_no() {
@@ -22,12 +20,6 @@ public class MemberGradeVO {
 	public void setMg_date(Timestamp mg_date) {
 		this.mg_date = mg_date;
 	}
-	public int getGrade() {
-		return grade;
-	}
-	public void setGrade(int grade) {
-		this.grade = grade;
-	}
 	public int getPoint() {
 		return point;
 	}
@@ -39,5 +31,11 @@ public class MemberGradeVO {
 	}
 	public void setReason(String reason) {
 		this.reason = reason;
+	}
+	public int getMg_grade() {
+		return mg_grade;
+	}
+	public void setMg_grade(int mg_grade) {
+		this.mg_grade = mg_grade;
 	}
 }

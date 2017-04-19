@@ -50,8 +50,8 @@ public class MemberVO {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	public Grade getGrade() {
-		return grade;
+	public int getGrade() {
+		return grade.getCode();
 	}
 	public void setGrade(int grade) {
 		this.grade = Grade.of(grade);
