@@ -4,14 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.got.controller.FileController;
 import com.got.vo.FileVO;
-import com.got.vo.GoodsImgVO;
 
 public class FileUtil {
 	
@@ -46,9 +45,14 @@ public class FileUtil {
 		throw new IllegalArgumentException("파일 삭제 실패. save_name : " + save_name + " | path : " + path);
 	}
 
-	public static <T extends FileVO> ArrayList<T> moveToSavePath(String folderName, ArrayList<T> list) {
+	public static <T extends FileVO> List<T> moveToSavePath(String folderName, List<T> list) {
 		String tempPath = FileController.tempPath;
-		String savePath = tempPath.substring(0, tempPath.lastIndexOf("/")) + "/" + folderName;
+		String savePath = tempPath.substring(0, tempPath.lastIndexOf("\\") + 1) + folderName;
+		
+		File saveDir = new File(savePath);
+		if( !saveDir.exists() )
+			saveDir.mkdirs();
+		
 		for(T fileVO : list) {
 			File tempFile = new File(tempPath + "/" + fileVO.getSave_name());
 			File saveFile = new File(savePath + "/" + fileVO.getSave_name());

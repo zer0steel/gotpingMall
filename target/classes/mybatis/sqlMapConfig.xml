@@ -16,6 +16,7 @@
 	</environments>
 	<mappers>
 		<mapper resource="mybatis/fileMapper.xml" />
+		<mapper resource="mybatis/goodsImgMapper.xml" />
 		<mapper resource="mybatis/shippingReceivingMapper.xml" />
 		<mapper resource="mybatis/goodsMapper.xml" />
 		<mapper resource="mybatis/categoryMapper.xml" />

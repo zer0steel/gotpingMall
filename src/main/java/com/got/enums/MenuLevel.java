@@ -31,6 +31,8 @@ public enum MenuLevel {
 	private Map<Integer, CategoryVO> categories;
 	private String korName;
 	private int menu_level;
+	
+	private static boolean setting = false;
 
 	private MenuLevel(int menu_level, String korName, Map<Integer, CategoryVO> categories) {
 		this.menu_level = menu_level;
@@ -44,6 +46,19 @@ public enum MenuLevel {
 	{	return this.menu_level;	}
 	public Map<Integer, CategoryVO> getCategories() 
 	{	return this.categories;	}
+	public static boolean isSetting() {
+		return MenuLevel.setting;
+	}
+	
+	/**
+	 * categoryVO에서 c_no가 할당될때 분류가 세팅되어 있으면 자동적으로 해당 VO는 관련 정보들로 세팅되게 되어있음.<br>
+	 * 세팅을 false로 안바꾸면 새로운 분류가 추가될때 시퀀스에서 새로운 번호를 할당하면 
+	 * 해당 분류 레벨에서 존재하지 않는 새로운 번호라서 에러가 뜬다.<br>
+	 * 그걸 회피하려면 미리 이 메서드를 실행시켜야함.
+	 */
+	public static void insertSetting() {
+		MenuLevel.setting = false;
+	}
 	
 	/**
 	 * 분류가 나뉘어져있지 않은 모든 분류 list를 분류레벨에 맞게 해당 enum의 map에 넣는다.
@@ -52,6 +67,7 @@ public enum MenuLevel {
 	public static void groupingCategories(List<CategoryVO> categories) {
 		for(CategoryVO c : categories) 
 			c.getMenuLevel().categories.put(c.getC_no(), c);
+		setting = true;
 	}
 	
 	public static MenuLevel of(int menu_level) {
@@ -59,5 +75,26 @@ public enum MenuLevel {
 		if(m == null)
 			throw new IllegalArgumentException("존재하지 않는 분류 레벨 : " + menu_level);
 		return m;
+	}
+
+	public static CategoryVO getCategory(int c_no) {
+		for(MenuLevel lvl : values()) {
+			CategoryVO c = lvl.categories.get(c_no);
+			if( c != null )
+				return c;
+		}
+		throw new IllegalArgumentException("존재하지 않는 분류번호 : " + c_no);
+	}
+
+	public static CategoryVO findBigCategory(int c_no) {
+		CategoryVO c = MenuLevel.getCategory(c_no);
+		if(c.getMenuLevel() == MenuLevel.BIG) 
+			return c;
+		else if(c.getMenuLevel() == MenuLevel.MIDDLE)
+			return MenuLevel.getCategory(c.getSuper_no());
+		else {
+			CategoryVO middle = MenuLevel.getCategory(c.getSuper_no());
+			return MenuLevel.getCategory(middle.getSuper_no());
+		}
 	}
 }

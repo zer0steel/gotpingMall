@@ -15,12 +15,12 @@
 		<selectKey keyProperty="c_no" resultType="int" order="BEFORE">
 			SELECT c_no.nextval FROM DUAL
 		</selectKey>
-		INSERT INTO category(c_no, parent_no, title, menu_level, in_use) 
-		VALUES(#{c_no}, #{parent_no}, #{title}, #{menu_level}, #{in_use})
+		INSERT INTO category(c_no, super_no, title, menu_level) 
+		VALUES(#{c_no}, #{super_no}, #{title}, #{menu_level})
 	</insert>
 	
 	<update id="updateOne">
-		UPDATE category SET parent_no = #{parent_no}, title = #{title}, menu_level = #{menu_level}, in_use = #{in_use}
+		UPDATE category SET super_no = #{super_no}, title = #{title}, menu_level = #{menu_level}
 		WHERE c_no = #{c_no}
 	</update>
 	

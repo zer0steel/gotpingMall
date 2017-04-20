@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.got.dao.FileDao;
-import com.got.util.CommonUtil;
 import com.got.util.FileUtil;
 import com.got.vo.FileVO;
 

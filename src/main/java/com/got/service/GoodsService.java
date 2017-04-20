@@ -1,31 +1,44 @@
 package com.got.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.got.dao.GoodsDao;
 import com.got.dao.ShippingReceivingDao;
 import com.got.enums.GoodsStatus;
+import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
 import com.got.util.FileUtil;
+import com.got.vo.CategoryVO;
 import com.got.vo.GoodsImgVO;
 import com.got.vo.GoodsVO;
 
 @Service
 public class GoodsService {
 	
+	private static Logger log = Logger.getLogger(GoodsService.class);
+	
 	@Autowired private GoodsDao dao;
 	@Autowired private ShippingReceivingDao srDao;
 
 	public int enroll(GoodsVO g, String[] fileInfo) {
+		log.info(g.toString());
 		validationCheck(g);
-		ArrayList<GoodsImgVO> list = CommonUtil.getVO(fileInfo, GoodsImgVO.class);
-		list = FileUtil.moveToSavePath(g.getMenuLevel().getKorName(), list);
+		
 		g.setStatus(GoodsStatus.STAND_BY);
+		if(fileInfo != null) 
+			return enrollWithImg(g, fileInfo);
 		return dao.insert(g);
+	}
+	
+	private int enrollWithImg(GoodsVO g, String[] fileInfo) {
+		List<GoodsImgVO> list = CommonUtil.getVO(fileInfo, GoodsImgVO.class);
+		CategoryVO c = MenuLevel.findBigCategory(g.getC_no());
+		list = FileUtil.moveToSavePath(c.getTitle(), list);
+		return dao.insertWithImg(g, list);
 	}
 
 	private void validationCheck(GoodsVO g) {

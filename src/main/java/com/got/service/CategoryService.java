@@ -30,6 +30,7 @@ public class CategoryService {
 	 */
 	public String enroll(CategoryVO c) {
 		validationCheck(c);
+		MenuLevel.insertSetting();
 		if(dao.insertOne(c) == 1) 
 			return "등록되었습니다.";
 		throw new RuntimeException("등록 실패");

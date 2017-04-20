@@ -12,10 +12,13 @@
 	</select>
 
 	<insert id="insert">
+		<selectKey order="BEFORE" resultType="int" keyProperty="g_no">
+			SELECT g_no.nextval FROM DUAL
+		</selectKey>
 		INSERT INTO goods(g_no, c_no, name, detail, stock, 
-		purchase_price, sell_price, discount_rate, saving_mileage, status_code)
-		VALUES(g_no.nextval, #{c_no}, #{name}, #{detail}, #{stock}, 
-		#{purchase_price}, #{sell_price}, #{discount_rate}, #{saving_mileage}, #{status_code})
+		purchase_price, sell_price, discount_rate, saving_mileage, status_code, is_deleted)
+		VALUES(#{g_no}, #{c_no}, #{name}, #{detail}, #{stock}, 
+		#{purchase_price}, #{sell_price}, #{discount_rate}, #{saving_mileage}, #{status_code}, 'false')
 	</insert>
 	
 	<update id="updateStock">

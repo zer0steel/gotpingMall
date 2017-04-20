@@ -12,6 +12,8 @@ public class CategoryVO {
 	}
 	public void setC_no(int c_no) {
 		this.c_no = c_no;
+		if(MenuLevel.isSetting())
+			settingThis();
 	}
 	public String getTitle() {
 		return title;
@@ -33,6 +35,14 @@ public class CategoryVO {
 	}
 	public MenuLevel getMenuLevel() {
 		return menu_level;
+	}
+	public void settingThis() {
+		if( this.c_no > 0 ) {
+			CategoryVO c = MenuLevel.getCategory(c_no);
+			this.menu_level = c.menu_level;
+			this.super_no = c.super_no;
+			this.title = c.title;
+		}
 	}
 	@Override
 	public String toString() {

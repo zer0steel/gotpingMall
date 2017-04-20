@@ -68,9 +68,11 @@ Dropzone.autoDiscover = false;
 $("#uploadFile").dropzone({
 	init : function() {
 		this.on("success", function(file, fileInfo) {
+			delete fileInfo.save_path;
+			delete fileInfo.regdate;
+			fileInfo.location = "main";
 			var data = JSON.stringify(fileInfo);
 			var hiddenFileData = $("<input />").attr({"type":"text", "name":"fileInfo"}).val(data);
-			console.log(data);
 			$("#goods-form").append( hiddenFileData );
 		});
 	}

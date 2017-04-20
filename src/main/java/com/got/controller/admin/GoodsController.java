@@ -1,5 +1,9 @@
 package com.got.controller.admin;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +22,8 @@ import com.got.vo.GoodsVO;
 
 @Controller
 public class GoodsController {
+	
+	private static Logger log = Logger.getLogger(GoodsController.class);
 	
 	@Autowired private GoodsService gs;
 	@Autowired private CategoryService cs;

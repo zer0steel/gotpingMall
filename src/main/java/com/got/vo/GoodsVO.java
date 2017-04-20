@@ -102,7 +102,7 @@ public class GoodsVO extends CategoryVO {
 	}
 	@Override
 	public String toString() {
-		return "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
+		return super.toString() + "\nGoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
 				+ sell_price + ", discount_rate=" + discount_rate + ", saving_mileage=" + saving_mileage + ", name="
 				+ name + ", detail=" + detail + ", status=" + status + ", history=" + history + "]";
 	}

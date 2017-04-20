@@ -2,6 +2,8 @@ package com.got.vo;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FileVO {
 	
 	private int f_no, save_name;
@@ -37,5 +39,10 @@ public class FileVO {
 	}
 	public void setRegdate(Timestamp regdate) {
 		this.regdate = regdate;
+	}
+	@Override
+	public String toString() {
+		return "FileVO [f_no=" + f_no + ", save_name=" + save_name + ", save_path=" + save_path + ", real_name="
+				+ real_name + ", regdate=" + regdate + "]";
 	}
 }
