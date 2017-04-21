@@ -6,8 +6,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.got.dao.FileDao;
 import com.got.dao.GoodsDao;
-import com.got.dao.ShippingReceivingDao;
 import com.got.enums.GoodsStatus;
 import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
@@ -22,7 +22,8 @@ public class GoodsService {
 	private static Logger log = Logger.getLogger(GoodsService.class);
 	
 	@Autowired private GoodsDao dao;
-	@Autowired private ShippingReceivingDao srDao;
+	@Autowired private FileDao fdao;
+	@Autowired private SRService srService;
 
 	public void enroll(GoodsVO g) {
 		log.info(g.toString());
@@ -64,7 +65,8 @@ public class GoodsService {
 	 */
 	public GoodsVO detailAndSRHistory(int goods_no) {
 		GoodsVO g = dao.selectOneWithG_no(goods_no);
-		g.setHistory(srDao.selectListWithG_no(goods_no, SRService.DETAIL_GOODS_SHOW_HISTORY_COUNT));
+		g.setImages(fdao.selectGoodsImg(g.getG_no()));
+		g.setHistory(srService.getRecentHistory(goods_no));
 		return g;
 	}
 	

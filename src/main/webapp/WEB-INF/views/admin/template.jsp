@@ -38,6 +38,13 @@
 			</div>
 		</div>
 		<!-- /page content -->
+		
+		<footer>
+			<div class="pull-right">
+				모든지 판매하는 만능 온라인 쇼핑몰 <a href="${pageContext.request.contextPath}/front.yo">G-ping Mall</a>
+			</div>
+			<div class="clearfix"></div>
+		</footer>
 	</div>
 </div>
 <!-- Bootstrap -->

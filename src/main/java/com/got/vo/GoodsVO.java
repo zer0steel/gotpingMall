@@ -9,6 +9,7 @@ public class GoodsVO extends CategoryVO {
 	private String name, detail;
 	private GoodsStatus status;
 	private List<ShippingReceivingVO> history;
+	private List<GoodsImgVO> images;
 	
 	public int getG_no() {
 		return g_no;
@@ -75,6 +76,12 @@ public class GoodsVO extends CategoryVO {
 	}
 	public void setHistory(List<ShippingReceivingVO> history) {
 		this.history = history;
+	}
+	public List<GoodsImgVO> getImages() {
+		return images;
+	}
+	public void setImages(List<GoodsImgVO> images) {
+		this.images = images;
 	}
 	
 	/**

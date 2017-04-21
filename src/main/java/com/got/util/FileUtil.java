@@ -19,7 +19,7 @@ public class FileUtil {
 	public static FileVO saveFileInTempPath(String path, MultipartFile uploadFile) {
 		int save_name = (int)System.currentTimeMillis();
 		try {
-			FileOutputStream out = new FileOutputStream(path + "/" + save_name);
+			FileOutputStream out = new FileOutputStream(path + File.separator + save_name);
 			out.write(uploadFile.getBytes());
 			out.flush();
 			out.close();
@@ -47,21 +47,29 @@ public class FileUtil {
 
 	public static <T extends FileVO> List<T> moveToSavePath(String folderName, List<T> list) {
 		String tempPath = FileController.tempPath;
-		String savePath = tempPath.substring(0, tempPath.lastIndexOf("\\") + 1) + folderName;
+		String savePath = tempPath.substring(0, tempPath.lastIndexOf(File.separator) + 1) + folderName;
+		String simplePath = simpleSavePath(savePath);
 		
 		File saveDir = new File(savePath);
 		if( !saveDir.exists() )
 			saveDir.mkdirs();
 		
 		for(T fileVO : list) {
-			File tempFile = new File(tempPath + "/" + fileVO.getSave_name());
-			File saveFile = new File(savePath + "/" + fileVO.getSave_name());
-			fileVO.setSave_path(saveFile.getAbsolutePath());
+			File tempFile = new File(tempPath + File.separator + fileVO.getSave_name());
+			File saveFile = new File(savePath + File.separator + fileVO.getSave_name());
+			fileVO.setSave_path(simplePath);
 			if( !tempFile.renameTo(saveFile) ) {
 				log.error("파일 위치 변경 실패");
 				log.error("파일명 : " + tempFile.getName());
 			}
 		}
 		return list;
+	}
+	
+	private static String simpleSavePath(String path) {
+		int index = path.indexOf("\\", path.lastIndexOf("gotpingMall")) + 1;
+		if(index == 0)
+			index = path.indexOf("/", path.lastIndexOf("gotpingMall")) + 1;
+		return path.substring(index, path.length()).replace("\\", "/");
 	}
 }
