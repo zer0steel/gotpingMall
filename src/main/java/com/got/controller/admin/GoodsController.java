@@ -1,8 +1,5 @@
 package com.got.controller.admin;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +13,6 @@ import com.got.enums.HistoryCategory;
 import com.got.enums.Page;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
-import com.got.util.CommonUtil;
-import com.got.vo.GoodsImgVO;
 import com.got.vo.GoodsVO;
 
 @Controller
@@ -36,7 +31,11 @@ public class GoodsController {
 	
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
 	public ModelAndView insertGoodsSubmit(GoodsVO g, String[] fileInfo) {
-		gs.enroll(g, fileInfo);
+		if(fileInfo == null)
+			gs.enroll(g);
+		else
+			gs.enrollWithImg(g, fileInfo);
+		
 		return new ModelAndView("redirect:/admin/goods/insert.yo");
 	}
 	

@@ -1,6 +1,8 @@
 package com.got.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,6 +36,6 @@ public class CategoryDao {
 	}
 
 	public List<CategoryVO> selectSub(int c_no) {
-		return dao.selectList("c.sub", c_no);
+		return dao.selectList("c.selectSub", c_no);
 	}
 }

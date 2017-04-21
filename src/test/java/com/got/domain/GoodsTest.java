@@ -1,4 +1,4 @@
-package com.got.service;
+package com.got.domain;
 
 
 import org.junit.Test;
@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.enums.GoodsStatus;
+import com.got.service.GoodsService;
 import com.got.util.CommonUtil;
 
 @WebAppConfiguration

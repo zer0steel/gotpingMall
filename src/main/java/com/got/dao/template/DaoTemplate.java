@@ -3,7 +3,6 @@ package com.got.dao.template;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.transaction.TransactionException;
 import org.springframework.stereotype.Repository;
 
 import com.got.util.MybatisUtil;
@@ -52,7 +51,7 @@ public class DaoTemplate {
 		try {
 			callback.execute(session);
 			session.commit();
-		} catch (TransactionException e) {
+		} catch (Exception e) {
 			System.err.println(e);
 			session.rollback();
 		} finally {

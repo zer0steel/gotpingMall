@@ -24,22 +24,24 @@ public class GoodsService {
 	@Autowired private GoodsDao dao;
 	@Autowired private ShippingReceivingDao srDao;
 
-	public void enroll(GoodsVO g, String[] fileInfo) {
+	public void enroll(GoodsVO g) {
 		log.info(g.toString());
 		validationCheck(g);
 		
 		g.setStatus(GoodsStatus.STAND_BY);
-		if(fileInfo != null) 
-			enrollWithImg(g, fileInfo);
-		else
-			dao.insert(g);
+		dao.insert(g);
 	}
 	
-	private void enrollWithImg(GoodsVO g, String[] fileInfo) {
-		List<GoodsImgVO> list = CommonUtil.getVO(fileInfo, GoodsImgVO.class);
+	public void enrollWithImg(GoodsVO g, String[] fileInfo) {
+		log.info(g.toString());
+		validationCheck(g);
+		
+		g.setStatus(GoodsStatus.STAND_BY);
+		
+		List<GoodsImgVO> voList = CommonUtil.getVO(fileInfo, GoodsImgVO.class);
 		CategoryVO c = MenuLevel.findBigCategory(g.getC_no());
-		list = FileUtil.moveToSavePath(c.getTitle(), list);
-		dao.insertWithImg(g, list);
+		voList = FileUtil.moveToSavePath(c.getTitle(), voList);
+		dao.insertWithImg(g, voList);
 	}
 
 	private void validationCheck(GoodsVO g) {

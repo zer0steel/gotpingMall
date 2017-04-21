@@ -1,8 +1,11 @@
 package com.got.enums;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -65,6 +68,10 @@ public enum MenuLevel {
 	 * @param categories 분류가 나뉘어져 있지 않는 분류들
 	 */
 	public static void groupingCategories(List<CategoryVO> categories) {
+		MenuLevel.BIG.categories.clear();
+		MenuLevel.MIDDLE.categories.clear();
+		MenuLevel.SMALL.categories.clear();
+		
 		for(CategoryVO c : categories) 
 			c.getMenuLevel().categories.put(c.getC_no(), c);
 		setting = true;
@@ -86,6 +93,11 @@ public enum MenuLevel {
 		throw new IllegalArgumentException("존재하지 않는 분류번호 : " + c_no);
 	}
 
+	/**
+	 * 해당 분류번호가 가지고 있는 최상위의 분류 레벨을 가져온다.
+	 * @param c_no
+	 * @return
+	 */
 	public static CategoryVO findBigCategory(int c_no) {
 		CategoryVO c = MenuLevel.getCategory(c_no);
 		if(c.getMenuLevel() == MenuLevel.BIG) 
