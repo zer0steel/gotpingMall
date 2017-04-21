@@ -17,20 +17,20 @@ public class CategoryDao {
 		return dao.selectList("c.selectAll");
 	}
 
-	public int insertOne(CategoryVO c) {
-		return dao.insert("c.insert", c);
+	public void insertOne(CategoryVO c) {
+		dao.insert("c.insert", c);
 	}
 
 	public CategoryVO selectOne(int c_no) {
 		return dao.selectOne("c.selectOne", c_no);
 	}
 
-	public int deleteOne(int c_no) {
-		return dao.delete("c.deleteOne", c_no);
+	public void deleteOne(int c_no) {
+		dao.delete("c.deleteOne", c_no);
 	}
 
-	public int updateOne(CategoryVO c) {
-		return dao.update("c.updateOne", c);
+	public void updateOne(CategoryVO c) {
+		dao.update("c.updateOne", c);
 	}
 
 	public List<CategoryVO> selectSub(int c_no) {

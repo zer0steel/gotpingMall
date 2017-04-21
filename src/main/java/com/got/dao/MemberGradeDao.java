@@ -11,7 +11,7 @@ import com.got.vo.MemberGradeVO;
 public class MemberGradeDao {
 	@Autowired private DaoTemplate dao;
 	
-	public int insertMemberGrade(MemberGradeVO mg) {
-		return dao.insert("mg.insert", mg);
+	public void insertMemberGrade(MemberGradeVO mg) {
+		dao.insert("mg.insert", mg);
 	}
 }

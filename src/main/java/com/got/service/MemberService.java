@@ -28,17 +28,14 @@ public class MemberService {
 		return dao.selectOneColumn(column, value).size();
 	}
 	
-	public boolean join(MemberVO m, PrivateKey privateKey) {
+	public void join(MemberVO m, PrivateKey privateKey) {
 		m.encyptPwd(privateKey);
 		m.setEnumGrade(Grade.UNAUTHORIZED_MEMBER);
 		
 		MemberGradeVO mg = new MemberGradeVO();
 		mg.setReason("신규 가입");
 		
-		int insertedCount = dao.insertNewMember(m, mg);
-		if(insertedCount == 1)
-			return true;
-		return false;
+		dao.insertNewMember(m, mg);
 	}
 
 	public MemberVO login(String id, String pwd, PrivateKey privateKey) {

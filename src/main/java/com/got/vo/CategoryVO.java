@@ -24,8 +24,8 @@ public class CategoryVO {
 	public int getSuper_no() {
 		return super_no;
 	}
-	public void setSuper_no(int parent_no) {
-		this.super_no = parent_no;
+	public void setSuper_no(int super_no) {
+		this.super_no = super_no;
 	}
 	public int getMenu_level() {
 		return menu_level.getCode();

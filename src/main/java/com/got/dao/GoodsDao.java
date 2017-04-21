@@ -15,21 +15,20 @@ import com.got.vo.GoodsVO;
 public class GoodsDao {
 	@Autowired private DaoTemplate dao;
 
-	public int insert(GoodsVO g) {
-		return dao.insert("g.insert", g);
+	public void insert(GoodsVO g) {
+		dao.insert("g.insert", g);
 	}
 	
-	public int insertWithImg(GoodsVO g, List<GoodsImgVO> imgs) {
-		return dao.transactionTemplate(session -> {
-			int insertedCount = session.insert("g.insert", g);
-			if(insertedCount == 1) {
+	public void insertWithImg(GoodsVO g, List<GoodsImgVO> imgs) {
+		dao.transactionTemplate(session -> {
+			if(session.insert("g.insert", g) == 1) {
 				for(GoodsImgVO img : imgs) {
 					img.setG_no(g.getG_no());
+					if(session.update("f.updatePath", img) == -1)
+						throw new TransactionException();
 					if(session.insert("gi.insert", img) == -1)
 						throw new TransactionException();
-					insertedCount += 1;
 				}
-				return insertedCount;
 			}
 			else
 				throw new TransactionException();
@@ -44,11 +43,11 @@ public class GoodsDao {
 		return dao.selectOne("g.selectOne", g_no);
 	}
 
-	public int update(GoodsVO g) {
-		return dao.update("g.update", g);
+	public void update(GoodsVO g) {
+		dao.update("g.update", g);
 	}
 
-	public int deleteOne(int g_no) {
-		return dao.delete("g.deleteOne", g_no);
+	public void deleteOne(int g_no) {
+		dao.delete("g.deleteOne", g_no);
 	}
 }

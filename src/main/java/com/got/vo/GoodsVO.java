@@ -93,12 +93,8 @@ public class GoodsVO extends CategoryVO {
 		return true;
 	}
 	
-	public boolean updateStock(int amount) {
-		int updatedStock = this.stock + amount;
-		if(updatedStock < 0) 
-			return false;
-		this.stock = updatedStock;
-		return true;
+	public void updateStock(int amount) {
+		this.stock += amount;
 	}
 	@Override
 	public String toString() {

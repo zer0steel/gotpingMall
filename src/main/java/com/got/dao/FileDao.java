@@ -10,10 +10,10 @@ import com.got.vo.FileVO;
 public class FileDao {
 
 	@Autowired private DaoTemplate dao;
-	public int insert(FileVO f) {
-		return dao.insert("f.insert", f);
+	public void insert(FileVO f) {
+		dao.insert("f.insert", f);
 	}
-	public int delete(int f_no) {
-		return dao.delete("f.delete", f_no);
+	public void delete(int f_no) {
+		dao.delete("f.delete", f_no);
 	}
 }

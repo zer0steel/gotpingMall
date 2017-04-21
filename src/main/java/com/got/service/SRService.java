@@ -7,21 +7,28 @@ import org.springframework.stereotype.Service;
 
 import com.got.dao.ShippingReceivingDao;
 import com.got.util.CommonUtil;
+import com.got.vo.GoodsVO;
 import com.got.vo.ShippingReceivingVO;
 
 @Service
 public class SRService {
 	
 	@Autowired private ShippingReceivingDao dao;
+	
+	@Autowired private GoodsService gs;
+	
+	public List<ShippingReceivingVO> getAll() {
+		return dao.selectAll();
+	}
 
 	public String addHistory(ShippingReceivingVO sr) {
 		validationCheck(sr);
-		int insertedCount = dao.insertOneNewHistory(sr);
-		if(insertedCount == 1) 
-			return "추가되었습니다.";
-		else if(insertedCount == ShippingReceivingDao.UPDATE_STOCK_FAIL) 
+		GoodsVO g = gs.updateStock(sr.getG_no(), sr.getAmount());
+		if(g.getStock() < 0) 
 			return "재고값이 음수가 되어 추가할 수 없습니다.";
-		throw new RuntimeException("입출고내역 추가 실패. 객체 정보 : " + sr);
+		
+		dao.insertOneNewHistory(sr, g);
+		return "추가되었습니다.";
 	}
 	
 	public static final int DETAIL_GOODS_SHOW_HISTORY_COUNT = 5;
@@ -33,6 +40,7 @@ public class SRService {
 	public List<ShippingReceivingVO> getRecentHistory(int g_no) {
 		return dao.selectListWithG_no(g_no, DETAIL_GOODS_SHOW_HISTORY_COUNT);
 	}
+	
 	public String getRecentHistoryWithJSON(int g_no) {
 		return CommonUtil.convertToJSON(getRecentHistory(g_no));
 	}
@@ -40,8 +48,5 @@ public class SRService {
 	public void validationCheck(ShippingReceivingVO sr) {
 		if(sr.getG_no() == 0)
 			throw new IllegalArgumentException("상품 번호가 입력되지 않았음.");
-	}
-	public List<ShippingReceivingVO> getAll() {
-		return dao.selectAll();
 	}
 }

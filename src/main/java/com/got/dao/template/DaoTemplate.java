@@ -31,35 +31,26 @@ public class DaoTemplate {
 		});
 	}
 	
-	public int insert(String namespace, Object param) {
-		return template(session -> {
-			return session.insert(namespace, param);
+	public void insert(String namespace, Object param) {
+		template(session -> {
+			session.insert(namespace, param);
 		});
 	}
-	public int delete(String namespace, Object param) {
-		return template(session -> {
-			return session.delete(namespace, param);
+	public void delete(String namespace, Object param) {
+		template(session -> {
+			session.delete(namespace, param);
 		});
 	}
-	public int update(String namespace, Object param) {
-		return template(session -> {
-			return session.update(namespace, param);
+	public void update(String namespace, Object param) {
+		template(session -> {
+			session.update(namespace, param);
 		});
 	}
 	
-	/**
-	 * 트랜잭션을 지원하는 DB접속 템플릿이다.
-	 * SqlCallback 인터페이스를 구현할 때, rollback 해야 하는 상황이 나타나면
-	 * TransactionException을 던져야 한다.
-	 * 아무 에러 없이 변동된 컬럼의 수를 반환하면 commit이 된다.
-	 * @param callback
-	 * @return 추가, 삭제, 수정 된 컬럼의 개수
-	 */
-	public int transactionTemplate(SqlCallback callback) {
+	public void transactionTemplate(SqlCallback callback) {
 		SqlSession session = MybatisUtil.openTransactionSession();
-		int count = -1;
 		try {
-			count = callback.execute(session);
+			callback.execute(session);
 			session.commit();
 		} catch (TransactionException e) {
 			System.err.println(e);
@@ -67,7 +58,6 @@ public class DaoTemplate {
 		} finally {
 			session.close();
 		}
-		return count;
 	}
 	
 	private <T> T selectTemplate(SqlSelectCallback<T> callback) {
@@ -77,10 +67,9 @@ public class DaoTemplate {
 		return result;
 	}
 	
-	private int template(SqlCallback callback) {
+	private void template(SqlCallback callback) {
 		SqlSession session = MybatisUtil.openSession();
-		int count = callback.execute(session);
+		callback.execute(session);
 		session.close();
-		return count;
 	}
 }

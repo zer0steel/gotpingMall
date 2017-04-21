@@ -3,6 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="f">
+	<update id="updatePath">
+		UPDATE files SET save_path = #{save_path} WHERE f_no = #{f_no}
+	</update>
 	<insert id="insert">
 		<selectKey keyProperty="f_no" resultType="int" order="BEFORE">
 			SELECT f_no.nextval FROM DUAL

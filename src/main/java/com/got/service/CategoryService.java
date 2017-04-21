@@ -23,42 +23,25 @@ public class CategoryService {
 	public String getOneWithJSON(int c_no) {
 		return CommonUtil.convertToJSON(dao.selectOne(c_no));
 	}
-	
-	/**
-	 * @param c
-	 * @return 성공, 실패 메시지
-	 */
-	public String enroll(CategoryVO c) {
+	public void enroll(CategoryVO c) {
 		validationCheck(c);
 		MenuLevel.insertSetting();
-		if(dao.insertOne(c) == 1) 
-			return "등록되었습니다.";
-		throw new RuntimeException("등록 실패");
+		dao.insertOne(c);
 	}
 
-	/**
-	 * @param c_no
-	 * @return 성공, 실패 메시지
-	 */
 	public String delete(int c_no) {
 		if(dao.selectSub(c_no).size() > 0) 
 			return "하위분류가 존재하여 삭제할 수 없습니다.";
-		if(dao.deleteOne(c_no) == 1) 
-			return "삭제되었습니다.";
-		throw new RuntimeException("삭제 실패");
+		dao.deleteOne(c_no);
+		return "삭제되었습니다.";
 	}
-
-	/**
-	 * @param c
-	 * @return 성공, 실패 메시지
-	 */
+	
 	public String update(CategoryVO c) {
 		validationCheck(c);
 		if(c.getC_no() == 0)
 			throw new IllegalArgumentException("분류 수정해야 하는데 PK c_no 값이 0");
-		if(dao.updateOne(c) == 1) 
-			return "수정했습니다.";
-		throw new RuntimeException("수정 실패");
+		dao.updateOne(c);
+		return "수정했습니다.";
 	}
 	
 	/**

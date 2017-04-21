@@ -23,15 +23,13 @@ public class MemberDao {
 		return dao.selectList("m.selectOneColumn", params);
 	}
 	
-	public int insertNewMember(MemberVO m, MemberGradeVO mg) {
-		return dao.transactionTemplate(session -> {
-			int insertedCount = session.insert("m.insert",m);
-			if(insertedCount == 1) {
-				mg.setM_no(m.getM_no());
-				return session.insert("mg.insert",mg);
-			}
-			else
+	public void insertNewMember(MemberVO m, MemberGradeVO mg) {
+		dao.transactionTemplate(session -> {
+			if(session.insert("m.insert",m) != 1) 
 				throw new TransactionException();
+			
+			mg.setM_no(m.getM_no());
+			session.insert("mg.insert",mg);
 		});
 	}
 

@@ -24,21 +24,22 @@ public class GoodsService {
 	@Autowired private GoodsDao dao;
 	@Autowired private ShippingReceivingDao srDao;
 
-	public int enroll(GoodsVO g, String[] fileInfo) {
+	public void enroll(GoodsVO g, String[] fileInfo) {
 		log.info(g.toString());
 		validationCheck(g);
 		
 		g.setStatus(GoodsStatus.STAND_BY);
 		if(fileInfo != null) 
-			return enrollWithImg(g, fileInfo);
-		return dao.insert(g);
+			enrollWithImg(g, fileInfo);
+		else
+			dao.insert(g);
 	}
 	
-	private int enrollWithImg(GoodsVO g, String[] fileInfo) {
+	private void enrollWithImg(GoodsVO g, String[] fileInfo) {
 		List<GoodsImgVO> list = CommonUtil.getVO(fileInfo, GoodsImgVO.class);
 		CategoryVO c = MenuLevel.findBigCategory(g.getC_no());
 		list = FileUtil.moveToSavePath(c.getTitle(), list);
-		return dao.insertWithImg(g, list);
+		dao.insertWithImg(g, list);
 	}
 
 	private void validationCheck(GoodsVO g) {
@@ -67,34 +68,27 @@ public class GoodsService {
 	
 	
 	/**
-	 * 공사중
 	 * @param g_no
 	 * @param amount
-	 * @return
+	 * @return 재고 계산 처리된 goodsVO
 	 */
-	public String updateStock(int g_no, int amount) {
+	public GoodsVO updateStock(int g_no, int amount) {
 		GoodsVO g = dao.selectOneWithG_no(g_no);
-		if(g.updateStock(amount)) {
-			return null;
-		}
-		else 
-			return "재고 값이 음수가 되어 수정할 수 없습니다.";
+		g.updateStock(amount);
+		return g;
 	}
 
 	public void update(GoodsVO g) {
 		if(g.getG_no() == 0)
 			throw new IllegalArgumentException("PK값 g_no 가 0임");
-		if(dao.update(g) == 1)
-			return;
-		throw new RuntimeException("수정 실패");
+		
+		dao.update(g);
 	}
 
 	public void delete(int g_no) {
 		if(g_no == 0)
 			throw new IllegalArgumentException("PK값 g_no 가 0임");
-		if(dao.deleteOne(g_no) == 1) {
-			return;
-		}
-		throw new RuntimeException("삭제 실패");
+		
+		dao.deleteOne(g_no);
 	}
 }

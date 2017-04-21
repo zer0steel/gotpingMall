@@ -34,20 +34,12 @@ public class ShippingReceivingDao {
 	
 	public static final int UPDATE_STOCK_FAIL = -2;
 	
-	public int insertOneNewHistory(ShippingReceivingVO sr) {
-		return dao.transactionTemplate(session -> {
-			GoodsVO g = session.selectOne("g.selectOne",sr.getG_no());
-			if(g.updateStock(sr)) {
-				int insertedCount = session.insert("sr.insertOne", sr);
-				if(insertedCount == 1) {
-					int updateCount = session.update("g.updateStock", g);
-					if(updateCount == 1)
-						return updateCount;
-					throw new TransactionException("상품 재고 업데이트 실패.");
-				}
-				throw new TransactionException("입출고내역 등록 실패.");
-			}
-			return UPDATE_STOCK_FAIL;
+	public void insertOneNewHistory(ShippingReceivingVO sr, GoodsVO g) {
+		dao.transactionTemplate(session -> {
+			if(session.insert("sr.insertOne", sr) != 1)
+				throw new TransactionException();
+			if(session.update("g.updateStock", g) != 1)
+				throw new TransactionException();
 		});
 	}
 }

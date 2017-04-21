@@ -27,8 +27,8 @@ public class CategoryController {
 	
 	@RequestMapping(value = "admin/goods/category/insert.yo", method = RequestMethod.POST)
 	public ModelAndView insertCategory(CategoryVO c) {
+		cs.enroll(c);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("msg", cs.enroll(c));
 		mav.setViewName(REDIRECT_CATEGORY_PAGE);
 		return mav;
 	}

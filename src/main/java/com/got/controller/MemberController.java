@@ -71,10 +71,8 @@ public class MemberController {
 		PrivateKey privateKey = (PrivateKey)session.getAttribute(RSA.PRIVATE_KEY);
 		session.invalidate();
 		
-		if(s.join(m, privateKey))
-			return Page.setViewPage(new ModelAndView(), "member/joinComplete.jsp");
-		else
-			return Page.setViewPage(new ModelAndView(), "member/joinError.jsp");
+		s.join(m, privateKey);
+		return Page.setViewPage(new ModelAndView(), "member/joinComplete.jsp");
 	}
 	
 	@ResponseBody
