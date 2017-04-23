@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Grade {
-	UNAUTHORIZED_MEMBER(0,0),BRONZE(1, 100), SLIVER(2, 300), GOLD(3, 500);
+	UNAUTHORIZED(0,0),BRONZE(1, 100), SLIVER(2, 300), GOLD(3, 500), ADMIN(10, -1000);
 	
 	private final int grade;
 	private final int requirePoint;

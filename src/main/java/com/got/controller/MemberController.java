@@ -49,7 +49,7 @@ public class MemberController {
 	@RequestMapping("logout.yo")
 	public ModelAndView logout(HttpSession session) {
 		session.invalidate();
-		return Page.setViewPage(new ModelAndView(), "front.jsp");
+		return new ModelAndView("redirect:/front.yo");
 	}
 	
 	@RequestMapping("agreement.yo")

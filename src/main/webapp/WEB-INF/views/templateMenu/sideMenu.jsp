@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <section id="advertisement">
 	<div class="container">
 		<img src="${pageContext.request.contextPath }/resourcesimages/shop/advertisement.jpg" alt="" />
@@ -7,8 +7,9 @@
 </section>
 
 <div class="left-sidebar">
-	<h2>Category</h2>
-	<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+	<h2>상품 분류</h2>
+	<div class="panel-group category-products" id="accordian">
+	
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title">
@@ -30,6 +31,7 @@
 				</div>
 			</div>
 		</div>
+		
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title">
@@ -78,42 +80,13 @@
 				</div>
 			</div>
 		</div>
+		
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title"><a href="#">Kids</a></h4>
 			</div>
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4 class="panel-title"><a href="#">Fashion</a></h4>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4 class="panel-title"><a href="#">Households</a></h4>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4 class="panel-title"><a href="#">Interiors</a></h4>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4 class="panel-title"><a href="#">Clothing</a></h4>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4 class="panel-title"><a href="#">Bags</a></h4>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4 class="panel-title"><a href="#">Shoes</a></h4>
-			</div>
-		</div>
-	</div><!--/category-productsr-->
+	</div>
 
 	<div class="brands_products"><!--brands_products-->
 		<h2>Brands</h2>

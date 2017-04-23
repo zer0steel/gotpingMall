@@ -42,7 +42,7 @@
 								<h1><span>G</span>-PING MALL</h1>
 								<h2>언젠가 만들어 지겠지</h2>
 								<p>오픈기념 회원가입하시면 마일리지 천만포인트를 쏩니다! 지금 가입하세요!</p>
-								<button type="button" class="btn btn-default get">즉시 보러 가기!</button>
+								<a class="btn btn-default get" href="agreement.yo">즉시 가입 하기!</a>
 							</div>
 							<div class="col-sm-6">
 								<img src="resources/images/myimg/dogSound.jpeg" class="girl img-responsive" alt="" />

@@ -31,7 +31,7 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="x_content">
-			<table id="srTable" class="table table-striped table-bordered">
+			<table id="memberTable" class="table table-striped table-bordered">
 				<thead>
 					<tr>
 						<th>아이디</th>
@@ -41,14 +41,14 @@
 					</tr>
 				</thead>
 				<tbody>
-				<%-- <c:forEach var="sr" items="${list }">
+				<c:forEach var="m" items="${list }">
 					<tr>
-						<td><a href="${pageContext.request.contextPath }/admin/goods/detail.yo?g_no=${sr.g_no }">${sr.name }</a></td>
-						<td>${sr.amount } 개</td>
-						<td>${sr.change_stock } 개</td>
-						<td>${sr.regdate }</td>
+						<td>${m.id }</td>
+						<td>${m.email }</td>
+						<td>${m.enumGrade }</td>
+						<td>${m.join_date }</td>
 					</tr>
-				</c:forEach> --%>
+				</c:forEach>
 				</tbody>
 			</table>
 		</div>

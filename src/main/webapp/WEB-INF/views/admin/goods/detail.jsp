@@ -112,7 +112,12 @@
 		</div>
 	</div>
 </div>
+
 <div class="row">
+	<div class="col-md-6">
+		<jsp:include page="include/shippingReceivingForm.jsp"></jsp:include>
+	</div>
+	
 	<div class="col-md-6">
 		<div class="x_panel">
 			<div class="x_title">
@@ -147,9 +152,6 @@
 				</table>
 			</div>
 		</div>
-	</div>
-	<div class="col-md-6">
-		<jsp:include page="include/shippingReceivingForm.jsp"></jsp:include>
 	</div>
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/goods/categorySelectBox.js"></script>

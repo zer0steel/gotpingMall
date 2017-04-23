@@ -16,7 +16,7 @@ public class MemberController {
 	@RequestMapping("admin/member/list.yo")
 	public ModelAndView list() {
 		ModelAndView mav = new ModelAndView();
-//		mav.addObject("list", s.getAll());
+		mav.addObject("list", s.getAll());
 		return Page.setAdminViewPage(mav, "member/list.jsp");
 	}
 }

@@ -47,7 +47,7 @@ public class CategoryService {
 	/**
 	 * ModelAndView에 분류레벨을 저장한다.
 	 * @param mav
-	 * @return big, middle, small 가 저장된 ModelAndView
+	 * @return big, middle, small 이 저장된 ModelAndView
 	 */
 	public ModelAndView setEnumsInMAV(ModelAndView mav) {
 		MenuLevel.groupingCategories(dao.selectAll());

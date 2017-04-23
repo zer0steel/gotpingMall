@@ -8,7 +8,7 @@ import com.got.enums.Page;
 
 @Controller
 public class MainController {
-
+	
 	@RequestMapping("front.yo")
 	public ModelAndView front() {
 		ModelAndView mav = new ModelAndView();

@@ -30,7 +30,7 @@ public class MemberService {
 	
 	public void join(MemberVO m, PrivateKey privateKey) {
 		m.encyptPwd(privateKey);
-		m.setEnumGrade(Grade.UNAUTHORIZED_MEMBER);
+		m.setEnumGrade(Grade.UNAUTHORIZED);
 		
 		MemberGradeVO mg = new MemberGradeVO();
 		mg.setReason("신규 가입");

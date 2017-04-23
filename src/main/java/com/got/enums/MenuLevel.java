@@ -1,11 +1,8 @@
 package com.got.enums;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,7 +13,6 @@ import com.got.vo.CategoryVO;
  * 각 분류 레벨 별로 자신에게 속해있는 분류가 저장되어 있는 map이 존재함.<br>
  * jsp에서 사용할때 맵에서 꺼내써야 하기 때문에 key 값은 ${변수명.key } , value 값은 ${변수명.value } 로 가져다 쓸 수 있다.
  * @author Jang
- *
  */
 @JsonFormat(shape = Shape.OBJECT)
 public enum MenuLevel {
@@ -72,7 +68,7 @@ public enum MenuLevel {
 		MenuLevel.MIDDLE.categories.clear();
 		MenuLevel.SMALL.categories.clear();
 		
-		for(CategoryVO c : categories) 
+		for(CategoryVO c : categories)
 			c.getMenuLevel().categories.put(c.getC_no(), c);
 		setting = true;
 	}
@@ -94,7 +90,7 @@ public enum MenuLevel {
 	}
 
 	/**
-	 * 해당 분류번호가 가지고 있는 최상위의 분류 레벨을 가져온다.
+	 * 해당 분류번호가 가지고 있는 최상위의 분류를 가져온다.
 	 * @param c_no
 	 * @return
 	 */

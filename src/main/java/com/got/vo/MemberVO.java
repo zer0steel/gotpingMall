@@ -53,6 +53,9 @@ public class MemberVO {
 	public int getGrade() {
 		return grade.getCode();
 	}
+	public Grade getEnumGrade() {
+		return grade;
+	}
 	public void setGrade(int grade) {
 		this.grade = Grade.of(grade);
 	}
