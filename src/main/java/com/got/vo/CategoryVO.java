@@ -1,11 +1,15 @@
 package com.got.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.got.enums.MenuLevel;
 
 public class CategoryVO {
 	private int c_no, super_no;
 	private String title;
 	private MenuLevel menu_level;
+	private List<CategoryVO> sub = new ArrayList<>();;
 	
 	public int getC_no() {
 		return c_no;
@@ -48,5 +52,11 @@ public class CategoryVO {
 	public String toString() {
 		return "CategoryVO [c_no=" + c_no + ", super_no=" + super_no + ", title=" + title + ", menu_level="
 				+ menu_level + "]";
+	}
+	public List<CategoryVO> getSub() {
+		return sub;
+	}
+	public void addSub(CategoryVO sub) {
+		this.sub.add(sub);
 	}
 }

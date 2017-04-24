@@ -15,7 +15,7 @@ import com.got.service.CategoryService;
 import com.got.service.GoodsService;
 import com.got.vo.GoodsVO;
 
-@Controller
+@Controller("adminGoodsController")
 public class GoodsController {
 	
 	private static Logger log = Logger.getLogger(GoodsController.class);

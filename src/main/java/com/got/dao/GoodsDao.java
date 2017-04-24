@@ -1,13 +1,17 @@
 package com.got.dao;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.transaction.TransactionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.got.dao.template.DaoTemplate;
+import com.got.enums.GoodsStatus;
+import com.got.vo.CategoryVO;
 import com.got.vo.GoodsImgVO;
 import com.got.vo.GoodsVO;
 
@@ -48,5 +52,16 @@ public class GoodsDao {
 
 	public void deleteOne(int g_no) {
 		dao.delete("g.deleteOne", g_no);
+	}
+
+	public List<GoodsVO> selectListWithSmall(CategoryVO c) {
+		return dao.selectList("g.selectListWithSmall",c);
+	}
+	
+	public List<GoodsVO> selectListWithMiddle(int c_no) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("c_no", c_no);
+		param.put("status_code", GoodsStatus.FOR_SALE.getCode());
+		return dao.selectList("g.selectListWithMiddle",param);
 	}
 }

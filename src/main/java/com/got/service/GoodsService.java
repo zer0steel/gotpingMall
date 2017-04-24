@@ -95,4 +95,16 @@ public class GoodsService {
 		
 		dao.deleteOne(g_no);
 	}
+
+	public List<GoodsVO> getWithCategory(CategoryVO c) {
+		if(c.getC_no() == 0)
+			throw new IllegalArgumentException("분류번호가 0");
+		
+		if(c.getMenuLevel() == MenuLevel.SMALL)
+			return dao.selectListWithSmall(c);
+		else if(c.getMenuLevel() == MenuLevel.MIDDLE)
+			return dao.selectListWithMiddle(c.getC_no());
+		
+		throw new IllegalArgumentException("아직 대분류는 지원 안함");
+	}
 }

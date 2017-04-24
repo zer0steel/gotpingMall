@@ -21,7 +21,7 @@
 			<div class="row">
 				<div class="col-sm-4">
 					<div class="logo pull-left">
-						<a href="front.yo">
+						<a href="${pageContext.request.contextPath }/front.yo">
 							<font size="16" color="green">
 							GOTPING MALL
 							</font>
@@ -33,15 +33,15 @@
 						<ul class="nav navbar-nav">
 						<c:choose>
 							<c:when test="${lm == null }">
-								<li><a href="agreement.yo"><i class="fa fa-user fa-lg"></i>회원가입</a></li>
-								<li><a href="login.yo"><i class="fa fa-lock fa-lg"></i>로그인</a></li>
+								<li><a href="${pageContext.request.contextPath }/agreement.yo"><i class="fa fa-user fa-lg"></i>회원가입</a></li>
+								<li><a href="${pageContext.request.contextPath }/login.yo"><i class="fa fa-lock fa-lg"></i>로그인</a></li>
 							</c:when>
 							<c:otherwise>
 								<li><a href="#"><i class="fa fa-address-card-o fa-lg"></i>나의 정보</a></li>
-								<li><a href="logout.yo"><i class="fa fa-unlock fa-lg"></i>로그아웃</a></li>
+								<li><a href="${pageContext.request.contextPath }/logout.yo"><i class="fa fa-unlock fa-lg"></i>로그아웃</a></li>
 							</c:otherwise>
 						</c:choose>
-						<li><a href="admin.yo"><i class="fa fa-user-o fa-lg"></i>관리자 페이지</a></li>
+						<li><a href="${pageContext.request.contextPath }/admin.yo"><i class="fa fa-user-o fa-lg"></i>관리자 페이지</a></li>
 						</ul>
 					</div>
 				</div>
@@ -64,7 +64,7 @@
 					</div> -->
 					<div class="mainmenu pull-left">
 						<ul class="nav navbar-nav collapse navbar-collapse">
-							<li><a href="front.yo">Home</a></li>
+							<li><a href="${pageContext.request.contextPath }/front.yo">Home</a></li>
 							<li class="dropdown"><a href="#">공사중<i class="fa fa-angle-down"></i></a>
                                    <ul role="menu" class="sub-menu">
 										<li><a href="#">추가 예정</a></li>

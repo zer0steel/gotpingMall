@@ -10,6 +10,7 @@ public class GoodsVO extends CategoryVO {
 	private GoodsStatus status;
 	private List<ShippingReceivingVO> history;
 	private List<GoodsImgVO> images;
+	private GoodsImgVO mainImg;
 	
 	public int getG_no() {
 		return g_no;
@@ -105,8 +106,15 @@ public class GoodsVO extends CategoryVO {
 	}
 	@Override
 	public String toString() {
-		return super.toString() + "\nGoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
+		return super.toString() + "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
 				+ sell_price + ", discount_rate=" + discount_rate + ", saving_mileage=" + saving_mileage + ", name="
-				+ name + ", detail=" + detail + ", status=" + status + ", history=" + history + "]";
+				+ name + ", detail=" + detail + ", status=" + status + ", history=" + history + ", images=" + images
+				+ ", mainImg=" + mainImg + "]";
+	}
+	public GoodsImgVO getMainImg() {
+		return mainImg;
+	}
+	public void setMainImg(GoodsImgVO mainImg) {
+		this.mainImg = mainImg;
 	}
 }

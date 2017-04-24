@@ -65,12 +65,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
 Dropzone.autoDiscover = false;
+var	isFirst = true;
 $("#uploadFile").dropzone({
 	init : function() {
 		this.on("success", function(file, fileInfo) {
 			delete fileInfo.save_path;
 			delete fileInfo.regdate;
-			fileInfo.location = "main";
+			if( isFirst ) {
+				fileInfo.location = "main";
+				isFirst = false;
+			}
+			else
+				fileInfo.location = "main_sub";
 			var data = JSON.stringify(fileInfo);
 			var hiddenFileData = $("<input />").attr({"type":"text", "name":"fileInfo"}).val(data);
 			$("#goods-form").append( hiddenFileData );

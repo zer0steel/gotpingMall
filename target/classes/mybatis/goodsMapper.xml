@@ -10,6 +10,40 @@
 	<select id="selectOne" resultType="com.got.vo.GoodsVO">
 		SELECT * FROM goods g, category c WHERE g.c_no = c.c_no AND g.g_no = #{g_no}
 	</select>
+	
+	<select id="selectListWithSmall" resultType="com.got.vo.GoodsVO">
+		SELECT * FROM goods g, category c WHERE g.c_no = c.c_no AND c.c_no = #{c_no} AND is_deleted = 'false'
+	</select>
+	
+	<resultMap type="com.got.vo.GoodsVO" id="GoodsMap">
+		<id property="c_no" column="c_no" javaType="int"/>
+		<id property="g_no" column="g_no" javaType="int"/>
+		<result property="sell_price" column="sell_price"/>
+		<result property="name" column="name"/>
+		<association property="mainImg" column="mainImg" javaType="com.got.vo.GoodsImgVO" resultMap="GoodsImgMap" />
+	</resultMap>
+	
+	<resultMap type="com.got.vo.GoodsImgVO" id="GoodsImgMap">
+		<id property="g_no" column="g_no" javaType="int"/>
+		<result property="save_path" column="save_path"/>
+		<result property="save_name" column="save_name"/>
+	</resultMap>
+	
+	<select id="selectListWithMiddle" resultMap="GoodsMap">
+		SELECT r.c_no, r.g_no, r.sell_price, r.name, f.* 
+		FROM
+			goods_image gi, 
+			files f, 
+			(SELECT g.*
+			FROM
+				goods g, 
+				(SELECT c_no FROM category WHERE super_no = #{c_no}) c 
+			WHERE g.c_no = c.c_no 
+			AND is_deleted = 'false'
+			AND status_code = #{status_code}
+			) r
+		WHERE f.f_no = gi.f_no AND gi.g_no = r.g_no AND location = 'main'
+	</select>
 
 	<insert id="insert">
 		<selectKey order="BEFORE" resultType="int" keyProperty="g_no">

@@ -7,16 +7,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.got.enums.Page;
 import com.got.service.CategoryService;
+import com.got.service.GoodsService;
+import com.got.vo.CategoryVO;
 
 @Controller
-public class MainController {
+public class GoodsController {
 	
+	@Autowired private GoodsService gs;
 	@Autowired CategoryService cs;
 	
-	@RequestMapping("front.yo")
-	public ModelAndView front() {
+	@RequestMapping("goods/list.yo")
+	public ModelAndView list(CategoryVO c) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("goods", gs.getWithCategory(c));
 		cs.setEnumsInMAV(mav);
-		return Page.setViewPage(mav, "front.jsp");
+		return Page.setViewPage(mav, "goods/list.jsp");
 	}
 }

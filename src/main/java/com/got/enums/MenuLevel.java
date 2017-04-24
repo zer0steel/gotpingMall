@@ -1,5 +1,6 @@
 package com.got.enums;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,10 @@ public enum MenuLevel {
 		
 		for(CategoryVO c : categories)
 			c.getMenuLevel().categories.put(c.getC_no(), c);
+		
+		MenuLevel.MIDDLE.categories.values().stream().forEach(vo -> {
+			BIG.categories.get(vo.getSuper_no()).addSub(vo);;
+		});
 		setting = true;
 	}
 	
