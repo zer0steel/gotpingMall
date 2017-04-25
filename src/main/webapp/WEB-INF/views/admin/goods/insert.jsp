@@ -67,13 +67,34 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left" action="insert.yo" method="post">
+				<form id="option-form" data-parsley-validate class="form-horizontal form-label-left" method="post">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">
+						옵션명
+						</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<select name="o_no" class="form-control">
+								<option value="-1">-------------</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">
+						옵션값
+						</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" class="form-control" id="optionValue">
+						</div>
+					</div>
+					
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 							<button type="reset" class="btn btn-primary">입력 초기화</button>
-							<button type="button" class="btn btn-success" id="btn-enroll">등록</button>
+							<button type="button" class="btn btn-success" id="btn-addOption">추가</button>
 						</div>
 					</div>
+					
 				</form>
 			</div>
 		</div>
@@ -96,17 +117,15 @@ $("#uploadFile").dropzone({
 			else
 				fileInfo.location = "main_sub";
 			var data = JSON.stringify(fileInfo);
-			var hiddenFileData = $("<input />").attr({"type":"text", "name":"fileInfo"}).val(data);
+			var hiddenFileData = $("<input />").attr({"type":"text", "name":"fileInfoJSON"}).val(data);
 			$("#goods-form").append( hiddenFileData );
 		});
 	}
 });
 
-$("select").change(function() {
-	var c_no = $(this).val();
-	$("input[name=c_no]").val( c_no );
-});
-
+/*
+ * 숫자 입력 필드에서 포커스아웃될때 강제적으로 0을 부여
+ */
 $("input[type=number]").focusout(function() {
 	if($(this).val().length == 0)
 		$(this).val(0);
@@ -125,6 +144,9 @@ $("#btn-enroll").click(function() {
 	}
 });
 
+/*
+ * 상품 등록 폼 안에 있는 필수입력항목중 입력 안된 항목이 있나 검사
+ */
 function checkEmptyField() {
 	var emptyFields = $("input[required]").filter(function() {
 		return $(this).val() === "";
@@ -136,11 +158,73 @@ function checkEmptyField() {
 	return true;
 }
 
-function requestInsertGoods(goodsData) {
+/*
+ * 상단의 분류 클릭했을때 해당 분류번호를 상품 입력 폼 안에 입력
+ */
+$("select.menu_level").change(function() {
+	var c_no = $(this).val();
+	$("input[name=c_no]").val( c_no );
+});
+
+$(".topMenu_level").change(function() {
+	var c_no = $(this).val();
+	requestGetOption(c_no).done(function(options) {
+		setSelectBox(options);
+	});
+});
+
+function requestGetOption(c_no) {
 	return $.ajax({
-		url : "insert.yo",
-		type : "post",
-		data : goodsData
+		url : "option/get.yo?c_no=" + c_no,
+		dataType : "json"
 	});
 }
+
+function setSelectBox(options) {
+	$("select[name=o_no]").empty();
+	var optCount = $(options).each(function(idx) {
+		var opt = $("<option />").val(this.o_no).html(this.o_name);
+		$("select[name=o_no]").append(opt);
+	}).length;
+	
+	if(optCount == 0) {
+		var opt = $("<option />").val(0).html("옵션값이 존재하지 않습니다.");
+		$("select[name=o_no]").append(opt);
+	}
+}
+
+$("#btn-addOption").click(function() {
+	var o_no = $("select[name=o_no]").val();
+	if(o_no <= 0) {
+		alert("옵션명을 지정하셔야 합니다.");
+		return;
+	}
+	var value = $("#optionValue").val();
+	if(value.length == 0) {
+		alert("옵션값이 입력되지 않았습니다.")
+		return;
+	}
+	
+	addOption(o_no, value);
+});
+
+function addOption(o_no, value) {
+	var $opt = $("#option" + o_no);
+	if($opt.val() == undefined) {
+		var goodsOption = {
+			o_no : o_no,
+			value : value
+		};
+		
+		$("<input />")
+			.attr({"type":"text", "id":"option" + o_no, "name":"goodsOptionJSON"})
+			.val( JSON.stringify(goodsOption) )
+			.appendTo( $("#goods-form") );
+	}
+	else {
+		var goodsOption = JSON.parse($opt.val());
+		goodsOption.value += "/" + value;
+		$opt.val( JSON.stringify(goodsOption) );
+	}
+};
 </script>

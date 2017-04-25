@@ -20,7 +20,14 @@ public class GoodsDao {
 	@Autowired private DaoTemplate dao;
 
 	public void insert(GoodsVO g) {
-		dao.insert("g.insert", g);
+		dao.transactionTemplate(session -> {
+			session.insert("g.insert", g);
+			
+			g.getGoodsOptions().forEach(vo -> {
+				vo.setG_no(g.getG_no());
+				session.insert("go.insertNewOptionValue", vo);
+			});
+		});
 	}
 	
 	public void insertWithImg(GoodsVO g, List<GoodsImgVO> imgs) {
@@ -28,13 +35,18 @@ public class GoodsDao {
 			if(session.insert("g.insert", g) != 1)
 				throw new TransactionException();
 				
-			for(GoodsImgVO img : imgs) {
-				img.setG_no(g.getG_no());
-				if(session.update("f.updatePath", img) == -1)
+			imgs.forEach(vo -> {
+				vo.setG_no(g.getG_no());
+				if(session.update("f.updatePath", vo) == -1)
 					throw new TransactionException();
-				if(session.insert("gi.insert", img) == -1)
+				if(session.insert("gi.insert", vo) == -1)
 					throw new TransactionException();
-			}
+			});
+			
+			g.getGoodsOptions().forEach(vo -> {
+				vo.setG_no(g.getG_no());
+				session.insert("go.insertNewOptionValue", vo);
+			});
 		});
 	}
 

@@ -8,11 +8,20 @@
 		VALUES(o_no.nextval, #{o_name}, #{c_no})
 	</insert>
 	
+	<insert id="insertNewOptionValue">
+		INSERT INTO goods_option(g_no, o_no, value, go_stock)
+		VALUES(#{g_no}, #{o_no}, #{value}, 0)
+	</insert>
+	
 	<select id="selectListWithC_no" resultType="com.got.vo.OptionsVO">
 		SELECT * FROM options WHERE c_no = #{c_no}
 	</select>
 	
-	<delete id="deleteOne">
+	<delete id="delete">
 		DELETE FROM options WHERE o_no = #{o_no}
 	</delete>
+	
+	<update id="update">
+		UPDATE options SET o_name = #{o_name} WHERE o_no = #{o_no}
+	</update>
 </mapper>

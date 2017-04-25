@@ -21,8 +21,12 @@ public class GoodsOptionDao {
 		return dao.selectList("go.selectListWithC_no", c_no);
 	}
 
-	public void deleteOne(int o_no) {
-		dao.delete("go.deleteOne", o_no);
+	public void delete(int o_no) {
+		dao.delete("go.delete", o_no);
+	}
+
+	public void update(OptionsVO o) {
+		dao.update("go.update", o);
 	}
 
 }

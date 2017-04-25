@@ -15,6 +15,8 @@ import com.got.enums.HistoryCategory;
 import com.got.enums.Page;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
+import com.got.util.CommonUtil;
+import com.got.vo.GoodsOptionVO;
 import com.got.vo.GoodsVO;
 
 @Controller("adminGoodsController")
@@ -32,11 +34,12 @@ public class GoodsController {
 	}
 	
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
-	public ModelAndView insertGoodsSubmit(GoodsVO g, String[] fileInfo) {
-		if(fileInfo == null)
+	public ModelAndView insertGoodsSubmit(GoodsVO g, String[] fileInfoJSON, String[] goodsOptionJSON) {
+		g.setGoodsOptions(CommonUtil.getVO(goodsOptionJSON, GoodsOptionVO.class));
+		if(fileInfoJSON == null)
 			gs.enroll(g);
 		else
-			gs.enrollWithImg(g, fileInfo);
+			gs.enrollWithImg(g, fileInfoJSON);
 		
 		return new ModelAndView("redirect:/admin/goods/insert.yo");
 	}

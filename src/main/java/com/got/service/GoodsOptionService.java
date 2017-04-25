@@ -1,5 +1,7 @@
 package com.got.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,14 @@ public class GoodsOptionService {
 	}
 
 	public void delete(int o_no) {
-		dao.deleteOne(o_no);
+		dao.delete(o_no);
+	}
+
+	public void update(OptionsVO o) {
+		dao.update(o);
+	}
+
+	public List<OptionsVO> getWithG_no(int c_no) {
+		return dao.selectListWithC_no(c_no);
 	}
 }

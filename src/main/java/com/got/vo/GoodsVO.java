@@ -11,55 +11,24 @@ public class GoodsVO extends CategoryVO {
 	private List<ShippingReceivingVO> history;
 	private List<GoodsImgVO> images;
 	private GoodsImgVO mainImg;
+	private List<GoodsOptionVO> goodsOptions;
 	
-	public int getG_no() {
-		return g_no;
-	}
-	public void setG_no(int g_no) {
-		this.g_no = g_no;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getDetail() {
-		return detail;
-	}
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
-	public int getStock() {
-		return stock;
-	}
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
-	public int getPurchase_price() {
-		return purchase_price;
-	}
-	public void setPurchase_price(int purchase_price) {
-		this.purchase_price = purchase_price;
-	}
-	public int getSell_price() {
-		return sell_price;
-	}
-	public void setSell_price(int sell_price) {
-		this.sell_price = sell_price;
-	}
-	public int getDiscount_rate() {
-		return discount_rate;
-	}
-	public void setDiscount_rate(int discount_rate) {
-		this.discount_rate = discount_rate;
-	}
-	public int getSaving_mileage() {
-		return saving_mileage;
-	}
-	public void setSaving_mileage(int saving_mileage) {
-		this.saving_mileage = saving_mileage;
-	}
+	public int getG_no() {return g_no;}
+	public void setG_no(int g_no) {this.g_no = g_no;}
+	public String getName() {return name;}
+	public void setName(String name) {this.name = name;}
+	public String getDetail() {return detail;}
+	public void setDetail(String detail) {this.detail = detail;}
+	public int getStock() {return stock;}
+	public void setStock(int stock) {this.stock = stock;}
+	public int getPurchase_price() {return purchase_price;}
+	public void setPurchase_price(int purchase_price) {this.purchase_price = purchase_price;}
+	public int getSell_price() {return sell_price;}
+	public void setSell_price(int sell_price) {this.sell_price = sell_price;}
+	public int getDiscount_rate() {return discount_rate;}
+	public void setDiscount_rate(int discount_rate) {this.discount_rate = discount_rate;}
+	public int getSaving_mileage() {return saving_mileage;}
+	public void setSaving_mileage(int saving_mileage) {this.saving_mileage = saving_mileage;}
 	public int getStatus_code() {
 		return status.getCode();
 	}
@@ -85,22 +54,6 @@ public class GoodsVO extends CategoryVO {
 		this.images = images;
 	}
 	
-	/**
-	 * 재고를 업데이트한다. <br>
-	 * 계산후 재고값이 음수이면 값을 업데이트 하지 않고 false를 반환한다.
-	 * srVO에 변동후 재고량도 같이 입력된다.
-	 * @param sr
-	 * @return
-	 */
-	public boolean updateStock(ShippingReceivingVO sr) {
-		int updatedStock = this.stock + sr.getAmount();
-		if(updatedStock < 0) 
-			return false;
-		this.stock = updatedStock;
-		sr.setChange_stock(updatedStock);
-		return true;
-	}
-	
 	public void updateStock(int amount) {
 		this.stock += amount;
 	}
@@ -116,5 +69,11 @@ public class GoodsVO extends CategoryVO {
 	}
 	public void setMainImg(GoodsImgVO mainImg) {
 		this.mainImg = mainImg;
+	}
+	public List<GoodsOptionVO> getGoodsOptions() {
+		return goodsOptions;
+	}
+	public void setGoodsOptions(List<GoodsOptionVO> goodsOptions) {
+		this.goodsOptions = goodsOptions;
 	}
 }
