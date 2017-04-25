@@ -1,71 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="col-sm-9 padding-right">
+<div class="col-sm-12">
 	<div class="product-details">
 		<!--product-details-->
 		<div class="col-sm-5">
 			<div class="view-product">
-				<img src="images/product-details/1.jpg" alt="" />
-				<h3>ZOOM</h3>
+				<jsp:include page="include/imageSlider.jsp"></jsp:include>
 			</div>
-			<div id="similar-product" class="carousel slide" data-ride="carousel">
-
-				<!-- Wrapper for slides -->
-				<div class="carousel-inner">
-					<div class="item active">
-						<a href=""><img src="images/product-details/similar1.jpg"
-							alt=""></a> <a href=""><img
-							src="images/product-details/similar2.jpg" alt=""></a> <a
-							href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-					</div>
-					<div class="item">
-						<a href=""><img src="images/product-details/similar1.jpg"
-							alt=""></a> <a href=""><img
-							src="images/product-details/similar2.jpg" alt=""></a> <a
-							href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-					</div>
-					<div class="item">
-						<a href=""><img src="images/product-details/similar1.jpg"
-							alt=""></a> <a href=""><img
-							src="images/product-details/similar2.jpg" alt=""></a> <a
-							href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-					</div>
-
-				</div>
-
-				<!-- Controls -->
-				<a class="left item-control" href="#similar-product"
-					data-slide="prev"> <i class="fa fa-angle-left"></i>
-				</a> <a class="right item-control" href="#similar-product"
-					data-slide="next"> <i class="fa fa-angle-right"></i>
-				</a>
-			</div>
-
 		</div>
 		<div class="col-sm-7">
 			<div class="product-information">
 				<!--/product-information-->
-				<img src="images/product-details/new.jpg" class="newarrival" alt="" />
-				<h2>Anne Klein Sleeveless Colorblock Scuba</h2>
-				<p>Web ID: 1089772</p>
-				<img src="images/product-details/rating.png" alt="" /> <span>
-					<span>US $59</span> <label>Quantity:</label> <input type="text"
-					value="3" />
+				<img src="images/product-details/new.jpg" class="newarrival" alt="new" />
+				<h2>${g.name }</h2>
+				<p></p>
+				<span>
+					<span>${g.sell_price } 원</span>
+					<label>수량 : </label>
+					<input type="text" value="" />
 					<button type="button" class="btn btn-fefault cart">
-						<i class="fa fa-shopping-cart"></i> Add to cart
+						<i class="fa fa-shopping-cart"></i>장바구니에 추가하기
 					</button>
 				</span>
 				<p>
 					<b>Availability:</b> In Stock
 				</p>
-				<p>
-					<b>Condition:</b> New
-				</p>
-				<p>
-					<b>Brand:</b> E-SHOPPER
-				</p>
-				<a href=""><img src="images/product-details/share.png"
-					class="share img-responsive" alt="" /></a>
+				<a href="">
+					<img src="images/product-details/share.png" class="share img-responsive" alt="카드" />
+				</a>
 			</div>
 			<!--/product-information-->
 		</div>
@@ -76,191 +38,30 @@
 		<!--category-tab-->
 		<div class="col-sm-12">
 			<ul class="nav nav-tabs">
-				<li><a href="#details" data-toggle="tab">Details</a></li>
-				<li><a href="#companyprofile" data-toggle="tab">Company
-						Profile</a></li>
-				<li><a href="#tag" data-toggle="tab">Tag</a></li>
-				<li class="active"><a href="#reviews" data-toggle="tab">Reviews
-						(5)</a></li>
+				<li><a href="#details" data-toggle="tab">상세정보</a></li>
+				<li><a href="#payInfo" data-toggle="tab">상품 결제 정보</a></li>
+				<li class="active"><a href="#reviews" data-toggle="tab">상품후기</a></li>
 			</ul>
 		</div>
 		<div class="tab-content">
 			<div class="tab-pane fade" id="details">
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery1.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery2.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery3.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery4.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
+				<div class="col-sm-12">
+					<div style="width: 100%; height: auto; overflow: auto;">${g.detail }</div>
 				</div>
 			</div>
 
-			<div class="tab-pane fade" id="companyprofile">
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery1.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery3.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery2.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery4.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
+			<div class="tab-pane fade" id="payInfo">
+				<div class="col-sm-12">
+				<h3>상품결제정보</h3>
+				<br>
+				고액결제의 경우 안전을 위해 카드사에서 확인전화를 드릴 수도 있습니다.
+				확인과정에서 도난 카드의 사용이나 타인 명의의 주문등 정상적인 주문이 아니라고 판단될 경우 임의로 주문을 보류 또는 취소할 수 있습니다.   
+				<br><br>
+				무통장 입금은 상품 구매 대금은 PC뱅킹, 인터넷뱅킹, 텔레뱅킹 혹은 가까운 은행에서 직접 입금하시면 됩니다.  
+				주문시 입력한 입금자명과 실제입금자의 성명이 반드시 일치하여야 하며, 7일 이내로 입금을 하셔야 하며 입금되지 않은 주문은 자동취소 됩니다. 
 				</div>
 			</div>
 
-			<div class="tab-pane fade" id="tag">
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery1.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery2.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery3.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<div class="productinfo text-center">
-								<img src="images/home/gallery4.jpg" alt="" />
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<button type="button" class="btn btn-default add-to-cart">
-									<i class="fa fa-shopping-cart"></i>Add to cart
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 
 			<div class="tab-pane fade active in" id="reviews">
 				<div class="col-sm-12">

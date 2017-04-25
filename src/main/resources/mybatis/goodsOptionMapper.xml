@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="go">
+	<insert id="insertNewOption">
+		INSERT INTO options(o_no, o_name, c_no)
+		VALUES(o_no.nextval, #{o_name}, #{c_no})
+	</insert>
+</mapper>

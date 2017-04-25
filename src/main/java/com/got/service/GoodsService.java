@@ -63,10 +63,10 @@ public class GoodsService {
 	 * @param goods_no
 	 * @return goodsVO
 	 */
-	public GoodsVO detailAndSRHistory(int goods_no) {
-		GoodsVO g = dao.selectOneWithG_no(goods_no);
+	public GoodsVO detailAndSRHistory(int g_no) {
+		GoodsVO g = dao.selectOneWithG_no(g_no);
 		g.setImages(fdao.selectGoodsImg(g.getG_no()));
-		g.setHistory(srService.getRecentHistory(goods_no));
+		g.setHistory(srService.getRecentHistory(g_no));
 		return g;
 	}
 	
@@ -106,5 +106,11 @@ public class GoodsService {
 			return dao.selectListWithMiddle(c.getC_no());
 		
 		throw new IllegalArgumentException("아직 대분류는 지원 안함");
+	}
+
+	public GoodsVO detail(int g_no) {
+		GoodsVO g = dao.selectOneWithG_no(g_no);
+		g.setImages(fdao.selectGoodsImg(g.getG_no()));
+		return g;
 	}
 }

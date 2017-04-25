@@ -104,7 +104,7 @@
 				<div class="row">
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
-						<jsp:include page="include/imageSlider.jsp"></jsp:include>
+						<jsp:include page="/WEB-INF/views/goods/include/imageSlider.jsp"></jsp:include>
 					</div>
 					<div class="col-md-2"></div>
 				</div>

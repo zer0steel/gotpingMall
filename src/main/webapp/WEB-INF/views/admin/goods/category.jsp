@@ -67,7 +67,68 @@
 <!-- 상품 분류 끝 -->
 	
 <div class="row">
-	
+	<div class="col-md-6">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2 id="">옵션 목록</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content"></div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2 id="">옵션 추가</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<form action="option/insert.yo" method="post" id="option-form" 
+					data-parsley-validate class="form-horizontal form-label-left">
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">
+						분류명
+						</label>
+						<div class="col-md-6 col-sm-6">
+							<input type="text" class="form-control" required readonly>
+							<input type="hidden" class="form-control" name="c_no">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">
+						옵션 이름
+						</label>
+						<div class="col-md-6 col-sm-6">
+							<input type="text" name="o_name" class="form-control" required>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button type="submit" class="btn btn-success" id="btn-enroll">등록</button>
+							<button type="reset" class="btn btn-primary">입력 초기화</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- 수정 모달 -->
 <div class="modal fade" id="updateModal" >
@@ -171,6 +232,7 @@ $("select[data-menu_level]").click(function() {
 	requestDetailCategory(c_no).done(function(category) {
 		setInsertForm(category);
 		setUpdateForm(category);
+		setGoodsOptionForm(category);
 	});
 });
 
@@ -211,5 +273,10 @@ function setUpdateForm(category) {
 	updateForm.find("select[name=super_no]").val(category.super_no);
 	updateForm.find("input[name=title]").val(category.title);
 	updateForm.find("input[name=c_no]").val(category.c_no);
+}
+
+function setGoodsOptionForm(category) {
+	$("#option-form").find("input[name=c_no]").val(category.c_no)
+	.prev().val(category.title);
 }
 </script>

@@ -1,5 +1,7 @@
 package com.got.controller.admin;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,12 +51,12 @@ public class GoodsController {
 	
 	@ResponseBody
 	@RequestMapping("admin/goods/detail.yo")
-	public ModelAndView detailGoods(int g_no, String msg) {
+	public ModelAndView detailGoods(HttpServletRequest req, int g_no) {
 		ModelAndView mav = new ModelAndView();
 		cs.setEnumsInMAV(mav).addObject("g",gs.detailAndSRHistory(g_no));
-		mav.addObject("status", GoodsStatus.values());
-		mav.addObject("hc", HistoryCategory.values());
-		mav.addObject("msg", msg);
+		mav.addObject("status", GoodsStatus.values())
+		.addObject("hc", HistoryCategory.values())
+		.addObject("imageSlider", req.getContextPath() + "/goods/include/imageSlider.jsp");
 		return Page.setAdminViewPage(mav, "goods/detail.jsp");
 	}
 	

@@ -16,7 +16,7 @@ public class CategoryController {
 	
 	@Autowired private CategoryService cs;
 	
-	private static final String REDIRECT_CATEGORY_PAGE = "redirect:/admin/goods/category.yo";
+	public static final String REDIRECT_CATEGORY_PAGE = "redirect:/admin/goods/category.yo";
 	
 	@RequestMapping("admin/goods/category.yo")
 	public ModelAndView category(String msg) {

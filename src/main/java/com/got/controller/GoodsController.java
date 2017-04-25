@@ -23,4 +23,12 @@ public class GoodsController {
 		cs.setEnumsInMAV(mav);
 		return Page.setViewPage(mav, "goods/list.jsp");
 	}
+	
+	@RequestMapping("goods/detail.yo")
+	public ModelAndView list(int g_no) {
+		ModelAndView mav = new ModelAndView();
+		cs.setEnumsInMAV(mav)
+		.addObject("g", gs.detail(g_no));
+		return Page.setViewPage(mav, "goods/detail.jsp");
+	}
 }
