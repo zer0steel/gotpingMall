@@ -9,7 +9,8 @@ public class CategoryVO {
 	private int c_no, super_no;
 	private String title;
 	private MenuLevel menu_level;
-	private List<CategoryVO> sub = new ArrayList<>();;
+	private List<CategoryVO> sub = new ArrayList<>();
+	private List<OptionsVO> options;
 	
 	public int getC_no() {
 		return c_no;
@@ -58,5 +59,11 @@ public class CategoryVO {
 	}
 	public void addSub(CategoryVO sub) {
 		this.sub.add(sub);
+	}
+	public List<OptionsVO> getOptions() {
+		return options;
+	}
+	public void setOptions(List<OptionsVO> options) {
+		this.options = options;
 	}
 }

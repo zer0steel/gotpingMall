@@ -80,7 +80,14 @@
 				</ul>
 				<div class="clearfix"></div>
 			</div>
-			<div class="x_content"></div>
+			<div class="x_content">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+					<h2 id="h2-title"></h2>
+					<select name="o_no" size="5" style="width: 100%;"></select>
+				</div>
+				<div class="col-md-2"></div>
+			</div>
 		</div>
 	</div>
 	<div class="col-md-6">
@@ -97,7 +104,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form action="option/insert.yo" method="post" id="option-form" 
+				<form action="option/insert.yo" method="post" id="option-insertForm" 
 					data-parsley-validate class="form-horizontal form-label-left">
 					
 					<div class="form-group">
@@ -160,8 +167,72 @@
 	</div>
 </div>
 <!-- 수정 모달 끝 -->
+
+<!-- 수정 모달 -->
+<div class="modal fade" id="optionModal" >
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- header -->
+			<div class="modal-header">
+				<!-- 닫기(x) 버튼 -->
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<!-- header title -->
+				<h4 class="modal-title">수정 / 삭제</h4>
+			</div>
+			<!-- body -->
+			<div class="modal-body">
+				<form id="option-form" data-parsley-validate 
+					class="form-horizontal form-label-left" method="post">
+					
+					<input type="hidden" name="o_no">
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">
+						분류명
+						</label>
+						<div class="col-md-6 col-sm-6">
+							<input type="text" class="form-control" name="title" readonly>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">
+						옵션 이름
+						</label>
+						<div class="col-md-6 col-sm-6">
+							<input type="text" class="form-control" name="o_name" required>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button type="submit" class="btn btn-warning" formaction="option/update.yo">수정</button>
+							<button type="button" class="btn btn-danger btn-delete" formaction="option/delete.yo">삭제</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 수정 모달 끝 -->
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/categoryForm.js"></script>
 <script type="text/javascript">
+$(".btn-delete").click(function() {
+	if(confirm("정말로 삭제하시겠습니까?")) {
+		var url = $(this).attr("formaction");
+		$(this).parents("form").attr("action", url).submit();
+	}
+});
+
+function deleteData() {
+	if(confirm("정말로 삭제하시겠습니까?")) {
+		return true;
+	}
+	return false;
+}
+
 $("#btn-enroll").click(function() {
 	if( validationCheck() ) {
 		if( $("select[name=menu_level]").val() != Category.BIG )
@@ -233,6 +304,7 @@ $("select[data-menu_level]").click(function() {
 		setInsertForm(category);
 		setUpdateForm(category);
 		setGoodsOptionForm(category);
+		setOptionList(category);
 	});
 });
 
@@ -276,7 +348,27 @@ function setUpdateForm(category) {
 }
 
 function setGoodsOptionForm(category) {
-	$("#option-form").find("input[name=c_no]").val(category.c_no)
+	$("#option-insertForm").find("input[name=c_no]").val(category.c_no)
 	.prev().val(category.title);
 }
+
+function setOptionList(category) {
+	$("#h2-title").html(category.title);
+	$("select[name=o_no]").empty();
+	var options = category.options;
+	$(options).each(function(idx) {
+		var option = $("<option />").html(options[idx].o_name).val(options[idx].o_no);
+		$("select[name=o_no]").append(option);
+	});
+}
+
+$("select[name=o_no]").on("click",function() {
+	var o_no = $(this).val();
+	var o_name = $(this).find("option:selected").text();
+	var c_titlte = $("#h2-title").text();
+	$("#option-form").find("input[name=title]").val(c_titlte);
+	$("#option-form").find("input[name=o_no]").val(o_no);
+	$("#option-form").find("input[name=o_name]").val(o_name);
+	$("#optionModal").modal();
+});
 </script>

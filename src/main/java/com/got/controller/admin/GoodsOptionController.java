@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.got.service.GoodsOptionService;
-import com.got.vo.OptionVO;
+import com.got.vo.OptionsVO;
 
 @Controller
 public class GoodsOptionController {
@@ -18,10 +18,15 @@ public class GoodsOptionController {
 	@Autowired private GoodsOptionService gos;
 	
 	@RequestMapping(value = "admin/goods/option/insert.yo", method = RequestMethod.POST)
-	public ModelAndView insertNewOption(OptionVO o) {
+	public ModelAndView insertNewOption(OptionsVO o) {
 		log.info(o);
 		gos.add(o);
-		
+		return new ModelAndView(CategoryController.REDIRECT_CATEGORY_PAGE);
+	}
+	
+	@RequestMapping(value = "admin/goods/option/delete.yo", method = RequestMethod.POST)
+	public ModelAndView insertNewOption(int o_no) {
+		gos.delete(o_no);
 		return new ModelAndView(CategoryController.REDIRECT_CATEGORY_PAGE);
 	}
 }

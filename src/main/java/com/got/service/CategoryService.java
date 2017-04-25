@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.got.dao.CategoryDao;
+import com.got.dao.GoodsOptionDao;
 import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
 import com.got.vo.CategoryVO;
@@ -15,13 +16,16 @@ import com.got.vo.CategoryVO;
 public class CategoryService {
 	
 	@Autowired private CategoryDao dao;
+	@Autowired private GoodsOptionDao goDao;
 	
 	public List<CategoryVO> getAll() {
 		return dao.selectAll();
 	}
 	
 	public String getOneWithJSON(int c_no) {
-		return CommonUtil.convertToJSON(dao.selectOne(c_no));
+		CategoryVO c = dao.selectOne(c_no);
+		c.setOptions(goDao.selectListWithC_no(c_no));
+		return CommonUtil.convertToJSON(c);
 	}
 	public void enroll(CategoryVO c) {
 		validationCheck(c);

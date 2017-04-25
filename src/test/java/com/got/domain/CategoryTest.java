@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.dao.CategoryDao;
+import com.got.service.CategoryService;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -17,9 +18,10 @@ import com.got.dao.CategoryDao;
 public class CategoryTest {
 	
 	@Autowired CategoryDao dao;
+	@Autowired CategoryService s;
 	
 	@Test
-	public void selectSub() {
-		dao.selectSub(79);
+	public void selectOne() {
+		System.out.println(s.getOneWithJSON(84));
 	}
 }

@@ -1,6 +1,6 @@
 package com.got.vo;
 
-public class OptionVO {
+public class OptionsVO {
 	private int o_no, c_no;
 	private String o_name;
 	public int getO_no() {

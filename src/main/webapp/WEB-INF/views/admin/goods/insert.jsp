@@ -10,7 +10,7 @@
 <div class="clearfix"></div>
 <!-- 상품 분류 -->
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-6">
 		<div class="x_panel">
 		
 			<div class="x_title">
@@ -22,6 +22,19 @@
 				<jsp:include page="include/categorySelectBox.jsp"></jsp:include>
 				<br>
 				<a href="${pageContext.request.contextPath}/admin/goods/category.yo" class="btn btn-success btn-sm">분류 편집 하기</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>상품 이미지</h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<form action="${pageContext.request.contextPath}/file/upload.yo"
+				class="dropzone" id="uploadFile" enctype="multipart/form-data" method="post" data-paramName="file">
+				</form>
 			</div>
 		</div>
 	</div>
@@ -50,17 +63,22 @@
 	<div class="col-md-6">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>상품 이미지</h2>
+				<h2>옵션 편집</h2>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form action="${pageContext.request.contextPath}/file/upload.yo"
-				class="dropzone" id="uploadFile" enctype="multipart/form-data" method="post" data-paramName="file">
+				<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left" action="insert.yo" method="post">
+					<div class="form-group">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button type="reset" class="btn btn-primary">입력 초기화</button>
+							<button type="button" class="btn btn-success" id="btn-enroll">등록</button>
+						</div>
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	<div class="ln_solid"></div>
+
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
@@ -116,15 +134,6 @@ function checkEmptyField() {
 		return false;
 	}
 	return true;
-}
-
-function showMessage(insertedCount) {
-	if(insertedCount == 1)
-		alert("등록 성공");
-	else if(insertedCount == 0)
-		alert("등록 실패");
-	else
-		alert("여러번 등록되었습니다")
 }
 
 function requestInsertGoods(goodsData) {

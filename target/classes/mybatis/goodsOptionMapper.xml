@@ -7,4 +7,12 @@
 		INSERT INTO options(o_no, o_name, c_no)
 		VALUES(o_no.nextval, #{o_name}, #{c_no})
 	</insert>
+	
+	<select id="selectListWithC_no" resultType="com.got.vo.OptionsVO">
+		SELECT * FROM options WHERE c_no = #{c_no}
+	</select>
+	
+	<delete id="deleteOne">
+		DELETE FROM options WHERE o_no = #{o_no}
+	</delete>
 </mapper>

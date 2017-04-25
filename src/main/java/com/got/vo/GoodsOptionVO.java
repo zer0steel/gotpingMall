@@ -1,6 +1,6 @@
 package com.got.vo;
 
-public class GoodsOptionVO extends OptionVO {
+public class GoodsOptionVO extends OptionsVO {
 	private int g_no;
 	private String value, go_stock;
 	public int getG_no() {
