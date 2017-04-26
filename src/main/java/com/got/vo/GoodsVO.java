@@ -53,16 +53,8 @@ public class GoodsVO extends CategoryVO {
 	public void setImages(List<GoodsImgVO> images) {
 		this.images = images;
 	}
-	
 	public void updateStock(int amount) {
 		this.stock += amount;
-	}
-	@Override
-	public String toString() {
-		return super.toString() + "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
-				+ sell_price + ", discount_rate=" + discount_rate + ", saving_mileage=" + saving_mileage + ", name="
-				+ name + ", detail=" + detail + ", status=" + status + ", history=" + history + ", images=" + images
-				+ ", mainImg=" + mainImg + "]";
 	}
 	public GoodsImgVO getMainImg() {
 		return mainImg;
@@ -75,5 +67,10 @@ public class GoodsVO extends CategoryVO {
 	}
 	public void setGoodsOptions(List<GoodsOptionVO> goodsOptions) {
 		this.goodsOptions = goodsOptions;
+	}
+	@Override
+	public String toString() {
+		return "GoodsVO [g_no=" + g_no + ", status=" + status + ", history=" + history + ", images=" + images
+				+ ", mainImg=" + mainImg + ", goodsOptions=" + goodsOptions + "]";
 	}
 }

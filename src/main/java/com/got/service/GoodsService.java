@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.got.dao.FileDao;
 import com.got.dao.GoodsDao;
+import com.got.dao.GoodsOptionDao;
 import com.got.enums.GoodsStatus;
 import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
@@ -23,6 +24,7 @@ public class GoodsService {
 	
 	@Autowired private GoodsDao dao;
 	@Autowired private FileDao fdao;
+	@Autowired private GoodsOptionDao goDao;
 	@Autowired private SRService srService;
 
 	public void enroll(GoodsVO g) {
@@ -64,9 +66,11 @@ public class GoodsService {
 	 * @return goodsVO
 	 */
 	public GoodsVO detailAndSRHistory(int g_no) {
-		GoodsVO g = dao.selectOneWithG_no(g_no);
-		g.setImages(fdao.selectGoodsImg(g.getG_no()));
+		GoodsVO g = dao.selectOne(g_no);
+		g.setGoodsOptions(goDao.selectListWithG_no(g_no));
+		g.setImages(fdao.selectGoodsImg(g_no));
 		g.setHistory(srService.getRecentHistory(g_no));
+		log.info(g);
 		return g;
 	}
 	
@@ -77,7 +81,7 @@ public class GoodsService {
 	 * @return 재고 계산 처리된 goodsVO
 	 */
 	public GoodsVO updateStock(int g_no, int amount) {
-		GoodsVO g = dao.selectOneWithG_no(g_no);
+		GoodsVO g = dao.selectOne(g_no);
 		g.updateStock(amount);
 		return g;
 	}
@@ -109,7 +113,7 @@ public class GoodsService {
 	}
 
 	public GoodsVO detail(int g_no) {
-		GoodsVO g = dao.selectOneWithG_no(g_no);
+		GoodsVO g = dao.selectOne(g_no);
 		g.setImages(fdao.selectGoodsImg(g.getG_no()));
 		return g;
 	}

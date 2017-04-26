@@ -36,6 +36,7 @@ public class GoodsController {
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
 	public ModelAndView insertGoodsSubmit(GoodsVO g, String[] fileInfoJSON, String[] goodsOptionJSON) {
 		g.setGoodsOptions(CommonUtil.getVO(goodsOptionJSON, GoodsOptionVO.class));
+		log.info(g);
 		if(fileInfoJSON == null)
 			gs.enroll(g);
 		else

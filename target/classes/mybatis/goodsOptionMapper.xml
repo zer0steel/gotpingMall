@@ -17,6 +17,10 @@
 		SELECT * FROM options WHERE c_no = #{c_no}
 	</select>
 	
+	<select id="selectListWithG_no" resultType="com.got.vo.GoodsOptionVO">
+		SELECT * FROM goods_option go, options o WHERE o.o_no = go.o_no AND go.g_no = #{g_no}
+	</select>
+	
 	<delete id="delete">
 		DELETE FROM options WHERE o_no = #{o_no}
 	</delete>

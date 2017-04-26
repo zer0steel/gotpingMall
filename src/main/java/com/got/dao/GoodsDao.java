@@ -54,7 +54,7 @@ public class GoodsDao {
 		return dao.selectList("g.selectAll");
 	}
 	
-	public GoodsVO selectOneWithG_no(int g_no) {
+	public GoodsVO selectOne(int g_no) {
 		return dao.selectOne("g.selectOne", g_no);
 	}
 

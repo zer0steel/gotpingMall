@@ -153,6 +153,43 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="col-md-6">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>재고 상세 정보</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link" id="detail-collapse"><i class="fa fa-chevron-up"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<c:forEach var="opt" items="${g.goodsOptions }">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<td></td>
+		 					<c:forEach var="col" items="${opt.values }">
+							<td>${col }</td>
+							</c:forEach>
+						</tr>
+					</thead>
+					<tbody>					
+						<tr>
+							<td>${opt.o_name }</td>
+							<c:forEach var="s" items="${opt.go_stocks }">
+							<td>${s }</td>
+							</c:forEach>
+						</tr>
+					</tbody>
+				</table>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+	
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/goods/categorySelectBox.js"></script>
 <script type="text/javascript">

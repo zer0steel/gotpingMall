@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="row">
 	<div class="x_panel">
@@ -68,6 +67,73 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="stockModal" >
+	<div class="modal-dialog" style="display: table;">
+		<div class="modal-content">
+			<!-- header -->
+			<div class="modal-header">
+				<!-- 닫기(x) 버튼 -->
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<!-- header title -->
+				<h4 class="modal-title">재고 조정</h4>
+			</div>
+			<!-- body -->
+			<div class="modal-body">
+				<form id="stock-form" data-parsley-validate 
+					class="form-horizontal form-label-left" method="post">
+					
+					<div class="form-group">
+						<label class="control-label col-md-3">
+						등록예정 총 재고량
+						</label>
+						<div class="col-md-3">
+							<input class="form-control" type="number" readonly id="totalExpect">
+						</div>
+						<label class="control-label col-md-3">
+						입력된 총 재고량
+						</label>
+						<div class="col-md-3">
+							<input class="form-control" type="number" readonly value="0" id="totalInput">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<c:forEach var="opt" items="${g.goodsOptions }">
+						<table class="table table-striped table-bordered table-stock">
+						<thead>
+							<tr>
+								<td width="10%"></td>
+			 					<c:forEach var="col" items="${opt.values }">
+								<td width="*">${col }</td>
+								</c:forEach>
+							</tr>
+						</thead>
+						<tbody>					
+							<tr>
+								<td>${opt.o_name }</td>
+								<c:forEach var="s" items="${opt.go_stocks }">
+								<td><input type="number" class="form-control input-stock" value="0"></td>
+								</c:forEach>
+							</tr>
+						</tbody>
+						</table>
+						
+						</c:forEach>
+					</div>
+					<div class="form-group">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button type="submit" class="btn btn-warning" formaction="option/update.yo">등록</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script type="text/javascript">
 (function() {
 	if($("#msg").val().length != 0)
@@ -78,8 +144,38 @@ $("#btn-enroll").click(function() {
 	if( !checkEmptyForm() )
 		return;
 	
+	if($(".table-stock") != undefined) {
+		$(".input-stock").each(function() {
+			$(this).val(0);
+		});
+		$("#totalInput").val(0);
+		$("#totalExpect").val($("input[name=amount]").val());
+		$("#stockModal").modal();
+		return;
+	}
+	
 	$("#sr-form").submit();
 });
+
+$(".input-stock").keyup(function() {
+	var totalInput = calculateTotalInput();
+	var $totalInput = $("#totalInput");
+	$totalInput.val( totalInput );
+	
+	var totalExpect = Number($("#totalExpect").val());
+	if(totalExpect < totalInput)
+		$totalInput.css("color","red");
+	else
+		$totalInput.css("color","");
+});
+
+function calculateTotalInput() {
+	var inputTotal = 0;
+	$(".input-stock").each(function() {
+		inputTotal += Number($(this).val());
+	});
+	return inputTotal;
+}
 
 $("select[name=category]").change(function() {
 	var code = $(this).val();

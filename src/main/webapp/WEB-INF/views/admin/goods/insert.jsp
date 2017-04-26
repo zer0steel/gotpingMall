@@ -204,7 +204,6 @@ $("#btn-addOption").click(function() {
 		alert("옵션값이 입력되지 않았습니다.")
 		return;
 	}
-	
 	addOption(o_no, value);
 });
 
@@ -213,18 +212,19 @@ function addOption(o_no, value) {
 	if($opt.val() == undefined) {
 		var goodsOption = {
 			o_no : o_no,
-			value : value
+			value : value,
+			go_stock : "0"
 		};
-		
 		$("<input />")
-			.attr({"type":"text", "id":"option" + o_no, "name":"goodsOptionJSON"})
+			.attr({"type":"hidden", "id":"option" + o_no, "name":"goodsOptionJSON"})
 			.val( JSON.stringify(goodsOption) )
 			.appendTo( $("#goods-form") );
 	}
 	else {
 		var goodsOption = JSON.parse($opt.val());
-		goodsOption.value += "/" + value;
-		$opt.val( JSON.stringify(goodsOption) );
+		goodsOption.value += "," + value;
+		goodsOption.go_stock += ",0";
+		$opt.val(JSON.stringify(goodsOption));
 	}
 };
 </script>

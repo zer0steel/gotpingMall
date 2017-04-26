@@ -226,13 +226,6 @@ $(".btn-delete").click(function() {
 	}
 });
 
-function deleteData() {
-	if(confirm("정말로 삭제하시겠습니까?")) {
-		return true;
-	}
-	return false;
-}
-
 $("#btn-enroll").click(function() {
 	if( validationCheck() ) {
 		if( $("select[name=menu_level]").val() != Category.BIG )

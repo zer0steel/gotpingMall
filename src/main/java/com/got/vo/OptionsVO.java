@@ -23,6 +23,6 @@ public class OptionsVO {
 	}
 	@Override
 	public String toString() {
-		return "OptionVO [o_no=" + o_no + ", c_no=" + c_no + ", o_name=" + o_name + "]";
+		return "\nOptionVO [o_no=" + o_no + ", c_no=" + c_no + ", o_name=" + o_name + "]";
 	}
 }
