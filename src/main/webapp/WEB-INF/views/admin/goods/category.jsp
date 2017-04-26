@@ -10,23 +10,6 @@
 <div class="clearfix"></div>
 <!-- 상품 분류 -->
 <div class="row">
-	<div class="col-md-6">
-		<div class="x_panel">
-		
-			<div class="x_title">
-				<h2 id="">목록</h2>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<jsp:include page="include/categorySelectBox.jsp"></jsp:include>
-				<button class="btn btn-warning" id="btn-update">수정</button>
-				<button class="btn btn-danger" id="btn-delete">삭제</button>
-				<form action="category/delete.yo" id="category-deleteForm" method="post">
-					<input type="hidden" name="c_no">
-				</form>
-			</div>
-		</div>
-	</div>
 	<!-- 상품 분류 등록 -->
 	<div class="col-md-6">
 		<div class="x_panel">
@@ -63,33 +46,28 @@
 		</div>
 	</div>
 	<!-- 상품 분류 등록 끝 -->
+	
+	<div class="col-md-6">
+		<div class="x_panel">
+		
+			<div class="x_title">
+				<h2 id="">목록</h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<jsp:include page="include/categorySelectBox.jsp"></jsp:include>
+				<button class="btn btn-warning" id="btn-update">수정</button>
+				<button class="btn btn-danger" id="btn-delete">삭제</button>
+				<form action="category/delete.yo" id="category-deleteForm" method="post">
+					<input type="hidden" name="c_no">
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- 상품 분류 끝 -->
 	
 <div class="row">
-	<div class="col-md-6">
-		<div class="x_panel">
-			<div class="x_title">
-				<h2 id="">옵션 목록</h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li>
-						<a class="collapse-link">
-							<i class="fa fa-chevron-up"></i>
-						</a>
-					</li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<div class="col-md-2"></div>
-				<div class="col-md-8">
-					<h2 id="h2-title"></h2>
-					<select name="o_no" size="5" style="width: 100%;"></select>
-				</div>
-				<div class="col-md-2"></div>
-			</div>
-		</div>
-	</div>
 	<div class="col-md-6">
 		<div class="x_panel">
 			<div class="x_title">
@@ -136,8 +114,45 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="col-md-6">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2 id="">옵션 목록</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<table class="table table-striped table-bordered" id="table-option">
+						<thead>
+							<tr>
+								<th width="10%">분류명</th>
+								<th width="*">옵션 이름</th>
+								<th width="15%">기능</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<form method="post" id="option-form">
+						<input type="hidden" name="o_no">
+						<input type="hidden" name="o_name">
+						<input type="hidden" name="c_no">
+					</form>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+	</div>
 </div>
-<!-- 수정 모달 -->
 <div class="modal fade" id="updateModal" >
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -166,63 +181,16 @@
 		</div>
 	</div>
 </div>
-<!-- 수정 모달 끝 -->
-
-<!-- 수정 모달 -->
-<div class="modal fade" id="optionModal" >
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<!-- header -->
-			<div class="modal-header">
-				<!-- 닫기(x) 버튼 -->
-				<button type="button" class="close" data-dismiss="modal">×</button>
-				<!-- header title -->
-				<h4 class="modal-title">수정 / 삭제</h4>
-			</div>
-			<!-- body -->
-			<div class="modal-body">
-				<form id="option-form" data-parsley-validate 
-					class="form-horizontal form-label-left" method="post">
-					
-					<input type="hidden" name="o_no">
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3">
-						분류명
-						</label>
-						<div class="col-md-6 col-sm-6">
-							<input type="text" class="form-control" name="title" readonly>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3">
-						옵션 이름
-						</label>
-						<div class="col-md-6 col-sm-6">
-							<input type="text" class="form-control" name="o_name" required>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<button type="submit" class="btn btn-warning" formaction="option/update.yo">수정</button>
-							<button type="button" class="btn btn-danger btn-delete" formaction="option/delete.yo">삭제</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-						</div>
-					</div>
-					
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- 수정 모달 끝 -->
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/categoryForm.js"></script>
 <script type="text/javascript">
-$(".btn-delete").click(function() {
+$('body').on('click','.btn-delete', function() {
 	if(confirm("정말로 삭제하시겠습니까?")) {
 		var url = $(this).attr("formaction");
-		$(this).parents("form").attr("action", url).submit();
+		var o_no = $(this).val();
+		
+		var $form = $("#option-form");
+		$form.find('input[name=o_no]').val(o_no);
+		$form.attr('action', url).submit();
 	}
 });
 
@@ -297,7 +265,7 @@ $("select[data-menu_level]").click(function() {
 		setInsertForm(category);
 		setUpdateForm(category);
 		setGoodsOptionForm(category);
-		setOptionList(category);
+		setOptionTable(category);
 	});
 });
 
@@ -311,57 +279,70 @@ function requestDetailCategory(c_no) {
 }
 
 function setInsertForm(category) {
-	var insertForm = $("#category-insertForm");
+	var $form = $("#category-insertForm");
 	var subCategory = Category.setSubMenu_level( category.menu_level );
 	if( subCategory.isExisting() ) {
-		insertForm.find("select[name=super_no]").val( category.c_no );
-		insertForm.find("select[name=menu_level]").val( subCategory.menu_level ).removeAttr("disabled");
-		insertForm.find("input[name=title]").removeAttr("disabled");
-		insertForm.find("#btn-enroll").removeAttr("disabled");
+		$form.find("select[name=super_no]").val( category.c_no );
+		$form.find("select[name=menu_level]").val( subCategory.menu_level ).removeAttr("disabled");
+		$form.find("input[name=title]").removeAttr("disabled");
+		$form.find("#btn-enroll").removeAttr("disabled");
 	}
 	else {
 		var code = CategoryOption.CANNOT_CHOICE.code;
-		insertForm.find("select[name=super_no]").val(code).attr("disabled", true);
-		insertForm.find("select[name=menu_level]").val(code).attr("disabled", true);
-		insertForm.find("input[name=title]").attr("disabled", true);
-		insertForm.find("#btn-enroll").attr("disabled", true);
+		$form.find("select[name=super_no]").val(code).attr("disabled", true);
+		$form.find("select[name=menu_level]").val(code).attr("disabled", true);
+		$form.find("input[name=title]").attr("disabled", true);
+		$form.find("#btn-enroll").attr("disabled", true);
 	}
 }
 
 function setUpdateForm(category) {
 	var c = Category.setCategory(category);
-	var updateForm = $("#category-updateForm");
+	var $form = $("#category-updateForm");
 	c.isSubMenu_level() ? 
-		updateForm.find("select[name=super_no]").removeAttr("disabled") :
-		updateForm.find("select[name=super_no]").attr("disabled", true);
-	updateForm.find("select[name=menu_level]").val(category.menu_level);
-	updateForm.find("select[name=super_no]").val(category.super_no);
-	updateForm.find("input[name=title]").val(category.title);
-	updateForm.find("input[name=c_no]").val(category.c_no);
+		$form.find("select[name=super_no]").removeAttr("disabled") :
+		$form.find("select[name=super_no]").attr("disabled", true);
+	$form.find("select[name=menu_level]").val(category.menu_level);
+	$form.find("select[name=super_no]").val(category.super_no);
+	$form.find("input[name=title]").val(category.title);
+	$form.find("input[name=c_no]").val(category.c_no);
 }
 
 function setGoodsOptionForm(category) {
-	$("#option-insertForm").find("input[name=c_no]").val(category.c_no)
-	.prev().val(category.title);
+	var $form = $("#option-insertForm");
+	if(category.menu_level == Category.BIG) {
+		$form.find("button[type=submit]").removeAttr("disabled");
+		
+		$form.find("input[name=c_no]").val(category.c_no)
+		.prev().val(category.title);
+	}
+	else {
+		$form.find("button[type=submit]").attr("disabled", true);
+		$form.find("input[name=c_no]").prev().val("대분류에서만 추가할 수 있습니다.");
+	}
 }
 
-function setOptionList(category) {
-	$("#h2-title").html(category.title);
-	$("select[name=o_no]").empty();
+function setOptionTable(category) {
+	var $table = $("#table-option").find("tbody");
+	$table.empty();
+	
 	var options = category.options;
-	$(options).each(function(idx) {
-		var option = $("<option />").html(options[idx].o_name).val(options[idx].o_no);
-		$("select[name=o_no]").append(option);
-	});
+	var len = $(options).each(function(idx) {
+		var $tr = $("<tr />");
+		if(idx == 0) {
+			$("<td />").appendTo( $tr );
+		}
+		var $input = $("<input />")
+			.addClass("form-control")
+			.attr({'type':'text', 'readonly': true})
+			.val( this.o_name );
+		$("<td />").append( $input ).appendTo( $tr );
+		$("<td />").append(
+			$("<button />").addClass("btn btn-danger btn-delete")
+				.attr({'formaction':'option/delete.yo'}).val(this.o_no).text('삭제')
+		).appendTo( $tr );
+		$tr.appendTo( $table );
+	}).length;
+	$table.find('td:first').attr('rowspan', len).text(category.title);
 }
-
-$("select[name=o_no]").on("click",function() {
-	var o_no = $(this).val();
-	var o_name = $(this).find("option:selected").text();
-	var c_titlte = $("#h2-title").text();
-	$("#option-form").find("input[name=title]").val(c_titlte);
-	$("#option-form").find("input[name=o_no]").val(o_no);
-	$("#option-form").find("input[name=o_name]").val(o_name);
-	$("#optionModal").modal();
-});
 </script>

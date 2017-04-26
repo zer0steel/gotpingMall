@@ -12,37 +12,6 @@
 <div class="row">
 	<div class="col-md-6">
 		<div class="x_panel">
-		
-			<div class="x_title">
-				<h2 id="">목록</h2>
-				<div class="clearfix"></div>
-			</div>
-			
-			<div class="x_content">
-				<jsp:include page="include/categorySelectBox.jsp"></jsp:include>
-				<br>
-				<a href="${pageContext.request.contextPath}/admin/goods/category.yo" class="btn btn-success btn-sm">분류 편집 하기</a>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="x_panel">
-			<div class="x_title">
-				<h2>상품 이미지</h2>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<form action="${pageContext.request.contextPath}/file/upload.yo"
-				class="dropzone" id="uploadFile" enctype="multipart/form-data" method="post" data-paramName="file">
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- 상품 분류 끝 -->
-<div class="row">
-	<div class="col-md-6">
-		<div class="x_panel">
 			<div class="x_title">
 				<h2>상품 정보</h2>
 				<div class="clearfix"></div>
@@ -60,7 +29,24 @@
 			</div>
 		</div>
 	</div>
+	
 	<div class="col-md-6">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2 id="">분류 목록</h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<jsp:include page="include/categorySelectBox.jsp"></jsp:include>
+				<br>
+				<a href="${pageContext.request.contextPath}/admin/goods/category.yo" class="btn btn-success btn-sm">분류 편집 하기</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<!-- <div class="col-md-6">
 		<div class="x_panel">
 			<div class="x_title">
 				<h2>옵션 편집</h2>
@@ -87,6 +73,14 @@
 							<input type="text" class="form-control" id="optionValue">
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3 col-sm-3">
+						옵션값
+						</label>
+						<div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" class="form-control" id="optionValue">
+						</div>
+					</div>
 					
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -98,9 +92,52 @@
 				</form>
 			</div>
 		</div>
+	</div> -->
+	
+	<div class="col-md-6">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>옵션 목록</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<button class="btn btn-info" id="btn-addOptionTest">옵션 추가</button>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<table class="table table-striped table-bordered" id="table-option">
+					<thead>
+						<tr>
+							<td width="15%">옵션 이름</td>
+							<td width="35%">항목</td>
+							<td width="*">추가가격</td>
+							<td width="10%">필수</td>
+							<td width="10%">기능</td>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
-
+	
+	<div class="col-md-6">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>상품 이미지</h2>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<form action="${pageContext.request.contextPath}/file/upload.yo"
+				class="dropzone" id="uploadFile" enctype="multipart/form-data" method="post" data-paramName="file">
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
 Dropzone.autoDiscover = false;
@@ -121,6 +158,58 @@ $("#uploadFile").dropzone({
 			$("#goods-form").append( hiddenFileData );
 		});
 	}
+});
+
+$("#btn-addOptionTest").click(function() {
+	var opt = goodsOptions;
+	if(opt == null) {
+		alert('분류를 지정하셔야 합니다.');
+		return;
+	}
+	if(opt.length == 0) {
+		alert('옵션이 존재하지 않습니다.')
+		return;
+	}
+	createOptionTr();
+});
+
+function createOptionTr() {
+	var $tbody = $('#table-option').find('tbody');
+	if(opt.length <= $tbody.find('tr.option').length) {
+		alert('더이상 추가할수 없습니다.')
+		return;
+	}
+	
+	var $tr = $('<tr />').attr('class', 'option').appendTo( $tbody );
+	
+	var $select = $('<select />').addClass('form-control');
+	$(opt).each(function() {
+		$('<option />').html(this.o_name).val(this.o_no).appendTo( $select );
+	});
+	$('<td />').append( $select ).appendTo( $tr );
+	$('<td />').append( $('<a />').addClass('btn btn-info').text('항목 추가') ).appendTo( $tr );
+	$('<td />').appendTo( $tr );
+	$('<td />').append( $('<input />').attr({'type':'checkbox'})).appendTo( $tr );
+	$('<td />').append( $('<button />').addClass('btn btn-danger btn-delete').html('옵션 삭제') ).appendTo( $tr );
+}
+
+$('#table-option').on('click', '.btn-delete', function() {
+	var $tr = $(this).parents('tr');
+	if( $tr.attr('class') == 'option' && $tr.next().attr('class') == 'value' ) {
+		alert('하위 옵션이 존재하면 삭제할수 없습니다.');
+		return;
+	}
+	$tr.remove();
+});
+
+$('#table-option').on('click', 'a', function() {
+	var $tr = $('<tr />').attr('class', 'value');
+	$('<td />').appendTo( $tr );
+	$('<td />').append($('<input />').attr({'type':'text'})).appendTo( $tr );
+	$('<td />').append($('<input />').attr({'type':'number'})).appendTo( $tr );
+	$('<td />').appendTo( $tr );
+	$('<td />').append( $('<button />').addClass('btn btn-danger btn-warning btn-delete').html('삭제') ).appendTo( $tr );
+	$(this).parents('tr').after( $tr );
 });
 
 /*
@@ -166,9 +255,12 @@ $("select.menu_level").change(function() {
 	$("input[name=c_no]").val( c_no );
 });
 
+var goodsOptions = null;
 $(".topMenu_level").change(function() {
 	var c_no = $(this).val();
+	$('#table-option').find('tbody').empty();
 	requestGetOption(c_no).done(function(options) {
+		goodsOptions = options;
 		setSelectBox(options);
 	});
 });
