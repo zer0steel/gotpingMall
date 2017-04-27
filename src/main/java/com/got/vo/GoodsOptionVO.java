@@ -1,15 +1,33 @@
 package com.got.vo;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class GoodsOptionVO extends OptionsVO {
 	private int g_no;
-	private String value, go_stock;
-	private List<String> values;
-	private List<String> go_stocks;
+	private String value, go_stock, extra_cost;
+	private List<String> values, go_stocks, extra_costs;
+	private boolean required;
 	
+	public String getExtra_cost() {
+		return extra_cost;
+	}
+	public void setExtra_cost(String extra_cost) {
+		this.extra_cost = extra_cost;
+		this.setExtra_costs(Arrays.asList(extra_cost.split(",")));
+	}
+	public List<String> getExtra_costs() {
+		return extra_costs;
+	}
+	public void setExtra_costs(List<String> extra_costs) {
+		this.extra_costs = extra_costs;
+	}
+	public boolean isRequired() {
+		return required;
+	}
+	public void setRequired(boolean required) {
+		this.required = required;
+	}
 	public int getG_no() {
 		return g_no;
 	}
@@ -22,7 +40,6 @@ public class GoodsOptionVO extends OptionsVO {
 	public void setValue(String value) {
 		this.value = value;
 		this.setValues(Arrays.asList(value.split(",")));
-		checkStockString();
 	}
 	public String getGo_stock() {
 		return go_stock;
@@ -30,7 +47,6 @@ public class GoodsOptionVO extends OptionsVO {
 	public void setGo_stock(String go_stock) {
 		this.go_stock = go_stock;
 		this.setGo_stocks(Arrays.asList(go_stock.split(",")));
-		checkStockString();
 	}
 	public List<String> getValues() {
 		return values;
@@ -46,15 +62,8 @@ public class GoodsOptionVO extends OptionsVO {
 	}
 	@Override
 	public String toString() {
-		return super.toString() + "\nGoodsOptionVO [g_no=" + g_no + ", value=" + value + ", go_stock=" + go_stock + ", values=" + values
-				+ ", go_stocks=" + go_stocks + "]";
-	}
-	
-	private void checkStockString() {
-		if("0".equals(this.go_stock) && (go_stocks.size() != values.size()) ) {
-			String[] str = new String[values.size()];
-			Arrays.fill(str, "0");
-			go_stocks = Arrays.asList(str);
-		}
+		return "GoodsOptionVO [g_no=" + g_no + ", value=" + value + ", go_stock=" + go_stock + ", extra_cost="
+				+ extra_cost + ", values=" + values + ", go_stocks=" + go_stocks + ", extra_costs=" + extra_costs
+				+ ", required=" + required + "]";
 	}
 }

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.got.dao.template.DaoTemplate;
 import com.got.enums.GoodsStatus;
 import com.got.vo.CategoryVO;
-import com.got.vo.GoodsImgVO;
 import com.got.vo.GoodsVO;
 
 @Repository
@@ -23,30 +22,20 @@ public class GoodsDao {
 		dao.transactionTemplate(session -> {
 			session.insert("g.insert", g);
 			
-			g.getGoodsOptions().forEach(vo -> {
-				vo.setG_no(g.getG_no());
-				session.insert("go.insertNewOptionValue", vo);
-			});
-		});
-	}
-	
-	public void insertWithImg(GoodsVO g, List<GoodsImgVO> imgs) {
-		dao.transactionTemplate(session -> {
-			if(session.insert("g.insert", g) != 1)
-				throw new TransactionException();
-				
-			imgs.forEach(vo -> {
-				vo.setG_no(g.getG_no());
-				if(session.update("f.updatePath", vo) == -1)
-					throw new TransactionException();
-				if(session.insert("gi.insert", vo) == -1)
-					throw new TransactionException();
-			});
+			if( g.getGoodsOptions() != null)
+				g.getGoodsOptions().forEach(vo -> {
+					vo.setG_no(g.getG_no());
+					session.insert("go.insertNewOptionValue", vo);
+				});
 			
-			g.getGoodsOptions().forEach(vo -> {
-				vo.setG_no(g.getG_no());
-				session.insert("go.insertNewOptionValue", vo);
-			});
+			if( g.getImages() != null)
+				g.getImages().forEach(vo -> {
+					vo.setG_no(g.getG_no());
+					if(session.update("f.updatePath", vo) == -1)
+						throw new TransactionException();
+					if(session.insert("gi.insert", vo) == -1)
+						throw new TransactionException();
+				});
 		});
 	}
 

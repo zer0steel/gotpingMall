@@ -52,7 +52,7 @@ public class DaoTemplate {
 			callback.execute(session);
 			session.commit();
 		} catch (Exception e) {
-			System.err.println(e);
+			e.printStackTrace();
 			session.rollback();
 		} finally {
 			session.close();

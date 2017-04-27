@@ -41,10 +41,10 @@ public class GoodsService {
 		
 		g.setStatus(GoodsStatus.STAND_BY);
 		
-		List<GoodsImgVO> voList = CommonUtil.getVO(fileInfo, GoodsImgVO.class);
+		List<GoodsImgVO> goodsImgs = CommonUtil.getVO(fileInfo, GoodsImgVO.class);
 		CategoryVO c = MenuLevel.findBigCategory(g.getC_no());
-		voList = FileUtil.moveToSavePath(c.getTitle(), voList);
-		dao.insertWithImg(g, voList);
+		g.setImages(FileUtil.moveToSavePath(c.getTitle(), goodsImgs));
+		dao.insert(g);
 	}
 
 	private void validationCheck(GoodsVO g) {
