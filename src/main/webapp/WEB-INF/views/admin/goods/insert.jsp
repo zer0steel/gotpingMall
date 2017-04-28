@@ -73,6 +73,25 @@
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-md-12">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>상품 상세 설명</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<jsp:include page="include/textarea.jsp"></jsp:include>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script src="${pageContext.request.contextPath }/resources/js/goods/goodsOption.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">

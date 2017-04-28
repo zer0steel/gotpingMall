@@ -15,9 +15,10 @@
 			<div class="x_content">
 				<form id="goods-form" method="post" action="update.yo" data-parsley-validate class="form-horizontal form-label-left">
 					<input type="hidden" name="g_no" value=${g.g_no }>
+					<input type="hidden" value="${g.menuLevel.code }" id="hidden-menulevel_code">
+					<input type="hidden" value="${g.c_no }" id="hidden-c_no">
 					
 					<div class="form-group">
-						<input type="hidden" value="${g.menuLevel.code }" id="hidden-menulevel_code">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">
 						분류 레벨
 						</label>
@@ -31,7 +32,6 @@
 					</div>
 					
 					<div class="form-group">
-						<input type="hidden" value="${g.c_no }" id="hidden-c_no">
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">
 						분류명
 						</label>
@@ -204,21 +204,6 @@
 	$("select[name=status_code]").val(statusCode);
 	$("#c_no").val(c_no);
 })();
-
-$("select[name=menu_level]").change(function() {
-/* 	var menuLevel = $(this).val();
-	var count = 0;
-	$("select[name=title]").children("option").each(function() {
-		if($(this).data("menuLevel") == menuLevel) {
-			$(this).css("display","block");
-			count++;
-		}
-		else
-			$(this).css("display","none");
-	});
-	if(count == 0)
-		$("select[name=title]").val(0); */
-});
 
 var updateMode = false;
 $("#btn-update").click(function() {

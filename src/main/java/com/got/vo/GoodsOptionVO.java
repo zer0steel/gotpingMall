@@ -14,7 +14,7 @@ public class GoodsOptionVO extends OptionsVO {
 	}
 	public void setExtra_cost(String extra_cost) {
 		this.extra_cost = extra_cost;
-		this.setExtra_costs(Arrays.asList(extra_cost.split(",")));
+		this.setExtra_costs(Arrays.asList(extra_cost.split("/")));
 	}
 	public List<String> getExtra_costs() {
 		return extra_costs;
@@ -39,14 +39,14 @@ public class GoodsOptionVO extends OptionsVO {
 	}
 	public void setValue(String value) {
 		this.value = value;
-		this.setValues(Arrays.asList(value.split(",")));
+		this.setValues(Arrays.asList(value.split("/")));
 	}
 	public String getGo_stock() {
 		return go_stock;
 	}
 	public void setGo_stock(String go_stock) {
 		this.go_stock = go_stock;
-		this.setGo_stocks(Arrays.asList(go_stock.split(",")));
+		this.setGo_stocks(Arrays.asList(go_stock.split("/")));
 	}
 	public List<String> getValues() {
 		return values;

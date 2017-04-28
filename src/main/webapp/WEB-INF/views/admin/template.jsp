@@ -9,19 +9,20 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<title>GOTPINGMALL!</title>
 
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
 <!-- Bootstrap -->
-<link href="${pageContext.request.contextPath}/resources/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
-<link href="${pageContext.request.contextPath}/resources/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- NProgress -->
-<link href="${pageContext.request.contextPath}/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
 <!-- Custom Theme Style -->
 <link href="${pageContext.request.contextPath}/resources/build/css/custom.min.css" rel="stylesheet">
-<title>GOTPINGMALL!</title>
+
 </head>
 <body class="nav-md">
 
@@ -48,11 +49,9 @@
 	</div>
 </div>
 <!-- Bootstrap -->
-<script src="${pageContext.request.contextPath}/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="${pageContext.request.contextPath}/resources/vendors/fastclick/lib/fastclick.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- NProgress -->
-<script src="${pageContext.request.contextPath}/resources/vendors/nprogress/nprogress.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="${pageContext.request.contextPath}/resources/build/js/custom.min.js"></script>
 
