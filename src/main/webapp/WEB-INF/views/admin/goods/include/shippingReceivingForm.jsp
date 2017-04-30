@@ -81,26 +81,26 @@
 			<!-- body -->
 			<div class="modal-body">
 				<form id="stock-form" data-parsley-validate 
-					class="form-horizontal form-label-left" method="post">
+					class="form-horizontal" method="post">
 					
 					<div class="form-group">
 						<label class="control-label col-md-3">
-						등록예정 총 재고량
+						등록예정 재고량
 						</label>
 						<div class="col-md-3">
 							<input class="form-control" type="number" readonly id="totalExpect">
 						</div>
 						<label class="control-label col-md-3">
-						입력된 총 재고량
+						입력된 재고량
 						</label>
 						<div class="col-md-3">
-							<input class="form-control" type="number" readonly value="0" id="totalInput">
+							<input class="form-control" type="text" readonly value="0" id="totalInput">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<c:forEach var="opt" items="${g.goodsOptions }">
-						<table class="table table-striped table-bordered table-stock">
+						<table class="table table-striped table-bordered table-stock" data-o_no="${opt.o_no }">
 						<thead>
 							<tr>
 								<td width="10%"></td>
@@ -113,17 +113,17 @@
 							<tr>
 								<td>${opt.o_name }</td>
 								<c:forEach var="s" items="${opt.go_stocks }">
-								<td><input type="number" class="form-control input-stock" value="0"></td>
+								<td><input type=number class="form-control input-stock" value="0"></td>
 								</c:forEach>
 							</tr>
 						</tbody>
 						</table>
-						
 						</c:forEach>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<button type="submit" class="btn btn-warning" formaction="option/update.yo">등록</button>
+							<button type="button" class="btn btn-info" formaction="option/update.yo" id="btn-optionStockAdd">등록</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 						</div>
 					</div>
@@ -136,82 +136,144 @@
 
 <script type="text/javascript">
 (function() {
-	if($("#msg").val().length != 0)
-		alert($("#msg").val());
-})();
-
-$("#btn-enroll").click(function() {
-	if( !checkEmptyForm() )
-		return;
+	var $stockTable = $('.table-stock');
 	
-	if($(".table-stock") != undefined) {
+	$("#btn-enroll").click(function() {
+		addStock();
+	});
+	
+	var addStock = function() {
+		if( !checkEmptyForm() )
+			return;
+		if( $stockTable.data('o_no') ) {
+			openModal();
+			return;
+		}
+		$("#sr-form").submit();
+	}
+	
+	var checkEmptyForm = function() {
+		if($("select[name=category]").val() == 0) {
+			alert("분류는 필수 입력사항 입니다.")
+			return;
+		}
+		if($("input[name=amount]").val().length == 0) {
+			alert("수량은 필수 입력사항 입니다.")
+			return;
+		}
+		
+		const OTHER = 6;
+		if( $("#hc").val() >= OTHER) {
+			var textLen = $("#detail").val().length;
+			if(textLen == 0) {
+				alert("기타사유를 선택하셨으면 비고란을 작성하셔야 합니다.");
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	var openModal = function() {
 		$(".input-stock").each(function() {
 			$(this).val(0);
 		});
 		$("#totalInput").val(0);
 		$("#totalExpect").val($("input[name=amount]").val());
 		$("#stockModal").modal();
-		return;
 	}
 	
-	$("#sr-form").submit();
-});
-
-$(".input-stock").keyup(function() {
-	var totalInput = calculateTotalInput();
-	var $totalInput = $("#totalInput");
-	$totalInput.val( totalInput );
-	
-	var totalExpect = Number($("#totalExpect").val());
-	if(totalExpect < totalInput)
-		$totalInput.css("color","red");
-	else
-		$totalInput.css("color","");
-});
-
-function calculateTotalInput() {
-	var inputTotal = 0;
-	$(".input-stock").each(function() {
-		inputTotal += Number($(this).val());
-	});
-	return inputTotal;
-}
-
-$("select[name=category]").change(function() {
-	var code = $(this).val();
-	setInputPriceBox(code);
-});
-
-function setInputPriceBox(statusCode) {
-	const SHIPPING = 1, EXISTING_STOCK = 2, SELL = 3, LOSS_DISTORED = 4, FREE = 5;
-	var priceBox = $("input[name=price]");
-	
-	if(statusCode == SHIPPING)
-		priceBox.val($("input[name=purchase_price]").val());
-	else if(statusCode == SELL)
-		priceBox.val($("input[name=sell_price]").val());
-	else
-		priceBox.val(0);
-}
-
-function checkEmptyForm() {
-	if($("select[name=category]").val() == 0) {
-		alert("분류는 필수 입력사항 입니다.")
-		return;
-	}
-	if($("input[name=amount]").val().length == 0) {
-		alert("수량은 필수 입력사항 입니다.")
-		return;
-	}
-	
-	const OTHER = 6;
-	if( $("#hc").val() >= OTHER) {
-		var textLen = $("#detail").val().length;
-		if(textLen == 0) {
-			alert("기타사유를 선택하셨으면 비고란을 작성하셔야 합니다.");
-			return false;
+	Array.prototype.allTheSame = function() {
+		if(this.length === 1) 
+			return true;
+		
+		for(var i = 1; i < this.length; i++) {
+			if(this[0] !== this[i])
+				return false;
 		}
+		
+		return true;
 	}
-	return true;
-}
+	
+	$(".input-stock").keyup(function() {
+		calculateTotalInput();
+	});
+	
+	var calculateTotalInput = function() {
+		var inputs = sumOfStocks();
+		
+		var $totalInput = $('#totalInput');
+		if( !inputs.allTheSame() ) {
+			$totalInput.val('재고값이 다릅니다.');
+			return;
+		}
+		$totalInput.val(inputs[0]);
+		var totalExpect = Number($("#totalExpect").val());
+		if(totalExpect < inputs[0])
+			$totalInput.css("color","red");
+		else
+			$totalInput.css("color","");
+	}
+	
+	var sumOfStocks = function() {
+		var inputs = [];
+		$stockTable.each(function() {
+			inputs.push( calculateInput( $(this) ) );
+		});
+		return inputs;
+	}
+	
+	var calculateInput = function($table) {
+		var inputTotal = 0;
+		$table.find(".input-stock").each(function() {
+			inputTotal += Number($(this).val());
+		});
+		return inputTotal;
+	}
+	
+	$('#btn-optionStockAdd').click(function() {
+		var options = getOptions();
+		$(options).each(function() {
+			$('<input />').attr({'type':'hidden','name':'goodsOptions'})
+			.val(JSON.stringify(this)).appendTo( $('#sr-form') );
+		});
+		$("#sr-form").submit();
+	});
+	
+	var getOptions = function() {
+		var options = [];
+		$stockTable.each(function() {
+			options.push( createOption( $(this) ) );
+		});
+		return options;
+	}
+	
+	var createOption = function($table) {
+		var option = {
+			g_no : $('input[name=g_no]').val(),
+			o_no : $table.data('o_no'),
+			go_stocks : []
+		};
+		$table.find('.input-stock').each(function() {
+			option.go_stocks.push( $(this).val() );
+		})
+		return option;
+	} 
+	
+	$("select[name=category]").change(function() {
+		var code = $(this).val();
+		setInputPriceBox(code);
+	});
+	
+	function setInputPriceBox(statusCode) {
+		const SHIPPING = 1, EXISTING_STOCK = 2, SELL = 3, LOSS_DISTORED = 4, FREE = 5;
+		var $priceBox = $("input[name=price]");
+		
+		if(statusCode == SHIPPING)
+			$priceBox.val($("input[name=purchase_price]").val());
+		else if(statusCode == SELL)
+			$priceBox.val($("input[name=sell_price]").val());
+		else
+			$priceBox.val(0);
+	}
+})();
 </script>

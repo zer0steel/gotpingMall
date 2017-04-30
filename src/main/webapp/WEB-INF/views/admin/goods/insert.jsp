@@ -86,17 +86,24 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<jsp:include page="include/textarea.jsp"></jsp:include>
+			
 			</div>
 		</div>
 	</div>
 </div>
-
+<script src="${pageContext.request.contextPath}/resources/js/uploadFile.js?ver=2"></script>
 <script src="${pageContext.request.contextPath }/resources/js/goods/goodsOption.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
 // 뷰페이지 부분
 (function() {
+/* 	var uploadMain = uploadFile({
+		url : 'file/uploadTest.yo',
+		minCount : 1,
+		maxCount : 1,
+	});
+	uploadMain( $('#test') ); */
+	
 	var option = goods.option();
 	option( $("#table-option") );
 	/* option.setTestButton(); */

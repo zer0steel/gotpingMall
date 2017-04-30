@@ -20,15 +20,12 @@ import com.got.vo.GoodsVO;
 @Service
 public class GoodsService {
 	
-	private static Logger log = Logger.getLogger(GoodsService.class);
-	
 	@Autowired private GoodsDao dao;
 	@Autowired private FileDao fdao;
 	@Autowired private GoodsOptionDao goDao;
 	@Autowired private SRService srService;
 
 	public void enroll(GoodsVO g) {
-		log.info(g.toString());
 		validationCheck(g);
 		
 		g.setStatus(GoodsStatus.STAND_BY);
@@ -36,7 +33,6 @@ public class GoodsService {
 	}
 	
 	public void enrollWithImg(GoodsVO g, String[] fileInfo) {
-		log.info(g.toString());
 		validationCheck(g);
 		
 		g.setStatus(GoodsStatus.STAND_BY);
@@ -70,7 +66,6 @@ public class GoodsService {
 		g.setGoodsOptions(goDao.selectListWithG_no(g_no));
 		g.setImages(fdao.selectGoodsImg(g_no));
 		g.setHistory(srService.getRecentHistory(g_no));
-		log.info(g);
 		return g;
 	}
 	

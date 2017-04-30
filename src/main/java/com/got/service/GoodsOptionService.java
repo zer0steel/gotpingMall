@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.got.dao.GoodsOptionDao;
+import com.got.enums.HistoryCategory;
+import com.got.vo.GoodsOptionVO;
 import com.got.vo.OptionsVO;
 
 @Service
@@ -31,5 +33,13 @@ public class GoodsOptionService {
 
 	public List<OptionsVO> getWithG_no(int c_no) {
 		return dao.selectListWithC_no(c_no);
+	}
+
+	public void addStocks(List<GoodsOptionVO> options, HistoryCategory historyCategory) {
+		options.forEach(option -> {
+			GoodsOptionVO vo = dao.selectOne(option.getG_no(), option.getO_no());
+			vo.addStock(option, historyCategory.isMinusStockCategory());
+			dao.updateStocks(vo);
+		});
 	}
 }

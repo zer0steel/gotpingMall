@@ -16,20 +16,26 @@ public class FileUtil {
 	
 	private static final Logger log = Logger.getLogger(FileUtil.class);
 	
-	public static FileVO saveFileInTempPath(String path, MultipartFile uploadFile) {
-		int save_name = (int)System.currentTimeMillis();
+	public static FileVO saveFileInTempPath(String path, MultipartFile file) {
+		int save_name = 0;
+		while( true ) {
+			save_name = (int)System.currentTimeMillis();
+			File f = new File(path + File.separator + save_name);
+			if( !f.exists() )
+				break;
+		}
 		try {
 			FileOutputStream out = new FileOutputStream(path + File.separator + save_name);
-			out.write(uploadFile.getBytes());
+			out.write(file.getBytes());
 			out.flush();
 			out.close();
 			
-			FileVO f = new FileVO();
-			f.setReal_name(uploadFile.getOriginalFilename());
-			f.setSave_name(save_name);
-			f.setSave_path(path);
+			FileVO fVO = new FileVO();
+			fVO.setReal_name(file.getOriginalFilename());
+			fVO.setSave_name(save_name);
+			fVO.setSave_path( simpleSavePath(path) );
 			
-			return f;
+			return fVO;
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {

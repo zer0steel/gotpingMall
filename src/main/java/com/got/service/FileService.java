@@ -1,5 +1,8 @@
 package com.got.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,23 @@ public class FileService {
 		}
 		f.setSave_path(null);
 		return f;
+	}
+	
+	public List<FileVO> saveFileInTempPath(String path, List<MultipartFile> files) {
+		List<FileVO> fileVOs = new ArrayList<>();
+		files.forEach(file -> {
+			FileVO f = FileUtil.saveFileInTempPath(path, file);
+			try{
+				dao.insert(f);
+			}catch(Exception e) {
+				deleteFile(f);
+				logger.error(e);
+				throw new RuntimeException("데이터베이스에 파일정보 저장이 실패하여 앞서 업로드된 파일 삭제 수행");
+			}
+			f.setSave_path(null);
+			fileVOs.add(f);
+		});
+		return fileVOs;
 	}
 
 	private void deleteFile(FileVO f) {

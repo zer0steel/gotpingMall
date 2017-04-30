@@ -1,5 +1,7 @@
 package com.got.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import com.got.vo.FileVO;
 public class FileController {
 	
 	public static String tempPath;
+	public static final String SIMPLE_SAVE_PATH = "resources/upload/temp";
 	
 	@Autowired private FileService s;
 	
@@ -27,8 +30,21 @@ public class FileController {
 			throw new NullPointerException("파일 업로드 실패");
 		if(file.isEmpty())
 			throw new NullPointerException("NULL은 아니지만 파일 업로드 실패");
-		tempPath = session.getServletContext().getRealPath("resources/upload/temp");
+		tempPath = session.getServletContext().getRealPath(SIMPLE_SAVE_PATH);
 		FileVO f = s.saveFileInTempPath(tempPath, file);
 		return CommonUtil.convertToJSON(f);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "file/uploadTest.yo", method = RequestMethod.POST)
+	public String uploadFileTest(HttpSession session, List<MultipartFile> files) {
+		if(files == null)
+			throw new NullPointerException("파일 업로드 실패");
+		if(files.isEmpty())
+			throw new NullPointerException("NULL은 아니지만 파일 업로드 실패");
+		
+		tempPath = session.getServletContext().getRealPath(SIMPLE_SAVE_PATH);
+		List<FileVO> fileVOs = s.saveFileInTempPath(tempPath, files);
+		return CommonUtil.convertToJSON(fileVOs);
 	}
 }

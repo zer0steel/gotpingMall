@@ -1,11 +1,15 @@
 package com.got.dao;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.got.dao.template.DaoTemplate;
+import com.got.enums.HistoryCategory;
 import com.got.vo.GoodsOptionVO;
 import com.got.vo.OptionsVO;
 
@@ -32,5 +36,16 @@ public class GoodsOptionDao {
 
 	public void update(OptionsVO o) {
 		dao.update("go.update", o);
+	}
+	
+	public GoodsOptionVO selectOne(int g_no, int o_no) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("g_no", g_no);
+		param.put("o_no", o_no);
+		return dao.selectOne("go.selectOne", param);
+	}
+	
+	public void updateStocks(GoodsOptionVO options) {
+		dao.update("go.updateStock", options);
 	}
 }

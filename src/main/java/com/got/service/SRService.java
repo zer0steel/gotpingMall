@@ -26,7 +26,7 @@ public class SRService {
 		GoodsVO g = gs.updateStock(sr.getG_no(), sr.getAmount());
 		if(g.getStock() < 0) 
 			return "재고값이 음수가 되어 추가할 수 없습니다.";
-		
+		sr.setChange_stock(g.getStock());
 		dao.insertOneNewHistory(sr, g);
 		return "추가되었습니다.";
 	}

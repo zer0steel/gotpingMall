@@ -21,11 +21,19 @@
 		SELECT * FROM goods_option go, options o WHERE o.o_no = go.o_no AND go.g_no = #{g_no}
 	</select>
 	
+	<select id="selectOne" resultType="com.got.vo.GoodsOptionVO">
+		SELECT * FROM goods_option WHERE o_no = #{o_no} AND g_no = #{g_no}
+	</select>
+	
 	<delete id="delete">
 		DELETE FROM options WHERE o_no = #{o_no}
 	</delete>
 	
 	<update id="update">
 		UPDATE options SET o_name = #{o_name} WHERE o_no = #{o_no}
+	</update>
+	
+	<update id="updateStock">
+		UPDATE goods_option SET go_stock = #{go_stock} WHERE o_no = #{o_no} AND g_no = #{g_no}
 	</update>
 </mapper>
