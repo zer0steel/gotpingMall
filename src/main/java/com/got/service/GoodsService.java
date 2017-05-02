@@ -1,6 +1,9 @@
 package com.got.service;
 
+import static org.junit.Assert.assertNull;
+
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,7 @@ public class GoodsService {
 	
 	public void enrollWithImg(GoodsVO g, String[] fileInfo) {
 		validationCheck(g);
+		Objects.requireNonNull(fileInfo);
 		
 		g.setStatus(GoodsStatus.STAND_BY);
 		
@@ -43,17 +47,30 @@ public class GoodsService {
 		dao.insert(g);
 	}
 
-	private void validationCheck(GoodsVO g) {
-		if(g.getC_no() < 0)
-			throw new IllegalArgumentException("분류번호가 지정안됨.");
-		if(g.getName() == null || (g.getName() != null && g.getName().equals(""))) {
-			throw new IllegalArgumentException("상품명이 없음 : " + g.getName());
-		}
-		
-	}
 
 	public List<GoodsVO> getAll() {
 		return dao.selectAll();
+	}
+
+	public GoodsVO detail(Integer g_no) {
+		Objects.requireNonNull(g_no);
+		
+		GoodsVO g = dao.selectOne(g_no);
+		g.setGoodsOptions(goDao.selectListWithG_no(g_no));
+		g.setImages(fdao.selectGoodsImg(g_no));
+		return g;
+	}
+	
+
+	public List<GoodsVO> getWithCategory(CategoryVO c) {
+		Objects.requireNonNull(c.getC_no());
+		
+		if(c.getMenuLevel() == MenuLevel.SMALL)
+			return dao.selectListWithSmall(c);
+		else if(c.getMenuLevel() == MenuLevel.MIDDLE)
+			return dao.selectListWithMiddle(c.getC_no());
+		
+		throw new IllegalArgumentException("아직 대분류는 지원 안함");
 	}
 
 	/**
@@ -61,10 +78,8 @@ public class GoodsService {
 	 * @param goods_no
 	 * @return goodsVO
 	 */
-	public GoodsVO detailAndSRHistory(int g_no) {
-		GoodsVO g = dao.selectOne(g_no);
-		g.setGoodsOptions(goDao.selectListWithG_no(g_no));
-		g.setImages(fdao.selectGoodsImg(g_no));
+	public GoodsVO detailAndSRHistory(Integer g_no) {
+		GoodsVO g = detail(g_no);
 		g.setHistory(srService.getRecentHistory(g_no));
 		return g;
 	}
@@ -75,41 +90,22 @@ public class GoodsService {
 	 * @param amount
 	 * @return 재고 계산 처리된 goodsVO
 	 */
-	public GoodsVO updateStock(int g_no, int amount) {
+	public GoodsVO updateStock(Integer g_no, int amount) {
+		Objects.requireNonNull(g_no);
 		GoodsVO g = dao.selectOne(g_no);
 		g.updateStock(amount);
 		return g;
 	}
 
 	public void update(GoodsVO g) {
-		if(g.getG_no() == 0)
-			throw new IllegalArgumentException("PK값 g_no 가 0임");
-		
+		Objects.requireNonNull(g.getG_no());
 		dao.update(g);
 	}
-
-	public void delete(int g_no) {
-		if(g_no == 0)
-			throw new IllegalArgumentException("PK값 g_no 가 0임");
-		
-		dao.deleteOne(g_no);
-	}
-
-	public List<GoodsVO> getWithCategory(CategoryVO c) {
-		if(c.getC_no() == 0)
-			throw new IllegalArgumentException("분류번호가 0");
-		
-		if(c.getMenuLevel() == MenuLevel.SMALL)
-			return dao.selectListWithSmall(c);
-		else if(c.getMenuLevel() == MenuLevel.MIDDLE)
-			return dao.selectListWithMiddle(c.getC_no());
-		
-		throw new IllegalArgumentException("아직 대분류는 지원 안함");
-	}
-
-	public GoodsVO detail(int g_no) {
-		GoodsVO g = dao.selectOne(g_no);
-		g.setImages(fdao.selectGoodsImg(g.getG_no()));
-		return g;
+	
+	private void validationCheck(GoodsVO g) {
+		Objects.requireNonNull(g.getC_no());
+		Objects.requireNonNull(g.getName());
+		if(g.getName().equals(""))
+			throw new IllegalArgumentException("상품명이 없음 : " + g.getName());
 	}
 }

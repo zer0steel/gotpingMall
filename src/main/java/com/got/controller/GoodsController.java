@@ -14,7 +14,7 @@ import com.got.vo.CategoryVO;
 public class GoodsController {
 	
 	@Autowired private GoodsService gs;
-	@Autowired CategoryService cs;
+	@Autowired private CategoryService cs;
 	
 	@RequestMapping("goods/list.yo")
 	public ModelAndView list(CategoryVO c) {

@@ -2,6 +2,7 @@ package com.got.vo;
 
 import java.security.PrivateKey;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import com.got.enums.Grade;
 import com.got.util.BCrypt;
@@ -62,6 +63,12 @@ public class MemberVO {
 	public void setEnumGrade(Grade grade) {
 		this.grade = grade;
 	}
+	public Timestamp getJoin_date() {
+		return join_date;
+	}
+	public void setJoin_date(Timestamp join_date) {
+		this.join_date = join_date;
+	}
 	
 	public void setLogin() {
 		this.isLoginSuccess = true;
@@ -75,22 +82,17 @@ public class MemberVO {
 	}
 	
 	public boolean isEqualsPwd(String rsaPwd, PrivateKey privateKey) {
-		if(this.pwd == null || rsaPwd == null)
-			throw new NullPointerException("pwd null is " + (pwd == null) + " | " + "rsaPwd null is " + (rsaPwd == null));
-		else if(this.pwd.isEmpty() || rsaPwd.isEmpty())
+		Objects.requireNonNull(rsaPwd);
+		Objects.requireNonNull(privateKey);
+		if(this.pwd.isEmpty() || rsaPwd.isEmpty())
 			throw new IllegalArgumentException("pwd empty is " + pwd.isEmpty() + " | " + "rsaPwd empty is " + rsaPwd.isEmpty());
 		String pwd = RSA.decryptRsa(rsaPwd, privateKey);
 		return BCrypt.checkpw(pwd, this.pwd);
 	}
 	public void encyptPwd(PrivateKey privateKey) {
+		Objects.requireNonNull(privateKey);
 		String pwd = RSA.decryptRsa(this.pwd, privateKey);
 		this.pwd = BCrypt.hashpw(pwd,BCrypt.gensalt(12));
-	}
-	public Timestamp getJoin_date() {
-		return join_date;
-	}
-	public void setJoin_date(Timestamp join_date) {
-		this.join_date = join_date;
 	}
 	
 }

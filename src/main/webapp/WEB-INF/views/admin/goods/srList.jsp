@@ -45,7 +45,7 @@
 				<c:forEach var="sr" items="${list }">
 					<tr>
 						<td>${sr.enumCategory.korName }</td>
-						<td><a href="${pageContext.request.contextPath }/admin/goods/detail.yo?g_no=${sr.g_no }">${sr.name }</a></td>
+						<td><a href="${pageContext.request.contextPath }/admin/goods/detail.yo?g_no=${sr.g_no }"><%-- ${sr.name } --%></a></td>
 						<td>${sr.amount } 개</td>
 						<td>${sr.change_stock } 개</td>
 						<td>${sr.regdate }</td>

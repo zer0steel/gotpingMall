@@ -54,9 +54,8 @@ goods.option = function() {
 			if($tr.attr('class') == 'option') 
 				option = createOption( $tr );
 			else {
-				option.value += $tr.find('input[name=value]').val() + '/';
-				option.extra_cost += $tr.find('input[name=extra_cost]').val() + '/';
-				option.go_stock += '0/';
+				option.values.push( $tr.find('input[name=value]').val() );
+				option.extra_costs.push( $tr.find('input[name=extra_cost]').val() );
 				
 				var nextTr = $tr.next()[0];
 				if($(nextTr).attr('class') != 'value')
@@ -82,9 +81,8 @@ goods.option = function() {
 		return {
 			o_no : $tr.find('input[name=o_no]').val(),
 			required : $tr.find('input[type=checkbox]').is(':checked'),
-			extra_cost : '',
-			go_stock : '',
-			value : ''
+			extra_costs : [],
+			values : []
 		}
 	};
 	

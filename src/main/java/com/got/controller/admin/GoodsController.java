@@ -1,5 +1,7 @@
 package com.got.controller.admin;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -35,15 +37,18 @@ public class GoodsController {
 	
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
 	public ModelAndView insertGoodsSubmit(GoodsVO g, String[] fileInfoJSON, String[] goodsOptionJSON) {
-		log.info(g);
-		if(goodsOptionJSON != null)
+		if( Objects.nonNull(goodsOptionJSON) ) {
 			g.setGoodsOptions(CommonUtil.getVO(goodsOptionJSON, GoodsOptionVO.class));
+			g.createOptionStocks();
+		}
+		System.out.println("adbe".length() == 4 ? true : false);
 		
-		if(fileInfoJSON == null)
+		if( Objects.isNull(fileInfoJSON) )
 			gs.enroll(g);
 		else
 			gs.enrollWithImg(g, fileInfoJSON);
 		
+		log.info(g);
 		return new ModelAndView("redirect:/admin/goods/insert.yo");
 	}
 	
@@ -57,10 +62,11 @@ public class GoodsController {
 	
 	@ResponseBody
 	@RequestMapping("admin/goods/detail.yo")
-	public ModelAndView detailGoods(HttpServletRequest req, int g_no) {
+	public ModelAndView detailGoods(HttpServletRequest req, Integer g_no) {
 		ModelAndView mav = new ModelAndView();
-		cs.setEnumsInMAV(mav).addObject("g",gs.detailAndSRHistory(g_no));
-		mav.addObject("status", GoodsStatus.values())
+		cs.setEnumsInMAV(mav)
+		.addObject("g",gs.detailAndSRHistory(g_no))
+		.addObject("status", GoodsStatus.values())
 		.addObject("hc", HistoryCategory.values())
 		.addObject("imageSlider", req.getContextPath() + "/goods/include/imageSlider.jsp");
 		return Page.setAdminViewPage(mav, "goods/detail.jsp");
@@ -73,8 +79,8 @@ public class GoodsController {
 	}
 	
 	@RequestMapping("admin/goods/delete.yo")
-	public ModelAndView deleteGoods(int g_no) {
-		gs.delete(g_no);
+	public ModelAndView deleteGoods(Integer g_no) {
+		log.info("차후 만들 예정");
 		return new ModelAndView("redirect:/admin/goods/list.yo");
 	}
 }

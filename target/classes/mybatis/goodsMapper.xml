@@ -19,6 +19,7 @@
 		<id property="c_no" column="c_no" javaType="int"/>
 		<id property="g_no" column="g_no" javaType="int"/>
 		<result property="sell_price" column="sell_price"/>
+		<result property="discount_rate" column="discount_rate"/>
 		<result property="name" column="name"/>
 		<association property="mainImg" column="mainImg" javaType="com.got.vo.GoodsImgVO" resultMap="GoodsImgMap" />
 	</resultMap>

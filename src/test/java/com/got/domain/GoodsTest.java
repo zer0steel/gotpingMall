@@ -14,6 +14,7 @@ import com.got.service.CategoryService;
 import com.got.service.GoodsService;
 import com.got.util.CommonUtil;
 import com.got.vo.CategoryVO;
+import com.got.vo.GoodsVO;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,10 +30,15 @@ public class GoodsTest {
 		System.out.println(CommonUtil.convertToJSON(GoodsStatus.values()));
 	}
 	
-//	@Test
-//	public void getOneTest() {
-//		System.out.println(gs.detailAndSRHistory(85));
-//	}
+	@Test
+	public void getOneTest() {
+		System.out.println("----------------getOneTest--------------------");
+		GoodsVO g = gs.detail(117);
+		double rate = g.getDiscount_rate();
+		double rate2 = (100 - rate) / 100;
+		System.out.println(g.getSell_price() * rate2);
+		System.out.println("---------------- !getOneTest --------------------");
+	}
 	
 	@Test
 	public void getAllTest() {
@@ -52,4 +58,6 @@ public class GoodsTest {
 		System.out.println("메인 이미지 " + gs.getWithCategory(c).get(0).getMainImg());
 		System.out.println("----------------! getWithCategory !--------------------");
 	}
+	
+	
 }

@@ -25,6 +25,7 @@ public class GoodsOptionVO extends OptionsVO {
 	public void setExtra_costs(List<String> extra_costs) {
 		this.extra_costs = extra_costs;
 		this.optionCount = extra_costs.size();
+		this.extra_cost = String.join("/", extra_costs);
 	}
 	public boolean isRequired() {
 		return required;
@@ -58,6 +59,7 @@ public class GoodsOptionVO extends OptionsVO {
 	public void setValues(List<String> values) {
 		this.values = values;
 		this.optionCount = values.size();
+		this.value = String.join("/", values);
 	}
 	public List<String> getGo_stocks() {
 		return go_stocks;

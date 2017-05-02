@@ -4,30 +4,44 @@
 	<div class="product-details">
 		<!--product-details-->
 		<div class="col-sm-5">
+			<br/><br/>
 			<div class="view-product">
 				<jsp:include page="include/imageSlider.jsp"></jsp:include>
 			</div>
 		</div>
 		<div class="col-sm-7">
 			<div class="product-information">
-				<!--/product-information-->
-				<img src="images/product-details/new.jpg" class="newarrival" alt="new" />
 				<h2>${g.name }</h2>
-				<p></p>
 				<span>
-					<span>${g.sell_price } 원</span>
-					<label>수량 : </label>
-					<input type="text" value="" />
-					<button type="button" class="btn btn-fefault cart">
-						<i class="fa fa-shopping-cart"></i>장바구니에 추가하기
-					</button>
+					<c:choose>
+						<c:when test="${g.discount_rate > 0}">
+						<p style="text-decoration: line-through;">${g.sell_price } 원</p>
+						<span>${g.discount_price } 원</span>
+						</c:when>
+						<c:otherwise>
+						<span>${g.sell_price } 원</span>
+						</c:otherwise>
+					</c:choose>
 				</span>
-				<p>
-					<b>Availability:</b> In Stock
-				</p>
-				<a href="">
-					<img src="images/product-details/share.png" class="share img-responsive" alt="카드" />
-				</a>
+				<form action="" class="form-horizontal">
+				<c:forEach var="opt" items="${g.goodsOptions }">
+				<div class="form-group">
+					<label for="value" class="control-label col-md-2">${opt.o_name }</label>
+					<div class="col-md-7">
+					<select name="value" class="form-control">
+						<c:forEach var="col" items="${opt.values }">
+							<option>${col }</option>
+						</c:forEach>
+					</select>
+					</div>
+				</div>
+				</c:forEach>
+				</form>
+				<label>수량 : </label>
+				<input type="text" value="" />
+				<button type="button" class="btn btn-fefault cart">
+					<i class="fa fa-shopping-cart"></i>장바구니에 담기
+				</button>
 			</div>
 			<!--/product-information-->
 		</div>
@@ -97,7 +111,6 @@
 		</div>
 	</div>
 	<!--/category-tab-->
-
 	<div class="recommended_items">
 		<!--recommended_items-->
 		<h2 class="title text-center">recommended items</h2>

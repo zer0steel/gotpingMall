@@ -1,23 +1,28 @@
 package com.got.vo;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.got.enums.GoodsStatus;
 
 public class GoodsVO extends CategoryVO {
-	private int g_no, stock, purchase_price, sell_price, discount_rate, saving_mileage;
+	private Integer g_no;
+	private int stock, purchase_price, sell_price, saving_mileage, discount_price;
+	private double discount_rate;
 	private String name, detail;
 	private GoodsStatus status;
-	private List<ShippingReceivingVO> history;
-	private List<GoodsImgVO> images;
 	private GoodsImgVO mainImg;
+	private List<GoodsImgVO> images;
+	private List<ShippingReceivingVO> history;
 	private List<GoodsOptionVO> goodsOptions;
+	private List<OptionStockVO> optionStocks;
 
-	public int getG_no() {
+	public Integer getG_no() {
 		return g_no;
 	}
 
-	public void setG_no(int g_no) {
+	public void setG_no(Integer g_no) {
 		this.g_no = g_no;
 	}
 
@@ -59,14 +64,16 @@ public class GoodsVO extends CategoryVO {
 
 	public void setSell_price(int sell_price) {
 		this.sell_price = sell_price;
+		setDiscount_price();
 	}
 
-	public int getDiscount_rate() {
+	public double getDiscount_rate() {
 		return discount_rate;
 	}
 
-	public void setDiscount_rate(int discount_rate) {
+	public void setDiscount_rate(double discount_rate) {
 		this.discount_rate = discount_rate;
+		setDiscount_price();
 	}
 
 	public int getSaving_mileage() {
@@ -129,11 +136,56 @@ public class GoodsVO extends CategoryVO {
 		this.goodsOptions = goodsOptions;
 	}
 
+	public int getDiscount_price() {
+		return discount_price;
+	}
+
+	public void setDiscount_price() {
+		double rate = (100 - this.discount_rate) / 100;
+		this.discount_price = (int)(this.sell_price * rate);
+	}
+
+	public List<OptionStockVO> getOptionStocks() {
+		return optionStocks;
+	}
+
+	public void setOptionStocks(List<OptionStockVO> optionStocks) {
+		this.optionStocks = optionStocks;
+	}
+	
+	public void createOptionStocks() {
+		this.optionStocks = new ArrayList<>();
+		createCombinationString(this.goodsOptions, 0, new String[this.goodsOptions.size()]);
+	}
+	
+	private void createCombinationString(List<GoodsOptionVO> goList, int index, String[] values) {
+		GoodsOptionVO g = goList.get(index);
+		if( Objects.isNull(g) )
+			return;
+		for(String value : g.getValues()) {
+			values[index] = value;
+			if(index < goList.size() - 1) {
+				createCombinationString(goList, index + 1, values);
+			}
+			else {
+				StringBuilder sb = new StringBuilder(values[0]);
+				for (int i = 1; i < values.length; ++i) {
+				    sb.append(" ").append(values[i]);
+				}
+				OptionStockVO o = new OptionStockVO();
+				o.setCombination(sb.toString());
+				o.setG_no(this.g_no);
+				this.optionStocks.add(o);
+			}
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
-				+ sell_price + ", discount_rate=" + discount_rate + ", saving_mileage=" + saving_mileage + ", name="
-				+ name + ", detail=" + detail + ", status=" + status + ", history=" + history + ", images=" + images
-				+ ", mainImg=" + mainImg + ", goodsOptions=" + goodsOptions + "]";
+				+ sell_price + ", saving_mileage=" + saving_mileage + ", discount_price=" + discount_price
+				+ ", discount_rate=" + discount_rate + ", name=" + name + ", detail=" + detail + ", status=" + status
+				+ ", mainImg=" + mainImg + ", images=" + images + ", history=" + history + ", goodsOptions="
+				+ goodsOptions + ", optionStocks=" + optionStocks + "]";
 	}
 }
