@@ -4,6 +4,7 @@ package com.got.dao;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.ibatis.transaction.TransactionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +20,29 @@ public class GoodsDao {
 	@Autowired private DaoTemplate dao;
 
 	public void insert(GoodsVO g) {
+		g.setStatus(GoodsStatus.STAND_BY);
 		dao.transactionTemplate(session -> {
 			session.insert("g.insert", g);
 			
-			if( g.getGoodsOptions() != null)
+			if( Objects.nonNull(g.getGoodsOptions()) )
 				g.getGoodsOptions().forEach(vo -> {
 					vo.setG_no(g.getG_no());
 					session.insert("go.insertNewOptionValue", vo);
 				});
 			
-			if( g.getImages() != null)
+			if( Objects.nonNull(g.getImages()) )
 				g.getImages().forEach(vo -> {
 					vo.setG_no(g.getG_no());
-					if(session.update("f.updatePath", vo) == -1)
+					if(session.update("f.updatePath", vo) != 1)
 						throw new TransactionException();
-					if(session.insert("gi.insert", vo) == -1)
+					if(session.insert("gi.insert", vo) != 1)
+						throw new TransactionException();
+				});
+			
+			if( Objects.nonNull(g.getOptionStocks()) )
+				g.getOptionStocks().forEach(vo -> {
+					vo.setG_no(g.getG_no());
+					if(session.insert("os.insert", vo) != 1)
 						throw new TransactionException();
 				});
 		});

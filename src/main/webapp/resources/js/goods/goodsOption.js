@@ -25,7 +25,7 @@ goods.option = function() {
 		$('<td />').css('width','15%').html('옵션 이름').appendTo( $tr );
 		$('<td />').css('width','35%').html('항목').appendTo( $tr );
 		$('<td />').css('width','*').html('추가 가격').appendTo( $tr );
-		$('<td />').css('width','10%').html('필수').appendTo( $tr );
+		//$('<td />').css('width','10%').html('필수').appendTo( $tr );
 		$('<td />').css('width','10%').html('기능').appendTo( $tr );
 		$('<thead />').append( $tr ).appendTo( $table );
 		
@@ -80,7 +80,7 @@ goods.option = function() {
 	function createOption( $tr ) {
 		return {
 			o_no : $tr.find('input[name=o_no]').val(),
-			required : $tr.find('input[type=checkbox]').is(':checked'),
+			//required : $tr.find('input[type=checkbox]').is(':checked'),
 			extra_costs : [],
 			values : []
 		}
@@ -115,7 +115,7 @@ goods.option = function() {
 			).appendTo( $tr );
 			$('<td />').append( $('<a />').addClass('btn btn-info btn-sm').text('항목 추가') ).appendTo( $tr );
 			$('<td />').appendTo( $tr );
-			$('<td />').append( $('<input />').attr({'type':'checkbox'})).appendTo( $tr );
+			//$('<td />').append( $('<input />').attr({'type':'checkbox'})).appendTo( $tr );
 			$('<td />').appendTo( $tr );
 		});
 	};
@@ -125,7 +125,7 @@ goods.option = function() {
 		$('<td />').appendTo( $tr );
 		$('<td />').append($('<input />').attr({'type':'text', 'name':'value'})).appendTo( $tr );
 		$('<td />').append($('<input />').attr({'type':'number', 'name':'extra_cost'}).val(0)).appendTo( $tr );
-		$('<td />').appendTo( $tr );
+		//$('<td />').appendTo( $tr );
 		$('<td />').append( $('<button />').addClass('btn btn-danger btn-warning btn-delete').html('삭제') ).appendTo( $tr );
 		$a.parents('tr').after( $tr );
 	};

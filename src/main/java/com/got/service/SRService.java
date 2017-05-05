@@ -1,6 +1,7 @@
 package com.got.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.got.dao.ShippingReceivingDao;
 import com.got.util.CommonUtil;
 import com.got.vo.GoodsVO;
+import com.got.vo.OptionStockVO;
 import com.got.vo.ShippingReceivingVO;
 
 @Service
@@ -21,14 +23,14 @@ public class SRService {
 		return dao.selectAll();
 	}
 
-	public String addHistory(ShippingReceivingVO sr) {
-		validationCheck(sr);
+	public void addHistoryAndStocks(ShippingReceivingVO sr, String[] optionStocksJSON) {
 		GoodsVO g = gs.updateStock(sr.getG_no(), sr.getAmount());
-		if(g.getStock() < 0) 
-			return "재고값이 음수가 되어 추가할 수 없습니다.";
 		sr.setChange_stock(g.getStock());
-		dao.insertOneNewHistory(sr, g);
-		return "추가되었습니다.";
+		
+		if( Objects.nonNull(optionStocksJSON) ) 
+			g.setOptionStocks(CommonUtil.getVO(optionStocksJSON, OptionStockVO.class));
+		
+		dao.insertHistoryAndStocks(sr, g);
 	}
 	
 	public static final int DETAIL_GOODS_SHOW_HISTORY_COUNT = 5;
@@ -43,10 +45,5 @@ public class SRService {
 	
 	public String getRecentHistoryWithJSON(int g_no) {
 		return CommonUtil.convertToJSON(getRecentHistory(g_no));
-	}
-	
-	public void validationCheck(ShippingReceivingVO sr) {
-		if(sr.getG_no() == 0)
-			throw new IllegalArgumentException("상품 번호가 입력되지 않았음.");
 	}
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="os">
+	<insert id="insert">
+		INSERT INTO option_stock(os_no, combination, os_stock, g_no)
+		VALUES(os_no.nextval, #{combination}, #{os_stock}, #{g_no})
+	</insert>
+	
+	<select id="selectWithG_no" resultType="com.got.vo.OptionStockVO">
+		SELECT * FROM option_stock WHERE g_no = #{g_no}
+	</select>
+	
+	<update id="updateStock">
+		UPDATE option_stock SET os_stock = os_stock + #{os_stock} WHERE os_no = #{os_no}
+	</update>
+</mapper>

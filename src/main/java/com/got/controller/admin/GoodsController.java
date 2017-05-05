@@ -37,12 +37,7 @@ public class GoodsController {
 	
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
 	public ModelAndView insertGoodsSubmit(GoodsVO g, String[] fileInfoJSON, String[] goodsOptionJSON) {
-		if( Objects.nonNull(goodsOptionJSON) ) {
-			g.setGoodsOptions(CommonUtil.getVO(goodsOptionJSON, GoodsOptionVO.class));
-			g.createOptionStocks();
-		}
-		System.out.println("adbe".length() == 4 ? true : false);
-		
+		g.setGoodsOptions(goodsOptionJSON);
 		if( Objects.isNull(fileInfoJSON) )
 			gs.enroll(g);
 		else
@@ -67,8 +62,7 @@ public class GoodsController {
 		cs.setEnumsInMAV(mav)
 		.addObject("g",gs.detailAndSRHistory(g_no))
 		.addObject("status", GoodsStatus.values())
-		.addObject("hc", HistoryCategory.values())
-		.addObject("imageSlider", req.getContextPath() + "/goods/include/imageSlider.jsp");
+		.addObject("hc", HistoryCategory.values());
 		return Page.setAdminViewPage(mav, "goods/detail.jsp");
 	}
 	

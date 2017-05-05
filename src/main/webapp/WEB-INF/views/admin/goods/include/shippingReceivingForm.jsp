@@ -12,7 +12,6 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="x_content">
-			<input type="hidden" value="${msg }" id="msg">
 			<form id="sr-form" data-parsley-validate class="form-horizontal form-label-left" method="post" action="sr/insert.yo">
 				<input type="hidden" name="g_no" value=${g.g_no }>
 				
@@ -99,26 +98,25 @@
 					</div>
 					
 					<div class="form-group">
-						<c:forEach var="opt" items="${g.goodsOptions }">
-						<table class="table table-striped table-bordered table-stock" data-o_no="${opt.o_no }">
-						<thead>
-							<tr>
-								<td width="10%"></td>
-			 					<c:forEach var="col" items="${opt.values }">
-								<td width="*">${col }</td>
-								</c:forEach>
-							</tr>
-						</thead>
-						<tbody>					
-							<tr>
-								<td>${opt.o_name }</td>
-								<c:forEach var="s" items="${opt.go_stocks }">
-								<td><input type=number class="form-control input-stock" value="0"></td>
-								</c:forEach>
-							</tr>
-						</tbody>
+						<table class="table table-striped table-bordered table-stock">
+							<thead>
+								<tr>
+									<td>조합</td>
+									<td>재고량</td>
+								</tr>
+							</thead>
+							<tbody>					
+							<c:forEach var="os" items="${g.optionStocks }">
+								<tr id="${os.os_no }">
+									<td>${os.combination }</td>
+									<td>
+									<input type="hidden" name="os_no" value="${os.os_no }"/>
+									<input type="number" name="os_stock" class="input-stock"/>
+									</td>
+								</tr>
+							</c:forEach>
+							</tbody>
 						</table>
-						</c:forEach>
 					</div>
 					
 					<div class="form-group">
@@ -145,7 +143,7 @@
 	var addStock = function() {
 		if( !checkEmptyForm() )
 			return;
-		if( $stockTable.data('o_no') ) {
+		if( $stockTable.find('tbody tr').attr('id') ) {
 			openModal();
 			return;
 		}
@@ -182,58 +180,41 @@
 		$("#stockModal").modal();
 	}
 	
-	Array.prototype.allTheSame = function() {
-		if(this.length === 1) 
-			return true;
-		
-		for(var i = 1; i < this.length; i++) {
-			if(this[0] !== this[i])
-				return false;
-		}
-		
-		return true;
-	}
-	
 	$(".input-stock").keyup(function() {
 		calculateTotalInput();
 	});
 	
 	var calculateTotalInput = function() {
-		var inputs = sumOfStocks();
-		
+		var totalInput = sumOfStocks();
 		var $totalInput = $('#totalInput');
-		if( !inputs.allTheSame() ) {
-			$totalInput.val('재고값이 다릅니다.');
-			return;
-		}
-		$totalInput.val(inputs[0]);
 		var totalExpect = Number($("#totalExpect").val());
-		if(totalExpect < inputs[0])
+		
+		$totalInput.val(totalInput);
+		if(totalExpect < totalInput)
 			$totalInput.css("color","red");
 		else
 			$totalInput.css("color","");
 	}
 	
 	var sumOfStocks = function() {
-		var inputs = [];
-		$stockTable.each(function() {
-			inputs.push( calculateInput( $(this) ) );
+		var totalInput = 0;
+		$stockTable.find(".input-stock").each(function() {
+			totalInput += Number($(this).val());
 		});
-		return inputs;
-	}
-	
-	var calculateInput = function($table) {
-		var inputTotal = 0;
-		$table.find(".input-stock").each(function() {
-			inputTotal += Number($(this).val());
-		});
-		return inputTotal;
+		return totalInput;
 	}
 	
 	$('#btn-optionStockAdd').click(function() {
+		var totalInput = sumOfStocks();
+		var totalExpect = Number($("#totalExpect").val());
+		if(totalInput !== totalExpect) {
+			alert('입력된 재고량이 등록하기로 한 예상 재고량과 다릅니다.');
+			return;
+		}
+		
 		var options = getOptions();
 		$(options).each(function() {
-			$('<input />').attr({'type':'hidden','name':'goodsOptions'})
+			$('<input />').attr({'type':'hidden','name':'optionStocks'})
 			.val(JSON.stringify(this)).appendTo( $('#sr-form') );
 		});
 		$("#sr-form").submit();
@@ -241,22 +222,19 @@
 	
 	var getOptions = function() {
 		var options = [];
-		$stockTable.each(function() {
-			options.push( createOption( $(this) ) );
+		var g_no = $('input[name=g_no]').val();
+		$stockTable.find('tbody tr').each(function() {
+			options.push( createOption(g_no, $(this)) );
 		});
 		return options;
 	}
 	
-	var createOption = function($table) {
-		var option = {
-			g_no : $('input[name=g_no]').val(),
-			o_no : $table.data('o_no'),
-			go_stocks : []
+	var createOption = function(g_no, $tr) {
+		return {
+			g_no : g_no,
+			os_no : $tr.find('input[name=os_no]').val(),
+			os_stock : $tr.find('input[name=os_stock]').val()
 		};
-		$table.find('.input-stock').each(function() {
-			option.go_stocks.push( $(this).val() );
-		})
-		return option;
 	} 
 	
 	$("select[name=category]").change(function() {

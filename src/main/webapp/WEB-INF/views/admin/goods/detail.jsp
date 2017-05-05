@@ -154,26 +154,26 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<c:forEach var="opt" items="${g.goodsOptions }">
 				<table class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<td></td>
-		 					<c:forEach var="col" items="${opt.values }">
-							<td>${col }</td>
-							</c:forEach>
+							<td>조합</td>
+							<td>재고량</td>
 						</tr>
 					</thead>
 					<tbody>					
+					<c:forEach var="os" items="${g.optionStocks }">
 						<tr>
-							<td>${opt.o_name }</td>
-							<c:forEach var="s" items="${opt.go_stocks }">
-							<td>${s }</td>
-							</c:forEach>
+							<td>${os.combination }</td>
+							<td>${os.os_stock }</td>
+						</tr>
+					</c:forEach>
+						<tr>
+							<td>총합</td>
+							<td>${g.stock }</td>
 						</tr>
 					</tbody>
 				</table>
-				</c:forEach>
 			</div>
 		</div>
 	</div>
@@ -184,7 +184,6 @@
 <script type="text/javascript">
 (function() {
 	var option = goods.option();
-	console.log(option)
 	
 	var setDiabled = (function() {
 		$("#goods-form input").attr("readonly", true);

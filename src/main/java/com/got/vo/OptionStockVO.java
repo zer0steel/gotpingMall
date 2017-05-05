@@ -1,12 +1,14 @@
 package com.got.vo;
 
 public class OptionStockVO {
-	private int os_no, os_stock, g_no;
+	private Integer os_no, g_no;
+	private int os_stock;
 	private String combination;
-	public int getOs_no() {
+	
+	public Integer getOs_no() {
 		return os_no;
 	}
-	public void setOs_no(int os_no) {
+	public void setOs_no(Integer os_no) {
 		this.os_no = os_no;
 	}
 	public int getOs_stock() {
@@ -15,10 +17,10 @@ public class OptionStockVO {
 	public void setOs_stock(int os_stock) {
 		this.os_stock = os_stock;
 	}
-	public int getG_no() {
+	public Integer getG_no() {
 		return g_no;
 	}
-	public void setG_no(int g_no) {
+	public void setG_no(Integer g_no) {
 		this.g_no = g_no;
 	}
 	public String getCombination() {

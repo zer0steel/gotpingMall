@@ -1,18 +1,15 @@
 package com.got.service;
 
-import static org.junit.Assert.assertNull;
-
 import java.util.List;
 import java.util.Objects;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.got.dao.FileDao;
 import com.got.dao.GoodsDao;
 import com.got.dao.GoodsOptionDao;
-import com.got.enums.GoodsStatus;
+import com.got.dao.OptionStockDao;
 import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
 import com.got.util.FileUtil;
@@ -27,19 +24,16 @@ public class GoodsService {
 	@Autowired private FileDao fdao;
 	@Autowired private GoodsOptionDao goDao;
 	@Autowired private SRService srService;
+	@Autowired private OptionStockDao osDao;
 
 	public void enroll(GoodsVO g) {
 		validationCheck(g);
-		
-		g.setStatus(GoodsStatus.STAND_BY);
 		dao.insert(g);
 	}
 	
 	public void enrollWithImg(GoodsVO g, String[] fileInfo) {
 		validationCheck(g);
 		Objects.requireNonNull(fileInfo);
-		
-		g.setStatus(GoodsStatus.STAND_BY);
 		
 		List<GoodsImgVO> goodsImgs = CommonUtil.getVO(fileInfo, GoodsImgVO.class);
 		CategoryVO c = MenuLevel.findBigCategory(g.getC_no());
@@ -58,6 +52,7 @@ public class GoodsService {
 		GoodsVO g = dao.selectOne(g_no);
 		g.setGoodsOptions(goDao.selectListWithG_no(g_no));
 		g.setImages(fdao.selectGoodsImg(g_no));
+		g.setOptionStocks(osDao.selectWithG_no(g_no));
 		return g;
 	}
 	

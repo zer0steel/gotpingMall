@@ -3,6 +3,7 @@ package com.got.dao;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.ibatis.transaction.TransactionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,22 @@ public class ShippingReceivingDao {
 	
 	public static final int UPDATE_STOCK_FAIL = -2;
 	
-	public void insertOneNewHistory(ShippingReceivingVO sr, GoodsVO g) {
+	public void insertHistoryAndStocks(ShippingReceivingVO sr, GoodsVO g) {
 		dao.transactionTemplate(session -> {
 			if(session.insert("sr.insertOne", sr) != 1)
 				throw new TransactionException();
+			
 			if(session.update("g.updateStock", g) != 1)
 				throw new TransactionException();
+			
+			System.out.println(g.getOptionStocks());
+			if( Objects.nonNull(g.getOptionStocks()) ) {
+				g.getOptionStocks().forEach(o -> {
+					Objects.requireNonNull(o.getOs_no());
+					if(o.getOs_stock() != 0)
+						session.update("os.updateStock", o);
+				});
+			}
 		});
 	}
 }

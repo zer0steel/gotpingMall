@@ -9,8 +9,8 @@
 	</insert>
 	
 	<insert id="insertNewOptionValue">
-		INSERT INTO goods_option(g_no, o_no, value, go_stock, extra_cost, required)
-		VALUES(#{g_no}, #{o_no}, #{value}, #{go_stock}, #{extra_cost}, #{required})
+		INSERT INTO goods_option(g_no, o_no, value, extra_cost)
+		VALUES(#{g_no}, #{o_no}, #{value}, #{extra_cost})
 	</insert>
 	
 	<select id="selectListWithC_no" resultType="com.got.vo.OptionsVO">

@@ -34,12 +34,4 @@ public class GoodsOptionService {
 	public List<OptionsVO> getWithG_no(int c_no) {
 		return dao.selectListWithC_no(c_no);
 	}
-
-	public void addStocks(List<GoodsOptionVO> options, HistoryCategory historyCategory) {
-		options.forEach(option -> {
-			GoodsOptionVO vo = dao.selectOne(option.getG_no(), option.getO_no());
-			vo.addStock(option, historyCategory.isMinusStockCategory());
-			dao.updateStocks(vo);
-		});
-	}
 }

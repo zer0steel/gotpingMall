@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.got.enums.GoodsStatus;
+import com.got.util.CommonUtil;
 
 public class GoodsVO extends CategoryVO {
 	private Integer g_no;
@@ -135,6 +136,13 @@ public class GoodsVO extends CategoryVO {
 	public void setGoodsOptions(List<GoodsOptionVO> goodsOptions) {
 		this.goodsOptions = goodsOptions;
 	}
+	
+	public void setGoodsOptions(String[] goodsOptionJSON) {
+		if( Objects.nonNull(goodsOptionJSON) ) {
+			setGoodsOptions(CommonUtil.getVO(goodsOptionJSON, GoodsOptionVO.class));
+			createOptionStocks();
+		}
+	}
 
 	public int getDiscount_price() {
 		return discount_price;
@@ -153,7 +161,7 @@ public class GoodsVO extends CategoryVO {
 		this.optionStocks = optionStocks;
 	}
 	
-	public void createOptionStocks() {
+	private void createOptionStocks() {
 		this.optionStocks = new ArrayList<>();
 		createCombinationString(this.goodsOptions, 0, new String[this.goodsOptions.size()]);
 	}
