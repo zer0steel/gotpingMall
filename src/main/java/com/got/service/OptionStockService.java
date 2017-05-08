@@ -14,4 +14,13 @@ import com.got.vo.OptionStockVO;
 public class OptionStockService {
 	
 	@Autowired private OptionStockDao dao;
+
+	public List<OptionStockVO> getList(Integer g_no) {
+		Objects.requireNonNull(g_no);
+		return dao.selectWithG_no(g_no);
+	}
+	
+	public String getJSONList(Integer g_no) {
+		return CommonUtil.convertToJSON(getList(g_no));
+	}
 }

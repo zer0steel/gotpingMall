@@ -12,7 +12,7 @@ import com.got.service.GoodsOptionService;
 import com.got.util.CommonUtil;
 import com.got.vo.OptionsVO;
 
-@Controller
+@Controller("adminGoodsOptionController")
 public class GoodsOptionController {
 	
 	private static Logger log = Logger.getLogger(GoodsOptionController.class);

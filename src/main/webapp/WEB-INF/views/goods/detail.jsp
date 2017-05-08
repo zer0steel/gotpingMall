@@ -11,6 +11,7 @@
 		</div>
 		<div class="col-sm-7">
 			<div class="product-information">
+				<input type="hidden" id="g_no" value="${g.g_no }">
 				<h2>${g.name }</h2>
 				<span>
 					<c:choose>
@@ -24,21 +25,8 @@
 					</c:choose>
 				</span>
 				<form action="" class="form-horizontal">
-				<c:forEach var="opt" items="${g.goodsOptions }">
-				<div class="form-group">
-					<label for="value" class="control-label col-md-2">${opt.o_name }</label>
-					<div class="col-md-7">
-					<select name="value" class="form-control">
-						<c:forEach var="col" items="${opt.values }">
-							<option>${col }</option>
-						</c:forEach>
-					</select>
-					</div>
-				</div>
-				</c:forEach>
+					<div id="selectOption"></div>
 				</form>
-				<label>수량 : </label>
-				<input type="text" value="" />
 				<button type="button" class="btn btn-fefault cart">
 					<i class="fa fa-shopping-cart"></i>장바구니에 담기
 				</button>
@@ -82,28 +70,28 @@
 					<ul>
 						<li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
 						<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-						<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC
-								2014</a></li>
+						<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
 					</ul>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit,
 						sed do eiusmod tempor incididunt ut labore et dolore magna
 						aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco
 						laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure
 						dolor in reprehenderit in voluptate velit esse cillum dolore eu
-						fugiat nulla pariatur.</p>
+						fugiat nulla pariatur.
+					</p>
 					<p>
 						<b>Write Your Review</b>
 					</p>
 
 					<form action="#">
-						<span> <input type="text" placeholder="Your Name" /> <input
-							type="email" placeholder="Email Address" />
+						<span>
+							<input type="text" placeholder="Your Name" /> <input type="email" placeholder="Email Address" />
 						</span>
 						<textarea name=""></textarea>
-						<b>Rating: </b> <img src="images/product-details/rating.png"
-							alt="" />
-						<button type="button" class="btn btn-default pull-right">
-							Submit</button>
+						<b>Rating: </b>
+						<img src="images/product-details/rating.png" alt="" />
+						<button type="button" class="btn btn-default pull-right">Submit</button>
 					</form>
 				</div>
 			</div>
@@ -115,8 +103,7 @@
 		<!--recommended_items-->
 		<h2 class="title text-center">recommended items</h2>
 
-		<div id="recommended-item-carousel" class="carousel slide"
-			data-ride="carousel">
+		<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
 			<div class="carousel-inner">
 				<div class="item active">
 					<div class="col-sm-4">
@@ -207,15 +194,22 @@
 					</div>
 				</div>
 			</div>
-			<a class="left recommended-item-control"
-				href="#recommended-item-carousel" data-slide="prev"> <i
-				class="fa fa-angle-left"></i>
-			</a> <a class="right recommended-item-control"
-				href="#recommended-item-carousel" data-slide="next"> <i
-				class="fa fa-angle-right"></i>
+			<a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+				<i class="fa fa-angle-left"></i>
+			</a>
+			<a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+				<i class="fa fa-angle-right"></i>
 			</a>
 		</div>
 	</div>
-	<!--/recommended_items-->
-
 </div>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStock.js"></script> --%>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStockTest.js?ver=1"></script>
+<script type="text/javascript">
+(function() {
+	goods.selectOption({
+		g_no : $('#g_no').val(),
+		$root : $('#selectOption')
+	})
+}());
+</script>

@@ -9,12 +9,7 @@ goods.option = function() {
 	 */
 	function option( $table ) {
 		createDOM( $table );
-		$tbody.on('click', 'a', function() {
-			createOptionValueTr( $(this) );
-		});
-		$tbody.on('click', '.btn-delete', function() {
-			deleteOptionValueTr( $(this) );
-		});
+		addEvent( $table );
 	};
 	
 	/*
@@ -30,6 +25,15 @@ goods.option = function() {
 		$('<thead />').append( $tr ).appendTo( $table );
 		
 		$tbody = $('<tbody />').appendTo( $table );
+	}
+	
+	function addEvent( $table ) {
+		$table.on('click', 'a', function() {
+			createOptionValueTr( $(this) );
+		});
+		$table.on('click', '.btn-delete', function() {
+			deleteOptionValueTr( $(this) );
+		});
 	}
 	
 	/*

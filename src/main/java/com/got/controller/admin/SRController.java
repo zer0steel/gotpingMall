@@ -1,7 +1,5 @@
 package com.got.controller.admin;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +17,6 @@ public class SRController {
 	
 	@RequestMapping(value = "admin/goods/sr/insert.yo", method = RequestMethod.POST)
 	public ModelAndView insertSubmit(ShippingReceivingVO sr, String[] optionStocks) {
-		System.out.println(optionStocks.length);
-		Arrays.asList(optionStocks).forEach(o -> System.out.println(o));
 		s.addHistoryAndStocks(sr, optionStocks);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/admin/goods/detail.yo?g_no=" + sr.getG_no());

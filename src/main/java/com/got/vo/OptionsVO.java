@@ -1,18 +1,18 @@
 package com.got.vo;
 
 public class OptionsVO {
-	private int o_no, c_no;
+	private Integer o_no, c_no;
 	private String o_name;
-	public int getO_no() {
+	public Integer getO_no() {
 		return o_no;
 	}
-	public void setO_no(int o_no) {
+	public void setO_no(Integer o_no) {
 		this.o_no = o_no;
 	}
-	public int getC_no() {
+	public Integer getC_no() {
 		return c_no;
 	}
-	public void setC_no(int c_no) {
+	public void setC_no(Integer c_no) {
 		this.c_no = c_no;
 	}
 	public String getO_name() {
