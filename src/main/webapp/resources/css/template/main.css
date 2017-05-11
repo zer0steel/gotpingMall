@@ -1160,9 +1160,9 @@ h2.title {
 }
 
 .product-details {
-  margin-bottom: 40px;
   overflow: hidden;
-  margin-top: 10px;
+  /* margin-bottom: 40px;
+  margin-top: 10px; */
 }
 
 

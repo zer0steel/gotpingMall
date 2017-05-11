@@ -17,15 +17,8 @@ public class GoodsOptionController {
 	
 	@Autowired private OptionStockService oss;
 	@Autowired private GoodsOptionService gos;
-	
 	@ResponseBody
 	@RequestMapping(value = "goods/option/stock.yo", produces = "application/json; charset=UTF-8")
-	public String getOptinalStocks(Integer g_no) {
-		return oss.getJSONList(g_no);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "goods/option/stockTest.yo", produces = "application/json; charset=UTF-8")
 	public String getOptinalStocksTest(Integer g_no) {
 		return gos.getOptionalStocksJSON(g_no);
 	}

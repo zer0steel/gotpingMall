@@ -35,9 +35,15 @@
 							<c:when test="${lm == null }">
 								<li><a href="${pageContext.request.contextPath }/agreement.yo"><i class="fa fa-user fa-lg"></i>회원가입</a></li>
 								<li><a href="${pageContext.request.contextPath }/login.yo"><i class="fa fa-lock fa-lg"></i>로그인</a></li>
+								<li><a href="${pageContext.request.contextPath }/loginTest.yo?" id="test"><i class="fa fa-lock fa-lg"></i>테스트 로그인</a></li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="#"><i class="fa fa-address-card-o fa-lg"></i>나의 정보</a></li>
+								<li>
+									<a href="#">
+										<i class="fa fa-address-card-o fa-lg"></i>나의 정보
+										<input type="hidden" id="id" value="${lm.id }">
+									</a>
+								</li>
 								<li><a href="${pageContext.request.contextPath }/logout.yo"><i class="fa fa-unlock fa-lg"></i>로그아웃</a></li>
 							</c:otherwise>
 						</c:choose>
@@ -90,4 +96,14 @@
 			</div>
 			</div>
 		</div>
+		<input type="hidden" id="pageContextPath" value="${pageContext.request.contextPath }">
 </header>
+<script type="text/javascript">
+var isLogin = function() {
+	return $('#id').val() ? true : false;
+}
+
+var getContextPath = function() {
+	return $('#pageContextPath').val();
+}
+</script>

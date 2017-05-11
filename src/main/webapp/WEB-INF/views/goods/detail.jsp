@@ -2,13 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="col-sm-12">
 	<div class="product-details">
-		<!--product-details-->
+	
 		<div class="col-sm-5">
 			<br/><br/>
 			<div class="view-product">
 				<jsp:include page="include/imageSlider.jsp"></jsp:include>
 			</div>
 		</div>
+		
 		<div class="col-sm-7">
 			<div class="product-information">
 				<input type="hidden" id="g_no" value="${g.g_no }">
@@ -17,22 +18,25 @@
 					<c:choose>
 						<c:when test="${g.discount_rate > 0}">
 						<p style="text-decoration: line-through;">${g.sell_price } 원</p>
-						<span>${g.discount_price } 원</span>
+						<span id="goodsPrice" data-goods_price="${g.discount_price }">${g.discount_price } 원</span>
 						</c:when>
 						<c:otherwise>
-						<span>${g.sell_price } 원</span>
+						<span id="goodsPrice" data-goods_price="${g.sell_price }">${g.sell_price } 원</span>
 						</c:otherwise>
 					</c:choose>
 				</span>
-				<form action="" class="form-horizontal">
+				<form action="purchase.yo" class="form-horizontal" id="form-option-select">
 					<div id="selectOption"></div>
 				</form>
-				<button type="button" class="btn btn-fefault cart">
-					<i class="fa fa-shopping-cart"></i>장바구니에 담기
+				<button type="button" class="btn btn-danger btn-lg" id="btn-buy">
+					<i class="fa fa-money fa-x4"></i>바로구매하기
+				</button>
+				<button type="button" class="btn btn-info btn-lg">
+					<i class="fa fa-shopping-cart fa-x4"></i>장바구니
 				</button>
 			</div>
-			<!--/product-information-->
 		</div>
+		
 	</div>
 	<!--/product-details-->
 
@@ -203,13 +207,23 @@
 		</div>
 	</div>
 </div>
-<%-- <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStock.js"></script> --%>
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStockTest.js?ver=1"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStock.js?ver=1"></script>
 <script type="text/javascript">
 (function() {
 	goods.selectOption({
 		g_no : $('#g_no').val(),
-		$root : $('#selectOption')
-	})
+		$root : $('#selectOption'),
+		goodsPrice : $('#goodsPrice').data('goods_price')
+	});
+	
+	$('#btn-buy').click(function() {
+		if(isLogin()) {
+			$('#form-option-select').submit();
+			/* location.href = getContextPath() + '/goods/purchase.yo'; */
+		}
+		else {
+			location.href = getContextPath() + '/purchaseLogin.yo';
+		}
+	});
 }());
 </script>

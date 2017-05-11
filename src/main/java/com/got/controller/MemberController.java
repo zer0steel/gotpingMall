@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.got.enums.Grade;
 import com.got.enums.Page;
 import com.got.service.MemberService;
 import com.got.util.RSA;
@@ -24,11 +25,29 @@ public class MemberController {
 	
 	@Autowired private MemberService s;
 	
+	@RequestMapping("loginTest.yo")
+	public ModelAndView loginTest(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		MemberVO m = new MemberVO();
+		m.setId("admin");
+		m.setEnumGrade(Grade.ADMIN);
+		session.setAttribute("lm", m);
+		mav.setViewName("redirect:/front.yo");
+		return mav;
+	}
+	
 	@RequestMapping("login.yo")
 	public ModelAndView loginForm() {
 		ModelAndView mav = new ModelAndView();
 		Page.setNoSideFrame(mav);
 		return Page.setViewPage(mav, "member/login.jsp");
+	}
+	
+	@RequestMapping("purchaseLogin.yo")
+	public ModelAndView purchaseLoginForm() {
+		ModelAndView mav = new ModelAndView();
+		Page.setNoSideFrame(mav);
+		return Page.setViewPage(mav, "member/purchaseLogin.jsp");
 	}
 	
 	@ResponseBody
