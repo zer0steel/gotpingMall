@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.got.enums.Grade;
-import com.got.enums.Page;
 import com.got.service.MemberService;
+import com.got.util.ModelAndView;
 import com.got.util.RSA;
 import com.got.vo.MemberVO;
 
@@ -39,15 +38,15 @@ public class MemberController {
 	@RequestMapping("login.yo")
 	public ModelAndView loginForm() {
 		ModelAndView mav = new ModelAndView();
-		Page.setNoSideFrame(mav);
-		return Page.setViewPage(mav, "member/login.jsp");
+		mav.setNoSideFrame();
+		return mav.setViewPage("member/login.jsp");
 	}
 	
 	@RequestMapping("purchaseLogin.yo")
 	public ModelAndView purchaseLoginForm() {
 		ModelAndView mav = new ModelAndView();
-		Page.setNoSideFrame(mav);
-		return Page.setViewPage(mav, "member/purchaseLogin.jsp");
+		mav.setNoSideFrame();
+		return mav.setViewPage("member/purchaseLogin.jsp");
 	}
 	
 	@ResponseBody
@@ -74,15 +73,15 @@ public class MemberController {
 	@RequestMapping("agreement.yo")
 	public ModelAndView agreeForm() {
 		ModelAndView mav = new ModelAndView();
-		Page.setNoSideFrame(mav);
-		return Page.setViewPage(mav, "member/agreement.jsp");
+		mav.setNoSideFrame();
+		return mav.setViewPage("member/agreement.jsp");
 	}
 	
 	@RequestMapping("join.yo")
 	public ModelAndView joinForm() {
 		ModelAndView mav = new ModelAndView();
-		Page.setNoSideFrame(mav);
-		return Page.setViewPage(mav, "member/join.jsp");
+		mav.setNoSideFrame();
+		return mav.setViewPage("member/join.jsp");
 	}
 	
 	@RequestMapping(value = "join.yo", method = RequestMethod.POST)
@@ -91,7 +90,8 @@ public class MemberController {
 		session.invalidate();
 		
 		s.join(m, privateKey);
-		return Page.setViewPage(new ModelAndView(), "member/joinComplete.jsp");
+		ModelAndView mav = new ModelAndView();
+		return mav.setViewPage("member/joinComplete.jsp");
 	}
 	
 	@ResponseBody

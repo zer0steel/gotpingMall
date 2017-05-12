@@ -210,16 +210,20 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStock.js?ver=1"></script>
 <script type="text/javascript">
 (function() {
-	goods.selectOption({
+	var optCnt = goods.selectOption({
 		g_no : $('#g_no').val(),
 		$root : $('#selectOption'),
 		goodsPrice : $('#goodsPrice').data('goods_price')
-	});
+	}).getSelectedOptionCount;
+	
 	
 	$('#btn-buy').click(function() {
+		if(optCnt() < 1) {
+			alert('선택된 상품이 없습니다.');
+			return;
+		}
 		if(isLogin()) {
 			$('#form-option-select').submit();
-			/* location.href = getContextPath() + '/goods/purchase.yo'; */
 		}
 		else {
 			location.href = getContextPath() + '/purchaseLogin.yo';

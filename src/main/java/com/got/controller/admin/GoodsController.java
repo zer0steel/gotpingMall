@@ -10,15 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.got.enums.GoodsStatus;
 import com.got.enums.HistoryCategory;
-import com.got.enums.Page;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
-import com.got.util.CommonUtil;
-import com.got.vo.GoodsOptionVO;
+import com.got.util.ModelAndView;
 import com.got.vo.GoodsVO;
 
 @Controller("adminGoodsController")
@@ -32,7 +29,7 @@ public class GoodsController {
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.GET)
 	public ModelAndView insertGoodsForm() {
 		ModelAndView mav = cs.setEnumsInMAV(new ModelAndView());
-		return Page.setAdminViewPage(mav, "goods/insert.jsp");
+		return mav.setAdminViewPage("goods/insert.jsp");
 	}
 	
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
@@ -52,7 +49,7 @@ public class GoodsController {
 		ModelAndView mav = cs.setEnumsInMAV(new ModelAndView());
 		mav.addObject("status", GoodsStatus.values());
 		mav.addObject("goods", gs.getAll());
-		return Page.setAdminViewPage(mav, "goods/list.jsp");
+		return mav.setAdminViewPage("goods/list.jsp");
 	}
 	
 	@ResponseBody
@@ -63,7 +60,7 @@ public class GoodsController {
 		.addObject("g",gs.detailAndSRHistory(g_no))
 		.addObject("status", GoodsStatus.values())
 		.addObject("hc", HistoryCategory.values());
-		return Page.setAdminViewPage(mav, "goods/detail.jsp");
+		return mav.setAdminViewPage("goods/detail.jsp");
 	}
 	
 	@RequestMapping(value = "admin/goods/update.yo", method = RequestMethod.POST)

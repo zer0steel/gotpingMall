@@ -5,10 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.got.enums.Page;
 import com.got.service.CategoryService;
+import com.got.util.ModelAndView;
 import com.got.vo.CategoryVO;
 
 @Controller
@@ -22,7 +21,7 @@ public class CategoryController {
 	public ModelAndView category(String msg) {
 		ModelAndView mav = new ModelAndView();
 		cs.setEnumsInMAV(mav).addObject("msg", msg);
-		return Page.setAdminViewPage(mav, "goods/category.jsp");
+		return mav.setAdminViewPage("goods/category.jsp");
 	}
 	
 	@RequestMapping(value = "admin/goods/category/insert.yo", method = RequestMethod.POST)

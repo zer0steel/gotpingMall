@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.got.dao.CategoryDao;
 import com.got.dao.GoodsOptionDao;
@@ -53,7 +52,7 @@ public class CategoryService {
 	 * @param mav
 	 * @return big, middle, small 이 저장된 ModelAndView
 	 */
-	public ModelAndView setEnumsInMAV(ModelAndView mav) {
+	public com.got.util.ModelAndView setEnumsInMAV(com.got.util.ModelAndView mav) {
 		MenuLevel.groupingCategories(dao.selectAll());
 		mav.addObject("big", MenuLevel.BIG);
 		mav.addObject("middle", MenuLevel.MIDDLE);

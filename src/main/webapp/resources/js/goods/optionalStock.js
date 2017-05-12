@@ -24,7 +24,9 @@ goods.selectOption = (function() {
 			stocks = info.stocks;
 			createSelectTag(setting.$root, info.options);
 			addEvent(setting.$root.find('select'));
-		})
+		});
+		
+		return selectOption;
 	}
 	
 	var option = function(value, extraCost) {
@@ -47,6 +49,10 @@ goods.selectOption = (function() {
 				return s;
 			}
 		return false;
+	}
+	
+	selectOption.getSelectedOptionCount = function() {
+		return arraySize;
 	}
 	
 	var createSelectTag = function($root, options) {
