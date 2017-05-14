@@ -15,9 +15,11 @@ import com.got.enums.GoodsStatus;
 import com.got.enums.HistoryCategory;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
+import com.got.service.OptionStockService;
 import com.got.util.ModelAndView;
 import com.got.vo.GoodsOptionVO;
 import com.got.vo.GoodsVO;
+import com.got.vo.list.GoodsOptionListContainer;
 
 @Controller("adminGoodsController")
 public class GoodsController {
@@ -25,6 +27,7 @@ public class GoodsController {
 	private static Logger log = Logger.getLogger(GoodsController.class);
 	
 	@Autowired private GoodsService gs;
+	@Autowired private OptionStockService oss;
 	@Autowired private CategoryService cs;
 	
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.GET)
@@ -41,6 +44,13 @@ public class GoodsController {
 		else
 			gs.enrollWithImg(g, fileInfoJSON);
 		
+		log.info(g);
+		return new ModelAndView("redirect:/admin/goods/insert.yo");
+	}
+	
+	@RequestMapping(value = "admin/goods/insertTest.yo", method = RequestMethod.POST)
+	public ModelAndView insertGoodsSubmitTest(GoodsVO g, GoodsOptionListContainer container, String[] fileInfoJSON) {
+		oss.createOptionStocks(container.getList());
 		log.info(g);
 		return new ModelAndView("redirect:/admin/goods/insert.yo");
 	}

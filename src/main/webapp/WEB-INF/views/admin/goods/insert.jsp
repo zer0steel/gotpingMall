@@ -40,7 +40,7 @@
 </div>
 
 <div class="row">
-	<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left" action="insert.yo" method="post">
+	<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left" action="insertTest.yo" method="post">
 		<div class="col-md-6">
 			<div class="x_panel">
 				<div class="x_title">
@@ -91,7 +91,7 @@
 		</div>
 	</div>
 </div>
-<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOption.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOptionTest.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
 // 뷰페이지 부분

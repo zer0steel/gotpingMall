@@ -1,0 +1,137 @@
+var goods = goods || {};
+goods.option = (function() {
+	'use strict';
+	var $tbody, goodsOptions;
+	
+	/*
+	 * 생성자함수 
+	 * @param $table : jquery 테이블
+	 */
+	function option( $table ) {
+		createDOM( $table );
+		addEvent( $table );
+		return option;
+	};
+	
+	/*
+	 * 테이블 헤더와 바디를 만든다.
+	 */
+	function createDOM( $table ) {
+		var $tr = $('<tr />');
+		$('<td />').css('width','15%').html('옵션 이름').appendTo( $tr );
+		$('<td />').css('width','35%').html('항목').appendTo( $tr );
+		$('<td />').css('width','*').html('추가 가격').appendTo( $tr );
+		$('<td />').css('width','10%').html('기능').appendTo( $tr );
+		$('<thead />').append( $tr ).appendTo( $table );
+		
+		$tbody = $('<tbody />').appendTo( $table );
+	}
+	
+	function addEvent( $table ) {
+		$table.on('click', 'a', function() {
+			createOptionValueTr( $(this).parents('tr') );
+		});
+		$table.on('click', '.btn-delete', function() {
+			deleteOptionValueTr( $(this) );
+		});
+	}
+	
+	/*
+	 * 옵션 데이터 리스트를 받는다.
+	 */
+	option.setOptionData = function( options ) {
+		$tbody.empty();
+		goodsOptions = options;
+		createOptionTr();
+	};
+	
+	/*
+	 * 입력되어 있는 옵션들을 json객체리스트로 반환한다.
+	 */
+	option.getOptionList = function() {
+		var option;
+		var options = [];
+		
+		$tbody.find('tr').each(function(idx) {
+			var $tr = $(this);
+			
+			if($tr.attr('class') == 'option') 
+				option = createOption( $tr );
+			else {
+				option.values.push( $tr.find('input[name=value]').val() );
+				option.extra_costs.push( $tr.find('input[name=extra_cost]').val() );
+				
+				var nextTr = $tr.next()[0];
+				if($(nextTr).attr('class') != 'value')
+					options.push( option );
+			}
+		});
+		
+		return options;
+	};
+	
+	option.setTestButton = function() {
+		$tbody.parent().find('thead td').each(function() {
+			if( $(this).text() == '기능' ) {
+				var $button = $('<button />').text('테스트').click(function() {
+					console.log( option.getOptionList() );
+				});
+				$(this).html( $button );
+			}
+		});
+	};
+	
+	function createOption( $tr ) {
+		return {
+			o_no : $tr.find('input[name=o_no]').val(),
+			extra_costs : [],
+			values : []
+		}
+	};
+	
+	function optionCheck() {
+		var optCount = $tbody.find('tr.option').length;
+		if(goodsOptions == null) {
+			alert('분류를 지정하셔야 합니다.');
+			return false;
+		}
+		if(goodsOptions.length == 0) {
+			/*alert('옵션이 존재하지 않습니다.')*/
+			return false;
+		}
+		return true;
+	};
+	
+	function createOptionTr() {
+		if( !optionCheck() )
+			return;
+		$(goodsOptions).each(function(i) {
+			let $tr = $('<tr />').addClass('option').data({'index': i, 'optCount': 0}).appendTo( $tbody );
+			$('<td />').text(this.o_name).append( 
+				$('<input />').attr({'type':'hidden', 'name':'list['+ i +'].o_no'}).val(this.o_no)
+			).appendTo( $tr );
+			$('<td />').append( $('<a />').addClass('btn btn-info btn-sm').text('항목 추가') ).appendTo( $tr );
+			$('<td />').appendTo( $tr );
+			$('<td />').appendTo( $tr );
+		});
+	};
+	
+	function createOptionValueTr( $parentTr ) {
+		let index = $parentTr.data('index');
+		let optCount = $parentTr.data('optCount');
+		let $tr = $('<tr />').addClass('value');
+		$('<td />').appendTo( $tr );
+		$('<td />').append($('<input />').attr({'type':'text', 'name':'list['+ index +'].details['+ optCount +'].value'})).appendTo( $tr );
+		$('<td />').append($('<input />').attr({'type':'number', 'name':'list['+ index +'].details['+ optCount +'].extra_cost'}).val(0)).appendTo( $tr );
+		$('<td />').append( $('<button />').addClass('btn btn-danger btn-warning btn-delete').html('삭제') ).appendTo( $tr );
+		$parentTr.after( $tr );
+		
+		$parentTr.data('optCount', ++optCount);
+	};
+	
+	function deleteOptionValueTr( $btn ) {
+		$btn.parents('tr').remove();
+	};
+	
+	return option;
+}());

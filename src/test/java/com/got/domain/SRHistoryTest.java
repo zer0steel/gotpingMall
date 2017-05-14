@@ -28,6 +28,5 @@ public class SRHistoryTest {
 		sr.setAmount(1);
 		sr.setG_no(29);
 		sr.setDetail("");
-		s.addHistory(sr);
 	}
 }
