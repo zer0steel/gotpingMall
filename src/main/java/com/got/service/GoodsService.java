@@ -1,6 +1,9 @@
 package com.got.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import com.got.util.FileUtil;
 import com.got.vo.CategoryVO;
 import com.got.vo.GoodsImgVO;
 import com.got.vo.GoodsVO;
+import com.got.vo.OptionStockVO;
 
 @Service
 public class GoodsService {
@@ -45,7 +49,22 @@ public class GoodsService {
 	public List<GoodsVO> getAll() {
 		return dao.selectAll();
 	}
-
+	
+	public List<GoodsVO> getList(List<OptionStockVO> list) {
+		Map<Integer, GoodsVO> goodsMap = new HashMap<>();
+		list.forEach(os -> {
+			Integer g_no = os.getG_no();
+			Objects.requireNonNull(g_no);
+			GoodsVO g = goodsMap.get(g_no);
+			if(Objects.isNull(g)) {
+				g = new GoodsVO(g_no);
+				goodsMap.put(g_no, g);
+			}
+			g.getOptionStocks().add(os);
+		});
+		return dao.selectList(goodsMap.values());
+	}
+	
 	public GoodsVO detail(Integer g_no) {
 		Objects.requireNonNull(g_no);
 		
@@ -55,7 +74,6 @@ public class GoodsService {
 		g.setOptionStocks(osDao.selectWithG_no(g_no));
 		return g;
 	}
-	
 
 	public List<GoodsVO> getWithCategory(CategoryVO c) {
 		Objects.requireNonNull(c.getC_no());
@@ -103,4 +121,5 @@ public class GoodsService {
 		if(g.getName().equals(""))
 			throw new IllegalArgumentException("상품명이 없음 : " + g.getName());
 	}
+
 }

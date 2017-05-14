@@ -16,6 +16,7 @@ import com.got.enums.HistoryCategory;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
 import com.got.util.ModelAndView;
+import com.got.vo.GoodsOptionVO;
 import com.got.vo.GoodsVO;
 
 @Controller("adminGoodsController")

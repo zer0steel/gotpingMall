@@ -6,7 +6,13 @@ public class OptionStockVO {
 	private Integer os_no, g_no;
 	private int os_stock;
 	private String combination;
+	private int os_extra_cost;
 	private List<OptionStockVO> list;
+	@Override
+	public String toString() {
+		return "OptionStockVO [os_no=" + os_no + ", g_no=" + g_no + ", os_stock=" + os_stock + ", combination="
+				+ combination + ", os_extra_cost=" + os_extra_cost + ", list=" + list + "]";
+	}
 	
 	public Integer getOs_no() {
 		return os_no;
@@ -32,15 +38,16 @@ public class OptionStockVO {
 	public void setCombination(String combination) {
 		this.combination = combination;
 	}
-	@Override
-	public String toString() {
-		return "OptionStockVO [os_no=" + os_no + ", os_stock=" + os_stock + ", g_no=" + g_no + ", combination="
-				+ combination + "]";
-	}
 	public List<OptionStockVO> getList() {
 		return list;
 	}
 	public void setList(List<OptionStockVO> list) {
 		this.list = list;
+	}
+	public int getOs_extra_cost() {
+		return os_extra_cost;
+	}
+	public void setOs_extra_cost(int os_extra_cost) {
+		this.os_extra_cost = os_extra_cost;
 	}
 }

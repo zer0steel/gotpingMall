@@ -48,12 +48,9 @@ public class MemberService {
 		if(m == null)
 			return new MemberVO();
 		else {
-			if(m.isEqualsPwd(pwd, privateKey)) {
+			if(m.isEqualsPwd(pwd, privateKey))
 				m.setLogin();
-				return m;
-			}
-			else
-				return m;
+			return m;
 		}
 	}
 

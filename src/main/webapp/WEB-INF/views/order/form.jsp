@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="review-payment">
 	<h2>주문상품</h2>
 </div>
@@ -17,25 +18,27 @@
 					</tr>
 				</thead>
 				<tbody>
+				<c:forEach var="g" items="${goods }">
+					<c:forEach var="os" items="${g.optionStocks }">
 					<tr>
 						<td class="cart_product">
 							<a href="">
-								<img src="images/cart/one.png" alt="">
+								<img src="${pageContext.request.contextPath }/${g.mainImg.save_path }/${g.mainImg.save_name }" alt="">
 							</a>
 						</td>
 						<td class="cart_description">
 							<h4>
-								<a href="">Colorblock Scuba</a>
+								<a href="">${g.name }</a>
 							</h4>
-							<p>Web ID: 1089772</p>
+							<p>${os.combination }</p>
 						</td>
 						<td class="cart_price">
-							<p>$59</p>
+							<p></p>
 						</td>
 						<td class="cart_quantity">
 							<div class="cart_quantity_button">
 								<a class="cart_quantity_up" href=""> + </a>
-								<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
+								<input class="cart_quantity_input" type="text" name="quantity" value="${os.os_stock }" autocomplete="off" size="2">
 								<a class="cart_quantity_down" href=""> - </a>
 							</div>
 						</td>
@@ -48,6 +51,8 @@
 							</a>
 						</td>
 					</tr>
+					</c:forEach>
+				</c:forEach>
 		
 					<tr>
 						<td colspan="4">&nbsp;</td>

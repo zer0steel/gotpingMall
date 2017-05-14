@@ -13,26 +13,6 @@
 	<div class="col-md-6">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>상품 정보</h2>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left" action="insert.yo" method="post">
-					<jsp:include page="include/goodsForm.jsp"></jsp:include>				
-					<div class="form-group">
-						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-							<button type="reset" class="btn btn-primary">입력 초기화</button>
-							<button type="button" class="btn btn-success" id="btn-enroll">등록</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	
-	<div class="col-md-6">
-		<div class="x_panel">
-			<div class="x_title">
 				<h2 id="">분류 목록</h2>
 				<div class="clearfix"></div>
 			</div>
@@ -40,20 +20,6 @@
 				<jsp:include page="include/categorySelectBox.jsp"></jsp:include>
 				<br>
 				<a href="${pageContext.request.contextPath}/admin/goods/category.yo" class="btn btn-success btn-sm">분류 편집 하기</a>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-md-6">
-		<div class="x_panel">
-			<div class="x_title">
-				<h2>옵션 목록</h2>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<table class="table table-striped table-bordered" id="table-option"></table>
 			</div>
 		</div>
 	</div>
@@ -74,6 +40,40 @@
 </div>
 
 <div class="row">
+	<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left" action="insert.yo" method="post">
+		<div class="col-md-6">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>상품 정보</h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<jsp:include page="include/goodsForm.jsp"></jsp:include>				
+					<div class="form-group">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+							<button type="reset" class="btn btn-primary">입력 초기화</button>
+							<button type="button" class="btn btn-success" id="btn-enroll">등록</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>옵션 목록</h2>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<table class="table table-striped table-bordered" id="table-option"></table>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="row">
 	<div class="col-md-12">
 		<div class="x_panel">
 			<div class="x_title">
@@ -91,8 +91,7 @@
 		</div>
 	</div>
 </div>
-<script src="${pageContext.request.contextPath}/resources/js/uploadFile.js?ver=2"></script>
-<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOption.js?var=2"></script>
+<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOption.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
 // 뷰페이지 부분
@@ -104,8 +103,8 @@
 	});
 	uploadMain( $('#test') ); */
 	
-	var option = goods.option();
-	option( $("#table-option") );
+	var option = goods.option($("#table-option"));
+	console.log(option);
 	/* option.setTestButton(); */
 	
 	//대분류 항목이 클릭될때 실행

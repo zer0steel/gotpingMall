@@ -8,6 +8,7 @@ public class GoodsOptionVO extends OptionsVO {
 	private String value, extra_cost;
 	private List<String> values, extra_costs;
 	private int optionCount;
+	private List<GoodsOptionVO> list;
 	
 	public String getExtra_cost() {
 		return extra_cost;
@@ -49,5 +50,11 @@ public class GoodsOptionVO extends OptionsVO {
 	public String toString() {
 		return "GoodsOptionVO [g_no=" + g_no + ", value=" + value + ", extra_cost=" + extra_cost + ", values=" + values
 				+ ", extra_costs=" + extra_costs + ", optionCount=" + optionCount + "]";
+	}
+	public List<GoodsOptionVO> getList() {
+		return list;
+	}
+	public void setList(List<GoodsOptionVO> list) {
+		this.list = list;
 	}
 }

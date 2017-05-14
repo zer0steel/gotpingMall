@@ -8,7 +8,6 @@ import com.got.service.CategoryService;
 import com.got.service.GoodsService;
 import com.got.util.ModelAndView;
 import com.got.vo.CategoryVO;
-import com.got.vo.OptionStockVO;
 
 @Controller
 public class GoodsController {
@@ -32,10 +31,4 @@ public class GoodsController {
 		return mav.setViewPage("goods/detail.jsp");
 	}
 	
-	@RequestMapping("goods/purchase.yo")
-	public ModelAndView purchaseForm(OptionStockVO osList) {
-		ModelAndView mav = new ModelAndView();
-		mav.setNoSideFrame();
-		return mav.setViewPage("goods/purchase.jsp");
-	}
 }

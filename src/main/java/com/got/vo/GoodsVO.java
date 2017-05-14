@@ -18,6 +18,14 @@ public class GoodsVO extends CategoryVO {
 	private List<ShippingReceivingVO> history;
 	private List<GoodsOptionVO> goodsOptions;
 	private List<OptionStockVO> optionStocks;
+	
+	public GoodsVO() {
+	}
+	
+	public GoodsVO(Integer g_no) {
+		this.g_no = g_no;
+		this.optionStocks = new ArrayList<>();
+	}
 
 	public Integer getG_no() {
 		return g_no;
@@ -115,6 +123,12 @@ public class GoodsVO extends CategoryVO {
 
 	public void setImages(List<GoodsImgVO> images) {
 		this.images = images;
+		if( Objects.nonNull(images) )
+			for(GoodsImgVO img : images)
+				if("main".equals(img.getLocation())) {
+					this.mainImg = img;
+					break;
+				}
 	}
 
 	public void updateStock(int amount) {

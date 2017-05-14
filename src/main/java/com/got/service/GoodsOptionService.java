@@ -41,6 +41,7 @@ public class GoodsOptionService {
 	}
 	
 	public String getOptionalStocksJSON(Integer g_no) {
+		Objects.requireNonNull(g_no);
 		Map<String, Object> map = new HashMap<>();
 		map.put("options", dao.selectListWithG_no(g_no));
 		map.put("stocks", osDao.selectWithG_no(g_no));

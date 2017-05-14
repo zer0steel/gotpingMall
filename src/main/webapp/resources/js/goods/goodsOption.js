@@ -1,5 +1,5 @@
 var goods = goods || {};
-goods.option = function() {
+goods.option = (function() {
 	'use strict';
 	var $tbody, goodsOptions;
 	
@@ -10,6 +10,7 @@ goods.option = function() {
 	function option( $table ) {
 		createDOM( $table );
 		addEvent( $table );
+		return option;
 	};
 	
 	/*
@@ -100,11 +101,6 @@ goods.option = function() {
 			/*alert('옵션이 존재하지 않습니다.')*/
 			return false;
 		}
-		if(goodsOptions.length <= optCount) {
-			// 최대 옵션 종류의 개수보다 더 많은 옵션을 추가하려고 할때 실행된다.
-			alert('더이상 추가할수 없습니다.')
-			return false;
-		}
 		return true;
 	};
 	
@@ -113,9 +109,8 @@ goods.option = function() {
 			return;
 		$(goodsOptions).each(function() {
 			var $tr = $('<tr />').attr('class', 'option').appendTo( $tbody );
-			$('<td />').append( 
-				$('<input />').attr({'type':'hidden', 'name':'o_no'}).val(this.o_no),
-				$('<input />').attr({'type':'text', 'readonly':true}).addClass('form-control').val(this.o_name)
+			$('<td />').text(this.o_name).append( 
+				$('<input />').attr({'type':'hidden', 'name':'o_no'}).val(this.o_no)
 			).appendTo( $tr );
 			$('<td />').append( $('<a />').addClass('btn btn-info btn-sm').text('항목 추가') ).appendTo( $tr );
 			$('<td />').appendTo( $tr );
@@ -139,4 +134,4 @@ goods.option = function() {
 	};
 	
 	return option;
-};
+}());

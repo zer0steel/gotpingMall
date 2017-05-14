@@ -25,7 +25,7 @@
 						</c:otherwise>
 					</c:choose>
 				</span>
-				<form action="purchase.yo" class="form-horizontal" id="form-option-select">
+				<form action="${pageContext.request.contextPath }/order/form.yo" class="form-horizontal" id="form-option-select">
 					<div id="selectOption"></div>
 				</form>
 				<button type="button" class="btn btn-danger btn-lg" id="btn-buy">
@@ -207,7 +207,7 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStock.js?ver=1"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStock.js?ver=2"></script>
 <script type="text/javascript">
 (function() {
 	var optCnt = goods.selectOption({

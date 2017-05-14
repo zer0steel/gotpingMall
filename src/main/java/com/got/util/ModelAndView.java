@@ -14,19 +14,19 @@ public class ModelAndView extends org.springframework.web.servlet.ModelAndView {
 	}
 
 	public ModelAndView setNoSideFrame() {
-		this.addObject("noSideFrame", true);
+		super.addObject("noSideFrame", true);
 		return this;
 	}
 	
 	public ModelAndView setViewPage(String viewPage) {
-		this.addObject("viewPage", viewPage);
-		this.setViewName(TEMPLATE);
+		super.addObject("viewPage", viewPage);
+		super.setViewName(TEMPLATE);
 		return this;
 	}
 	
 	public ModelAndView setAdminViewPage(String viewPage) {
-		this.addObject("viewPage", viewPage);
-		this.setViewName(ADMIN_TEMPLATE);
+		super.addObject("viewPage", viewPage);
+		super.setViewName(ADMIN_TEMPLATE);
 		return this;
 	}
 }
