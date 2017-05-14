@@ -60,15 +60,14 @@ goods.selectOption = (function() {
 			let $select = $('<select />').addClass('form-control select-option')
 			.append(	$('<option />').html('(필수) 선택하세요.').attr('selected', true).val(DEFAULT_OPTION).css('display','none')	);
 			
-			let len = o.values.length;
-			for(var i = 0; i < len; i++) {
-				var optText = o.values[i];
-				var $option = $('<option />').val(o.values[i]).appendTo( $select );
-				if(Number(o.extra_costs[i]) !== 0) {
-					optText += "  (추가금액 : " + o.extra_costs[i] + " 원)"; 
-					$option.data(EXTRA_COST, o.extra_costs[i]);
+			for(var d of o.details) {
+				let optText = d.value;
+				var $option = $('<option />').val(d.value);
+				if(Number(d.extra_cost) !== 0) {
+					optText += "  (추가금액 : " + d.extra_cost + " 원)"; 
+					$option.data(EXTRA_COST, d.extra_cost);
 				}
-				$option.html( optText );
+				$option.data('text', optText).html(optText).appendTo( $select );
 				if( idx >= 1)
 					$option.css('display','none');
 			}
@@ -111,7 +110,7 @@ goods.selectOption = (function() {
 				return;
 			
 			let $priceTag = $parentTag.find('.price');
-			let price = goodsPrice * amount;
+			let price = $parentTag.data('price') * amount;
 			$priceTag.setPriceInHtml(price);
 			
 			// 상품 수량 유효성 검사
@@ -167,17 +166,18 @@ goods.selectOption = (function() {
 				return;
 			
 			let tempUserSelect = userSelect;
-			let $options = $($selectTags[lastIdx]).children('option');
-			for(var i = 1; i < $options.length; i++) {
-				tempUserSelect[lastIdx] = option($options[i].value);
+			let options = $($selectTags[lastIdx]).children('option');
+			for(var i = 1; i < options.length; i++) {
+				tempUserSelect[lastIdx] = option(options[i].value);
 				var o = optionSearch( tempUserSelect );
+				let $opt = $(options[i]);
 				if(o.os_stock === 0) {
-					$options[i].innerHTML = $options[i].value + ' (품절)';
-					$options[i].setAttribute('disabled', true);
+					$opt.text($opt.val() + ' (품절)');
+					$opt.attr('disabled', true)
 				}
 				else {
-					$options[i].innerHTML = $options[i].value;
-					$options[i].removeAttribute('disabled');
+					$opt.text($opt.data('text'));
+					$opt.removeAttr('disabled')
 				}
 				
 				if(o === false)

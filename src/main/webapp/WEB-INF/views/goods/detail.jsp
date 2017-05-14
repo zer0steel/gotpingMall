@@ -94,7 +94,6 @@
 						</span>
 						<textarea name=""></textarea>
 						<b>Rating: </b>
-						<img src="images/product-details/rating.png" alt="" />
 						<button type="button" class="btn btn-default pull-right">Submit</button>
 					</form>
 				</div>
@@ -103,8 +102,8 @@
 		</div>
 	</div>
 	<!--/category-tab-->
-	<div class="recommended_items">
-		<!--recommended_items-->
+	<!-- <div class="recommended_items">
+		recommended_items
 		<h2 class="title text-center">recommended items</h2>
 
 		<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
@@ -205,9 +204,9 @@
 				<i class="fa fa-angle-right"></i>
 			</a>
 		</div>
-	</div>
+	</div> -->
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStock.js?ver=2"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStock.js?ver=5"></script>
 <script type="text/javascript">
 (function() {
 	var optCnt = goods.selectOption({

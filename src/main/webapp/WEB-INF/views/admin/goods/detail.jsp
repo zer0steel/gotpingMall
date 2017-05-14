@@ -179,12 +179,9 @@
 	</div>
 	</c:if>
 </div>
-<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOption.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/goods/categorySelectBox.js"></script>
 <script type="text/javascript">
 (function() {
-	var option = goods.option();
-	
 	var setDiabled = (function() {
 		$("#goods-form input").attr("readonly", true);
 		$("#goods-form select").attr("disabled", true);

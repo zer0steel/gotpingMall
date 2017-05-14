@@ -33,7 +33,14 @@
 							<p>${os.combination }</p>
 						</td>
 						<td class="cart_price">
-							<p></p>
+						<c:choose>
+							<c:when test="${g.discount_rate == 0 }">
+								<p>${os.extra_cost } 원</p>
+							</c:when>
+							<c:otherwise>
+								<p>${g.discount_price + os.os_extra_cost } 원</p>
+							</c:otherwise>
+						</c:choose>
 						</td>
 						<td class="cart_quantity">
 							<div class="cart_quantity_button">
@@ -43,7 +50,7 @@
 							</div>
 						</td>
 						<td class="cart_total">
-							<p class="cart_total_price">$59</p>
+							<p class="cart_total_price">${(g.discount_price + os.os_extra_cost) * os.os_stock }원</p>
 						</td>
 						<td class="cart_delete">
 							<a class="cart_quantity_delete" href="">

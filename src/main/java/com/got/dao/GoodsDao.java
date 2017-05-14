@@ -16,6 +16,7 @@ import com.got.dao.template.DaoTemplate;
 import com.got.enums.GoodsStatus;
 import com.got.vo.CategoryVO;
 import com.got.vo.GoodsVO;
+import com.got.vo.OptionStockVO;
 
 @Repository
 public class GoodsDao {
@@ -26,12 +27,6 @@ public class GoodsDao {
 		dao.transactionTemplate(session -> {
 			session.insert("g.insert", g);
 			
-			if( Objects.nonNull(g.getGoodsOptions()) )
-				g.getGoodsOptions().forEach(vo -> {
-					vo.setG_no(g.getG_no());
-					session.insert("go.insertNewOptionValue", vo);
-				});
-			
 			if( Objects.nonNull(g.getImages()) )
 				g.getImages().forEach(vo -> {
 					vo.setG_no(g.getG_no());
@@ -39,6 +34,13 @@ public class GoodsDao {
 						throw new TransactionException();
 					if(session.insert("gi.insert", vo) != 1)
 						throw new TransactionException();
+				});
+			
+			if( Objects.nonNull(g.getGoodsOptions()) )
+				g.getGoodsOptions().forEach(vo -> {
+					vo.setG_no(g.getG_no());
+					vo.setupStrings();
+					session.insert("go.insertNewOptionValue", vo);
 				});
 			
 			if( Objects.nonNull(g.getOptionStocks()) )
@@ -80,6 +82,8 @@ public class GoodsDao {
 				GoodsVO g = session.selectOne("g.selectOne", vo.getG_no());
 				g.setImages(session.selectList("f.selectGoodsImg",vo.getG_no()));
 				g.setOptionStocks(vo.getOptionStocks());
+				List<OptionStockVO> options = session.selectList("os.selectListWithOS_no", vo.getOptionStocks());
+				g.setExtraCost(options);
 				list.add(g);
 			});
 		});

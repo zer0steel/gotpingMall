@@ -1,7 +1,6 @@
 package com.got.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.got.dao.OptionStockDao;
 import com.got.util.CommonUtil;
-import com.got.vo.GoodsOptionVOTest;
-import com.got.vo.GoodsOptionVOTest.Detail;
+import com.got.vo.GoodsOptionVO;
+import com.got.vo.GoodsOptionVO.Detail;
 import com.got.vo.OptionStockVO;
 
 @Service
@@ -28,17 +27,17 @@ public class OptionStockService {
 		return CommonUtil.convertToJSON(getList(g_no));
 	}
 	
-	public List<OptionStockVO> createOptionStocks(List<GoodsOptionVOTest> list) {
-		list = filteringEmptyArray(list);
+	public List<OptionStockVO> createOptionStocks(List<GoodsOptionVO> list) {
+		if(Objects.isNull(list))
+			return new ArrayList<>();
+		if(list.isEmpty())
+			return new ArrayList<>();
+		
 		return createOptionStockArray(list, 0, new Detail[list.size()], new ArrayList<>());
 	}
 	
-	private List<GoodsOptionVOTest> filteringEmptyArray(List<GoodsOptionVOTest> list) {
-		return Arrays.asList(list.stream().filter(vo -> Objects.nonNull(vo.getDetails()) ).toArray(GoodsOptionVOTest[]::new));
-	}
-	
-	private List<OptionStockVO> createOptionStockArray(List<GoodsOptionVOTest> goList, int index, Detail[] details, List<OptionStockVO> returnList) {
-		GoodsOptionVOTest g = goList.get(index);
+	private List<OptionStockVO> createOptionStockArray(List<GoodsOptionVO> goList, int index, Detail[] details, List<OptionStockVO> returnList) {
+		GoodsOptionVO g = goList.get(index);
 		if( Objects.isNull(g) )
 			return null;
 		for(Detail detail : g.getDetails()) {

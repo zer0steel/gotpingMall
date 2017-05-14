@@ -1,6 +1,5 @@
 package com.got.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +13,8 @@ import com.got.dao.GoodsDao;
 import com.got.dao.GoodsOptionDao;
 import com.got.dao.OptionStockDao;
 import com.got.enums.MenuLevel;
-import com.got.util.CommonUtil;
-import com.got.util.FileUtil;
 import com.got.vo.CategoryVO;
-import com.got.vo.GoodsImgVO;
+import com.got.vo.GoodsOptionVO;
 import com.got.vo.GoodsVO;
 import com.got.vo.OptionStockVO;
 
@@ -29,22 +26,23 @@ public class GoodsService {
 	@Autowired private GoodsOptionDao goDao;
 	@Autowired private SRService srService;
 	@Autowired private OptionStockDao osDao;
+	
+	@Autowired private OptionStockService oss;
+	@Autowired private GoodsOptionService gos;
+	@Autowired private FileService fs;
 
 	public void enroll(GoodsVO g) {
 		validationCheck(g);
 		dao.insert(g);
 	}
 	
-	public void enrollWithImg(GoodsVO g, String[] fileInfo) {
-		validationCheck(g);
-		Objects.requireNonNull(fileInfo);
-		
-		List<GoodsImgVO> goodsImgs = CommonUtil.getVO(fileInfo, GoodsImgVO.class);
-		CategoryVO c = MenuLevel.findBigCategory(g.getC_no());
-		g.setImages(FileUtil.moveToSavePath(c.getTitle(), goodsImgs));
+	public void enroll(GoodsVO g, List<GoodsOptionVO> list, String[] fileInfoJSON) {
+		list = gos.filteringEmptyArray(list);
+		g.setGoodsOptions(list);
+		g.setOptionStocks(oss.createOptionStocks(list));
+		g.setImages(fs.setupImages(g.getC_no(), fileInfoJSON));
 		dao.insert(g);
 	}
-
 
 	public List<GoodsVO> getAll() {
 		return dao.selectAll();

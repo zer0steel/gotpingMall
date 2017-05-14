@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.got.controller.FileController;
+import com.got.enums.MenuLevel;
 import com.got.vo.FileVO;
 
 public class FileUtil {
@@ -78,4 +79,5 @@ public class FileUtil {
 			index = path.indexOf("/", path.lastIndexOf("gotpingMall")) + 1;
 		return path.substring(index, path.length()).replace("\\", "/");
 	}
+
 }

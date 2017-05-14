@@ -1,5 +1,6 @@
 package com.got.service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.got.dao.GoodsOptionDao;
 import com.got.dao.OptionStockDao;
 import com.got.util.CommonUtil;
+import com.got.vo.GoodsOptionVO;
+import com.got.vo.GoodsVO;
 import com.got.vo.OptionsVO;
 
 @Service
@@ -18,6 +21,10 @@ public class GoodsOptionService {
 	
 	@Autowired private GoodsOptionDao dao;
 	@Autowired private OptionStockDao osDao;
+	
+	public List<GoodsOptionVO> filteringEmptyArray(List<GoodsOptionVO> list) {
+		return Arrays.asList(list.stream().filter(vo -> Objects.nonNull(vo.getDetails()) ).toArray(GoodsOptionVO[]::new));
+	}
 	
 	public void add(OptionsVO o) {
 		Objects.requireNonNull(o.getC_no());
@@ -45,6 +52,7 @@ public class GoodsOptionService {
 		Map<String, Object> map = new HashMap<>();
 		map.put("options", dao.selectListWithG_no(g_no));
 		map.put("stocks", osDao.selectWithG_no(g_no));
+		System.out.println(CommonUtil.convertToJSON(map));
 		return CommonUtil.convertToJSON(map);
 	}
 }

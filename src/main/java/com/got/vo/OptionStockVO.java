@@ -8,7 +8,7 @@ public class OptionStockVO {
 	@Override
 	public String toString() {
 		return "OptionStockVO [os_no=" + os_no + ", g_no=" + g_no + ", os_stock=" + os_stock + ", combination="
-				+ combination + ", os_extra_cost=" + os_extra_cost + ",]";
+				+ combination + ", os_extra_cost=" + os_extra_cost + "]";
 	}
 	
 	public Integer getOs_no() {

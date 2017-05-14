@@ -2,17 +2,17 @@ package com.got.vo.list;
 
 import java.util.List;
 
-import com.got.vo.GoodsOptionVOTest;
+import com.got.vo.GoodsOptionVO;
 
 public class GoodsOptionListContainer {
 	
-	private List<GoodsOptionVOTest> list;
+	private List<GoodsOptionVO> list;
 
-	public List<GoodsOptionVOTest> getList() {
+	public List<GoodsOptionVO> getList() {
 		return list;
 	}
 
-	public void setList(List<GoodsOptionVOTest> list) {
+	public void setList(List<GoodsOptionVO> list) {
 		this.list = list;
 	}
 }

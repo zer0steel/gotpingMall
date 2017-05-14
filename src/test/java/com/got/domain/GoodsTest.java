@@ -1,6 +1,10 @@
 package com.got.domain;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.got.dao.GoodsOptionDao;
+import com.got.dao.OptionStockDao;
 import com.got.enums.GoodsStatus;
 import com.got.enums.MenuLevel;
 import com.got.service.CategoryService;
+import com.got.service.GoodsOptionService;
 import com.got.service.GoodsService;
 import com.got.util.CommonUtil;
 import com.got.vo.CategoryVO;
@@ -23,7 +30,31 @@ import com.got.vo.GoodsVO;
 		"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 public class GoodsTest {
 	@Autowired GoodsService gs;
+	@Autowired GoodsOptionService gos;
 	@Autowired CategoryService cs;
+	
+	@Autowired private GoodsOptionDao gdao;
+	@Autowired private OptionStockDao osDao;
+	
+	List<GoodsVO> list;
+	GoodsVO g;
+	
+	@Before
+	public void setup() {
+		g = new GoodsVO();
+		g.setName("테스트");
+		
+		list = gs.getAll();
+	}
+	
+	@Test
+	public void test() {
+		System.out.println("----------------Test--------------------");
+		Integer g_no = list.get(list.size()-1).getG_no();
+		System.out.println(osDao.selectWithG_no(g_no));
+		System.out.println(gdao.selectListWithG_no(g_no));
+		System.out.println("---------------- !Test --------------------");
+	}
 	
 	@Test
 	public void statusTest() {

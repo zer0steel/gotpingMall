@@ -40,7 +40,7 @@
 </div>
 
 <div class="row">
-	<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left" action="insertTest.yo" method="post">
+	<form id="goods-form" data-parsley-validate class="form-horizontal form-label-left" action="insert.yo" method="post">
 		<div class="col-md-6">
 			<div class="x_panel">
 				<div class="x_title">
@@ -91,7 +91,7 @@
 		</div>
 	</div>
 </div>
-<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOptionTest.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOptionTest.js?ver=1"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
 // 뷰페이지 부분
@@ -138,8 +138,6 @@
 		else {
 			if( !checkEmptyField() )
 				return;
-			addOptionsToForm( option.getOptionList() );
-			
 			$("#goods-form").submit();
 		}
 	});
@@ -156,18 +154,6 @@
 			return false;
 		}
 		return true;
-	}
-	
-	/*
-	 * 리스트에 있는 데이터를 form안에 json string으로 변환하여 넣는다.
-	 */
-	var addOptionsToForm = function(options) {
-		$(options).each(function() {
-			$("<input />")
-			.attr({"type":"hidden", "name":"goodsOptionJSON"})
-			.val( JSON.stringify( this ) )
-			.appendTo( $("#goods-form") );
-		});
 	}
 	
 	/*

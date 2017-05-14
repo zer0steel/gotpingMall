@@ -17,6 +17,7 @@ public class GoodsOptionController {
 	
 	@Autowired private OptionStockService oss;
 	@Autowired private GoodsOptionService gos;
+	
 	@ResponseBody
 	@RequestMapping(value = "goods/option/stock.yo", produces = "application/json; charset=UTF-8")
 	public String getOptinalStocks(Integer g_no) {

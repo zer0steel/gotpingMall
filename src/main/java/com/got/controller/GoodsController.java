@@ -24,7 +24,7 @@ public class GoodsController {
 	}
 	
 	@RequestMapping("goods/detail.yo")
-	public ModelAndView list(int g_no) {
+	public ModelAndView detail(Integer g_no) {
 		ModelAndView mav = new ModelAndView();
 		cs.setEnumsInMAV(mav)
 		.addObject("g", gs.detail(g_no));

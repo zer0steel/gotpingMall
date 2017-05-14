@@ -2,6 +2,7 @@ package com.got.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.got.dao.FileDao;
+import com.got.enums.MenuLevel;
+import com.got.util.CommonUtil;
 import com.got.util.FileUtil;
+import com.got.vo.CategoryVO;
 import com.got.vo.FileVO;
+import com.got.vo.GoodsImgVO;
 
 @Service
 public class FileService {
@@ -54,5 +59,19 @@ public class FileService {
 			return;
 		else
 			throw new RuntimeException("삭제 실패, 확인바람");
+	}
+
+	public List<GoodsImgVO> setupImages(Integer c_no, String[] fileInfoJSON) {
+		Objects.requireNonNull(c_no);
+		if(Objects.isNull(fileInfoJSON))
+			return new ArrayList<>();
+		
+		String folderName = getSaveFolderName(c_no);
+		List<GoodsImgVO> tempGoodsImgs = CommonUtil.getVO(fileInfoJSON, GoodsImgVO.class);
+		return FileUtil.moveToSavePath(folderName, tempGoodsImgs);
+	}
+	
+	private String getSaveFolderName(Integer g_no) {
+		return MenuLevel.findBigCategory(g_no).getTitle();
 	}
 }

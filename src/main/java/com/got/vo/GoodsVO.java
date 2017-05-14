@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import com.got.enums.GoodsStatus;
-import com.got.util.CommonUtil;
 
 public class GoodsVO extends CategoryVO {
 	private Integer g_no;
@@ -150,13 +149,6 @@ public class GoodsVO extends CategoryVO {
 	public void setGoodsOptions(List<GoodsOptionVO> goodsOptions) {
 		this.goodsOptions = goodsOptions;
 	}
-	
-	public void setGoodsOptions(String[] goodsOptionJSON) {
-		if( Objects.nonNull(goodsOptionJSON) ) {
-			setGoodsOptions(CommonUtil.getVO(goodsOptionJSON, GoodsOptionVO.class));
-			createOptionStocks();
-		}
-	}
 
 	public int getDiscount_price() {
 		return discount_price;
@@ -174,33 +166,6 @@ public class GoodsVO extends CategoryVO {
 	public void setOptionStocks(List<OptionStockVO> optionStocks) {
 		this.optionStocks = optionStocks;
 	}
-	
-	private void createOptionStocks() {
-		this.optionStocks = new ArrayList<>();
-		createCombinationString(this.goodsOptions, 0, new String[this.goodsOptions.size()]);
-	}
-	
-	private void createCombinationString(List<GoodsOptionVO> goList, int index, String[] values) {
-		GoodsOptionVO g = goList.get(index);
-		if( Objects.isNull(g) )
-			return;
-		for(String value : g.getValues()) {
-			values[index] = value;
-			if(index < goList.size() - 1) {
-				createCombinationString(goList, index + 1, values);
-			}
-			else {
-				StringBuilder sb = new StringBuilder(values[0]);
-				for (int i = 1; i < values.length; ++i) {
-				    sb.append(" ").append(values[i]);
-				}
-				OptionStockVO o = new OptionStockVO();
-				o.setCombination(sb.toString());
-				o.setG_no(this.g_no);
-				this.optionStocks.add(o);
-			}
-		}
-	}
 
 	@Override
 	public String toString() {
@@ -209,5 +174,10 @@ public class GoodsVO extends CategoryVO {
 				+ ", discount_rate=" + discount_rate + ", name=" + name + ", detail=" + detail + ", status=" + status
 				+ ", mainImg=" + mainImg + ", images=" + images + ", history=" + history + ", goodsOptions="
 				+ goodsOptions + ", optionStocks=" + optionStocks + "]";
+	}
+
+	public void setExtraCost(List<OptionStockVO> dbDataStocks) {
+		for(int i = 0; i < dbDataStocks.size(); i++)
+			this.optionStocks.get(i).setOs_extra_cost(dbDataStocks.get(i).getOs_extra_cost());
 	}
 }
