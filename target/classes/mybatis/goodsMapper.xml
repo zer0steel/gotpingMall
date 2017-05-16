@@ -3,19 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="g">
-	<select id="selectAll" resultType="com.got.vo.GoodsVO">
+	<select id="selectAll" resultType="com.got.vo.goods.GoodsVO">
 		SELECT * FROM goods g, category c WHERE g.c_no = c.c_no
 	</select>
 	
-	<select id="selectOne" resultType="com.got.vo.GoodsVO">
+	<select id="selectOne" resultType="com.got.vo.goods.GoodsVO">
 		SELECT * FROM goods g, category c WHERE g.c_no = c.c_no AND g.g_no = #{g_no}
 	</select>
 	
-	<select id="selectListWithSmall" resultType="com.got.vo.GoodsVO">
+	<select id="selectListWithSmall" resultType="com.got.vo.goods.GoodsVO">
 		SELECT * FROM goods g, category c WHERE g.c_no = c.c_no AND c.c_no = #{c_no} AND is_deleted = 'false'
 	</select>
 	
-	<resultMap type="com.got.vo.GoodsVO" id="GoodsMap">
+	<resultMap type="com.got.vo.goods.GoodsVO" id="GoodsMap">
 		<id property="c_no" column="c_no" javaType="int"/>
 		<id property="g_no" column="g_no" javaType="int"/>
 		<result property="sell_price" column="sell_price"/>

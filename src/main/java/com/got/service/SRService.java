@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.got.dao.ShippingReceivingDao;
 import com.got.util.CommonUtil;
-import com.got.vo.GoodsVO;
-import com.got.vo.OptionStockVO;
-import com.got.vo.ShippingReceivingVO;
+import com.got.vo.goods.GoodsVO;
+import com.got.vo.goods.OptionStockVO;
+import com.got.vo.goods.ShippingReceivingVO;
 
 @Service
 public class SRService {

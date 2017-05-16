@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.got.dao.template.DaoTemplate;
-import com.got.vo.GoodsOptionVO;
-import com.got.vo.OptionsVO;
+import com.got.vo.goods.GoodsOptionVO;
+import com.got.vo.goods.OptionsVO;
 
 @Repository
 public class GoodsOptionDao {

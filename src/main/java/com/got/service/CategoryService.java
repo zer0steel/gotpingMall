@@ -9,7 +9,7 @@ import com.got.dao.CategoryDao;
 import com.got.dao.GoodsOptionDao;
 import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
-import com.got.vo.CategoryVO;
+import com.got.vo.goods.CategoryVO;
 
 @Service
 public class CategoryService {

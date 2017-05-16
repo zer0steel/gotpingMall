@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.service.CategoryService;
 import com.got.util.ModelAndView;
-import com.got.vo.CategoryVO;
+import com.got.vo.goods.CategoryVO;
 
 @Controller
 public class CategoryController {

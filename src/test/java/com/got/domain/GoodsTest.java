@@ -20,8 +20,8 @@ import com.got.service.CategoryService;
 import com.got.service.GoodsOptionService;
 import com.got.service.GoodsService;
 import com.got.util.CommonUtil;
-import com.got.vo.CategoryVO;
-import com.got.vo.GoodsVO;
+import com.got.vo.goods.CategoryVO;
+import com.got.vo.goods.GoodsVO;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)

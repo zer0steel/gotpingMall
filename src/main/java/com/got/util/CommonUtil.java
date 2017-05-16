@@ -6,9 +6,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class CommonUtil {
 	
@@ -36,6 +39,22 @@ public class CommonUtil {
 		return voList;
 	}
 	
+	public static <T> List<T> getVOList(String jsonString, Class<T> VOclazz) {
+		ObjectMapper mapper = new ObjectMapper();
+		List<T> voList = null;
+		try {
+			TypeFactory factory = TypeFactory.defaultInstance();
+			voList = mapper.readValue(jsonString, factory.constructCollectionType(List.class, VOclazz));
+		} catch (JsonMappingException e) {
+			log.fatal(e);
+			throw new RuntimeException();
+		} catch (IOException e) {
+			log.fatal(e);
+			throw new RuntimeException();
+		}
+		return voList;
+	}
+	
 	private static <T> List<T> convertVO(Class<T> VOclazz, String...jsonString) {
 		ObjectMapper mapper = new ObjectMapper();
 		List<T> voList = new ArrayList<>();
@@ -44,10 +63,10 @@ public class CommonUtil {
 				voList.add(mapper.readValue(json, VOclazz));
 			}
 		} catch (JsonMappingException e) {
-			log.error(e);
+			log.fatal(e);
 			throw new RuntimeException();
 		} catch (IOException e) {
-			log.error(e);
+			log.fatal(e);
 			throw new RuntimeException();
 		}
 		return voList;

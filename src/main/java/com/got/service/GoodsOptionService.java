@@ -12,9 +12,8 @@ import org.springframework.stereotype.Service;
 import com.got.dao.GoodsOptionDao;
 import com.got.dao.OptionStockDao;
 import com.got.util.CommonUtil;
-import com.got.vo.GoodsOptionVO;
-import com.got.vo.GoodsVO;
-import com.got.vo.OptionsVO;
+import com.got.vo.goods.GoodsOptionVO;
+import com.got.vo.goods.OptionsVO;
 
 @Service
 public class GoodsOptionService {
@@ -52,7 +51,6 @@ public class GoodsOptionService {
 		Map<String, Object> map = new HashMap<>();
 		map.put("options", dao.selectListWithG_no(g_no));
 		map.put("stocks", osDao.selectWithG_no(g_no));
-		System.out.println(CommonUtil.convertToJSON(map));
 		return CommonUtil.convertToJSON(map);
 	}
 }

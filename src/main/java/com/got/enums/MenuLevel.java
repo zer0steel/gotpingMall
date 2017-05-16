@@ -8,7 +8,7 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.got.vo.CategoryVO;
+import com.got.vo.goods.CategoryVO;
 
 /**
  * 각 분류 레벨 별로 자신에게 속해있는 분류가 저장되어 있는 map이 존재함.<br>

@@ -14,7 +14,7 @@ import com.got.enums.HistoryCategory;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
 import com.got.util.ModelAndView;
-import com.got.vo.GoodsVO;
+import com.got.vo.goods.GoodsVO;
 import com.got.vo.list.GoodsOptionListContainer;
 
 @Controller("adminGoodsController")
@@ -34,7 +34,7 @@ public class GoodsController {
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
 	public ModelAndView insertGoodsSubmit(GoodsVO g, GoodsOptionListContainer container, String[] fileInfoJSON) {
 		gs.enroll(g, container.getList(), fileInfoJSON);
-		log.info(g);
+		log.debug(g);
 		return new ModelAndView("redirect:/admin/goods/insert.yo");
 	}
 	

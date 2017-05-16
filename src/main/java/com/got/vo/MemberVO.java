@@ -9,16 +9,16 @@ import com.got.util.BCrypt;
 import com.got.util.RSA;
 
 public class MemberVO {
-	private int m_no;
+	private Integer m_no;
 	private String id, name, pwd, email, addr;
 	private Timestamp join_date;
 	private Grade grade;
-	private boolean isLoginSuccess = false;
+	private boolean loginSuccess = false;
 	
-	public int getM_no() {
+	public Integer getM_no() {
 		return m_no;
 	}
-	public void setM_no(int m_no) {
+	public void setM_no(Integer m_no) {
 		this.m_no = m_no;
 	}
 	public String getId() {
@@ -71,14 +71,14 @@ public class MemberVO {
 	}
 	
 	public void setLogin() {
-		this.isLoginSuccess = true;
+		this.loginSuccess = true;
 		this.name = null;
 		this.pwd = null;
 		this.addr = null;
 	}
 	
-	public boolean isLogin() {
-		return this.isLoginSuccess;
+	public boolean isLoginSuccess() {
+		return this.loginSuccess;
 	}
 	
 	public boolean isEqualsPwd(String rsaPwd, PrivateKey privateKey) {

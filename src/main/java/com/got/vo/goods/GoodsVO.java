@@ -1,10 +1,11 @@
-package com.got.vo;
+package com.got.vo.goods;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import com.got.enums.GoodsStatus;
+import com.got.vo.GoodsImgVO;
 
 public class GoodsVO extends CategoryVO {
 	private Integer g_no;

@@ -1,8 +1,12 @@
 package com.got.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.PrivateKey;
+import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -14,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.enums.Grade;
+import com.got.service.GoodsService;
 import com.got.service.MemberService;
+import com.got.util.CommonUtil;
 import com.got.util.ModelAndView;
 import com.got.util.RSA;
 import com.got.vo.MemberVO;
+import com.got.vo.goods.GoodsVO;
+import com.got.vo.list.OptionStockListContainer;
 
 @Controller
 public class MemberController {
@@ -43,7 +51,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping("purchaseLogin.yo")
-	public ModelAndView purchaseLoginForm() {
+	public ModelAndView purchaseLoginForm(HttpServletResponse res, OptionStockListContainer container) throws UnsupportedEncodingException {
+		String jsonString = CommonUtil.convertToJSON(container.getList());
+		Cookie c = new Cookie("buyList", URLEncoder.encode(jsonString, "UTF-8"));
+		res.addCookie(c);
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setNoSideFrame();
 		return mav.setViewPage("member/purchaseLogin.jsp");
@@ -59,9 +71,9 @@ public class MemberController {
 		PrivateKey privateKey = (PrivateKey)session.getAttribute(RSA.PRIVATE_KEY);
 		session.removeAttribute(RSA.PRIVATE_KEY);
 		MemberVO m = s.login(id, pwd, privateKey);
-		if(m.isLogin()) 
+		if(m.isLoginSuccess()) 
 			session.setAttribute("lm", m);
-		res.getWriter().print(m.isLogin());
+		res.getWriter().print(m.isLoginSuccess());
 	}
 	
 	@RequestMapping("logout.yo")

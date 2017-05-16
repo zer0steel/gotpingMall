@@ -8,11 +8,11 @@
 		VALUES(os_no.nextval, #{combination}, #{os_stock}, #{os_extra_cost}, #{g_no})
 	</insert>
 	
-	<select id="selectWithG_no" resultType="com.got.vo.OptionStockVO">
+	<select id="selectWithG_no" resultType="com.got.vo.goods.OptionStockVO">
 		SELECT * FROM option_stock WHERE g_no = #{g_no}
 	</select>
 	
-	<select id="selectListWithOS_no" resultType="com.got.vo.OptionStockVO">
+	<select id="selectListWithOS_no" resultType="com.got.vo.goods.OptionStockVO">
 		SELECT * FROM option_stock WHERE os_no in
 		<foreach collection="list" open="(" close=")" separator="," item="os">#{os.os_no }</foreach>
 	</select>

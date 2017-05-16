@@ -225,7 +225,7 @@
 			$('#form-option-select').submit();
 		}
 		else {
-			location.href = getContextPath() + '/purchaseLogin.yo';
+			$('#form-option-select').attr('action', getContextPath() + '/purchaseLogin.yo').submit();
 		}
 	});
 }());

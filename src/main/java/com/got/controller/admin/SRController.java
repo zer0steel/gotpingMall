@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.got.service.SRService;
 import com.got.util.ModelAndView;
-import com.got.vo.ShippingReceivingVO;
+import com.got.vo.goods.ShippingReceivingVO;
 
 @Controller
 public class SRController {

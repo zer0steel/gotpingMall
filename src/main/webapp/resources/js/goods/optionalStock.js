@@ -110,7 +110,7 @@ goods.selectOption = (function() {
 				return;
 			
 			let $priceTag = $parentTag.find('.price');
-			let price = $parentTag.data('price') * amount;
+			let price = Number($priceTag.data('price')) * amount;
 			$priceTag.setPriceInHtml(price);
 			
 			// 상품 수량 유효성 검사
@@ -213,7 +213,7 @@ goods.selectOption = (function() {
 				$('<input />').attr({'type':'hidden','name':'list[' + arraySize + '].combination'}).val(opt.combination),
 				$('<input />').attr({'type':'hidden','name':'list[' + arraySize + '].g_no'}).val(opt.g_no)
 			),
-			$('<td />').addClass('price').setPriceInHtml(price),
+			$('<td />').addClass('price').data('price', price).setPriceInHtml(price),
 			$('<td />').html($('<i />').addClass('fa fa-window-close-o').css('cursor','pointer'))
 		).appendTo( $table );
 		arraySize++;
@@ -231,7 +231,7 @@ goods.selectOption = (function() {
 	}
 	
 	$.fn.setPriceInHtml = function(price) {
-		return $(this).html('&nbsp;&nbsp; ' + price + ' 원 &nbsp;&nbsp;').data('price', price);
+		return $(this).html('&nbsp;&nbsp; ' + price + ' 원 &nbsp;&nbsp;');
 	}
 	
 	return selectOption;

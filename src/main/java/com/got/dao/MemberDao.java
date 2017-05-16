@@ -33,8 +33,12 @@ public class MemberDao {
 		});
 	}
 
-	public MemberVO selectOneWithM_Id(String m_id) {
+	public MemberVO selectOneWithM_id(String m_id) {
 		return dao.selectOne("m.selectOneWithM_id", m_id);
+	}
+	
+	public MemberVO selectOneWithM_no(Integer m_no) {
+		return dao.selectOne("m.selectOneWithM_no", m_no);
 	}
 
 	public List<MemberVO> selectAll() {

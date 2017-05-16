@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.got.dao.OptionStockDao;
 import com.got.util.CommonUtil;
-import com.got.vo.GoodsOptionVO;
-import com.got.vo.GoodsOptionVO.Detail;
-import com.got.vo.OptionStockVO;
+import com.got.vo.goods.GoodsOptionVO;
+import com.got.vo.goods.OptionStockVO;
+import com.got.vo.goods.GoodsOptionVO.Detail;
 
 @Service
 public class OptionStockService {

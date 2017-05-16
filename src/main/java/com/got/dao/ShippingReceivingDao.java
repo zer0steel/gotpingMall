@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.got.dao.template.DaoTemplate;
-import com.got.vo.GoodsVO;
-import com.got.vo.ShippingReceivingVO;
+import com.got.vo.goods.GoodsVO;
+import com.got.vo.goods.ShippingReceivingVO;
 
 @Repository
 public class ShippingReceivingDao {

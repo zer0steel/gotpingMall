@@ -23,7 +23,7 @@
 					<tr>
 						<td class="cart_product">
 							<a href="">
-								<img src="${pageContext.request.contextPath }/${g.mainImg.save_path }/${g.mainImg.save_name }" alt="">
+								<img src="${pageContext.request.contextPath }/${g.mainImg.save_path }/${g.mainImg.save_name }" alt="" width="40%" height="auto">
 							</a>
 						</td>
 						<td class="cart_description">
@@ -44,9 +44,7 @@
 						</td>
 						<td class="cart_quantity">
 							<div class="cart_quantity_button">
-								<a class="cart_quantity_up" href=""> + </a>
 								<input class="cart_quantity_input" type="text" name="quantity" value="${os.os_stock }" autocomplete="off" size="2">
-								<a class="cart_quantity_down" href=""> - </a>
 							</div>
 						</td>
 						<td class="cart_total">
@@ -65,14 +63,14 @@
 						<td colspan="4">&nbsp;</td>
 						<td colspan="2">
 							<table class="table table-condensed total-result">
-								<tr>
+<!-- 								<tr>
 									<td>상품 금액</td>
 									<td>$59</td>
 								</tr>
 								<tr>
 									<td>배송료</td>
 									<td>$2</td>
-								</tr>
+								</tr> -->
 								<tr>
 									<td>총금액</td>
 									<td><span>$61</span></td>

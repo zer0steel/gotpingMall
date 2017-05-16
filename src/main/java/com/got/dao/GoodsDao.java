@@ -14,9 +14,9 @@ import org.springframework.stereotype.Repository;
 
 import com.got.dao.template.DaoTemplate;
 import com.got.enums.GoodsStatus;
-import com.got.vo.CategoryVO;
-import com.got.vo.GoodsVO;
-import com.got.vo.OptionStockVO;
+import com.got.vo.goods.CategoryVO;
+import com.got.vo.goods.GoodsVO;
+import com.got.vo.goods.OptionStockVO;
 
 @Repository
 public class GoodsDao {

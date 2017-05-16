@@ -10,7 +10,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.enums.HistoryCategory;
 import com.got.service.SRService;
-import com.got.vo.ShippingReceivingVO;
+import com.got.vo.goods.ShippingReceivingVO;
 
 
 @WebAppConfiguration

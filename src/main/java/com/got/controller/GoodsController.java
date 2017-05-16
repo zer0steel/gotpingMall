@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
 import com.got.util.ModelAndView;
-import com.got.vo.CategoryVO;
+import com.got.vo.goods.CategoryVO;
 
 @Controller
 public class GoodsController {

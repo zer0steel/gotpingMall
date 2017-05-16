@@ -13,8 +13,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
-import com.got.vo.CategoryVO;
 import com.got.vo.GoodsImgVO;
+import com.got.vo.goods.CategoryVO;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)

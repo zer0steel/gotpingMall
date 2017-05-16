@@ -2,7 +2,7 @@ package com.got.vo.list;
 
 import java.util.List;
 
-import com.got.vo.OptionStockVO;
+import com.got.vo.goods.OptionStockVO;
 
 public class OptionStockListContainer {
 	

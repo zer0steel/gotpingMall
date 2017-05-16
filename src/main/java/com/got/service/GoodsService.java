@@ -13,10 +13,10 @@ import com.got.dao.GoodsDao;
 import com.got.dao.GoodsOptionDao;
 import com.got.dao.OptionStockDao;
 import com.got.enums.MenuLevel;
-import com.got.vo.CategoryVO;
-import com.got.vo.GoodsOptionVO;
-import com.got.vo.GoodsVO;
-import com.got.vo.OptionStockVO;
+import com.got.vo.goods.CategoryVO;
+import com.got.vo.goods.GoodsOptionVO;
+import com.got.vo.goods.GoodsVO;
+import com.got.vo.goods.OptionStockVO;
 
 @Service
 public class GoodsService {
@@ -48,7 +48,7 @@ public class GoodsService {
 		return dao.selectAll();
 	}
 	
-	public List<GoodsVO> getList(List<OptionStockVO> list) {
+	public List<GoodsVO> getBuyList(List<OptionStockVO> list) {
 		Map<Integer, GoodsVO> goodsMap = new HashMap<>();
 		list.forEach(os -> {
 			Integer g_no = os.getG_no();

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.got.dao.template.DaoTemplate;
-import com.got.vo.OptionStockVO;
+import com.got.vo.goods.OptionStockVO;
 
 @Repository
 public class OptionStockDao {

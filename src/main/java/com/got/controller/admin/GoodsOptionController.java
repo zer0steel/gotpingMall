@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.got.service.GoodsOptionService;
 import com.got.util.CommonUtil;
-import com.got.vo.OptionsVO;
+import com.got.vo.goods.OptionsVO;
 
 @Controller("adminGoodsOptionController")
 public class GoodsOptionController {

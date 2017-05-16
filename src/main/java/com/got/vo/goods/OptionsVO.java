@@ -1,4 +1,4 @@
-package com.got.vo;
+package com.got.vo.goods;
 
 public class OptionsVO {
 	private Integer o_no, c_no;

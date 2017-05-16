@@ -2,6 +2,7 @@ package com.got.service;
 
 import java.security.PrivateKey;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class MemberService {
 		if(id.isEmpty() || pwd.isEmpty()) 
 			throw new IllegalArgumentException("id empty is " + id.isEmpty() + " | " + "pwd empty is " + pwd.isEmpty());
 		
-		MemberVO m = dao.selectOneWithM_Id(id);
+		MemberVO m = dao.selectOneWithM_id(id);
 		if(m == null)
 			return new MemberVO();
 		else {
@@ -56,6 +57,12 @@ public class MemberService {
 
 	public List<MemberVO> getAll() {
 		return dao.selectAll();
+	}
+
+	public MemberVO detail(Integer m_no) {
+		Objects.requireNonNull(m_no);
+		return dao.selectOneWithM_no(m_no);
+		
 	}
 	
 }

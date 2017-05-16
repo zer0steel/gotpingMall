@@ -3,13 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sr">
-	<select id="selectAll" resultType="com.got.vo.ShippingReceivingVO">
+	<select id="selectAll" resultType="com.got.vo.goods.ShippingReceivingVO">
 		SELECT * 
 		FROM goods g, shipping_receiving sr 
 		WHERE g.g_no = sr.g_no ORDER BY regdate DESC
 	</select>
 	
-	<select id="selectWithG_no" resultType="com.got.vo.ShippingReceivingVO">
+	<select id="selectWithG_no" resultType="com.got.vo.goods.ShippingReceivingVO">
 		SELECT r.* FROM (SELECT * FROM shipping_receiving WHERE g_no = #{g_no} ORDER BY regdate DESC) r
 		<if test="count != null">
 			<![CDATA[WHERE ROWNUM <= #{count}]]>
