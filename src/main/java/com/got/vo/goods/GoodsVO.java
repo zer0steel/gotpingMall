@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.got.enums.GoodsStatus;
 import com.got.vo.GoodsImgVO;
 
@@ -97,7 +98,7 @@ public class GoodsVO extends CategoryVO {
 		return status.getCode();
 	}
 
-	public void setStatus_code(int status) {
+	public void setStatus_code(Integer status) {
 		this.status = GoodsStatus.of(status);
 	}
 
@@ -166,6 +167,12 @@ public class GoodsVO extends CategoryVO {
 
 	public void setOptionStocks(List<OptionStockVO> optionStocks) {
 		this.optionStocks = optionStocks;
+	}
+	
+	public int getRealPrice() {
+		return this.discount_rate == 0 ?
+				this.sell_price :
+				this.discount_price;
 	}
 
 	@Override

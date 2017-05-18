@@ -9,7 +9,7 @@ public class CategoryVO {
 	private Integer c_no;
 	private int super_no;
 	private String title;
-	private MenuLevel menu_level;
+	private MenuLevel menu_level = MenuLevel.UNDEFINED;
 	private List<CategoryVO> sub = new ArrayList<>();
 	private List<OptionsVO> options;
 

@@ -23,7 +23,8 @@ public class CommonUtil {
 		try {
 			jsonString = mapper.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
-			log.error(e);
+			log.fatal(e);
+			throw new RuntimeException();
 		}
 		return jsonString;
 	}

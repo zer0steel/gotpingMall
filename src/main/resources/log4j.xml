@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.got.controller">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<logger name="com.got.service">

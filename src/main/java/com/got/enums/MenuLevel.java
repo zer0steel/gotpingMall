@@ -19,7 +19,8 @@ import com.got.vo.goods.CategoryVO;
 public enum MenuLevel {
 	BIG(1, "대분류", new HashMap<Integer, CategoryVO>()), 
 	MIDDLE(2, "중분류", new HashMap<Integer, CategoryVO>()), 
-	SMALL(3, "소분류", new HashMap<Integer, CategoryVO>());
+	SMALL(3, "소분류", new HashMap<Integer, CategoryVO>()),
+	UNDEFINED(4, "미정", null);
 	
 	private static final Map<Integer, MenuLevel> map = new HashMap<>();
 	static {

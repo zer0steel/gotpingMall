@@ -45,7 +45,7 @@ function addrFinder() {
     }).open();
 }
 $(function(){
-	$("#btn-addrFinder").click(function(){
+	$("#btn-addrFinder").click(function() {
 		addrFinder();
 	});
 })
@@ -53,5 +53,5 @@ function getFullAddr() {
 	var postcode = document.getElementById('input-postcode').value;
 	var addr = document.getElementById('input-addr').value;
 	var extraAddr = document.getElementById('input-extraAddr').value;
-	return postcode + "." + addr + "." + extraAddr;
+	return postcode + "/" + addr + "/" + extraAddr;
 }

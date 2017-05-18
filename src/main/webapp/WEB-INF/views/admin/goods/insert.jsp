@@ -91,7 +91,7 @@
 		</div>
 	</div>
 </div>
-<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOptionTest.js?ver=1"></script>
+<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOption.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
 // 뷰페이지 부분

@@ -17,11 +17,11 @@
 		SELECT * FROM options WHERE c_no = #{c_no}
 	</select>
 	
-	<select id="selectListWithG_no" resultType="com.got.vo.goods.OptionsVO">
+	<select id="selectListWithG_no" resultType="com.got.vo.goods.GoodsOptionVO">
 		SELECT * FROM goods_option go, options o WHERE o.o_no = go.o_no AND go.g_no = #{g_no}
 	</select>
 	
-	<select id="selectOne" resultType="com.got.vo.goods.OptionsVO">
+	<select id="selectOne" resultType="com.got.vo.goods.GoodsOptionVO">
 		SELECT * FROM goods_option WHERE o_no = #{o_no} AND g_no = #{g_no}
 	</select>
 	

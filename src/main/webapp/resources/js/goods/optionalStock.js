@@ -208,10 +208,10 @@ goods.selectOption = (function() {
 		$('<tr />').addClass('select-option').data(OPTION_INFO, opt).append(
 			$('<td />').html(opt.combination + ' &nbsp;&nbsp;').data('combination', opt.combination),
 			$('<td />').append(
-				$('<input />').attr({'type':'number','name':'list[' + arraySize + '].os_stock'}).css('width','50px').val(1),
-				$('<input />').attr({'type':'hidden','name':'list[' + arraySize + '].os_no'}).val(opt.os_no),
-				$('<input />').attr({'type':'hidden','name':'list[' + arraySize + '].combination'}).val(opt.combination),
-				$('<input />').attr({'type':'hidden','name':'list[' + arraySize + '].g_no'}).val(opt.g_no)
+				$('<input />').attr({'type':'number','name':'list[' + arraySize + '].amount'}).css('width','50px').val(1),
+				$('<input />').attr({'type':'hidden','name':'list[' + arraySize + '].g_no'}).val(opt.g_no),
+				$('<input />').attr({'type':'hidden','name':'list[' + arraySize + '].optionStock.os_no'}).val(opt.os_no),
+				$('<input />').attr({'type':'hidden','name':'list[' + arraySize + '].optionStock.combination'}).val(opt.combination)
 			),
 			$('<td />').addClass('price').data('price', price).setPriceInHtml(price),
 			$('<td />').html($('<i />').addClass('fa fa-window-close-o').css('cursor','pointer'))

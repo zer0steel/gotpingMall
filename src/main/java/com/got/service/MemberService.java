@@ -62,7 +62,9 @@ public class MemberService {
 	public MemberVO detail(Integer m_no) {
 		Objects.requireNonNull(m_no);
 		return dao.selectOneWithM_no(m_no);
-		
 	}
 	
+	public MemberVO detail(String m_id) {
+		return dao.selectOneWithM_id(m_id);
+	}
 }

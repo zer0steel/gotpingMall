@@ -28,15 +28,15 @@
 				<input type="text" placeholder="이메일" id="input-email" name="email" class="form-control">
 				<p id="p-email"></p>
 				<div class="input-group">
-					<input type="text" placeholder="우편번호" id="input-postcode" readonly class="form-control">
+					<input type="text" placeholder="우편번호" id="input-postcode" readonly class="form-control" name="address.postCode">
 					<span class="input-group-btn">
 						<button id="btn-addrFinder" type="button" class="btn btn-info">우편번호 찾기</button>
 					</span>
 				</div>
 				<br>
-				<input type="text" placeholder="주소" id="input-addr" readonly class="form-control">
+				<input type="text" placeholder="주소" id="input-addr" readonly class="form-control" name="address.base">
 				<br>
-				<input type="text" placeholder="상세 주소" id="input-extraAddr" class="form-control">
+				<input type="text" placeholder="상세 주소" id="input-extraAddr" class="form-control" name="address.extra">
 				<br>
 				<button id="btn-join" type="button" class="btn btn-success">회원가입</button>
 			</form>

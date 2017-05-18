@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.got.dao.template.DaoTemplate;
+import com.got.dao.template.MapperCallback;
+import com.got.mapper.member.MemberMapper;
 import com.got.vo.MemberGradeVO;
 import com.got.vo.MemberVO;
 

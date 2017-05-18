@@ -16,10 +16,12 @@ import com.got.dao.GoodsOptionDao;
 import com.got.dao.OptionStockDao;
 import com.got.enums.GoodsStatus;
 import com.got.enums.MenuLevel;
+import com.got.mapper.goods.GoodsMapper;
 import com.got.service.CategoryService;
 import com.got.service.GoodsOptionService;
 import com.got.service.GoodsService;
 import com.got.util.CommonUtil;
+import com.got.util.MybatisUtil;
 import com.got.vo.goods.CategoryVO;
 import com.got.vo.goods.GoodsVO;
 
@@ -63,11 +65,15 @@ public class GoodsTest {
 	
 	@Test
 	public void getOneTest() {
+		
 		System.out.println("----------------getOneTest--------------------");
-		GoodsVO g = gs.detail(117);
+		System.out.println();
+		System.out.println(MybatisUtil.openSession().getMapper(GoodsMapper.class).selectOne(list.get(0).getG_no()));
+		GoodsVO g = gs.detail(list.get(0).getG_no());
 		double rate = g.getDiscount_rate();
 		double rate2 = (100 - rate) / 100;
 		System.out.println(g.getSell_price() * rate2);
+		System.out.println();
 		System.out.println("---------------- !getOneTest --------------------");
 	}
 	

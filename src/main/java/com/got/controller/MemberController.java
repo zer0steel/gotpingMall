@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.PrivateKey;
-import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,18 +17,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.got.enums.Grade;
-import com.got.service.GoodsService;
 import com.got.service.MemberService;
 import com.got.util.CommonUtil;
 import com.got.util.ModelAndView;
 import com.got.util.RSA;
 import com.got.vo.MemberVO;
-import com.got.vo.goods.GoodsVO;
-import com.got.vo.list.OptionStockListContainer;
+import com.got.vo.list.OrderDetailListContainer;
 
-@Controller
+@Controller("memberController")
 public class MemberController {
+	
+	private Logger log = Logger.getLogger(MainController.class);
 	
 	@Autowired private MemberService s;
 	
@@ -37,8 +36,7 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		MemberVO m = new MemberVO();
 		m.setId("admin");
-		m.setEnumGrade(Grade.ADMIN);
-		session.setAttribute("lm", m);
+		session.setAttribute("lm", s.detail(m.getId()));
 		mav.setViewName("redirect:/front.yo");
 		return mav;
 	}
@@ -51,7 +49,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping("purchaseLogin.yo")
-	public ModelAndView purchaseLoginForm(HttpServletResponse res, OptionStockListContainer container) throws UnsupportedEncodingException {
+	public ModelAndView purchaseLoginForm(HttpServletResponse res, OrderDetailListContainer container) throws UnsupportedEncodingException {
+		log.debug("com.got.controller.MemberController.purchaseLoginForm()");
+		log.debug(container.getList());
+		
 		String jsonString = CommonUtil.convertToJSON(container.getList());
 		Cookie c = new Cookie("buyList", URLEncoder.encode(jsonString, "UTF-8"));
 		res.addCookie(c);
@@ -98,6 +99,8 @@ public class MemberController {
 	
 	@RequestMapping(value = "join.yo", method = RequestMethod.POST)
 	public ModelAndView joinSubmit(HttpSession session,MemberVO m) {
+		log.info("--------------- joinSubmit() ---------------\n");
+		log.debug(m);
 		PrivateKey privateKey = (PrivateKey)session.getAttribute(RSA.PRIVATE_KEY);
 		session.invalidate();
 		

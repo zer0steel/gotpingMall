@@ -2,6 +2,8 @@ package com.got.vo;
 
 import java.security.PrivateKey;
 import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 import com.got.enums.Grade;
@@ -10,10 +12,20 @@ import com.got.util.RSA;
 
 public class MemberVO {
 	private Integer m_no;
-	private String id, name, pwd, email, addr;
+	private String id, name, pwd, email;
 	private Timestamp join_date;
 	private Grade grade;
 	private boolean loginSuccess = false;
+	
+	private Address addr;
+	private static final String SEPARATOR_CHAR = "/ ";
+	
+	@Override
+	public String toString() {
+		return "MemberVO [m_no=" + m_no + ", id=" + id + ", name=" + name + ", email=" + email
+				+ ", join_date=" + join_date + ", grade=" + grade + ", loginSuccess=" + loginSuccess + ", addr=" + addr
+				+ "]";
+	}
 	
 	public Integer getM_no() {
 		return m_no;
@@ -46,10 +58,21 @@ public class MemberVO {
 		this.email = email;
 	}
 	public String getAddr() {
-		return addr;
+		String[] str = new String[3];
+		str[0] = addr.getPostCode();
+		str[1] = addr.getBase();
+		str[2] = addr.getExtra();
+		return String.join(SEPARATOR_CHAR, str);
 	}
 	public void setAddr(String addr) {
-		this.addr = addr;
+		Iterator<String> iter = Arrays.asList(addr.split(SEPARATOR_CHAR)).iterator();
+		this.addr = new Address();
+		if(iter.hasNext())
+			this.addr.setPostCode(iter.next());
+		if(iter.hasNext())
+			this.addr.setBase(iter.next());
+		if(iter.hasNext())
+			this.addr.setExtra(iter.next());
 	}
 	public int getGrade() {
 		return grade.getCode();
@@ -68,6 +91,10 @@ public class MemberVO {
 	}
 	public void setJoin_date(Timestamp join_date) {
 		this.join_date = join_date;
+	}
+	
+	public Address getAddress() {
+		return this.addr;
 	}
 	
 	public void setLogin() {
@@ -95,4 +122,39 @@ public class MemberVO {
 		this.pwd = BCrypt.hashpw(pwd,BCrypt.gensalt(12));
 	}
 	
+	public class Address {
+		String postCode;
+		String base;
+		String extra;
+		
+		@Override
+		public String toString() {
+			return "Address [postCode=" + postCode + ", base=" + base + ", extra=" + extra + "]";
+		}
+
+		public String getPostCode() {
+			return postCode;
+		}
+
+		public void setPostCode(String postCode) {
+			this.postCode = postCode;
+		}
+
+		public String getBase() {
+			return base;
+		}
+
+		public void setBase(String base) {
+			this.base = base;
+		}
+
+		public String getExtra() {
+			return extra;
+		}
+
+		public void setExtra(String extra) {
+			this.extra = extra;
+		}
+		
+	}
 }
