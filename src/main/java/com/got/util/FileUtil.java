@@ -18,22 +18,18 @@ public class FileUtil {
 	private static final Logger log = Logger.getLogger(FileUtil.class);
 	
 	public static FileVO saveFileInTempPath(String path, MultipartFile file) {
-		int save_name = 0;
-		while( true ) {
-			save_name = (int)System.currentTimeMillis();
-			File f = new File(path + File.separator + save_name);
-			if( !f.exists() )
-				break;
-		}
+		checkTempFolder(path);
+		File saveFile = createFile(path);
+		
 		try {
-			FileOutputStream out = new FileOutputStream(path + File.separator + save_name);
+			FileOutputStream out = new FileOutputStream(saveFile);
 			out.write(file.getBytes());
 			out.flush();
 			out.close();
 			
 			FileVO fVO = new FileVO();
 			fVO.setReal_name(file.getOriginalFilename());
-			fVO.setSave_name(save_name);
+			fVO.setSave_name(Integer.parseInt(saveFile.getName()));
 			fVO.setSave_path( simpleSavePath(path) );
 			
 			return fVO;
@@ -66,8 +62,9 @@ public class FileUtil {
 			File saveFile = new File(savePath + File.separator + fileVO.getSave_name());
 			fileVO.setSave_path(simplePath);
 			if( !tempFile.renameTo(saveFile) ) {
-				log.error("파일 위치 변경 실패");
-				log.error("파일명 : " + tempFile.getName());
+				log.fatal("파일 위치 변경 실패");
+				log.fatal("파일명 : " + tempFile.getName());
+				throw new RuntimeException();
 			}
 		}
 		return list;
@@ -79,5 +76,19 @@ public class FileUtil {
 			index = path.indexOf("/", path.lastIndexOf("gotpingMall")) + 1;
 		return path.substring(index, path.length()).replace("\\", "/");
 	}
-
+	
+	private static void checkTempFolder(String path) {
+		File dir = new File(path);
+		if(!dir.exists())
+			dir.mkdirs();
+	}
+	
+	private static File createFile(String path) {
+		while( true ) {
+			int save_name = (int)System.currentTimeMillis();
+			File f = new File(path + File.separator + save_name);
+			if( !f.exists() )
+				return f;
+		}
+	}
 }

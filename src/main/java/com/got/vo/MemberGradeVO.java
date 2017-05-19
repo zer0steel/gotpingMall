@@ -1,17 +1,23 @@
 package com.got.vo;
 
 import java.security.Timestamp;
+import java.util.Objects;
 
 public class MemberGradeVO {
-	
-	private int m_no, mg_grade, point;
+	private Integer m_no;
+	private int mg_grade, point;
 	private Timestamp mg_date;
 	private String reason;
 	
-	public int getM_no() {
+	public MemberGradeVO() {}
+	public MemberGradeVO(Integer m_no) {
+		this.m_no = m_no;
+	}
+	
+	public Integer getM_no() {
 		return m_no;
 	}
-	public void setM_no(int m_no) {
+	public void setM_no(Integer m_no) {
 		this.m_no = m_no;
 	}
 	public Timestamp getMg_date() {
@@ -37,5 +43,10 @@ public class MemberGradeVO {
 	}
 	public void setMg_grade(int mg_grade) {
 		this.mg_grade = mg_grade;
+	}
+	public MemberGradeVO setupNewMember() {
+		Objects.requireNonNull(m_no);
+		this.reason = "신규 가입";
+		return this;
 	}
 }

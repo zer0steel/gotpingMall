@@ -11,6 +11,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.got.mapper.files.GoodsImageMapper;
 import com.got.mapper.goods.GoodsMapper;
 import com.got.mapper.goods.OptionStockMapper;
+import com.got.mapper.member.MemberMapper;
+import com.got.mapper.member.MileageMapper;
 
 public class MybatisUtil {
 	private static final SqlSessionFactory FACTORY;
@@ -30,6 +32,8 @@ public class MybatisUtil {
 		configuration.addMapper(GoodsMapper.class);
 		configuration.addMapper(GoodsImageMapper.class);
 		configuration.addMapper(OptionStockMapper.class);
+		configuration.addMapper(MemberMapper.class);
+		configuration.addMapper(MileageMapper.class);
 	}
 	
 	public static SqlSession openSession() {

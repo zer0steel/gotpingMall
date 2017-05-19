@@ -56,4 +56,10 @@ public class OrderController {
 		mav.addObject("o", os.getBuyList(list));
 		return mav.setViewPage("order/form.jsp");
 	}
+	
+	@RequestMapping("order/checkout.yo")
+	public ModelAndView checkout() {
+		ModelAndView mav = new ModelAndView();
+		return mav.setViewPage("order/checkout.jsp");
+	}
 }

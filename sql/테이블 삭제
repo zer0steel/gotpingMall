@@ -1,0 +1,304 @@
+ALTER TABLE goods
+	DROP
+		CONSTRAINT FK_category_TO_goods
+		CASCADE;
+
+ALTER TABLE order_detail
+	DROP
+		CONSTRAINT FK_goods_TO_order_detail
+		CASCADE;
+
+ALTER TABLE order_detail
+	DROP
+		CONSTRAINT FK_orders_TO_order_detail
+		CASCADE;
+
+ALTER TABLE orders
+	DROP
+		CONSTRAINT FK_member_TO_orders
+		CASCADE;
+
+ALTER TABLE orders
+	DROP
+		CONSTRAINT FK_non_member_TO_orders
+		CASCADE;
+
+ALTER TABLE payment
+	DROP
+		CONSTRAINT FK_payment_way_TO_payment
+		CASCADE;
+
+ALTER TABLE payment
+	DROP
+		CONSTRAINT FK_orders_TO_payment
+		CASCADE;
+
+ALTER TABLE mileage
+	DROP
+		CONSTRAINT FK_member_TO_mileage
+		CASCADE;
+
+ALTER TABLE mileage
+	DROP
+		CONSTRAINT FK_payment_TO_mileage
+		CASCADE;
+
+ALTER TABLE order_check
+	DROP
+		CONSTRAINT FK_payment_TO_order_check
+		CASCADE;
+
+ALTER TABLE post
+	DROP
+		CONSTRAINT FK_board_TO_post
+		CASCADE;
+
+ALTER TABLE basket
+	DROP
+		CONSTRAINT FK_member_TO_basket
+		CASCADE;
+
+ALTER TABLE basket
+	DROP
+		CONSTRAINT FK_goods_TO_basket
+		CASCADE;
+
+ALTER TABLE member_grade
+	DROP
+		CONSTRAINT FK_member_TO_member_grade
+		CASCADE;
+
+ALTER TABLE goods_image
+	DROP
+		CONSTRAINT FK_goods_TO_goods_image
+		CASCADE;
+
+ALTER TABLE goods_image
+	DROP
+		CONSTRAINT FK_files_TO_goods_image
+		CASCADE;
+
+ALTER TABLE shipping_receiving
+	DROP
+		CONSTRAINT FK_goods_TO_shipping_receiving
+		CASCADE;
+
+ALTER TABLE options
+	DROP
+		CONSTRAINT FK_category_TO_options
+		CASCADE;
+
+ALTER TABLE goods_option
+	DROP
+		CONSTRAINT FK_goods_TO_goods_option
+		CASCADE;
+
+ALTER TABLE goods_option
+	DROP
+		CONSTRAINT FK_options_TO_goods_option
+		CASCADE;
+
+ALTER TABLE option_stock
+	DROP
+		CONSTRAINT FK_goods_TO_option_stock
+		CASCADE;
+
+ALTER TABLE member
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE board
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE goods
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE order_detail
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE orders
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE non_member
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE payment
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE mileage
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE order_check
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE payment_way
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE post
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE basket
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE member_grade
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE files
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE goods_image
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE shipping_receiving
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE category
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE options
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE goods_option
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+ALTER TABLE option_stock
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
+/* 회원 */
+DROP TABLE member 
+	CASCADE CONSTRAINTS;
+
+/* 게시판 */
+DROP TABLE board 
+	CASCADE CONSTRAINTS;
+
+/* 상품 */
+DROP TABLE goods 
+	CASCADE CONSTRAINTS;
+
+/* 주문상세 */
+DROP TABLE order_detail 
+	CASCADE CONSTRAINTS;
+
+/* 상품주문 */
+DROP TABLE orders 
+	CASCADE CONSTRAINTS;
+
+/* 비회원 */
+DROP TABLE non_member 
+	CASCADE CONSTRAINTS;
+
+/* 결제 */
+DROP TABLE payment 
+	CASCADE CONSTRAINTS;
+
+/* 마일리지 */
+DROP TABLE mileage 
+	CASCADE CONSTRAINTS;
+
+/* 주문확인 */
+DROP TABLE order_check 
+	CASCADE CONSTRAINTS;
+
+/* 결제수단 */
+DROP TABLE payment_way 
+	CASCADE CONSTRAINTS;
+
+/* 게시글 */
+DROP TABLE post 
+	CASCADE CONSTRAINTS;
+
+/* 장바구니 */
+DROP TABLE basket 
+	CASCADE CONSTRAINTS;
+
+/* 회원등급 */
+DROP TABLE member_grade 
+	CASCADE CONSTRAINTS;
+
+/* 파일 */
+DROP TABLE files 
+	CASCADE CONSTRAINTS;
+
+/* 상품이미지 */
+DROP TABLE goods_image 
+	CASCADE CONSTRAINTS;
+
+/* 입출고내역 */
+DROP TABLE shipping_receiving 
+	CASCADE CONSTRAINTS;
+
+/* 분류 */
+DROP TABLE category 
+	CASCADE CONSTRAINTS;
+
+/* 옵션 */
+DROP TABLE options 
+	CASCADE CONSTRAINTS;
+
+/* 상품옵션 */
+DROP TABLE goods_option 
+	CASCADE CONSTRAINTS;
+
+/* 옵션별재고 */
+DROP TABLE option_stock 
+	CASCADE CONSTRAINTS;

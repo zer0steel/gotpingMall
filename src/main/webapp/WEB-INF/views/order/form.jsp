@@ -14,7 +14,6 @@
 						<td class="price">가격</td>
 						<td class="quantity">수량</td>
 						<td class="total">합계</td>
-						<td></td>
 					</tr>
 				</thead>
 				<tbody>
@@ -35,23 +34,16 @@
 							<p>${d.goods.realPrice + d.optionStock.os_extra_cost } 원</p>
 						</td>
 						<td class="cart_quantity">
-							<div class="cart_quantity_button">
-								<input class="cart_quantity_input" type="text" name="quantity" value="${d.amount }" autocomplete="off" size="2">
-							</div>
+							<input class="cart_quantity_input" type="text" name="quantity" value="${d.amount }" size="2" readonly>
 						</td>
 						<td class="cart_total">
 							<p class="cart_total_price">${d.total_price }원</p>
 						</td>
-						<td class="cart_delete">
-							<a class="cart_quantity_delete" href="">
-								<i class="fa fa-times"></i>
-							</a>
-						</td>
 					</tr>
 					</c:forEach>
-					<tr>
+					<%-- <tr>
 						<td colspan="4">&nbsp;</td>
-						<td colspan="2">
+						<td>
 							<table class="table table-condensed total-result">
 								<tr>
 									<td>상품구매금액</td>
@@ -59,7 +51,7 @@
 								</tr>
 							</table>
 						</td>
-					</tr>
+					</tr> --%>
 				</tbody>
 			</table>
 		</div>
@@ -85,8 +77,8 @@
 		</div>/register-req-->
 		
 		<div class="shopper-informations">
-			<div class="row">
-				<form class="form-horizontal">
+			<form class="form-horizontal">
+			
 					<div class="col-md-6">
 						<h3>구매자 정보</h3>
 						<br>
@@ -97,8 +89,24 @@
 							<input type="password" class="form-control input" data-label="구매비밀번호">
 							<input type="password" class="form-control input" data-label="비밀번호확인">
 						</c:if>
+						
+						<div class="clearfix"></div>
+						
+						<c:if test="${m != null }">
+						<h3>할인</h3>
+						<div class="form-group">
+							<label class="control-label col-md-3">마일리지</label>
+							<div class="col-md-3">
+								<input type="number" class="form-control" max="${m.mileage }" min="0" id="mileage">
+							</div>
+							<div class="col-md-6">
+								(사용가능 마일리지 : <span style="color: orange;">${m.mileage }</span> 원)
+							</div>
+						</div>
+						</c:if>
+						
 						<a class="btn btn-primary" href="">Get Quotes</a>
-						<a class="btn btn-primary" href="">Continue</a>
+						<a class="btn btn-primary" href="#" id="checkout">결제</a>
 					</div>
 					
 					<div class="col-md-6">
@@ -109,67 +117,69 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">우편번호</label>
 							<div class="col-md-4">
-								<input type="text" id="input-postcode" class="form-control" value="${m. }" readonly>
+								<input type="text" id="input-postcode" class="form-control" value="${m.address.postCode }" readonly>
 							</div>
 							<div class="col-md-3">
 								<button type="button" id="btn-addrFinder" class="btn btn-info" >찾기</button>
 							</div>
 						</div>
-						<input type="text" class="form-control input" data-label="주소" id="input-addr" readonly>
-						<input type="text" class="form-control input" data-label="상세주소" id="input-extraAddr">
-						<div class="order-message">
-							<p>주문 메시지</p>
-							<textarea name="message"  rows="16"></textarea>
-						</div>
+						<input type="text" class="form-control input" data-label="주소" id="input-addr" value="${m.address.base }" readonly>
+						<input type="text" class="form-control input" data-label="상세주소" id="input-extraAddr" value="${m.address.extra }">
+						<textarea class="form-control input" rows="4" cols="5" 
+						data-label="주문 메시지" maxlength="200" placeholder="200자 내외로 적어주세요"></textarea>
 					</div>
-				</form>
-			</div>
+				
+					<div class="col-md-6">
+						
+					</div>
+			</form>
 		</div>
 	</div>
 </section>
-
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/member/addrFinder.js?"></script>
 <script>
 (function() {
-	$('div.form-group.input').each(function() {
-		let label = $(this).data('label');
-		let name = $(this).data('name');
-		let value = $(this).data('value');
-		let id = $(this).data('id');
-		let readonly = $(this).data('readonly') != undefined;
-		
-		$(this).append(
-			$('<label />').addClass('control-label col-md-3').text(label),
-			$('<div />').addClass('col-md-6').append(
-				$('<input />').addClass('form-control').attr({'name':name, 'id':id, 'readonly': readonly}).val(value)
-			)
-		);
-	});
-	
+	IMP.init('imp92243006');
+	$('#checkout').click(function() {
+	})
+
 	$('.form-control.input').each(function() {
 		let label = $(this).data('label');
 		let $div = createTag(label);
-		$(this).replaceWith( $div );
-		$div.find('div.col-md-6').append( $(this) );		
+		$(this).replaceWith($div);
+		$div.find('div.col-md-6').append($(this));
 	});
+
+	function openCheckoutModule() {
+		IMP.request_pay({
+			merchant_uid : 'merchant_' + new Date().getTime(),
+			name : '결제테스트',
+			amount : 14000,
+			buyer_email : 'iamport@siot.do',
+			buyer_name : '구매자',
+			buyer_tel : '010-1234-5678',
+			buyer_addr : '서울특별시 강남구 삼성동',
+			buyer_postcode : '123-456'
+		}, function(rsp) {
+			if (rsp.success) {
+				var msg = '결제가 완료되었습니다.';
+				msg += '고유ID : ' + rsp.imp_uid;
+				msg += '상점 거래ID : ' + rsp.merchant_uid;
+				msg += '결제 금액 : ' + rsp.paid_amount;
+				msg += '카드 승인번호 : ' + rsp.apply_num;
+			} else {
+				var msg = '결제에 실패하였습니다.';
+				msg += '에러내용 : ' + rsp.error_msg;
+			}
+		});
+	}
 	
 	function createTag(label) {
 		return $('<div />').addClass('form-group').append(
-				$('<label />').addClass('control-label col-md-3').text(label),
-				$('<div />').addClass('col-md-6').append()
-			)
-	}
-	
-	function getAttr(tag) {
-		let attr = tag.attributes;
-		let attributes = [];
-		for(var a of attr) {
-			let prop = "{}";
-			attributes.push(prop.toString());
-		}
-		console.log(attributes);
-		return attributes;
+				$('<label />').addClass('control-label col-md-3').text(
+						label), $('<div />').addClass('col-md-6').append())
 	}
 }())
 </script>

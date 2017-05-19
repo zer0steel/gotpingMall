@@ -366,6 +366,67 @@ ALTER TABLE category
 			c_no
 		);
 
+/* 옵션 */
+CREATE TABLE options (
+	o_no NUMBER NOT NULL, /* 옵션번호 */
+	o_name VARCHAR2(50), /* 옵션명 */
+	c_no NUMBER /* 분류번호 */
+);
+
+CREATE UNIQUE INDEX PK_options
+	ON options (
+		o_no ASC
+	);
+
+ALTER TABLE options
+	ADD
+		CONSTRAINT PK_options
+		PRIMARY KEY (
+			o_no
+		);
+
+/* 상품옵션 */
+CREATE TABLE goods_option (
+	g_no NUMBER NOT NULL, /* 상품번호 */
+	o_no NUMBER NOT NULL, /* 옵션번호 */
+	value VARCHAR2(255), /* 옵션값 */
+	extra_cost VARCHAR2(255) /* 추가금액 */
+);
+
+CREATE UNIQUE INDEX PK_goods_option
+	ON goods_option (
+		g_no ASC,
+		o_no ASC
+	);
+
+ALTER TABLE goods_option
+	ADD
+		CONSTRAINT PK_goods_option
+		PRIMARY KEY (
+			g_no,
+			o_no
+		);
+
+/* 옵션별재고 */
+CREATE TABLE option_stock (
+	os_no NUMBER NOT NULL, /* 순번 */
+	combination VARCHAR2(255), /* 옵션조합 */
+	os_stock NUMBER, /* 재고량 */
+	g_no NUMBER /* 상품번호 */
+);
+
+CREATE UNIQUE INDEX PK_option_stock
+	ON option_stock (
+		os_no ASC
+	);
+
+ALTER TABLE option_stock
+	ADD
+		CONSTRAINT PK_option_stock
+		PRIMARY KEY (
+			os_no
+		);
+
 ALTER TABLE goods
 	ADD
 		CONSTRAINT FK_category_TO_goods
@@ -529,6 +590,46 @@ ALTER TABLE goods_image
 ALTER TABLE shipping_receiving
 	ADD
 		CONSTRAINT FK_goods_TO_shipping_receiving
+		FOREIGN KEY (
+			g_no
+		)
+		REFERENCES goods (
+			g_no
+		);
+
+ALTER TABLE options
+	ADD
+		CONSTRAINT FK_category_TO_options
+		FOREIGN KEY (
+			c_no
+		)
+		REFERENCES category (
+			c_no
+		);
+
+ALTER TABLE goods_option
+	ADD
+		CONSTRAINT FK_goods_TO_goods_option
+		FOREIGN KEY (
+			g_no
+		)
+		REFERENCES goods (
+			g_no
+		);
+
+ALTER TABLE goods_option
+	ADD
+		CONSTRAINT FK_options_TO_goods_option
+		FOREIGN KEY (
+			o_no
+		)
+		REFERENCES options (
+			o_no
+		);
+
+ALTER TABLE option_stock
+	ADD
+		CONSTRAINT FK_goods_TO_option_stock
 		FOREIGN KEY (
 			g_no
 		)

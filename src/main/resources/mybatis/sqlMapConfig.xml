@@ -23,8 +23,5 @@
 		<mapper resource="mybatis/optionStockMapper.xml" />
 		<mapper resource="mybatis/categoryMapper.xml" />
 		<mapper resource="mybatis/shippingReceivingMapper.xml" />
-		
-		<mapper resource="mybatis/memberMapper.xml" />
-		<mapper resource="mybatis/memberGradeMapper.xml" />
 	</mappers>
 </configuration>

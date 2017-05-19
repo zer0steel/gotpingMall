@@ -2,8 +2,10 @@ package com.got.vo;
 
 import java.security.PrivateKey;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 import com.got.enums.Grade;
@@ -19,6 +21,10 @@ public class MemberVO {
 	
 	private Address addr;
 	private static final String SEPARATOR_CHAR = "/ ";
+	
+	private int mileage;
+	private List<MileageVO> milList;
+	private List<MemberGradeVO> mgList;
 	
 	@Override
 	public String toString() {
@@ -58,11 +64,14 @@ public class MemberVO {
 		this.email = email;
 	}
 	public String getAddr() {
-		String[] str = new String[3];
-		str[0] = addr.getPostCode();
-		str[1] = addr.getBase();
-		str[2] = addr.getExtra();
-		return String.join(SEPARATOR_CHAR, str);
+		if(Objects.nonNull(addr)) {
+			String[] str = new String[3];
+			str[0] = addr.getPostCode();
+			str[1] = addr.getBase();
+			str[2] = addr.getExtra();
+			return String.join(SEPARATOR_CHAR, str);
+		}
+		return new String();
 	}
 	public void setAddr(String addr) {
 		Iterator<String> iter = Arrays.asList(addr.split(SEPARATOR_CHAR)).iterator();
@@ -107,21 +116,35 @@ public class MemberVO {
 	public boolean isLoginSuccess() {
 		return this.loginSuccess;
 	}
-	
-	public boolean isEqualsPwd(String rsaPwd, PrivateKey privateKey) {
-		Objects.requireNonNull(rsaPwd);
-		Objects.requireNonNull(privateKey);
-		if(this.pwd.isEmpty() || rsaPwd.isEmpty())
-			throw new IllegalArgumentException("pwd empty is " + pwd.isEmpty() + " | " + "rsaPwd empty is " + rsaPwd.isEmpty());
-		String pwd = RSA.decryptRsa(rsaPwd, privateKey);
-		return BCrypt.checkpw(pwd, this.pwd);
+
+	public int getMileage() {
+		return mileage;
 	}
-	public void encyptPwd(PrivateKey privateKey) {
-		Objects.requireNonNull(privateKey);
-		String pwd = RSA.decryptRsa(this.pwd, privateKey);
-		this.pwd = BCrypt.hashpw(pwd,BCrypt.gensalt(12));
+
+	public void setMileage(int mileage) {
+		this.mileage = mileage;
 	}
 	
+	public List<MileageVO> getMilList() {
+		if(Objects.isNull(this.milList))
+			this.milList = new ArrayList<>();
+		return this.milList;
+	}
+
+	public void setMilList(List<MileageVO> milList) {
+		this.milList = milList;
+	}
+
+	public List<MemberGradeVO> getMgList() {
+		if(Objects.isNull(this.mgList))
+			this.mgList = new ArrayList<>();
+		return this.mgList;
+	}
+
+	public void setMgList(List<MemberGradeVO> mgList) {
+		this.mgList = mgList;
+	}
+
 	public class Address {
 		String postCode;
 		String base;
@@ -157,4 +180,19 @@ public class MemberVO {
 		}
 		
 	}
+	
+	public boolean isEqualsPwd(String rsaPwd, PrivateKey privateKey) {
+		Objects.requireNonNull(rsaPwd);
+		Objects.requireNonNull(privateKey);
+		if(this.pwd.isEmpty() || rsaPwd.isEmpty())
+			throw new IllegalArgumentException("pwd empty is " + pwd.isEmpty() + " | " + "rsaPwd empty is " + rsaPwd.isEmpty());
+		String pwd = RSA.decryptRsa(rsaPwd, privateKey);
+		return BCrypt.checkpw(pwd, this.pwd);
+	}
+	public void encyptPwd(PrivateKey privateKey) {
+		Objects.requireNonNull(privateKey);
+		String pwd = RSA.decryptRsa(this.pwd, privateKey);
+		this.pwd = BCrypt.hashpw(pwd,BCrypt.gensalt(12));
+	}
+
 }

@@ -27,7 +27,7 @@ import com.got.vo.list.OrderDetailListContainer;
 @Controller("memberController")
 public class MemberController {
 	
-	private Logger log = Logger.getLogger(MainController.class);
+	private Logger log = Logger.getLogger(MemberController.class);
 	
 	@Autowired private MemberService s;
 	
