@@ -94,7 +94,6 @@ CREATE TABLE orders (
 	o_no NUMBER NOT NULL, /* 주문번호 */
 	m_no NUMBER, /* 고객번호 */
 	total_price NUMBER, /* 총금액 */
-	pay VARCHAR2(5), /* 결제 유/무 */
 	regdate DATE, /* 등록일 */
 	recipient VARCHAR2(50), /* 받는사람 이름 */
 	addr VARCHAR2(255), /* 주소 */
@@ -135,22 +134,26 @@ ALTER TABLE non_member
 
 /* 결제 */
 CREATE TABLE payment (
-	o_no NUMBER NOT NULL, /* 주문번호 */
+	p_no VARCHAR2(255) NOT NULL, /* 결제번호 */
+	o_no NUMBER, /* 주문번호 */
 	price NUMBER, /* 지불한 금액 */
+	use_mileage NUMBER, /* 사용된 마일리지 */
+	status VARCHAR2(50), /* 상태 */
 	regdate DATE, /* 결제일 */
-	py_no NUMBER /* 결제수단번호 */
+	p_way VARCHAR2(50), /* 결제수단 */
+	p_way_detail VARCHAR2(50) /* 결제수단상세 */
 );
 
 CREATE UNIQUE INDEX PK_payment
 	ON payment (
-		o_no ASC
+		p_no ASC
 	);
 
 ALTER TABLE payment
 	ADD
 		CONSTRAINT PK_payment
 		PRIMARY KEY (
-			o_no
+			p_no
 		);
 
 /* 마일리지 */
@@ -159,8 +162,7 @@ CREATE TABLE mileage (
 	m_date DATE NOT NULL, /* 변동날짜 */
 	total_mileage NUMBER, /* 현재 마일리지 */
 	change_amount NUMBER, /* 적립/사용 된 마일리지 */
-	reason VARCHAR2(150), /* 변동 사유 */
-	o_no NUMBER /* 주문번호 */
+	reason VARCHAR2(150) /* 변동 사유 */
 );
 
 CREATE UNIQUE INDEX PK_mileage
@@ -179,21 +181,21 @@ ALTER TABLE mileage
 
 /* 주문확인 */
 CREATE TABLE order_check (
-	o_no NUMBER NOT NULL, /* 주문번호 */
+	p_no VARCHAR2(255) NOT NULL, /* 결제번호 */
 	status VARCHAR2(20), /* 주문상태 */
 	regdate DATE /* 처리일자 */
 );
 
 CREATE UNIQUE INDEX PK_order_check
 	ON order_check (
-		o_no ASC
+		p_no ASC
 	);
 
 ALTER TABLE order_check
 	ADD
 		CONSTRAINT PK_order_check
 		PRIMARY KEY (
-			o_no
+			p_no
 		);
 
 /* 결제수단 */
@@ -479,16 +481,6 @@ ALTER TABLE orders
 
 ALTER TABLE payment
 	ADD
-		CONSTRAINT FK_payment_way_TO_payment
-		FOREIGN KEY (
-			py_no
-		)
-		REFERENCES payment_way (
-			py_no
-		);
-
-ALTER TABLE payment
-	ADD
 		CONSTRAINT FK_orders_TO_payment
 		FOREIGN KEY (
 			o_no
@@ -507,24 +499,14 @@ ALTER TABLE mileage
 			m_no
 		);
 
-ALTER TABLE mileage
-	ADD
-		CONSTRAINT FK_payment_TO_mileage
-		FOREIGN KEY (
-			o_no
-		)
-		REFERENCES payment (
-			o_no
-		);
-
 ALTER TABLE order_check
 	ADD
 		CONSTRAINT FK_payment_TO_order_check
 		FOREIGN KEY (
-			o_no
+			p_no
 		)
 		REFERENCES payment (
-			o_no
+			p_no
 		);
 
 ALTER TABLE post

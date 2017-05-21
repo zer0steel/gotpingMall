@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.got.dao.template.DaoTemplate;
 import com.got.mapper.files.GoodsImageMapper;
 import com.got.mapper.goods.GoodsMapper;
-import com.got.mapper.goods.OptionStockMapper;
+import com.got.mapper.goods.StockMapper;
 import com.got.vo.OrderDetailVO;
 import com.got.vo.OrderVO;
 import com.got.vo.goods.GoodsVO;
@@ -25,7 +25,7 @@ public class OrderDao {
 				Integer g_no = vo.getG_no();
 				GoodsVO g = session.getMapper(GoodsMapper.class).selectOne(g_no);
 				g.setImages(session.getMapper(GoodsImageMapper.class).selectList(g_no));
-				vo.setOptionStock(session.getMapper(OptionStockMapper.class).selectOne(vo.getOptionStock().getOs_no()));
+				vo.setOptionStock(session.getMapper(StockMapper.class).selectOne(vo.getOptionStock().getOs_no()));
 				vo.setGoods(g);
 				int totalPrice = (g.getRealPrice() + vo.getOptionStock().getOs_extra_cost()) * vo.getAmount();
 				vo.setTotal_price(totalPrice);

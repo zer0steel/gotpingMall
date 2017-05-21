@@ -6,26 +6,38 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.got.dao.GoodsOptionDao;
 import com.got.dao.OptionStockDao;
+import com.got.mapper.goods.GoodsOptionMapper;
 import com.got.util.CommonUtil;
 import com.got.vo.goods.GoodsOptionVO;
-import com.got.vo.goods.OptionsVO;
+import com.got.vo.goods.GoodsVO;
+import com.got.vo.goods.OptionVO;
 
 @Service
 public class GoodsOptionService {
 	
-	@Autowired private GoodsOptionDao dao;
-	@Autowired private OptionStockDao osDao;
+	@Inject private GoodsOptionDao dao;
+	@Inject private OptionStockDao osDao;
+	@Inject GoodsOptionMapper goodsOptionMapper;
 	
 	public List<GoodsOptionVO> filteringEmptyArray(List<GoodsOptionVO> list) {
 		return Arrays.asList(list.stream().filter(vo -> Objects.nonNull(vo.getDetails()) ).toArray(GoodsOptionVO[]::new));
 	}
 	
-	public void add(OptionsVO o) {
+	public void insertGoodsOption(GoodsVO g) {
+		filteringEmptyArray(g.getGoodsOptions()).forEach(vo -> {
+			vo.setG_no(g.getG_no());
+			goodsOptionMapper.insert(vo);
+		});
+	}
+	
+	public void add(OptionVO o) {
 		Objects.requireNonNull(o.getC_no());
 		Objects.requireNonNull(o.getO_name());
 		if(o.getO_name().equals(""))
@@ -38,11 +50,11 @@ public class GoodsOptionService {
 		dao.delete(o_no);
 	}
 
-	public void update(OptionsVO o) {
+	public void update(OptionVO o) {
 		dao.update(o);
 	}
 
-	public List<OptionsVO> getWithG_no(int c_no) {
+	public List<OptionVO> getWithG_no(int c_no) {
 		return dao.selectListWithC_no(c_no);
 	}
 	

@@ -43,9 +43,9 @@ public class ShippingReceivingDao {
 			if(session.update("g.updateStock", g) != 1)
 				throw new TransactionException();
 			
-			System.out.println(g.getOptionStocks());
-			if( Objects.nonNull(g.getOptionStocks()) ) {
-				g.getOptionStocks().forEach(o -> {
+			System.out.println(g.getStocks());
+			if( Objects.nonNull(g.getStocks()) ) {
+				g.getStocks().forEach(o -> {
 					Objects.requireNonNull(o.getOs_no());
 					if(o.getOs_stock() != 0)
 						session.update("os.updateStock", o);

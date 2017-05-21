@@ -50,7 +50,7 @@ public class MemberController {
 	
 	@RequestMapping("purchaseLogin.yo")
 	public ModelAndView purchaseLoginForm(HttpServletResponse res, OrderDetailListContainer container) throws UnsupportedEncodingException {
-		log.debug("com.got.controller.MemberController.purchaseLoginForm()");
+		log.info("--------------- purchaseLoginForm() ---------------");
 		log.debug(container.getList());
 		
 		String jsonString = CommonUtil.convertToJSON(container.getList());

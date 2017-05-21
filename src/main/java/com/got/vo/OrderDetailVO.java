@@ -1,13 +1,13 @@
 package com.got.vo;
 
 import com.got.vo.goods.GoodsVO;
-import com.got.vo.goods.OptionStockVO;
+import com.got.vo.goods.StockVO;
 
 public class OrderDetailVO {
 	private Integer od_no, o_no, g_no;
 	private int amount, total_price;
 	private GoodsVO goods;
-	private OptionStockVO optionStock;
+	private StockVO optionStock;
 	
 	@Override
 	public String toString() {
@@ -55,10 +55,10 @@ public class OrderDetailVO {
 	public void setG_no(Integer g_no) {
 		this.g_no = g_no;
 	}
-	public OptionStockVO getOptionStock() {
+	public StockVO getOptionStock() {
 		return optionStock;
 	}
-	public void setOptionStock(OptionStockVO optionStock) {
+	public void setOptionStock(StockVO optionStock) {
 		this.optionStock = optionStock;
 	}
 }

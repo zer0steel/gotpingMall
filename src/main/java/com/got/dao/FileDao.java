@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.got.dao.template.DaoTemplate;
 import com.got.vo.FileVO;
-import com.got.vo.GoodsImgVO;
+import com.got.vo.GoodsImageVO;
 
 @Repository
 public class FileDao {
@@ -19,7 +19,7 @@ public class FileDao {
 	public void delete(int f_no) {
 		dao.delete("f.delete", f_no);
 	}
-	public List<GoodsImgVO> selectGoodsImg(int g_no) {
+	public List<GoodsImageVO> selectGoodsImg(int g_no) {
 		return dao.selectList("f.selectGoodsImg", g_no);
 	}
 }

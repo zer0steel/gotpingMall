@@ -162,7 +162,7 @@
 						</tr>
 					</thead>
 					<tbody>					
-					<c:forEach var="os" items="${g.optionStocks }">
+					<c:forEach var="os" items="${g.stocks }">
 						<tr>
 							<td>${os.combination }</td>
 							<td>${os.os_stock }</td>

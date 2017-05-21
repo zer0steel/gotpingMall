@@ -21,10 +21,10 @@
 		<result property="sell_price" column="sell_price"/>
 		<result property="discount_rate" column="discount_rate"/>
 		<result property="name" column="name"/>
-		<association property="mainImg" column="mainImg" javaType="com.got.vo.GoodsImgVO" resultMap="GoodsImgMap" />
+		<association property="mainImg" column="mainImg" javaType="com.got.vo.GoodsImageVO" resultMap="GoodsImgMap" />
 	</resultMap>
 	
-	<resultMap type="com.got.vo.GoodsImgVO" id="GoodsImgMap">
+	<resultMap type="com.got.vo.GoodsImageVO" id="GoodsImgMap">
 		<id property="g_no" column="g_no" javaType="int"/>
 		<result property="save_path" column="save_path"/>
 		<result property="save_name" column="save_name"/>

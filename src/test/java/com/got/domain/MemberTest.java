@@ -2,21 +2,18 @@ package com.got.domain;
 
 import javax.inject.Inject;
 
-import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.enums.Grade;
+import com.got.mapper.MileageMapper;
 import com.got.mapper.member.MemberMapper;
-import com.got.mapper.member.MileageMapper;
 import com.got.service.MemberService;
 import com.got.util.BCrypt;
-import com.got.util.MybatisUtil;
 import com.got.vo.MemberVO;
 import com.got.vo.MileageVO;
 
@@ -54,15 +51,12 @@ public class MemberTest {
 
 	@Test
 	public void insertMileage() {
-		SqlSession session = MybatisUtil.openSession();
-		MemberMapper mapper = session.getMapper(MemberMapper.class);
-		MemberVO m = mapper.selectOneWithId("admin");
+		MemberVO m = memberMapper.selectOneWithId("admin");
 		MileageVO mileage = new MileageVO();
 		mileage.setM_no(m.getM_no());
 		mileage.setReason("테스트");
 		mileage.setChange_amount(-700);
-		session.getMapper(MileageMapper.class).insert(mileage);
-		session.close();
+		mileageMapper.insert(mileage);
 	}
 	
 	@Test

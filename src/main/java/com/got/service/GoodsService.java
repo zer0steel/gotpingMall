@@ -5,50 +5,58 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.got.dao.FileDao;
 import com.got.dao.GoodsDao;
 import com.got.dao.GoodsOptionDao;
 import com.got.dao.OptionStockDao;
+import com.got.enums.GoodsStatus;
 import com.got.enums.MenuLevel;
+import com.got.mapper.files.GoodsImageMapper;
+import com.got.mapper.goods.GoodsMapper;
+import com.got.mapper.goods.GoodsOptionMapper;
+import com.got.mapper.goods.StockMapper;
 import com.got.vo.goods.CategoryVO;
-import com.got.vo.goods.GoodsOptionVO;
 import com.got.vo.goods.GoodsVO;
-import com.got.vo.goods.OptionStockVO;
+import com.got.vo.goods.StockVO;
 
 @Service
 public class GoodsService {
 	
-	@Autowired private GoodsDao dao;
-	@Autowired private FileDao fdao;
-	@Autowired private GoodsOptionDao goDao;
-	@Autowired private SRService srService;
-	@Autowired private OptionStockDao osDao;
+	@Inject private GoodsDao dao;
+	@Inject private FileDao fdao;
+	@Inject private GoodsOptionDao goDao;
+	@Inject private SRService srService;
+	@Inject private OptionStockDao osDao;
 	
-	@Autowired private OptionStockService oss;
-	@Autowired private GoodsOptionService gos;
-	@Autowired private FileService fs;
-
+	@Inject private StockService stockService;
+	@Inject private GoodsOptionService goodsOptionService;
+	@Inject private GoodsImageService goodsImageService;
+	
+	@Inject private GoodsMapper goodsMapper;
+	@Inject private StockMapper stockMapper;
+	@Inject private GoodsImageMapper goodsImageMapper;
+	@Inject private GoodsOptionMapper goodsOptionMapper;
+	
+	@Transactional
 	public void enroll(GoodsVO g) {
-		validationCheck(g);
-		dao.insert(g);
+		g.setStatus(GoodsStatus.STAND_BY);
+		goodsMapper.insert(g);
+		Objects.nonNull(g.getG_no());
+		goodsOptionService.insertGoodsOption(g);
+		stockService.insertStock(g);
+		goodsImageService.insertGoodsImage(g);
 	}
 	
-	public void enroll(GoodsVO g, List<GoodsOptionVO> list, String[] fileInfoJSON) {
-		list = gos.filteringEmptyArray(list);
-		g.setGoodsOptions(list);
-		g.setOptionStocks(oss.createOptionStocks(list));
-		g.setImages(fs.setupImages(g.getC_no(), fileInfoJSON));
-		dao.insert(g);
-	}
-
 	public List<GoodsVO> getAll() {
-		return dao.selectAll();
+		return goodsMapper.selectAll();
 	}
 	
-	public List<GoodsVO> getBuyList(List<OptionStockVO> list) {
+	public List<GoodsVO> getBuyList(List<StockVO> list) {
 		Map<Integer, GoodsVO> goodsMap = new HashMap<>();
 		list.forEach(os -> {
 			Integer g_no = os.getG_no();
@@ -58,18 +66,17 @@ public class GoodsService {
 				g = new GoodsVO(g_no);
 				goodsMap.put(g_no, g);
 			}
-			g.getOptionStocks().add(os);
+			g.getStocks().add(os);
 		});
 		return dao.selectList(goodsMap.values());
 	}
 	
 	public GoodsVO detail(Integer g_no) {
 		Objects.requireNonNull(g_no);
-		
-		GoodsVO g = dao.selectOne(g_no);
-		g.setGoodsOptions(goDao.selectListWithG_no(g_no));
-		g.setImages(fdao.selectGoodsImg(g_no));
-		g.setOptionStocks(osDao.selectWithG_no(g_no));
+		GoodsVO g = goodsMapper.selectOne(g_no);
+		g.setGoodsOptions(goodsOptionMapper.selectListWithG_no(g_no));
+		g.setImages(goodsImageMapper.selectList(g_no));
+		g.setStocks(stockMapper.selectListWithG_no(g_no));
 		return g;
 	}
 
@@ -112,12 +119,4 @@ public class GoodsService {
 		Objects.requireNonNull(g.getG_no());
 		dao.update(g);
 	}
-	
-	private void validationCheck(GoodsVO g) {
-		Objects.requireNonNull(g.getC_no());
-		Objects.requireNonNull(g.getName());
-		if(g.getName().equals(""))
-			throw new IllegalArgumentException("상품명이 없음 : " + g.getName());
-	}
-
 }

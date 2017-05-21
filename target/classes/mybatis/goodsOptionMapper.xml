@@ -13,7 +13,7 @@
 		VALUES(#{g_no}, #{o_no}, #{value}, #{extra_cost})
 	</insert>
 	
-	<select id="selectListWithC_no" resultType="com.got.vo.goods.OptionsVO">
+	<select id="selectListWithC_no" resultType="com.got.vo.goods.OptionVO">
 		SELECT * FROM options WHERE c_no = #{c_no}
 	</select>
 	

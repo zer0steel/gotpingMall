@@ -32,8 +32,8 @@ public class GoodsController {
 	}
 	
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.POST)
-	public ModelAndView insertGoodsSubmit(GoodsVO g, GoodsOptionListContainer container, String[] fileInfoJSON) {
-		gs.enroll(g, container.getList(), fileInfoJSON);
+	public ModelAndView insertGoodsSubmit(GoodsVO g) {
+		gs.enroll(g);
 		log.debug(g);
 		return new ModelAndView("redirect:/admin/goods/insert.yo");
 	}

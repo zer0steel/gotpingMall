@@ -11,7 +11,12 @@ public class CategoryVO {
 	private String title;
 	private MenuLevel menu_level = MenuLevel.UNDEFINED;
 	private List<CategoryVO> sub = new ArrayList<>();
-	private List<OptionsVO> options;
+	private List<OptionVO> options;
+	
+	public CategoryVO() {}
+	public CategoryVO(Integer c_no) {
+		this.c_no = c_no;
+	}
 
 	public Integer getC_no() {
 		return c_no;
@@ -59,11 +64,11 @@ public class CategoryVO {
 		this.sub.add(sub);
 	}
 
-	public List<OptionsVO> getOptions() {
+	public List<OptionVO> getOptions() {
 		return options;
 	}
 
-	public void setOptions(List<OptionsVO> options) {
+	public void setOptions(List<OptionVO> options) {
 		this.options = options;
 	}
 

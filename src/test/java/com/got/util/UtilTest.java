@@ -13,7 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
-import com.got.vo.GoodsImgVO;
+import com.got.vo.GoodsImageVO;
 import com.got.vo.goods.CategoryVO;
 
 @WebAppConfiguration
@@ -32,10 +32,10 @@ public class UtilTest {
 				"{\"f_no\":181,\"save_name\":-1984376599,\"real_name\":\"dogSound.jpeg\",\"location\":\"main\"},",
 				"{\"f_no\":181,\"save_name\":-1984376599,\"real_name\":\"dogSound.jpeg\",\"location\":\"main\"},",
 				"{\"f_no\":182,\"save_name\":-1984375109,\"real_name\":\"car1.jpg\",\"location\":\"main\"}"};
-		List<GoodsImgVO> list = CommonUtil.getVO(json, GoodsImgVO.class);
+		List<GoodsImageVO> list = CommonUtil.getVO(json, GoodsImageVO.class);
 		list.stream().forEach(vo -> System.out.println(vo));
 		System.out.println("=----------------------------=");
-		List<GoodsImgVO> list2 = CommonUtil.getVO(json2, GoodsImgVO.class);
+		List<GoodsImageVO> list2 = CommonUtil.getVO(json2, GoodsImageVO.class);
 		list2.stream().forEach(vo -> System.out.println(vo));
 	}
 	

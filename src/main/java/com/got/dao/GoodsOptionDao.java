@@ -9,18 +9,18 @@ import org.springframework.stereotype.Repository;
 
 import com.got.dao.template.DaoTemplate;
 import com.got.vo.goods.GoodsOptionVO;
-import com.got.vo.goods.OptionsVO;
+import com.got.vo.goods.OptionVO;
 
 @Repository
 public class GoodsOptionDao {
 	
 	@Autowired private DaoTemplate dao;
 
-	public void insertNewOption(OptionsVO o) {
+	public void insertNewOption(OptionVO o) {
 		dao.insert("go.insertNewOption", o);
 	}
 
-	public List<OptionsVO> selectListWithC_no(int c_no) {
+	public List<OptionVO> selectListWithC_no(int c_no) {
 		return dao.selectList("go.selectListWithC_no", c_no);
 	}
 	
@@ -32,7 +32,7 @@ public class GoodsOptionDao {
 		dao.delete("go.delete", o_no);
 	}
 
-	public void update(OptionsVO o) {
+	public void update(OptionVO o) {
 		dao.update("go.update", o);
 	}
 	

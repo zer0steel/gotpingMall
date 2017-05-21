@@ -1,8 +1,14 @@
 package com.got.domain;
 
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,14 +22,24 @@ import com.got.dao.GoodsOptionDao;
 import com.got.dao.OptionStockDao;
 import com.got.enums.GoodsStatus;
 import com.got.enums.MenuLevel;
+import com.got.mapper.goods.CategoryMapper;
 import com.got.mapper.goods.GoodsMapper;
+import com.got.mapper.goods.GoodsOptionMapper;
+import com.got.mapper.goods.OptionMapper;
+import com.got.mapper.goods.StockMapper;
 import com.got.service.CategoryService;
 import com.got.service.GoodsOptionService;
 import com.got.service.GoodsService;
+import com.got.service.StockService;
 import com.got.util.CommonUtil;
 import com.got.util.MybatisUtil;
+import com.got.vo.VOHelper;
 import com.got.vo.goods.CategoryVO;
+import com.got.vo.goods.GoodsOptionVO;
 import com.got.vo.goods.GoodsVO;
+import com.got.vo.goods.OptionVO;
+import com.got.vo.goods.StockVO;
+import com.got.vo.goods.GoodsOptionVO.Detail;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,70 +47,83 @@ import com.got.vo.goods.GoodsVO;
 		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
 		"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 public class GoodsTest {
-	@Autowired GoodsService gs;
-	@Autowired GoodsOptionService gos;
-	@Autowired CategoryService cs;
+	@Inject GoodsService gs;
+	@Inject GoodsOptionService gos;
+	@Inject CategoryService cs;
+	@Inject StockService oss;
 	
-	@Autowired private GoodsOptionDao gdao;
-	@Autowired private OptionStockDao osDao;
+	@Inject CategoryMapper categoryMapper;
+	@Inject OptionMapper optionMapper;
+	@Inject GoodsMapper goodsMapper;
+	@Inject GoodsOptionMapper goodsOptionMapper;
+	@Inject StockMapper stockMapper;
 	
 	List<GoodsVO> list;
+	List<GoodsOptionVO> goodsOptions;
+	boolean isSetup = false;
 	GoodsVO g;
 	
 	@Before
 	public void setup() {
-		g = new GoodsVO();
-		g.setName("테스트");
-		
+		int size = goodsMapper.selectAll().size();
+		goodsOptions = VOHelper.createGoodsOptions(
+				optionMapper.selectListWithC_no(	categoryMapper.selectAll().get(0).getC_no()	)
+				);
+		if(isSetup)
+			return;
+		g = createGoods(categoryMapper.selectAll().get(0));
+		System.out.println("상품 개수 : " + size++);
+		g.setName("테스트-" + size);
+		isSetup = true;
 		list = gs.getAll();
 	}
 	
-	@Test
-	public void test() {
-		System.out.println("----------------Test--------------------");
-		Integer g_no = list.get(list.size()-1).getG_no();
-		System.out.println(osDao.selectWithG_no(g_no));
-		System.out.println(gdao.selectListWithG_no(g_no));
-		System.out.println("---------------- !Test --------------------");
+	private GoodsVO createGoods(CategoryVO categoryVO) {
+		GoodsVO g = new GoodsVO();
+		g.setDetail("내용 테스트");
+		g.setPurchase_price(10000);
+		g.setSell_price(15000);
+		g.setDiscount_rate(10);
+		g.setSaving_mileage(1);
+		g.setStatus(GoodsStatus.FOR_SALE);
+		g.setC_no(categoryVO.getC_no());
+		return g;
 	}
 	
 	@Test
-	public void statusTest() {
-		System.out.println(CommonUtil.convertToJSON(GoodsStatus.values()));
+	public void GoodsServiceInsert() {
+//		gs.enroll(g);
 	}
 	
 	@Test
-	public void getOneTest() {
-		
-		System.out.println("----------------getOneTest--------------------");
-		System.out.println();
-		System.out.println(MybatisUtil.openSession().getMapper(GoodsMapper.class).selectOne(list.get(0).getG_no()));
-		GoodsVO g = gs.detail(list.get(0).getG_no());
-		double rate = g.getDiscount_rate();
-		double rate2 = (100 - rate) / 100;
-		System.out.println(g.getSell_price() * rate2);
-		System.out.println();
-		System.out.println("---------------- !getOneTest --------------------");
+	public void insert() {
+		assertThat(goodsMapper.insert(g), is(1));
+		goodsOptions.forEach(vo -> {
+			vo.setG_no(g.getG_no());
+			assertThat(goodsOptionMapper.insert(vo), is(1));
+		});
+		List<StockVO> list2 = oss.createOptionStocks(goodsOptions);
+		list2.forEach(vo -> {
+			vo.setG_no(g.getG_no());
+			assertThat(stockMapper.insert(vo), is(1));
+		});
 	}
 	
 	@Test
-	public void getAllTest() {
-		System.out.println(gs.getAll().size());
+	public void insertWithNoOption() {
+		goodsOptions.clear();
+//		gs.newenroll(g, goodsOptions, null);
 	}
 	
 	@Test
-	public void getWithCategory() {
-		System.out.println("----------------getWithCategory--------------------");
-		CategoryVO c = new CategoryVO();
-		MenuLevel.groupingCategories(cs.getAll());
-		c.setC_no(80);
-		System.out.println(c.getTitle() + " | " + c.getMenu_level());
-		System.out.println();
-		System.out.println("1 : " + gs.getWithCategory(c).size());
-		System.out.println();
-		System.out.println("메인 이미지 " + gs.getWithCategory(c).get(0).getMainImg());
-		System.out.println("----------------! getWithCategory !--------------------");
+	public void createGoodsOptionList() {
+		System.out.println("createGoodsOptionList");
+		goodsOptions.forEach(vo -> {
+			System.out.println(vo);
+		});
+		List<StockVO> stocks = oss.createOptionStocks(goodsOptions);
+		stocks.forEach(vo -> {
+			System.out.println(vo);
+		});
 	}
-	
-	
 }

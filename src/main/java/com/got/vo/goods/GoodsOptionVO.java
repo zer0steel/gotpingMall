@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GoodsOptionVO extends OptionsVO {
+public class GoodsOptionVO extends OptionVO {
 	private Integer g_no;
 	private String value = "", extra_cost = "";
 	private List<Detail> details;
@@ -85,6 +85,13 @@ public class GoodsOptionVO extends OptionsVO {
 		String value;
 		int extra_cost;
 		
+		public Detail() {}
+		public Detail(String value, int extra_cost) {
+			super();
+			this.value = value;
+			this.extra_cost = extra_cost;
+		}
+
 		@Override
 		public String toString() {
 			return "Detail [value=" + value + ", extra_cost=" + extra_cost + "]";

@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.got.dao.MemberDao;
 import com.got.enums.Grade;
+import com.got.mapper.MileageMapper;
 import com.got.mapper.member.MemberGradeMapper;
 import com.got.mapper.member.MemberMapper;
-import com.got.mapper.member.MileageMapper;
 import com.got.vo.MemberGradeVO;
 import com.got.vo.MemberVO;
 import com.got.vo.MileageVO;

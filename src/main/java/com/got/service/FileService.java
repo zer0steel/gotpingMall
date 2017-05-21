@@ -14,7 +14,7 @@ import com.got.enums.MenuLevel;
 import com.got.util.CommonUtil;
 import com.got.util.FileUtil;
 import com.got.vo.FileVO;
-import com.got.vo.GoodsImgVO;
+import com.got.vo.GoodsImageVO;
 import com.got.vo.goods.CategoryVO;
 
 @Service
@@ -61,14 +61,22 @@ public class FileService {
 			throw new RuntimeException("삭제 실패, 확인바람");
 	}
 
-	public List<GoodsImgVO> setupImages(Integer c_no, String[] fileInfoJSON) {
+	public List<GoodsImageVO> setupImages(Integer c_no, String[] fileInfoJSON) {
 		Objects.requireNonNull(c_no);
 		if(Objects.isNull(fileInfoJSON))
 			return new ArrayList<>();
 		
 		String folderName = getSaveFolderName(c_no);
-		List<GoodsImgVO> tempGoodsImgs = CommonUtil.getVO(fileInfoJSON, GoodsImgVO.class);
+		List<GoodsImageVO> tempGoodsImgs = CommonUtil.getVO(fileInfoJSON, GoodsImageVO.class);
 		return FileUtil.moveToSavePath(folderName, tempGoodsImgs);
+	}
+	
+	public List<GoodsImageVO> setupImages(Integer c_no, List<GoodsImageVO> tempImages) {
+		Objects.requireNonNull(c_no);
+		Objects.requireNonNull(tempImages);
+		
+		String folderName = getSaveFolderName(c_no);
+		return FileUtil.moveToSavePath(folderName, tempImages);
 	}
 	
 	private String getSaveFolderName(Integer g_no) {

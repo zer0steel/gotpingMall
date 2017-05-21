@@ -66,8 +66,8 @@ goods.option = (function() {
 			let $tbody = $('<tbody />').addClass('option').data({'index': i, 'optCount': 0}).appendTo( $table );
 			let $tr = $('<tr />').appendTo( $tbody );
 			$('<td />').text(this.o_name).append( 
-				$('<input />').attr({'type':'hidden', 'name':'list['+ i +'].o_no'}).val(this.o_no),
-				$('<input />').attr({'type':'hidden', 'name':'list['+ i +'].o_name'}).val(this.o_name)
+				$('<input />').attr({'type':'hidden', 'name':'goodsOptions['+ i +'].o_no'}).val(this.o_no),
+				$('<input />').attr({'type':'hidden', 'name':'goodsOptions['+ i +'].o_name'}).val(this.o_name)
 			).appendTo( $tr );
 			$('<td />').append( $('<a />').addClass('btn btn-info btn-sm').text('항목 추가') ).appendTo( $tr );
 			$('<td />').appendTo( $tr );
@@ -80,8 +80,8 @@ goods.option = (function() {
 		let optCount = $tbody.data('optCount');
 		let $tr = $('<tr />').addClass('value');
 		$('<td />').appendTo( $tr );
-		$('<td />').append($('<input />').attr({'type':'text', 'name':'list['+ index +'].details['+ optCount +'].value'})).appendTo( $tr );
-		$('<td />').append($('<input />').attr({'type':'number', 'name':'list['+ index +'].details['+ optCount +'].extra_cost'}).val(0)).appendTo( $tr );
+		$('<td />').append($('<input />').attr({'type':'text', 'name':'goodsOptions['+ index +'].details['+ optCount +'].value'})).appendTo( $tr );
+		$('<td />').append($('<input />').attr({'type':'number', 'name':'goodsOptions['+ index +'].details['+ optCount +'].extra_cost'}).val(0)).appendTo( $tr );
 		$('<td />').append( $('<button />').addClass('btn btn-danger btn-warning btn-delete').html('삭제') ).appendTo( $tr );
 		$tbody.append( $tr );
 		

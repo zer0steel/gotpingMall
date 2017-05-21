@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.got.enums.GoodsStatus;
-import com.got.vo.GoodsImgVO;
+import com.got.vo.GoodsImageVO;
 
 public class GoodsVO extends CategoryVO {
 	private Integer g_no;
@@ -14,18 +14,25 @@ public class GoodsVO extends CategoryVO {
 	private double discount_rate;
 	private String name, detail;
 	private GoodsStatus status;
-	private GoodsImgVO mainImg;
-	private List<GoodsImgVO> images;
+	private GoodsImageVO mainImg;
+	private List<GoodsImageVO> images;
 	private List<ShippingReceivingVO> history;
 	private List<GoodsOptionVO> goodsOptions;
-	private List<OptionStockVO> optionStocks;
+	private List<StockVO> stocks;
 	
-	public GoodsVO() {
+	@Override
+	public String toString() {
+		return "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
+				+ sell_price + ", saving_mileage=" + saving_mileage + ", discount_price=" + discount_price
+				+ ", discount_rate=" + discount_rate + ", name=" + name + ", detail=" + detail + ", status=" + status
+				+ ", mainImg=" + mainImg + ", images=" + images + ", history=" + history + ", goodsOptions="
+				+ goodsOptions + ", stocks=" + stocks + "]";
 	}
-	
+
+	public GoodsVO() {}
 	public GoodsVO(Integer g_no) {
 		this.g_no = g_no;
-		this.optionStocks = new ArrayList<>();
+		this.stocks = new ArrayList<>();
 	}
 
 	public Integer getG_no() {
@@ -118,14 +125,14 @@ public class GoodsVO extends CategoryVO {
 		this.history = history;
 	}
 
-	public List<GoodsImgVO> getImages() {
+	public List<GoodsImageVO> getImages() {
 		return images;
 	}
 
-	public void setImages(List<GoodsImgVO> images) {
+	public void setImages(List<GoodsImageVO> images) {
 		this.images = images;
 		if( Objects.nonNull(images) )
-			for(GoodsImgVO img : images)
+			for(GoodsImageVO img : images)
 				if("main".equals(img.getLocation())) {
 					this.mainImg = img;
 					break;
@@ -136,11 +143,11 @@ public class GoodsVO extends CategoryVO {
 		this.stock += amount;
 	}
 
-	public GoodsImgVO getMainImg() {
+	public GoodsImageVO getMainImg() {
 		return mainImg;
 	}
 
-	public void setMainImg(GoodsImgVO mainImg) {
+	public void setMainImg(GoodsImageVO mainImg) {
 		this.mainImg = mainImg;
 	}
 
@@ -161,12 +168,12 @@ public class GoodsVO extends CategoryVO {
 		this.discount_price = (int)(this.sell_price * rate);
 	}
 
-	public List<OptionStockVO> getOptionStocks() {
-		return optionStocks;
+	public List<StockVO> getStocks() {
+		return stocks;
 	}
 
-	public void setOptionStocks(List<OptionStockVO> optionStocks) {
-		this.optionStocks = optionStocks;
+	public void setStocks(List<StockVO> stocks) {
+		this.stocks = stocks;
 	}
 	
 	public int getRealPrice() {
@@ -175,17 +182,8 @@ public class GoodsVO extends CategoryVO {
 				this.discount_price;
 	}
 
-	@Override
-	public String toString() {
-		return "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
-				+ sell_price + ", saving_mileage=" + saving_mileage + ", discount_price=" + discount_price
-				+ ", discount_rate=" + discount_rate + ", name=" + name + ", detail=" + detail + ", status=" + status
-				+ ", mainImg=" + mainImg + ", images=" + images + ", history=" + history + ", goodsOptions="
-				+ goodsOptions + ", optionStocks=" + optionStocks + "]";
-	}
-
-	public void setExtraCost(List<OptionStockVO> dbDataStocks) {
+	public void setExtraCost(List<StockVO> dbDataStocks) {
 		for(int i = 0; i < dbDataStocks.size(); i++)
-			this.optionStocks.get(i).setOs_extra_cost(dbDataStocks.get(i).getOs_extra_cost());
+			this.stocks.get(i).setOs_extra_cost(dbDataStocks.get(i).getOs_extra_cost());
 	}
 }

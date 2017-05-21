@@ -91,7 +91,7 @@
 		</div>
 	</div>
 </div>
-<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOption.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/goods/goodsOption.js?ver=1"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 <script type="text/javascript">
 // 뷰페이지 부분
@@ -104,7 +104,6 @@
 	uploadMain( $('#test') ); */
 	
 	var option = goods.option($("#table-option"));
-	console.log(option);
 	/* option.setTestButton(); */
 	
 	//대분류 항목이 클릭될때 실행
@@ -174,6 +173,7 @@
 	
 	Dropzone.autoDiscover = false;
 	var	isFirst = true;
+	var fileCount = 0;
 	$("#uploadFile").dropzone({
 		init : function() {
 			this.on("success", function(file, fileInfo) {
@@ -185,9 +185,13 @@
 				}
 				else
 					fileInfo.location = "main_sub";
-				var data = JSON.stringify(fileInfo);
-				var hiddenFileData = $("<input />").attr({"type":"text", "name":"fileInfoJSON"}).val(data);
-				$("#goods-form").append( hiddenFileData );
+				console.log(fileInfo);
+				$("#goods-form").append(
+					$("<input />").attr({'type':'text', 'name':'images[' + fileCount + '].f_no'}).val(fileInfo.f_no),
+					$("<input />").attr({'type':'text', 'name':'images[' + fileCount + '].location'}).val(fileInfo.location),
+					$("<input />").attr({'type':'text', 'name':'images[' + fileCount + '].save_name'}).val(fileInfo.save_name)
+				);
+				fileCount++;
 			});
 		}
 	});

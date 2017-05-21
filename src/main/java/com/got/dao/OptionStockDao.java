@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.got.dao.template.DaoTemplate;
-import com.got.vo.goods.OptionStockVO;
+import com.got.vo.goods.StockVO;
 
 @Repository
 public class OptionStockDao {
 	
 	@Autowired private DaoTemplate dao;
 
-	public List<OptionStockVO> selectWithG_no(Integer g_no) {
+	public List<StockVO> selectWithG_no(Integer g_no) {
 		return dao.selectList("os.selectWithG_no", g_no);
 	}
 }

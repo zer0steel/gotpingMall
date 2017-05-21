@@ -1,5 +1,9 @@
 package com.got.domain;
 
+import javax.inject.Inject;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.dao.CategoryDao;
+import com.got.mapper.goods.CategoryMapper;
 import com.got.service.CategoryService;
+import com.got.vo.goods.CategoryVO;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -19,9 +25,23 @@ public class CategoryTest {
 	
 	@Autowired CategoryDao dao;
 	@Autowired CategoryService s;
+	@Inject CategoryMapper categoryMapper;
+	
+	CategoryVO c;
+	boolean isSetup = false;
+	
+	@Before
+	public void setup() {
+		if(isSetup)
+			return;
+		c = new CategoryVO();
+		c.setTitle("대분류 테스트");
+		c.setMenu_level(1);
+		isSetup = true;
+	}
 	
 	@Test
-	public void selectOne() {
-		System.out.println(s.getOneWithJSON(84));
+	public void insert() {
+		categoryMapper.insert(c);
 	}
 }

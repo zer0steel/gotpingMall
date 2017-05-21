@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.service.GoodsOptionService;
-import com.got.service.OptionStockService;
+import com.got.service.StockService;
 
 @Controller
 public class GoodsOptionController {
 	
 	private static Logger log = Logger.getLogger(GoodsOptionController.class);
 	
-	@Autowired private OptionStockService oss;
+	@Autowired private StockService oss;
 	@Autowired private GoodsOptionService gos;
 	
 	@ResponseBody

@@ -3,19 +3,24 @@ package com.got.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 
 import com.got.dao.OrderDao;
 import com.got.vo.OrderDetailVO;
 import com.got.vo.OrderVO;
+import com.got.vo.PaymentVO;
 
 @Service
 public class OrderService {
 	
-	@Autowired private OrderDao dao;
+	@Inject private OrderDao dao;
 
 	public OrderVO getBuyList(List<OrderDetailVO> list) {
 		return dao.createOrderVO(list);
+	}
+
+	public void saveCheckoutInfo(PaymentVO p) {
 	}
 }

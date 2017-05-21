@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.got.service.GoodsOptionService;
 import com.got.util.CommonUtil;
-import com.got.vo.goods.OptionsVO;
+import com.got.vo.goods.OptionVO;
 
 @Controller("adminGoodsOptionController")
 public class GoodsOptionController {
@@ -20,7 +20,7 @@ public class GoodsOptionController {
 	@Autowired private GoodsOptionService gos;
 	
 	@RequestMapping(value = "admin/goods/option/insert.yo", method = RequestMethod.POST)
-	public ModelAndView insertNewOption(OptionsVO o) {
+	public ModelAndView insertNewOption(OptionVO o) {
 		log.info(o);
 		gos.add(o);
 		return new ModelAndView(CategoryController.REDIRECT_CATEGORY_PAGE);
@@ -33,7 +33,7 @@ public class GoodsOptionController {
 	}
 	
 	@RequestMapping(value = "admin/goods/option/update.yo", method = RequestMethod.POST)
-	public ModelAndView updateOption(OptionsVO o) {
+	public ModelAndView updateOption(OptionVO o) {
 		gos.update(o);
 		return new ModelAndView(CategoryController.REDIRECT_CATEGORY_PAGE);
 	}
