@@ -46,8 +46,8 @@ public class ShippingReceivingDao {
 			System.out.println(g.getStocks());
 			if( Objects.nonNull(g.getStocks()) ) {
 				g.getStocks().forEach(o -> {
-					Objects.requireNonNull(o.getOs_no());
-					if(o.getOs_stock() != 0)
+					Objects.requireNonNull(o.getS_no());
+					if(o.getAmount() != 0)
 						session.update("os.updateStock", o);
 				});
 			}

@@ -131,7 +131,7 @@
 					<c:forEach var="sr" items="${g.history }">
 						<tr>
 							<td>${sr.enumCategory.korName }</td>
-							<td>${sr.amount }</td>
+							<td>${sr.change_amount }</td>
 							<td>${sr.regdate }</td>
 							<td>${sr.detail }</td>
 						</tr>
@@ -162,15 +162,15 @@
 						</tr>
 					</thead>
 					<tbody>					
-					<c:forEach var="os" items="${g.stocks }">
+					<c:forEach var="s" items="${g.stocks }">
 						<tr>
-							<td>${os.combination }</td>
-							<td>${os.os_stock }</td>
+							<td>${s.combination }</td>
+							<td>${s.amount }</td>
 						</tr>
 					</c:forEach>
 						<tr>
 							<td>총합</td>
-							<td>${g.stock }</td>
+							<%-- <td>${g.stock }</td> --%>
 						</tr>
 					</tbody>
 				</table>

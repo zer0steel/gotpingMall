@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.got.enums.HistoryCategory;
 
 public class ShippingReceivingVO {
-	private int sr_no, g_no, amount, price, change_stock;
+	private int sr_no, g_no, change_amount, price, remain_stock;
 	private String detail;
 	@JsonFormat(shape = Shape.STRING, pattern = "m월 dd일 hh시", timezone = "Asia/Seoul")
 	private Timestamp regdate;
@@ -30,11 +30,11 @@ public class ShippingReceivingVO {
 	}
 
 	public int getAmount() {
-		return amount;
+		return change_amount;
 	}
 
 	public void setAmount(int amount) {
-		this.amount = amount;
+		this.change_amount = amount;
 		if (this.category != null)
 			modifyAmount();
 	}
@@ -83,21 +83,21 @@ public class ShippingReceivingVO {
 
 	private void modifyAmount() {
 		if (this.category.isMinusStockCategory())
-			this.amount = Math.negateExact(this.amount);
+			this.change_amount = Math.negateExact(this.change_amount);
 	}
 
 	public int getChange_stock() {
-		return change_stock;
+		return remain_stock;
 	}
 
 	public void setChange_stock(int change_stock) {
-		this.change_stock = change_stock;
+		this.remain_stock = change_stock;
 	}
 
 	@Override
 	public String toString() {
-		return "ShippingReceivingVO [sr_no=" + sr_no + ", g_no=" + g_no + ", amount=" + amount + ", price=" + price
-				+ ", change_stock=" + change_stock + ", detail=" + detail + ", regdate=" + regdate + ", category="
+		return "ShippingReceivingVO [sr_no=" + sr_no + ", g_no=" + g_no + ", amount=" + change_amount + ", price=" + price
+				+ ", change_stock=" + remain_stock + ", detail=" + detail + ", regdate=" + regdate + ", category="
 				+ category + "]";
 	}
 

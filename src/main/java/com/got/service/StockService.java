@@ -49,8 +49,8 @@ public class StockService {
 	
 	private List<StockVO> createStockVO() {
 		StockVO s = new StockVO();
-		s.setOs_stock(0);
-		s.setOs_extra_cost(0);
+		s.setAmount(0);
+		s.setExtra_cost(0);
 		List<StockVO> list = new ArrayList<>();
 		list.add(s);
 		return list;
@@ -74,7 +74,7 @@ public class StockService {
 				}
 				StockVO o = new StockVO();
 				o.setCombination(sb.toString());
-				o.setOs_extra_cost(extraCost);
+				o.setExtra_cost(extraCost);
 				returnList.add(o);
 			}
 		}

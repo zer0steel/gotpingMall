@@ -106,12 +106,12 @@
 								</tr>
 							</thead>
 							<tbody>					
-							<c:forEach var="os" items="${g.optionStocks }">
-								<tr id="${os.os_no }">
-									<td>${os.combination }</td>
+							<c:forEach var="s" items="${g.stocks }">
+								<tr id="${s.s_no }">
+									<td>${s.combination }</td>
 									<td>
-									<input type="hidden" name="os_no" value="${os.os_no }"/>
-									<input type="number" name="os_stock" class="input-stock"/>
+									<input type="hidden" name="s_no" value="${s.s_no }"/>
+									<input type="number" name="change_amount" class="input-stock"/>
 									</td>
 								</tr>
 							</c:forEach>

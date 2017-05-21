@@ -10,7 +10,7 @@ import com.got.vo.goods.ShippingReceivingVO;
 public interface SRMapper {
 	
 	final String SELECT_LIST_WITH_OS_NO = "SELECT r.* FROM ("
-			+ "SELECT sr.sr_no, sr.category, sr.change_amount, sr.regdate, s.combination "
+			+ "SELECT sr.sr_no, sr.category, sr.change_amount, sr.regdate, sr.detail, s.combination "
 			+ "FROM goods g, stock s, shipping_receiving sr "
 			+ "WHERE g.g_no = s.g_no AND s.os_no = sr.os_no AND g.g_no = #{g_no} "
 			+ "ORDER BY regdate DESC"

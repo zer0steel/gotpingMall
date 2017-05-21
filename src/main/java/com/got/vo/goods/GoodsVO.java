@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.got.enums.GoodsStatus;
 import com.got.vo.GoodsImageVO;
 
@@ -184,6 +183,6 @@ public class GoodsVO extends CategoryVO {
 
 	public void setExtraCost(List<StockVO> dbDataStocks) {
 		for(int i = 0; i < dbDataStocks.size(); i++)
-			this.stocks.get(i).setOs_extra_cost(dbDataStocks.get(i).getOs_extra_cost());
+			this.stocks.get(i).setExtra_cost(dbDataStocks.get(i).getExtra_cost());
 	}
 }

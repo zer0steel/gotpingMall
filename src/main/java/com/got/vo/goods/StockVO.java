@@ -11,35 +11,44 @@ public class StockVO {
 		return "OptionStockVO [os_no=" + s_no + ", g_no=" + g_no + ", os_stock=" + amount + ", combination="
 				+ combination + ", os_extra_cost=" + extra_cost + "]";
 	}
-	
-	public Integer getOs_no() {
+
+	public Integer getS_no() {
 		return s_no;
 	}
-	public void setOs_no(Integer os_no) {
-		this.s_no = os_no;
+
+	public void setS_no(Integer s_no) {
+		this.s_no = s_no;
 	}
-	public int getOs_stock() {
-		return amount;
-	}
-	public void setOs_stock(int os_stock) {
-		this.amount = os_stock;
-	}
+
 	public Integer getG_no() {
 		return g_no;
 	}
+
 	public void setG_no(Integer g_no) {
 		this.g_no = g_no;
 	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
 	public String getCombination() {
 		return combination;
 	}
+
 	public void setCombination(String combination) {
 		this.combination = combination;
 	}
-	public int getOs_extra_cost() {
+
+	public int getExtra_cost() {
 		return extra_cost;
 	}
-	public void setOs_extra_cost(int os_extra_cost) {
-		this.extra_cost = os_extra_cost;
+
+	public void setExtra_cost(int extra_cost) {
+		this.extra_cost = extra_cost;
 	}
 }
