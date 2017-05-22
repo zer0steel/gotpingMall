@@ -206,7 +206,7 @@
 		</div>
 	</div> -->
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/optionalStock.js?ver=1"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/stock.js?ver=1"></script>
 <script type="text/javascript">
 (function() {
 	var optCnt = goods.selectOption({

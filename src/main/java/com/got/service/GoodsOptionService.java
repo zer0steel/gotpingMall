@@ -8,12 +8,11 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.got.dao.GoodsOptionDao;
-import com.got.dao.OptionStockDao;
 import com.got.mapper.goods.GoodsOptionMapper;
+import com.got.mapper.goods.StockMapper;
 import com.got.util.CommonUtil;
 import com.got.vo.goods.GoodsOptionVO;
 import com.got.vo.goods.GoodsVO;
@@ -23,8 +22,8 @@ import com.got.vo.goods.OptionVO;
 public class GoodsOptionService {
 	
 	@Inject private GoodsOptionDao dao;
-	@Inject private OptionStockDao osDao;
 	@Inject GoodsOptionMapper goodsOptionMapper;
+	@Inject StockMapper stockMapper;
 	
 	public List<GoodsOptionVO> filteringEmptyArray(List<GoodsOptionVO> list) {
 		return Arrays.asList(list.stream().filter(vo -> Objects.nonNull(vo.getDetails()) ).toArray(GoodsOptionVO[]::new));
@@ -33,6 +32,7 @@ public class GoodsOptionService {
 	public void insertGoodsOption(GoodsVO g) {
 		filteringEmptyArray(g.getGoodsOptions()).forEach(vo -> {
 			vo.setG_no(g.getG_no());
+			vo.setupStrings();
 			goodsOptionMapper.insert(vo);
 		});
 	}
@@ -58,11 +58,11 @@ public class GoodsOptionService {
 		return dao.selectListWithC_no(c_no);
 	}
 	
-	public String getOptionalStocksJSON(Integer g_no) {
+	public String getStocksJSON(Integer g_no) {
 		Objects.requireNonNull(g_no);
 		Map<String, Object> map = new HashMap<>();
-		map.put("options", dao.selectListWithG_no(g_no));
-		map.put("stocks", osDao.selectWithG_no(g_no));
+		map.put("options", goodsOptionMapper.selectListWithG_no(g_no));
+		map.put("stocks", stockMapper.selectListWithG_no(g_no));
 		return CommonUtil.convertToJSON(map);
 	}
 }

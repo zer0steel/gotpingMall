@@ -10,10 +10,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.got.dao.FileDao;
 import com.got.dao.GoodsDao;
-import com.got.dao.GoodsOptionDao;
-import com.got.dao.OptionStockDao;
 import com.got.enums.GoodsStatus;
 import com.got.enums.MenuLevel;
 import com.got.mapper.files.GoodsImageMapper;
@@ -28,10 +25,7 @@ import com.got.vo.goods.StockVO;
 public class GoodsService {
 	
 	@Inject private GoodsDao dao;
-	@Inject private FileDao fdao;
-	@Inject private GoodsOptionDao goDao;
-	@Inject private SRService srService;
-	@Inject private OptionStockDao osDao;
+	@Inject private GoodsManagmentService managmentService;
 	
 	@Inject private StockService stockService;
 	@Inject private GoodsOptionService goodsOptionService;
@@ -98,7 +92,7 @@ public class GoodsService {
 	 */
 	public GoodsVO detailAndSRHistory(Integer g_no) {
 		GoodsVO g = detail(g_no);
-		g.setHistory(srService.getRecentHistory(g_no));
+		g.setHistory(managmentService.getRecentHistory(g_no));
 		return g;
 	}
 	
@@ -110,13 +104,13 @@ public class GoodsService {
 	 */
 	public GoodsVO updateStock(Integer g_no, int amount) {
 		Objects.requireNonNull(g_no);
-		GoodsVO g = dao.selectOne(g_no);
+		GoodsVO g = goodsMapper.selectOne(g_no);
 		g.updateStock(amount);
 		return g;
 	}
 
 	public void update(GoodsVO g) {
 		Objects.requireNonNull(g.getG_no());
-		dao.update(g);
+		goodsMapper.updateOne(g);
 	}
 }

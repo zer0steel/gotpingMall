@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import com.got.enums.GoodsStatus;
 import com.got.vo.GoodsImageVO;
+import com.got.vo.GoodsManagmentVO;
 
 public class GoodsVO extends CategoryVO {
 	private Integer g_no;
@@ -15,7 +16,7 @@ public class GoodsVO extends CategoryVO {
 	private GoodsStatus status;
 	private GoodsImageVO mainImg;
 	private List<GoodsImageVO> images;
-	private List<ShippingReceivingVO> history;
+	private List<GoodsManagmentVO> history;
 	private List<GoodsOptionVO> goodsOptions;
 	private List<StockVO> stocks;
 	
@@ -24,7 +25,7 @@ public class GoodsVO extends CategoryVO {
 		return "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
 				+ sell_price + ", saving_mileage=" + saving_mileage + ", discount_price=" + discount_price
 				+ ", discount_rate=" + discount_rate + ", name=" + name + ", detail=" + detail + ", status=" + status
-				+ ", mainImg=" + mainImg + ", images=" + images + ", history=" + history + ", goodsOptions="
+				+ ", mainImg=" + mainImg + ", images=" + images + ", GoodsManagmentVO=" + history + ", goodsOptions="
 				+ goodsOptions + ", stocks=" + stocks + "]";
 	}
 
@@ -116,11 +117,11 @@ public class GoodsVO extends CategoryVO {
 		this.status = status;
 	}
 
-	public List<ShippingReceivingVO> getHistory() {
+	public List<GoodsManagmentVO> getHistory() {
 		return history;
 	}
 
-	public void setHistory(List<ShippingReceivingVO> history) {
+	public void setHistory(List<GoodsManagmentVO> history) {
 		this.history = history;
 	}
 

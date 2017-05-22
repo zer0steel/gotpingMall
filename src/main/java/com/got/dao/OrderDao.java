@@ -25,9 +25,9 @@ public class OrderDao {
 				Integer g_no = vo.getG_no();
 				GoodsVO g = session.getMapper(GoodsMapper.class).selectOne(g_no);
 				g.setImages(session.getMapper(GoodsImageMapper.class).selectList(g_no));
-				vo.setOptionStock(session.getMapper(StockMapper.class).selectOne(vo.getOptionStock().getS_no()));
+				vo.setStock(session.getMapper(StockMapper.class).selectOne(vo.getS_no()));
 				vo.setGoods(g);
-				int totalPrice = (g.getRealPrice() + vo.getOptionStock().getExtra_cost()) * vo.getAmount();
+				int totalPrice = (g.getRealPrice() + vo.getExtra_cost()) * vo.getAmount();
 				vo.setTotal_price(totalPrice);
 				o.setTotal_price(o.getTotal_price() + totalPrice);
 			});

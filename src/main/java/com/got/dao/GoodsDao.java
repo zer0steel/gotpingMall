@@ -59,8 +59,4 @@ public class GoodsDao {
 		});
 		return list;
 	}
-	
-	public GoodsVO selectOne(int g_no) {
-		return dao.selectOne("g.selectOne", g_no);
-	}
 }

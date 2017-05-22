@@ -1,20 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="row">
-	<div class="x_panel">
-		<div class="x_title">
-			<h2>입출고내역 등록</h2>
-			<ul class="nav navbar-right panel_toolbox">
-				<li>
-					<a class="collapse-link" id="detail-collapse"><i class="fa fa-chevron-up"></i></a>
-				</li>
-			</ul>
-			<div class="clearfix"></div>
-		</div>
-		<div class="x_content">
-			<form id="sr-form" data-parsley-validate class="form-horizontal form-label-left" method="post" action="sr/insert.yo">
-				<input type="hidden" name="g_no" value=${g.g_no }>
-				
+<form id="sr-form" action="insertStock.yo" class="form-horizontal form-label-left" method="post" data-parsley-validate>
+<input type="hidden" name="g_no" value=${g.g_no }>
+	<div class="row">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>입출고내역 등록</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link" id="detail-collapse"><i class="fa fa-chevron-up"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
 				<div class="form-group">
 					<label class="control-label col-md-3 col-sm-3 col-xs-12">
 						분류
@@ -34,7 +33,7 @@
 						수량
 					</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="number" name="amount" class="form-control" required>
+						<input type="number" name="change_amount" class="form-control" required>
 					</div>
 				</div>
 				
@@ -61,27 +60,22 @@
 						<button type="button" class="btn btn-success" id="btn-enroll">등록</button>
 					</div>
 				</div>
-			</form>
-			
+			</div>
 		</div>
 	</div>
-</div>
-
-<div class="modal fade" id="stockModal" >
-	<div class="modal-dialog" style="display: table;">
-		<div class="modal-content">
-			<!-- header -->
-			<div class="modal-header">
-				<!-- 닫기(x) 버튼 -->
-				<button type="button" class="close" data-dismiss="modal">×</button>
-				<!-- header title -->
-				<h4 class="modal-title">재고 조정</h4>
-			</div>
-			<!-- body -->
-			<div class="modal-body">
-				<form id="stock-form" data-parsley-validate 
-					class="form-horizontal" method="post">
-					
+	
+	<div class="modal fade" id="stockModal" >
+		<div class="modal-dialog" style="display: table;">
+			<div class="modal-content">
+				<!-- header -->
+				<div class="modal-header">
+					<!-- 닫기(x) 버튼 -->
+					<button type="button" class="close" data-dismiss="modal">×</button>
+					<!-- header title -->
+					<h4 class="modal-title">재고 조정</h4>
+				</div>
+				<!-- body -->
+				<div class="modal-body">
 					<div class="form-group">
 						<label class="control-label col-md-3">
 						등록예정 재고량
@@ -97,27 +91,7 @@
 						</div>
 					</div>
 					
-					<div class="form-group">
-						<table class="table table-striped table-bordered table-stock">
-							<thead>
-								<tr>
-									<td>조합</td>
-									<td>재고량</td>
-								</tr>
-							</thead>
-							<tbody>					
-							<c:forEach var="s" items="${g.stocks }">
-								<tr id="${s.s_no }">
-									<td>${s.combination }</td>
-									<td>
-									<input type="hidden" name="s_no" value="${s.s_no }"/>
-									<input type="number" name="change_amount" class="input-stock"/>
-									</td>
-								</tr>
-							</c:forEach>
-							</tbody>
-						</table>
-					</div>
+					<div id="selectOption"></div>
 					
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -125,16 +99,29 @@
 							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 						</div>
 					</div>
-					
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
+</form>
+<script src="${pageContext.request.contextPath }/resources/js/goods/stock.js"></script>
 <script type="text/javascript">
 (function() {
 	var $stockTable = $('.table-stock');
+	
+	var option = goods.selectOption({
+		g_no : $('input[name=g_no]').val(),
+		$root : $('#selectOption'),
+		updateMode : true,
+		onStockChange : function(count) {
+			let expectCount = Number($('#totalExpect').val())
+			if(expectCount !== count)
+				$('#totalInput').css('color', 'red');
+			else
+				$('#totalInput').css('color', '');
+			$('#totalInput').val(count);
+		}
+	});
 	
 	$("#btn-enroll").click(function() {
 		addStock();
@@ -143,21 +130,21 @@
 	var addStock = function() {
 		if( !checkEmptyForm() )
 			return;
-		if( $stockTable.find('tbody tr').attr('id') ) {
+		if(option.getOptionCount() > 0) {
 			openModal();
 			return;
 		}
-		$("#sr-form").submit();
+ 		$("#sr-form").submit();
 	}
 	
 	var checkEmptyForm = function() {
 		if($("select[name=category]").val() == 0) {
 			alert("분류는 필수 입력사항 입니다.")
-			return;
+			return false;
 		}
-		if($("input[name=amount]").val().length == 0) {
+		if($("input[name=change_amount]").val().length == 0) {
 			alert("수량은 필수 입력사항 입니다.")
-			return;
+			return false;
 		}
 		
 		const OTHER = 6;
@@ -172,70 +159,22 @@
 	}
 	
 	var openModal = function() {
-		$(".input-stock").each(function() {
-			$(this).val(0);
-		});
+		option.setGoodsPrice($('input[name=price]').val());
 		$("#totalInput").val(0);
-		$("#totalExpect").val($("input[name=amount]").val());
+		$("#totalExpect").val($("input[name=change_amount]").val());
 		$("#stockModal").modal();
 	}
 	
-	$(".input-stock").keyup(function() {
-		calculateTotalInput();
-	});
-	
-	var calculateTotalInput = function() {
-		var totalInput = sumOfStocks();
-		var $totalInput = $('#totalInput');
-		var totalExpect = Number($("#totalExpect").val());
-		
-		$totalInput.val(totalInput);
-		if(totalExpect < totalInput)
-			$totalInput.css("color","red");
-		else
-			$totalInput.css("color","");
-	}
-	
-	var sumOfStocks = function() {
-		var totalInput = 0;
-		$stockTable.find(".input-stock").each(function() {
-			totalInput += Number($(this).val());
-		});
-		return totalInput;
-	}
-	
 	$('#btn-optionStockAdd').click(function() {
-		var totalInput = sumOfStocks();
+		var totalInput = Number($("#totalInput").val());
 		var totalExpect = Number($("#totalExpect").val());
 		if(totalInput !== totalExpect) {
 			alert('입력된 재고량이 등록하기로 한 예상 재고량과 다릅니다.');
 			return;
 		}
-		
-		var options = getOptions();
-		$(options).each(function() {
-			$('<input />').attr({'type':'hidden','name':'optionStocks'})
-			.val(JSON.stringify(this)).appendTo( $('#sr-form') );
-		});
 		$("#sr-form").submit();
 	});
 	
-	var getOptions = function() {
-		var options = [];
-		var g_no = $('input[name=g_no]').val();
-		$stockTable.find('tbody tr').each(function() {
-			options.push( createOption(g_no, $(this)) );
-		});
-		return options;
-	}
-	
-	var createOption = function(g_no, $tr) {
-		return {
-			g_no : g_no,
-			os_no : $tr.find('input[name=os_no]').val(),
-			os_stock : $tr.find('input[name=os_stock]').val()
-		};
-	} 
 	
 	$("select[name=category]").change(function() {
 		var code = $(this).val();

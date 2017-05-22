@@ -1,24 +1,26 @@
 package com.got.controller.admin;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.got.service.SRService;
+import com.got.service.GoodsManagmentService;
 import com.got.util.ModelAndView;
-import com.got.vo.goods.ShippingReceivingVO;
+import com.got.vo.GoodsManagmentVO;
+import com.got.vo.list.StockListContainer;
 
 @Controller
-public class SRController {
+public class GoodsManagmentController {
 	
-	@Autowired private SRService s;
+	@Inject private GoodsManagmentService s;
 	
-	@RequestMapping(value = "admin/goods/sr/insert.yo", method = RequestMethod.POST)
-	public ModelAndView insertSubmit(ShippingReceivingVO sr, String[] optionStocks) {
-		s.addHistoryAndStocks(sr, optionStocks);
+	@RequestMapping(value = "admin/goods/insertStock.yo", method = RequestMethod.POST)
+	public ModelAndView insertSubmit(Integer g_no, GoodsManagmentVO managmentVO) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/admin/goods/detail.yo?g_no=" + sr.getG_no());
+		s.addHistoryAndStocks(managmentVO);
+		mav.setViewName("redirect:/admin/goods/detail.yo?g_no=" + g_no);
 		return mav;
 	}
 	

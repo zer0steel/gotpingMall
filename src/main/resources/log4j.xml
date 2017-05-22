@@ -16,7 +16,7 @@
 	</logger>
 	
 	<logger name="com.got.service">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

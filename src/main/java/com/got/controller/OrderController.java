@@ -33,7 +33,6 @@ import com.got.vo.list.OrderDetailListContainer;
 @Controller
 public class OrderController {
 	
-	@Inject private GoodsService gs;
 	@Inject private MemberService ms;
 	@Inject private OrderService os;
 	@Inject private MileageService mileage;

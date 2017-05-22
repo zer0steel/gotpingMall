@@ -21,6 +21,6 @@ public class GoodsOptionController {
 	@ResponseBody
 	@RequestMapping(value = "goods/option/stock.yo", produces = "application/json; charset=UTF-8")
 	public String getOptinalStocks(Integer g_no) {
-		return gos.getOptionalStocksJSON(g_no);
+		return gos.getStocksJSON(g_no);
 	}
 }

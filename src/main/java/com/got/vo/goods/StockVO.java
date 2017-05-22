@@ -1,15 +1,17 @@
 package com.got.vo.goods;
 
+import java.util.List;
+
 public class StockVO {
 	private Integer s_no, g_no;
 	private int amount;
 	private String combination;
 	private int extra_cost;
-	
+
 	@Override
 	public String toString() {
-		return "OptionStockVO [os_no=" + s_no + ", g_no=" + g_no + ", os_stock=" + amount + ", combination="
-				+ combination + ", os_extra_cost=" + extra_cost + "]";
+		return "StockVO [s_no=" + s_no + ", g_no=" + g_no + ", amount=" + amount + ", combination=" + combination
+				+ ", extra_cost=" + extra_cost + ",]";
 	}
 
 	public Integer getS_no() {

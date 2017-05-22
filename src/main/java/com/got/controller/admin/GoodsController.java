@@ -1,21 +1,18 @@
 package com.got.controller.admin;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.enums.GoodsStatus;
-import com.got.enums.HistoryCategory;
+import com.got.enums.ManagementCategory;
 import com.got.service.CategoryService;
 import com.got.service.GoodsService;
 import com.got.util.ModelAndView;
 import com.got.vo.goods.GoodsVO;
-import com.got.vo.list.GoodsOptionListContainer;
 
 @Controller("adminGoodsController")
 public class GoodsController {
@@ -46,14 +43,13 @@ public class GoodsController {
 		return mav.setAdminViewPage("goods/list.jsp");
 	}
 	
-	@ResponseBody
 	@RequestMapping("admin/goods/detail.yo")
-	public ModelAndView detailGoods(HttpServletRequest req, Integer g_no) {
+	public ModelAndView detailGoods(Integer g_no) {
 		ModelAndView mav = new ModelAndView();
 		cs.setEnumsInMAV(mav)
 		.addObject("g",gs.detailAndSRHistory(g_no))
 		.addObject("status", GoodsStatus.values())
-		.addObject("hc", HistoryCategory.values());
+		.addObject("hc", ManagementCategory.values());
 		return mav.setAdminViewPage("goods/detail.jsp");
 	}
 	
