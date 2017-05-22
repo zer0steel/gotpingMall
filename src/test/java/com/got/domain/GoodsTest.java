@@ -4,8 +4,6 @@ package com.got.domain;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,33 +11,25 @@ import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.got.dao.GoodsOptionDao;
-import com.got.dao.OptionStockDao;
 import com.got.enums.GoodsStatus;
-import com.got.enums.MenuLevel;
 import com.got.mapper.goods.CategoryMapper;
 import com.got.mapper.goods.GoodsMapper;
 import com.got.mapper.goods.GoodsOptionMapper;
 import com.got.mapper.goods.OptionMapper;
 import com.got.mapper.goods.StockMapper;
-import com.got.service.CategoryService;
-import com.got.service.GoodsOptionService;
-import com.got.service.GoodsService;
-import com.got.service.StockService;
-import com.got.util.CommonUtil;
-import com.got.util.MybatisUtil;
+import com.got.service.goods.CategoryService;
+import com.got.service.goods.GoodsOptionService;
+import com.got.service.goods.GoodsService;
+import com.got.service.goods.StockService;
 import com.got.vo.VOHelper;
 import com.got.vo.goods.CategoryVO;
 import com.got.vo.goods.GoodsOptionVO;
 import com.got.vo.goods.GoodsVO;
-import com.got.vo.goods.OptionVO;
 import com.got.vo.goods.StockVO;
-import com.got.vo.goods.GoodsOptionVO.Detail;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)

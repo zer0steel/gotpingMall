@@ -7,28 +7,25 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.got.service.GoodsService;
 import com.got.service.MemberService;
 import com.got.service.MileageService;
 import com.got.service.OrderService;
 import com.got.util.CommonUtil;
 import com.got.util.ModelAndView;
-import com.got.vo.MemberVO;
 import com.got.vo.MileageVO;
 import com.got.vo.OrderDetailVO;
 import com.got.vo.PaymentVO;
 import com.got.vo.list.OrderDetailListContainer;
+import com.got.vo.member.MemberVO;
 
 @Controller
 public class OrderController {

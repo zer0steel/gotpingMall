@@ -18,6 +18,9 @@ public interface GoodsMapper {
 	@Select("SELECT * FROM goods g, category c WHERE g.c_no = c.c_no AND g.g_no = #{g_no}")
 	public GoodsVO selectOne(Integer g_no);
 	
+	@Select("SELECT * FROM goods g, category c WHERE g.c_no = c.c_no AND c.c_no = #{c_no} AND is_deleted = 'false'")
+	public List<GoodsVO> selectListWithSmall(Integer c_no);
+	
 	final String INSERT = "INSERT INTO goods(g_no, c_no, name, detail, " +
 		"purchase_price, sell_price, discount_rate, saving_mileage, status_code, is_deleted)" +
 		"VALUES(#{g_no}, #{c_no}, #{name}, #{detail}, " +

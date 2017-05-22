@@ -10,7 +10,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.controller.RsaController;
 import com.got.service.MemberService;
-import com.got.vo.MemberVO;
+import com.got.vo.member.MemberVO;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)

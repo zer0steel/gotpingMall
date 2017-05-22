@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.got.service.GoodsOptionService;
-import com.got.service.StockService;
+import com.got.service.goods.GoodsOptionService;
+import com.got.service.goods.StockService;
 
 @Controller
 public class GoodsOptionController {

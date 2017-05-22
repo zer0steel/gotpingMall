@@ -1,4 +1,4 @@
-package com.got.service;
+package com.got.service.goods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.got.dao.OptionStockDao;
 import com.got.mapper.goods.StockMapper;
 import com.got.util.CommonUtil;
 import com.got.vo.goods.GoodsOptionVO;
@@ -19,7 +18,6 @@ import com.got.vo.goods.GoodsOptionVO.Detail;
 @Service
 public class StockService {
 	
-	@Inject private OptionStockDao dao;
 	@Inject StockMapper stockMapper;
 	
 	public void insertStock(GoodsVO g) {
@@ -31,7 +29,7 @@ public class StockService {
 
 	public List<StockVO> getList(Integer g_no) {
 		Objects.requireNonNull(g_no);
-		return dao.selectWithG_no(g_no);
+		return stockMapper.selectListWithG_no(g_no);
 	}
 	
 	public String getJSONList(Integer g_no) {

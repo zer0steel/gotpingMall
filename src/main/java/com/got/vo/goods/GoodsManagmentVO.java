@@ -1,4 +1,4 @@
-package com.got.vo;
+package com.got.vo.goods;
 
 import java.sql.Timestamp;
 import java.util.List;

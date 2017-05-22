@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 
-import com.got.vo.GoodsManagmentVO;
+import com.got.vo.goods.GoodsManagmentVO;
 
 public interface GoodsManagmentMapper {
 	

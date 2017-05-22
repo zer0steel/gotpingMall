@@ -2,7 +2,7 @@ package com.got.mapper.goods;
 
 import org.apache.ibatis.annotations.Insert;
 
-import com.got.vo.ControlDetailVO;
+import com.got.vo.goods.ControlDetailVO;
 
 public interface ControlDetailMapper {
 	

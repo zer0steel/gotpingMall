@@ -1,4 +1,4 @@
-package com.got.vo;
+package com.got.vo.member;
 
 import java.security.PrivateKey;
 import java.sql.Timestamp;
@@ -11,6 +11,7 @@ import java.util.Objects;
 import com.got.enums.Grade;
 import com.got.util.BCrypt;
 import com.got.util.RSA;
+import com.got.vo.MileageVO;
 
 public class MemberVO {
 	private Integer m_no;

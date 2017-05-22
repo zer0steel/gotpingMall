@@ -1,10 +1,4 @@
-package com.got.vo;
-
-import java.sql.Timestamp;
-
-import com.got.enums.GoodsStatus;
-import com.got.enums.ManagementCategory;
-import com.got.vo.goods.StockVO;
+package com.got.vo.goods;
 
 public class ControlDetailVO extends StockVO {
 	private Integer cd_no, gc_no;

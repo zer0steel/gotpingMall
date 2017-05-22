@@ -1,4 +1,4 @@
-package com.got.vo;
+package com.got.vo.member;
 
 import java.security.Timestamp;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package com.got.vo;
+package com.got.vo.file;
 
 import java.sql.Timestamp;
 

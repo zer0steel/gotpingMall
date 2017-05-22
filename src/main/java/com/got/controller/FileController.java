@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.got.service.FileService;
 import com.got.util.CommonUtil;
-import com.got.vo.FileVO;
+import com.got.vo.file.FileVO;
 
 @Controller
 public class FileController {

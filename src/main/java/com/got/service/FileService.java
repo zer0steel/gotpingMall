@@ -13,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.got.enums.MenuLevel;
 import com.got.mapper.files.FileMapper;
 import com.got.util.FileUtil;
-import com.got.vo.FileVO;
-import com.got.vo.GoodsImageVO;
+import com.got.vo.file.FileVO;
+import com.got.vo.file.GoodsImageVO;
 
 @Service
 public class FileService {

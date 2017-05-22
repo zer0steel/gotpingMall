@@ -1,4 +1,4 @@
-package com.got.service;
+package com.got.service.goods;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,13 +10,12 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.got.dao.GoodsDao;
 import com.got.enums.GoodsStatus;
-import com.got.enums.MenuLevel;
 import com.got.mapper.files.GoodsImageMapper;
 import com.got.mapper.goods.GoodsMapper;
 import com.got.mapper.goods.GoodsOptionMapper;
 import com.got.mapper.goods.StockMapper;
+import com.got.service.GoodsImageService;
 import com.got.vo.goods.CategoryVO;
 import com.got.vo.goods.GoodsVO;
 import com.got.vo.goods.StockVO;
@@ -24,7 +23,6 @@ import com.got.vo.goods.StockVO;
 @Service
 public class GoodsService {
 	
-	@Inject private GoodsDao dao;
 	@Inject private GoodsManagmentService managmentService;
 	
 	@Inject private StockService stockService;
@@ -62,7 +60,18 @@ public class GoodsService {
 			}
 			g.getStocks().add(os);
 		});
-		return dao.selectList(goodsMap.values());
+//		List<GoodsVO> list = new ArrayList<>();
+//		dao.transactionTemplate(session -> {
+//			collection.forEach(vo -> {
+//				GoodsVO g = session.selectOne("g.selectOne", vo.getG_no());
+//				g.setImages(session.selectList("f.selectGoodsImg",vo.getG_no()));
+//				g.setStocks(vo.getStocks());
+//				List<StockVO> options = session.selectList("os.selectListWithOS_no", vo.getStocks());
+//				g.setExtraCost(options);
+//				list.add(g);
+//			});
+//		});
+		return null;
 	}
 	
 	public GoodsVO detail(Integer g_no) {
@@ -77,10 +86,10 @@ public class GoodsService {
 	public List<GoodsVO> getWithCategory(CategoryVO c) {
 		Objects.requireNonNull(c.getC_no());
 		
-		if(c.getMenuLevel() == MenuLevel.SMALL)
-			return dao.selectListWithSmall(c);
-		else if(c.getMenuLevel() == MenuLevel.MIDDLE)
-			return dao.selectListWithMiddle(c.getC_no());
+//		if(c.getMenuLevel() == MenuLevel.SMALL)
+//			return dao.selectListWithSmall(c);
+//		else if(c.getMenuLevel() == MenuLevel.MIDDLE)
+//			return dao.selectListWithMiddle(c.getC_no());
 		
 		throw new IllegalArgumentException("아직 대분류는 지원 안함");
 	}

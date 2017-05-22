@@ -1,4 +1,4 @@
-package com.got.service;
+package com.got.service.goods;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import com.got.mapper.goods.ControlDetailMapper;
 import com.got.mapper.goods.GoodsManagmentMapper;
 import com.got.mapper.goods.StockMapper;
 import com.got.util.CommonUtil;
-import com.got.vo.GoodsManagmentVO;
+import com.got.vo.goods.GoodsManagmentVO;
 
 @Service
 public class GoodsManagmentService {

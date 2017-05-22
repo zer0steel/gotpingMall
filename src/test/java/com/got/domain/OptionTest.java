@@ -13,11 +13,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.got.dao.CategoryDao;
 import com.got.mapper.goods.CategoryMapper;
 import com.got.mapper.goods.OptionMapper;
-import com.got.service.CategoryService;
-import com.got.service.GoodsOptionService;
+import com.got.service.goods.CategoryService;
+import com.got.service.goods.GoodsOptionService;
 import com.got.vo.goods.CategoryVO;
 import com.got.vo.goods.OptionVO;
 

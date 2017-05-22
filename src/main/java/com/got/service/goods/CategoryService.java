@@ -1,50 +1,49 @@
-package com.got.service;
+package com.got.service.goods;
 
 import java.util.List;
+import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 
-import com.got.dao.CategoryDao;
-import com.got.dao.GoodsOptionDao;
 import com.got.enums.MenuLevel;
+import com.got.mapper.goods.CategoryMapper;
+import com.got.mapper.goods.OptionMapper;
 import com.got.util.CommonUtil;
 import com.got.vo.goods.CategoryVO;
 
 @Service
 public class CategoryService {
 	
-	@Autowired private CategoryDao dao;
-	@Autowired private GoodsOptionDao goDao;
+	@Inject private CategoryMapper categoryMapper;
+	@Inject private OptionMapper optionMapper;
 	
 	public List<CategoryVO> getAll() {
-		return dao.selectAll();
+		return categoryMapper.selectAll();
 	}
 	
-	public String getOneWithJSON(int c_no) {
-		CategoryVO c = dao.selectOne(c_no);
-		c.setOptions(goDao.selectListWithC_no(c_no));
+	public String getCategoryToJSON(Integer c_no) {
+		CategoryVO c = categoryMapper.selectOne(c_no);
+		c.setOptions(optionMapper.selectListWithC_no(c_no));
 		return CommonUtil.convertToJSON(c);
 	}
+	
 	public void enroll(CategoryVO c) {
 		validationCheck(c);
 		MenuLevel.insertSetting();
-		dao.insertOne(c);
+		categoryMapper.insert(c);
 	}
 
-	public String delete(int c_no) {
-		if(dao.selectSub(c_no).size() > 0) 
-			return "하위분류가 존재하여 삭제할 수 없습니다.";
-		dao.deleteOne(c_no);
-		return "삭제되었습니다.";
+	public void delete(Integer c_no) {
+		Objects.requireNonNull(c_no);
+		categoryMapper.deleteOne(c_no);
 	}
 	
-	public String update(CategoryVO c) {
+	public void update(CategoryVO c) {
 		validationCheck(c);
-		if(c.getC_no() == 0)
-			throw new IllegalArgumentException("분류 수정해야 하는데 PK c_no 값이 0");
-		dao.updateOne(c);
-		return "수정했습니다.";
+		Objects.requireNonNull(c.getC_no());
+		categoryMapper.updateOne(c);
 	}
 	
 	/**
@@ -53,7 +52,7 @@ public class CategoryService {
 	 * @return big, middle, small 이 저장된 ModelAndView
 	 */
 	public com.got.util.ModelAndView setEnumsInMAV(com.got.util.ModelAndView mav) {
-		MenuLevel.groupingCategories(dao.selectAll());
+		MenuLevel.groupingCategories(categoryMapper.selectAll());
 		mav.addObject("big", MenuLevel.BIG);
 		mav.addObject("middle", MenuLevel.MIDDLE);
 		mav.addObject("small", MenuLevel.SMALL);

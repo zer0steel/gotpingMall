@@ -1,4 +1,4 @@
-package com.got.vo;
+package com.got.vo.file;
 
 public class GoodsImageVO extends FileVO{
 	

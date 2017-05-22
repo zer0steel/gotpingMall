@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.got.enums.GoodsStatus;
-import com.got.vo.GoodsImageVO;
-import com.got.vo.GoodsManagmentVO;
+import com.got.vo.file.GoodsImageVO;
 
 public class GoodsVO extends CategoryVO {
 	private Integer g_no;

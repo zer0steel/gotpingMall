@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.got.vo.ControlDetailVO;
+import com.got.vo.goods.ControlDetailVO;
 import com.got.vo.goods.StockVO;
 
 public interface StockMapper {

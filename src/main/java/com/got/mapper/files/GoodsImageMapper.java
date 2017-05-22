@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
-import com.got.vo.GoodsImageVO;
+import com.got.vo.file.GoodsImageVO;
 
 public interface GoodsImageMapper {
 	

@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.got.controller.FileController;
 import com.got.enums.MenuLevel;
-import com.got.vo.FileVO;
+import com.got.vo.file.FileVO;
 
 public class FileUtil {
 	

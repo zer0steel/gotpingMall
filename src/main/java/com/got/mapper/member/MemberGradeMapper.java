@@ -2,7 +2,7 @@ package com.got.mapper.member;
 
 import org.apache.ibatis.annotations.Insert;
 
-import com.got.vo.MemberGradeVO;
+import com.got.vo.member.MemberGradeVO;
 
 public interface MemberGradeMapper {
 	

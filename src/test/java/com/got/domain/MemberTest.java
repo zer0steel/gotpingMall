@@ -14,8 +14,8 @@ import com.got.mapper.MileageMapper;
 import com.got.mapper.member.MemberMapper;
 import com.got.service.MemberService;
 import com.got.util.BCrypt;
-import com.got.vo.MemberVO;
 import com.got.vo.MileageVO;
+import com.got.vo.member.MemberVO;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)

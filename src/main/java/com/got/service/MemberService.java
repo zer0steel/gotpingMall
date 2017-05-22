@@ -9,14 +9,13 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.got.dao.MemberDao;
 import com.got.enums.Grade;
 import com.got.mapper.MileageMapper;
 import com.got.mapper.member.MemberGradeMapper;
 import com.got.mapper.member.MemberMapper;
-import com.got.vo.MemberGradeVO;
-import com.got.vo.MemberVO;
 import com.got.vo.MileageVO;
+import com.got.vo.member.MemberGradeVO;
+import com.got.vo.member.MemberVO;
 
 @Service
 public class MemberService {

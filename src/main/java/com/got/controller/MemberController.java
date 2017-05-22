@@ -21,8 +21,8 @@ import com.got.service.MemberService;
 import com.got.util.CommonUtil;
 import com.got.util.ModelAndView;
 import com.got.util.RSA;
-import com.got.vo.MemberVO;
 import com.got.vo.list.OrderDetailListContainer;
+import com.got.vo.member.MemberVO;
 
 @Controller("memberController")
 public class MemberController {

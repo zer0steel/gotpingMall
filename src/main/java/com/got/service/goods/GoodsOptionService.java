@@ -1,4 +1,4 @@
-package com.got.service;
+package com.got.service.goods;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,8 +10,8 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.got.dao.GoodsOptionDao;
 import com.got.mapper.goods.GoodsOptionMapper;
+import com.got.mapper.goods.OptionMapper;
 import com.got.mapper.goods.StockMapper;
 import com.got.util.CommonUtil;
 import com.got.vo.goods.GoodsOptionVO;
@@ -21,8 +21,8 @@ import com.got.vo.goods.OptionVO;
 @Service
 public class GoodsOptionService {
 	
-	@Inject private GoodsOptionDao dao;
 	@Inject GoodsOptionMapper goodsOptionMapper;
+	@Inject OptionMapper optionMapper;
 	@Inject StockMapper stockMapper;
 	
 	public List<GoodsOptionVO> filteringEmptyArray(List<GoodsOptionVO> list) {
@@ -42,20 +42,20 @@ public class GoodsOptionService {
 		Objects.requireNonNull(o.getO_name());
 		if(o.getO_name().equals(""))
 			throw new IllegalArgumentException("분류이름이 지정되지 않았음");
-		
-		dao.insertNewOption(o);
+		optionMapper.insert(o);
 	}
 
 	public void delete(int o_no) {
-		dao.delete(o_no);
+		optionMapper.deleteOne(o_no);
 	}
 
 	public void update(OptionVO o) {
-		dao.update(o);
+		optionMapper.updateOne(o);
 	}
 
-	public List<OptionVO> getWithG_no(int c_no) {
-		return dao.selectListWithC_no(c_no);
+	public List<OptionVO> getOptions(Integer c_no) {
+		Objects.requireNonNull(c_no);
+		return optionMapper.selectListWithC_no(c_no);
 	}
 	
 	public String getStocksJSON(Integer g_no) {

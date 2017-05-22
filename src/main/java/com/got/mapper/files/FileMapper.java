@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
-import com.got.vo.FileVO;
+import com.got.vo.file.FileVO;
 
 public interface FileMapper {
 	

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.got.enums.GoodsStatus;
 import com.got.enums.ManagementCategory;
-import com.got.service.CategoryService;
-import com.got.service.GoodsService;
+import com.got.service.goods.CategoryService;
+import com.got.service.goods.GoodsService;
 import com.got.util.ModelAndView;
 import com.got.vo.goods.GoodsVO;
 

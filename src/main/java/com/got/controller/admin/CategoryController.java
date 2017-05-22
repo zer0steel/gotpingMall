@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.got.service.CategoryService;
+import com.got.service.goods.CategoryService;
 import com.got.util.ModelAndView;
 import com.got.vo.goods.CategoryVO;
 
@@ -35,7 +35,7 @@ public class CategoryController {
 	@RequestMapping(value = "admin/goods/category/delete.yo", method = RequestMethod.POST)
 	public ModelAndView deteteCategory(int c_no) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("msg", cs.delete(c_no));
+		cs.delete(c_no);
 		mav.setViewName(REDIRECT_CATEGORY_PAGE);
 		return mav;
 	}
@@ -43,7 +43,7 @@ public class CategoryController {
 	@RequestMapping(value = "admin/goods/category/update.yo", method = RequestMethod.POST)
 	public ModelAndView updateCategory(CategoryVO c) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("msg", cs.update(c));
+		cs.update(c);
 		mav.setViewName(REDIRECT_CATEGORY_PAGE);
 		return mav;
 	}
@@ -54,6 +54,6 @@ public class CategoryController {
 			method = RequestMethod.POST, 
 			produces = "application/json; charset=UTF-8")
 	public String detailCategory(int c_no) {
-		return cs.getOneWithJSON(c_no);
+		return cs.getCategoryToJSON(c_no);
 	}
 }

@@ -11,9 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.got.dao.CategoryDao;
 import com.got.mapper.goods.CategoryMapper;
-import com.got.service.CategoryService;
+import com.got.service.goods.CategoryService;
 import com.got.vo.goods.CategoryVO;
 
 @WebAppConfiguration
@@ -23,7 +22,6 @@ import com.got.vo.goods.CategoryVO;
 		"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 public class CategoryTest {
 	
-	@Autowired CategoryDao dao;
 	@Autowired CategoryService s;
 	@Inject CategoryMapper categoryMapper;
 	
