@@ -1,6 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<section id="cart_items">
+<!--start-ckeckout-->
+<div class="ckeckout">
+	<div class="container">
+		<div class="ckeck-top heading">
+			<h2>CHECKOUT</h2>
+		</div>
+		<div class="ckeckout-top">
+			<div class="cart-items">
+				<h3>주문상품</h3>
+
+				<div class="in-check">
+					<ul class="unit">
+						<li><span>상품</span></li>
+						<li><span>상풍명</span></li>
+						<li><span>가격</span></li>
+						<li><span>수량</span></li>
+						<li></li>
+						<div class="clearfix"></div>
+					</ul>
+					<c:forEach var="d" items="${o.details }">
+						<ul class="cart-header">
+							<div class="close1"></div>
+							<li class="ring-in">
+								<a href="single.html">
+									<img src="${pageContext.request.contextPath }/${d.goods.mainImg.save_path }/${d.goods.mainImg.save_name }"
+									alt="" class="img-responsive" >
+								</a>
+							</li>
+							<li>
+								<span class="name">${d.goods.name }</span>
+								<p class="option">
+									<img src="${pageContext.request.contextPath }/resources/images/small/basket_option.gif">
+									&nbsp;${d.combination }
+								</p>
+							</li>
+							<li><span class="cost">${d.goods.realPrice + d.extra_cost } 원</span></li>
+							<li>
+								<span>Free</span>
+								<p>Delivered in 2-3 business days</p>
+							</li>
+							<div class="clearfix"></div>
+						</ul>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end-ckeckout-->
+<%-- <section id="cart_items">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -53,8 +102,8 @@
 			</div>
 			<div class="col-md-1"></div>
 		</div>
-		<form class="form-horizontal" action="successCheckout.yo" method="post">
-			<input type="hidden" name="m_no" value="${m.m_no }">
+		<form class="form-horizontal" action="successCheckout.yo" method="post"> --%>
+<%-- 			<input type="hidden" name="m_no" value="${m.m_no }">
 			<input type="hidden" name="total_price" value="${o.total_price }" data-price="${o.total_price }">
 			<div class="row">
 				<div class="col-md-1"></div>
@@ -168,7 +217,7 @@
 			</div>
 		</form>
 	</div>
-</section>
+</section> --%>
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/member/addrFinder.js?"></script>

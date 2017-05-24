@@ -6,13 +6,13 @@ import com.got.vo.OrderDetailVO;
 
 public class OrderDetailListContainer {
 	
-	private List<OrderDetailVO> list;
+	private List<OrderDetailVO> details;
 
-	public List<OrderDetailVO> getList() {
-		return list;
+	public List<OrderDetailVO> getDetails() {
+		return details;
 	}
 
-	public void setList(List<OrderDetailVO> list) {
-		this.list = list;
+	public void setDetails(List<OrderDetailVO> details) {
+		this.details = details;
 	}
 }

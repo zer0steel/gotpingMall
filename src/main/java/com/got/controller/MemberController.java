@@ -50,9 +50,9 @@ public class MemberController {
 	@RequestMapping("purchaseLogin.yo")
 	public ModelAndView purchaseLoginForm(HttpServletResponse res, OrderDetailListContainer container) throws UnsupportedEncodingException {
 		log.info("--------------- purchaseLoginForm() ---------------");
-		log.debug(container.getList());
+		log.debug(container.getDetails());
 		
-		String jsonString = CommonUtil.convertToJSON(container.getList());
+		String jsonString = CommonUtil.convertToJSON(container.getDetails());
 		Cookie c = new Cookie("buyList", URLEncoder.encode(jsonString, "UTF-8"));
 		res.addCookie(c);
 		

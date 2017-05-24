@@ -50,7 +50,7 @@ public interface GoodsMapper {
 	
 	final String SELECT_LIST_WITH_C_NO = "SELECT g.*, f.save_path, f.save_name "
 			+ "FROM goods g, category c, files f, goods_Image gi "
-			+ "WHERE status_code = #{status.code } AND f.f_no = gi.f_no AND gi.location = 'main' AND g.c_no = c.c_no AND c.c_no IN ("
+			+ "WHERE status_code = #{status.code } AND g.g_no = gi.g_no AND f.f_no = gi.f_no AND gi.location = 'main' AND g.c_no = c.c_no AND c.c_no IN ("
 			+ "SELECT c_no FROM category WHERE super_no = #{c_no } OR c_no = #{c_no } OR c_no IN ("
 			+ "SELECT sub.c_no FROM category super, category sub WHERE sub.levels = 3 AND sub.super_no = super.c_no AND super.super_no = #{c_no })	)";
 	@Select(SELECT_LIST_WITH_C_NO)

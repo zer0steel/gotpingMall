@@ -15,6 +15,8 @@
 	
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" 
 	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<%-- <script type="application/javascript" src="${pageContext.request.contextPath }/resources/template/mall/js/jquery-1.11.0.min.js"></script> --%>
+	
 	<script type="application/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="application/javascript" src="https://cdn.jsdelivr.net/jquery.easydropdown/2.1.4/jquery.easydropdown.min.js"></script>
 	<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/simplecartjs/3.0.5/simplecart.min.js"></script>

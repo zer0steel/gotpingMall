@@ -11,8 +11,9 @@ public class OrderDetailVO extends StockVO {
 	@Override
 	public String toString() {
 		return "OrderDetailVO [od_no=" + od_no + ", o_no=" + o_no + ", change_amount=" + change_amount
-				+ ", total_price=" + total_price + ", goods=" + goods + "]";
+				+ ", total_price=" + total_price + ", goods=" + goods + ", toString()=" + super.toString() + "]";
 	}
+	
 	
 	public Integer getOd_no() {
 		return od_no;

@@ -113,6 +113,7 @@
 		g_no : $('input[name=g_no]').val(),
 		$root : $('#selectOption'),
 		updateMode : true,
+		useFormGroup : true,
 		onStockChange : function(count) {
 			let expectCount = Number($('#totalExpect').val())
 			if(expectCount !== count)

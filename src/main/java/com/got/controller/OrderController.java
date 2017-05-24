@@ -44,7 +44,7 @@ public class OrderController {
 			) throws UnsupportedEncodingException {
 		log.info("---------------- purchaseForm() ----------------\n");
 		
-		List<OrderDetailVO> list = container.getList();
+		List<OrderDetailVO> list = container.getDetails();
 		if(Objects.isNull(list)) {
 			list = CommonUtil.getVOList(URLDecoder.decode(buyListJSON, "UTF-8"), OrderDetailVO.class);
 			log.debug("로그인페이지 경유해서 들어옴");

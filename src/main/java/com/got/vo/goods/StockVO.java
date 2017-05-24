@@ -11,7 +11,7 @@ public class StockVO {
 	@Override
 	public String toString() {
 		return "StockVO [s_no=" + s_no + ", g_no=" + g_no + ", amount=" + amount + ", combination=" + combination
-				+ ", extra_cost=" + extra_cost + ",]";
+				+ ", extra_cost=" + extra_cost + "]";
 	}
 
 	public Integer getS_no() {

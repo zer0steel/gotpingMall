@@ -23,6 +23,7 @@ goods.selectOption = (function() {
 	 * @param	g_no : 상품 번호
 	 * 			goodsPrice : 상품 가격
 	 * 			updateMode : 재고 추가 모드 어부
+	 * 			useFormGroup : select 태그에서 부트스트랩 css 클래스 사용여부
 	 * 			onStockChange : function(count) 선택된 옵션 수량값이 바뀌면 호출되는 함수
 	 * 							count : 총 입력된 수량 개수
 	 */
@@ -36,9 +37,8 @@ goods.selectOption = (function() {
 				dataType : 'json'
 			});
 		}(setting.g_no)).done(info => {
-			console.log(info)
 			optInfo = info;
-			createSelectTag(setting.$root, info.options);
+			createSelectTag(setting, info.options);
 			addEvent(setting.$root.find('select'), setting.onStockChange);
 		});
 		
@@ -56,8 +56,6 @@ goods.selectOption = (function() {
 	selectOption.getOptionCount = function() {
 		return optInfo.options.length;
 	}
-	
-	
 	
 	var option = function(value, extraCost) {
 		return {
@@ -90,9 +88,10 @@ goods.selectOption = (function() {
 		return stockCount;
 	}
 	
-	var createSelectTag = function($root, options) {
+	var createSelectTag = function(setting, options) {
+		let $root = setting.$root
 		options.forEach( (o, idx) => {
-			let $select = $('<select />').addClass('form-control select-option')
+			let $select = $('<select />').addClass('select-option')
 			.append(	$('<option />').html('(필수) 선택하세요.').attr('selected', true).val(DEFAULT_OPTION).css('display','none')	);
 			
 			for(var d of o.details) {
@@ -106,13 +105,19 @@ goods.selectOption = (function() {
 				if( idx >= 1)
 					$option.css('display','none');
 			}
-			
-			$('<div />').addClass('form-group').append(
-				$('<label />').addClass('control-label col-md-2').html(o.o_name),
-				$('<div />').addClass('col-md-9').append( $select )
-			).appendTo( $root );
+			if(setting.useFormGroup) {
+				$('<div />').addClass('form-group').append(
+						$('<label />').addClass('control-label col-md-2').html(o.o_name),
+						$('<div />').addClass('col-md-9').append( $select.addClass('form-control') )
+				).appendTo( $root );
+			}
+			else {
+				$('<ul />').append(
+					$('<li />').text(o.o_name).append($select),
+					$('<div />').addClass('clearfix'))
+					.appendTo($root);
+			}
 		})
-		
 		$table = $('<table />').addClass('table').css('max-width', '90%');
 		$('<div />').attr('id','selectedOptions').css({'max-height':'150px', 'overflow-y':'scroll'})
 		.append( $table ).appendTo( $root );
@@ -120,14 +125,12 @@ goods.selectOption = (function() {
 	
 	var createSelectedList = function($selectTags, onStockChange) {
 		let opt = optionSearch( userSelect );
-		if( !opt )
-			return;
+		if( !opt )	return;
 		
 		if( !overlapCheck(opt) ) {
 			addEvent.resetSelectTag($selectTags);
 			return;
 		}
-		
 		let price = goodsPrice + opt.extraCost;
 		$('<tr />').addClass(ATTR.CLASS.SELECT_OPTION).data(ATTR.DATA.OPTION_INFO, opt).append(
 			$('<td />').html(opt.combination + ' &nbsp;&nbsp;').data('combination', opt.combination),
@@ -138,7 +141,7 @@ goods.selectOption = (function() {
 				$('<input />').attr({'type':'hidden','name':'details[' + arraySize + '].combination'}).val(opt.combination)
 			),
 			$('<td />').addClass(ATTR.CLASS.PRICE).data('price', price).setPriceInHtml(price),
-			$('<td />').html($('<i />').addClass('fa fa-window-close-o').css('cursor','pointer'))
+			$('<td />').html($('<p />').text('X').addClass('deleteChoice').css('cursor','pointer'))
 		).appendTo( $table );
 		arraySize++;
 		addEvent.resetSelectTag($selectTags);
@@ -181,7 +184,7 @@ goods.selectOption = (function() {
 			onStockChange(getStockCount());
 		});
 		
-		$table.on('click', 'i.fa', function() {
+		$table.on('click', '.deleteChoice', function() {
 			$(this).parents('.' + ATTR.CLASS.SELECT_OPTION).empty();
 			arraySize--;
 			

@@ -6,7 +6,6 @@
 		<id column="f_no" property="f_no"/>
 		<result column="save_name" property="save_name"/>
 		<result column="save_path" property="save_path"/>
-		<result column="location" property="location"/>
 	</resultMap>
 	
 	<resultMap type="com.got.vo.goods.GoodsVO" id="goods">
