@@ -1,7 +1,6 @@
 var goods = goods || {};
 goods.selectOption = (function() {
 	'use strict';
-	
 	var $table;
 	var userSelect = [];
 	var optInfo, goodsPrice;
@@ -20,6 +19,13 @@ goods.selectOption = (function() {
 	}
 	const DEFAULT_OPTION = '';
 	
+	/*
+	 * @param	g_no : 상품 번호
+	 * 			goodsPrice : 상품 가격
+	 * 			updateMode : 재고 추가 모드 어부
+	 * 			onStockChange : function(count) 선택된 옵션 수량값이 바뀌면 호출되는 함수
+	 * 							count : 총 입력된 수량 개수
+	 */
 	function selectOption(setting) {
 		goodsPrice = Number(setting.goodsPrice);
 		updateMode = setting.updateMode;

@@ -40,7 +40,7 @@
 						<ul class="nav child_menu">
 							<li><a href="${pageContext.request.contextPath}/admin/goods/list.yo">상품 목록</a></li>
 							<li><a href="${pageContext.request.contextPath}/admin/goods/insert.yo">상품 등록</a></li>
-							<li><a href="${pageContext.request.contextPath}/admin/goods/category.yo">상품 분류 편집</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/goods/category.yo">분류 / 옵션 관리</a></li>
 							<li><a href="${pageContext.request.contextPath}/admin/goods/sr/list.yo">재고 변동 내역</a></li>
 						</ul>
 					</li>

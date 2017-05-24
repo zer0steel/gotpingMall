@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.got.controller.FileController;
-import com.got.enums.MenuLevel;
+import com.got.enums.Level;
 import com.got.vo.file.FileVO;
 
 public class FileUtil {

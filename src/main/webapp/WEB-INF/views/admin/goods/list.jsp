@@ -24,10 +24,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<jsp:include page="include/categorySelectBox.jsp"></jsp:include>
-				<script type="text/javascript">
-					$("select").attr("size",0).val("");
-				</script>
+				<div id="select"></div>
 			</div>
 		</div>
 	</div>
@@ -64,3 +61,11 @@
 		</div>
 	</div>
 </div>
+<script type="application/javascript" src="${pageContext.request.contextPath }/resources/js/goods/category.js?ver=2"></script>
+<script>
+(function() {
+	goods.category({
+		$root : $('#select')
+	})
+}())
+</script>

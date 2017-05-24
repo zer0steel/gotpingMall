@@ -57,7 +57,6 @@ public class OrderController {
 			mav.addObject("m", ms.detail(m.getM_no()));
 		
 		log.debug(os.getBuyList(list));
-		mav.setNoSideFrame();
 		mav.addObject("o", os.getBuyList(list));
 		return mav.setViewPage("order/form.jsp");
 	}

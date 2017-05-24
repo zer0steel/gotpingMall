@@ -12,11 +12,6 @@ public class ModelAndView extends org.springframework.web.servlet.ModelAndView {
 	public ModelAndView() {
 		super();
 	}
-
-	public ModelAndView setNoSideFrame() {
-		super.addObject("noSideFrame", true);
-		return this;
-	}
 	
 	public ModelAndView setViewPage(String viewPage) {
 		super.addObject("viewPage", viewPage);

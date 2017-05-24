@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.got.enums.MenuLevel;
+import com.got.enums.Level;
 import com.got.mapper.files.FileMapper;
 import com.got.util.FileUtil;
 import com.got.vo.file.FileVO;
@@ -23,8 +23,7 @@ public class FileService {
 	@Inject private FileMapper fileMapper;
 	
 	public FileVO saveFileInTempPath(String path, MultipartFile uploadFile) {
-		Objects.requireNonNull(uploadFile);
-		if(uploadFile.isEmpty())
+		if(Objects.requireNonNull(uploadFile).isEmpty())
 			throw new RuntimeException("업로드된 파일 내용물이 비어있음");
 		FileVO f = FileUtil.saveFileInTempPath(path, uploadFile);
 		try{
@@ -55,15 +54,8 @@ public class FileService {
 			throw new RuntimeException("삭제 실패, 확인바람");
 	}
 	
-	public List<GoodsImageVO> setupImages(Integer c_no, List<GoodsImageVO> tempImages) {
-		Objects.requireNonNull(c_no);
+	public List<GoodsImageVO> setupImages(String folderName, List<GoodsImageVO> tempImages) {
 		Objects.requireNonNull(tempImages);
-		
-		String folderName = getSaveFolderName(c_no);
 		return FileUtil.moveToSavePath(folderName, tempImages);
-	}
-	
-	private String getSaveFolderName(Integer c_no) {
-		return MenuLevel.findBigCategory(c_no).getTitle();
 	}
 }

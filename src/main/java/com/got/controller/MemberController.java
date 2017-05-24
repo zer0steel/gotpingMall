@@ -44,7 +44,6 @@ public class MemberController {
 	@RequestMapping("login.yo")
 	public ModelAndView loginForm() {
 		ModelAndView mav = new ModelAndView();
-		mav.setNoSideFrame();
 		return mav.setViewPage("member/login.jsp");
 	}
 	
@@ -58,7 +57,6 @@ public class MemberController {
 		res.addCookie(c);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setNoSideFrame();
 		return mav.setViewPage("member/purchaseLogin.jsp");
 	}
 	
@@ -86,14 +84,12 @@ public class MemberController {
 	@RequestMapping("agreement.yo")
 	public ModelAndView agreeForm() {
 		ModelAndView mav = new ModelAndView();
-		mav.setNoSideFrame();
 		return mav.setViewPage("member/agreement.jsp");
 	}
 	
 	@RequestMapping("join.yo")
 	public ModelAndView joinForm() {
 		ModelAndView mav = new ModelAndView();
-		mav.setNoSideFrame();
 		return mav.setViewPage("member/join.jsp");
 	}
 	

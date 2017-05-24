@@ -24,7 +24,7 @@ public class GoodsController {
 	
 	@RequestMapping(value = "admin/goods/insert.yo", method = RequestMethod.GET)
 	public ModelAndView insertGoodsForm() {
-		ModelAndView mav = cs.setEnumsInMAV(new ModelAndView());
+		ModelAndView mav = new ModelAndView();
 		return mav.setAdminViewPage("goods/insert.jsp");
 	}
 	
@@ -37,7 +37,7 @@ public class GoodsController {
 	
 	@RequestMapping("admin/goods/list.yo")
 	public ModelAndView listGoods() {
-		ModelAndView mav = cs.setEnumsInMAV(new ModelAndView());
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("status", GoodsStatus.values());
 		mav.addObject("goods", gs.getAll());
 		return mav.setAdminViewPage("goods/list.jsp");
@@ -46,8 +46,7 @@ public class GoodsController {
 	@RequestMapping("admin/goods/detail.yo")
 	public ModelAndView detailGoods(Integer g_no) {
 		ModelAndView mav = new ModelAndView();
-		cs.setEnumsInMAV(mav)
-		.addObject("g",gs.detailAndSRHistory(g_no))
+		mav.addObject("g",gs.detailAndSRHistory(g_no))
 		.addObject("status", GoodsStatus.values())
 		.addObject("hc", ManagementCategory.values());
 		return mav.setAdminViewPage("goods/detail.jsp");

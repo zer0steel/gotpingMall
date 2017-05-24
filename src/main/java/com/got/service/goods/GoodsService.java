@@ -39,6 +39,7 @@ public class GoodsService {
 		g.setStatus(GoodsStatus.STAND_BY);
 		goodsMapper.insert(g);
 		Objects.nonNull(g.getG_no());
+		g.setGoodsOptions(goodsOptionService.filteringEmptyArray(g.getGoodsOptions()));
 		goodsOptionService.insertGoodsOption(g);
 		stockService.insertStock(g);
 		goodsImageService.insertGoodsImage(g);
@@ -83,15 +84,9 @@ public class GoodsService {
 		return g;
 	}
 
-	public List<GoodsVO> getWithCategory(CategoryVO c) {
-		Objects.requireNonNull(c.getC_no());
-		
-//		if(c.getMenuLevel() == MenuLevel.SMALL)
-//			return dao.selectListWithSmall(c);
-//		else if(c.getMenuLevel() == MenuLevel.MIDDLE)
-//			return dao.selectListWithMiddle(c.getC_no());
-		
-		throw new IllegalArgumentException("아직 대분류는 지원 안함");
+	public List<GoodsVO> getWithC_no(Integer c_no) {
+		Objects.requireNonNull(c_no);
+		return goodsMapper.selectListWithC_no(c_no, GoodsStatus.FOR_SALE);
 	}
 
 	/**

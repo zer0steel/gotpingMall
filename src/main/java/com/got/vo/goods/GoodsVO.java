@@ -16,7 +16,7 @@ public class GoodsVO extends CategoryVO {
 	private GoodsImageVO mainImg;
 	private List<GoodsImageVO> images;
 	private List<GoodsManagmentVO> history;
-	private List<GoodsOptionVO> goodsOptions;
+	private List<GoodsOptionVO> goodsOptions = new ArrayList<>();
 	private List<StockVO> stocks;
 	
 	@Override
@@ -83,8 +83,8 @@ public class GoodsVO extends CategoryVO {
 		setDiscount_price();
 	}
 
-	public double getDiscount_rate() {
-		return discount_rate;
+	public int getDiscount_rate() {
+		return (int)discount_rate;
 	}
 
 	public void setDiscount_rate(double discount_rate) {

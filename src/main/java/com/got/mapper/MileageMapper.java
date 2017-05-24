@@ -2,9 +2,11 @@ package com.got.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import com.got.vo.MileageVO;
 
+@Repository
 public interface MileageMapper {
 	
 	final String SELECT_CURR_MILEAGE = "SELECT * FROM "

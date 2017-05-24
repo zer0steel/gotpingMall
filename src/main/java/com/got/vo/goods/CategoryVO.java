@@ -3,13 +3,12 @@ package com.got.vo.goods;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.got.enums.MenuLevel;
+import com.got.enums.Level;
 
 public class CategoryVO {
-	private Integer c_no;
-	private int super_no;
+	private Integer c_no, super_no;
 	private String title;
-	private MenuLevel menu_level = MenuLevel.UNDEFINED;
+	private Level levels;
 	private List<CategoryVO> sub = new ArrayList<>();
 	private List<OptionVO> options;
 	
@@ -17,73 +16,48 @@ public class CategoryVO {
 	public CategoryVO(Integer c_no) {
 		this.c_no = c_no;
 	}
-
 	public Integer getC_no() {
 		return c_no;
 	}
-
 	public void setC_no(Integer c_no) {
 		this.c_no = c_no;
-		if (MenuLevel.isSetting())
-			settingThis();
 	}
-
+	public Integer getSuper_no() {
+		return levels == Level.BIG ? null : super_no;
+	}
+	public void setSuper_no(Integer super_no) {
+		this.super_no = super_no;
+	}
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-	public int getSuper_no() {
-		return super_no;
+	public Level getLevels() {
+		return levels;
 	}
-
-	public void setSuper_no(int super_no) {
-		this.super_no = super_no;
+	public void setLevels(int levels) {
+		this.levels = Level.of(levels);
 	}
-
-	public int getMenu_level() {
-		return menu_level.getCode();
-	}
-
-	public void setMenu_level(int menu_level) {
-		this.menu_level = MenuLevel.of(menu_level);
-	}
-
-	public MenuLevel getMenuLevel() {
-		return menu_level;
-	}
-
 	public List<CategoryVO> getSub() {
 		return sub;
 	}
-
-	public void addSub(CategoryVO sub) {
-		this.sub.add(sub);
+	public void setSub(List<CategoryVO> sub) {
+		this.sub = sub;
 	}
-
 	public List<OptionVO> getOptions() {
 		return options;
 	}
-
 	public void setOptions(List<OptionVO> options) {
 		this.options = options;
 	}
-
-	public void settingThis() {
-		if (this.c_no > 0) {
-			CategoryVO c = MenuLevel.getCategory(c_no);
-			this.menu_level = c.menu_level;
-			this.super_no = c.super_no;
-			this.title = c.title;
-		}
+	public void addSub(CategoryVO c) {
+		this.sub.add(c);
 	}
-
 	@Override
 	public String toString() {
-		return "CategoryVO [c_no=" + c_no + ", super_no=" + super_no + ", title=" + title + ", menu_level=" + menu_level
+		return "CategoryVO [c_no=" + c_no + ", super_no=" + super_no + ", title=" + title + ", levels=" + levels
 				+ ", sub=" + sub + ", options=" + options + "]";
 	}
 }

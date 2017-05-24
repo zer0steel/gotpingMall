@@ -7,10 +7,9 @@
 	</label>
 	<div class="col-md-6 col-sm-6">
 		<select name="menu_level" class="form-control category" required>
-			<option value="0">눌러서 선택하세요</option>
-			<option value="${big.code }">${big.korName }</option>
-			<option value="${middle.code }">${middle.korName }</option>
-			<option value="${small.code }">${small.korName }</option>
+			<option value="1">대분류</option>
+			<option value="2">중분류</option>
+			<option value="3">소분류</option>
 		</select>
 	</div>
 </div>
@@ -20,19 +19,7 @@
 	상위 분류
 	</label>
 	<div class="col-md-6 col-sm-6">
-		<select name="super_no" class="form-control category" disabled>
-			<option value="">----------------</option>
-			<c:forEach items="${big.categories }" var="c">
-				<option value="${c.key }" data-menu_level="${c.value.menuLevel.code }">
-					${c.value.title }
-				</option>
-			</c:forEach>
-			<c:forEach items="${middle.categories }" var="c">
-				<option value="${c.key }" data-menu_level="${c.value.menuLevel.code }">
-					${c.value.title }
-				</option>
-			</c:forEach>
-		</select>
+		<input type="text" name="super_no" readonly>
 	</div>
 </div>
 

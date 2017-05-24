@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
+import org.springframework.stereotype.Repository;
 
 import com.got.vo.goods.GoodsManagmentVO;
 
+@Repository
 public interface GoodsManagmentMapper {
 	
 	final String SELECT_LIST_WITH_OS_NO = "SELECT r.* FROM "

@@ -23,32 +23,23 @@
 			<div class="x_content">
 				<form id="goods-form" method="post" action="update.yo" 
 					data-parsley-validate class="form-horizontal form-label-left">
-					<jsp:include page="include/goodsForm.jsp"></jsp:include>
 					
-					<input type="hidden" name="g_no" value=${g.g_no }>
+					<input type="hidden" name="g_no" value="${g.g_no }">
+					<input type="hidden" name="c_no" value="${g.c_no }">
 					<input type="hidden" id="hidden-status_code" value=${g.status_code }>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">
-						총 재고량
-						</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<p class="form-control col-md-7 col-xs-12" id="stock">${g.stock }</p>
-						</div>
-					</div>
 					
-					<div class="form-group">
-						<input type="hidden" value="${g.status_code }" id="hidden-status_code">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">
-						상품 상태
-						</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<select name="status_code" class="form-control" required>
-							<c:forEach var="s" items="${status }">
-								<option value="${s.code }">${s.kor }</option>
-							</c:forEach>
-							</select>
-						</div>
-					</div>
+					<input type="text" name="name" class="form-control input" data-label="상품명" value="${g.name }" required>
+					<input type="number" name="purchase_price" class="form-control input" data-label="매입가격" value="${g.purchase_price }" required>
+					<input type="number" name="sell_price"  class="form-control input" data-label="판매가격"value="${g.sell_price }" required>
+					<input type="number" name="discount_rate"  class="form-control input" data-label="할인율 (%)" value="${g.discount_rate }" min="0" max="100" required>
+					<input type="number" name="saving_mileage"  class="form-control input" data-label="마일리지 적립율 (%)" value="${g.saving_mileage }" min="0" max="100" required>
+					<p class="form-control input" data-label="총 재고량">${g.stock }</p>
+					
+					<select name="status_code" class="form-control input" data-label="상품 상태" required>
+					<c:forEach var="s" items="${status }">
+						<option value="${s.code }">${s.kor }</option>
+					</c:forEach>
+					</select>
 					
 					<div class="form-group">
 						<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -179,7 +170,6 @@
 	</div>
 	</c:if>
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/goods/categorySelectBox.js"></script>
 <script type="text/javascript">
 (function() {
 	var setDiabled = (function() {
@@ -191,7 +181,6 @@
 		$("#goods-form input").removeAttr("readonly");
 		$("#goods-form select").removeAttr("disabled");
 		$("#goods-form textarea").removeAttr("disabled");
-		$(this).html("수정 하기");
 	}
 	
 	$("select[name=status_code]").val( $("#hidden-status_code").val() );
@@ -199,13 +188,17 @@
 	var updateMode = false;
 	$("#btn-update").click(function() {
 		if( updateMode ) {
-			console.log( $("#goods-form").serializeArray() );
 			$("#goods-form").submit();
 		}
 		else {
 			setEnable();
+			$(this).html("수정");
 			updateMode = true;
 		}
 	});
 })();
+const CSS_CLASS = {
+		label : "col-md-3 col-xs-12",
+		div : "col-md-5 col-xs-12"
+	}
 </script>

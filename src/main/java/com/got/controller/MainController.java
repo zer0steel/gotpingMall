@@ -15,7 +15,6 @@ public class MainController {
 	@RequestMapping("front.yo")
 	public ModelAndView front() {
 		ModelAndView mav = new ModelAndView();
-		cs.setEnumsInMAV(mav);
 		return mav.setViewPage("front.jsp");
 	}
 }

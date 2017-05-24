@@ -4,9 +4,11 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Repository;
 
 import com.got.vo.file.FileVO;
 
+@Repository
 public interface FileMapper {
 	
 	@Insert("INSERT INTO files(f_no, save_name, real_name, regdate, save_path) " + 

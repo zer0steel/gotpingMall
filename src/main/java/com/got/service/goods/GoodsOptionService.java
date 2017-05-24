@@ -30,7 +30,7 @@ public class GoodsOptionService {
 	}
 	
 	public void insertGoodsOption(GoodsVO g) {
-		filteringEmptyArray(g.getGoodsOptions()).forEach(vo -> {
+		g.getGoodsOptions().forEach(vo -> {
 			vo.setG_no(g.getG_no());
 			vo.setupStrings();
 			goodsOptionMapper.insert(vo);

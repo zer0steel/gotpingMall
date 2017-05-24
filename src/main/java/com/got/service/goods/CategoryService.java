@@ -1,17 +1,21 @@
 package com.got.service.goods;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.got.enums.MenuLevel;
+import com.got.enums.Level;
 import com.got.mapper.goods.CategoryMapper;
 import com.got.mapper.goods.OptionMapper;
 import com.got.util.CommonUtil;
+import com.got.util.ModelAndView;
 import com.got.vo.goods.CategoryVO;
+import com.got.vo.goods.LevelVO;
 
 @Service
 public class CategoryService {
@@ -19,24 +23,58 @@ public class CategoryService {
 	@Inject private CategoryMapper categoryMapper;
 	@Inject private OptionMapper optionMapper;
 	
+	public Map<Level, LevelVO> getLevels() {
+		Map<Level, LevelVO> levels = new HashMap<>();
+		levels.put(Level.BIG, createLevelVO(Level.BIG));
+		levels.put(Level.MIDDLE, createLevelVO(Level.MIDDLE));
+		levels.put(Level.SMALL, createLevelVO(Level.SMALL));
+		return levels;
+	}
+	
+	private LevelVO createLevelVO(Level level) {
+		List<CategoryVO> categories = categoryMapper.selectListWithLevel(level.getCode());
+		LevelVO levelVO = new LevelVO();
+		levelVO.setCategories(categories);
+		levelVO.setLevels(level);
+		return levelVO;
+	}
+	
 	public List<CategoryVO> getAll() {
 		return categoryMapper.selectAll();
 	}
+
+	public List<CategoryVO> getSubList(Integer c_no) {
+		Objects.requireNonNull(c_no);
+		return categoryMapper.selectSubList(c_no);
+	}
 	
-	public String getCategoryToJSON(Integer c_no) {
+	public Map<Integer, CategoryVO> getCategories() {
+		Map<Integer, CategoryVO> map = new HashMap<>();
+		categoryMapper.selectListWithLevel(Level.BIG.getCode()).forEach(vo -> {
+			map.put(vo.getC_no(), vo);
+		});
+		categoryMapper.selectListWithLevel(Level.MIDDLE.getCode()).forEach(vo -> {
+			map.get(vo.getSuper_no()).addSub(vo);
+		});
+		return map;
+	}
+	
+	public CategoryVO getCategoryWithOption(Integer c_no) {
+		Objects.requireNonNull(c_no);
 		CategoryVO c = categoryMapper.selectOne(c_no);
 		c.setOptions(optionMapper.selectListWithC_no(c_no));
-		return CommonUtil.convertToJSON(c);
+		return c;
 	}
 	
 	public void enroll(CategoryVO c) {
 		validationCheck(c);
-		MenuLevel.insertSetting();
 		categoryMapper.insert(c);
 	}
 
-	public void delete(Integer c_no) {
+	public void deleteOne(Integer c_no) {
 		Objects.requireNonNull(c_no);
+		if(categoryMapper.selectSubList(c_no).size() > 0)
+			return;
 		categoryMapper.deleteOne(c_no);
 	}
 	
@@ -46,29 +84,12 @@ public class CategoryService {
 		categoryMapper.updateOne(c);
 	}
 	
-	/**
-	 * ModelAndView에 분류레벨을 저장한다.
-	 * @param mav
-	 * @return big, middle, small 이 저장된 ModelAndView
-	 */
-	public com.got.util.ModelAndView setEnumsInMAV(com.got.util.ModelAndView mav) {
-		MenuLevel.groupingCategories(categoryMapper.selectAll());
-		mav.addObject("big", MenuLevel.BIG);
-		mav.addObject("middle", MenuLevel.MIDDLE);
-		mav.addObject("small", MenuLevel.SMALL);
-		return mav;
-	}
-	
 	private void validationCheck(CategoryVO c) {
-		if(c.getMenu_level() < MenuLevel.BIG.getCode() || c.getMenu_level() > MenuLevel.SMALL.getCode())
-			throw new IllegalArgumentException("1보다 작거나 3보다 큰 분류레벨 코드가 들어왔음.");
-		if(c.getSuper_no()< 0)
-			throw new IllegalArgumentException("부모 분류 번호값이 음수");
-		if(c.getTitle().equals(""))
-			throw new IllegalArgumentException("c.getTitle() is empty ");
-		if(c.getMenuLevel() == MenuLevel.BIG && c.getSuper_no() > 0)
-			throw new IllegalArgumentException("최상위 분류인데 상위분류 번호를 가지고 있음. 객체 정보 : " + c);
-		if(c.getMenuLevel() != MenuLevel.BIG && c.getSuper_no() == 0)
-			throw new IllegalArgumentException("최상위 분류가 아닌데 부모 번호가 존재하지 않음. 객체 정보 : " + c);
+		if(c.getLevels() != Level.BIG) {
+			Objects.requireNonNull(c.getSuper_no(), "최상위 분류가 아닌데 상위 분류가 존재하지 않음.");
+			if(c.getSuper_no() == 0)
+				throw new IllegalArgumentException("최상위 분류가 아닌데 상위 분류가 존재하지 않음.");
+		}
 	}
+
 }

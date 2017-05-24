@@ -54,6 +54,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="${pageContext.request.contextPath}/resources/build/js/custom.min.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/commonUtil.js?ver=1"></script>
 </body>
 </html>

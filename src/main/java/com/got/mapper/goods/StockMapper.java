@@ -5,10 +5,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Repository;
 
 import com.got.vo.goods.ControlDetailVO;
 import com.got.vo.goods.StockVO;
 
+@Repository
 public interface StockMapper {
 	
 	final String SELECT_ONE = "SELECT * FROM stock WHERE s_no = #{s_no}";

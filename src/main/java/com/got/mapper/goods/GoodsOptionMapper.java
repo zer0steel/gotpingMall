@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import com.got.vo.goods.GoodsOptionVO;
 
+@Repository
 public interface GoodsOptionMapper {
 	
 	@Insert("INSERT INTO goods_option(g_no, o_no, value, extra_cost) VALUES(#{g_no}, #{o_no}, #{value}, #{extra_cost})")

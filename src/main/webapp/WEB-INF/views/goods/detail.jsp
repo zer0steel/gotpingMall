@@ -1,6 +1,161 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="col-sm-12">
+<script type="application/javascript">
+$(function() {
+    var menu_ul = $('.menu_drop > li > ul'),
+           menu_a  = $('.menu_drop > li > a');
+    
+    menu_ul.hide();
+
+    menu_a.click(function(e) {
+        e.preventDefault();
+        if(!$(this).hasClass('active')) {
+            menu_a.removeClass('active');
+            menu_ul.filter(':visible').slideUp('normal');
+            $(this).addClass('active').next().stop(true,true).slideDown('normal');
+        } else {
+            $(this).removeClass('active');
+            $(this).next().stop(true,true).slideUp('normal');
+        }
+    });
+
+});
+</script>
+<div class="single contact">
+	<div class="container">
+		<div class="single-main">
+			<div class="col-md-9 single-main-left">
+				<div class="sngl-top">
+					<div class="col-md-5 single-top-left">	
+						<div class="flexslider">
+							  <ul class="slides">
+								<li data-thumb="images/s-1.jpg">
+									<div class="thumb-image"> <img src="images/s-1.jpg" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+								</li>
+								<li data-thumb="images/s-2.jpg">
+									 <div class="thumb-image"> <img src="images/s-2.jpg" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+								</li>
+								<li data-thumb="images/s-3.jpg">
+								   <div class="thumb-image"> <img src="images/s-3.jpg" data-imagezoom="true" class="img-responsive" alt=""/> </div>
+								</li> 
+							  </ul>
+						</div>
+						<!-- FlexSlider -->
+						<script src="js/imagezoom.js"></script>
+						<script defer src="js/jquery.flexslider.js"></script>
+						<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
+	
+						<script>
+						// Can also be used with $(document).ready()
+						$(window).load(function() {
+						  $('.flexslider').flexslider({
+							animation: "slide",
+							controlNav: "thumbnails"
+						  });
+						});
+						</script>
+					</div>	
+					<div class="col-md-7 single-top-right">
+						<div class="single-para simpleCart_shelfItem">
+							<input type="hidden" id="g_no" value="${g.g_no }">
+							<h2>${g.name }</h2>
+							<div class="star-on">
+								<ul class="star-footer">
+									<li><a href="#"><i></i></a></li>
+									<li><a href="#"><i></i></a></li>
+									<li><a href="#"><i></i></a></li>
+									<li><a href="#"><i></i></a></li>
+									<li><a href="#"><i></i></a></li>
+								</ul>
+								<div class="review">
+									<a href="#"> 1 customer review </a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							
+							<h5 class="item_price">$ 95.00</h5>
+							<p>나중에 상품 내용 여기다 로드할것</p>
+							<form action="${pageContext.request.contextPath }/order/form.yo" class="form-horizontal" id="form-option-select">
+								<div id="selectOption"></div>
+							</form>
+							<div class="available">
+								<ul>
+									<li>Color
+										<select>
+										<option>Silver</option>
+										<option>Black</option>
+										<option>Dark Black</option>
+										<option>Red</option>
+									</select></li>
+								<li class="size-in">Size<select>
+									<option>Large</option>
+									<option>Medium</option>
+									<option>small</option>
+									<option>Large</option>
+									<option>small</option>
+								</select>
+								</li>
+								<div class="clearfix"></div>
+								</ul>
+							</div>
+							<ul class="tag-men">
+								<li><span>TAG</span>
+								<span class="women1">: Women,</span></li>
+								<li><span>SKU</span>
+								<span class="women1">: CK09</span></li>
+							</ul>
+							<a href="#" class="add-cart item_add">ADD TO CART</a>
+							
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="tabs">
+					<ul class="menu_drop">
+						<li class="item1"><a href="#"><img src="images/arrow.png" alt="">Description</a>
+							<ul>
+								<li class="subitem1"><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a></li>
+								<li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
+								<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+							</ul>
+						</li>
+						<li class="item2"><a href="#"><img src="images/arrow.png" alt="">Additional information</a>
+							<ul>
+							    <li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
+								<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+							</ul>
+						</li>
+						<li class="item3"><a href="#"><img src="images/arrow.png" alt="">Reviews (10)</a>
+							<ul>
+								<li class="subitem1"><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a></li>
+								<li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
+								<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+							</ul>
+						</li>
+						<li class="item4"><a href="#"><img src="images/arrow.png" alt="">Helpful Links</a>
+							<ul>
+							    <li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
+								<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+							</ul>
+						</li>
+						<li class="item5"><a href="#"><img src="images/arrow.png" alt="">Make A Gift</a>
+							<ul>
+								<li class="subitem1"><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a></li>
+								<li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
+								<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+							</ul>
+						</li>
+	 				</ul>
+				</div>
+			</div>
+			<div class="col-md-3 single-right">
+				<jsp:include page="/WEB-INF/views/templateMenu/sideMenu.jsp"></jsp:include>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end-single-->
+<%-- <div class="col-sm-12">
 	<div class="product-details">
 	
 		<div class="col-sm-5">
@@ -101,111 +256,7 @@
 
 		</div>
 	</div>
-	<!--/category-tab-->
-	<!-- <div class="recommended_items">
-		recommended_items
-		<h2 class="title text-center">recommended items</h2>
-
-		<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-			<div class="carousel-inner">
-				<div class="item active">
-					<div class="col-sm-4">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/recommend1.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart">
-										<i class="fa fa-shopping-cart"></i>Add to cart
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/recommend2.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart">
-										<i class="fa fa-shopping-cart"></i>Add to cart
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/recommend3.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart">
-										<i class="fa fa-shopping-cart"></i>Add to cart
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="col-sm-4">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/recommend1.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart">
-										<i class="fa fa-shopping-cart"></i>Add to cart
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/recommend2.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart">
-										<i class="fa fa-shopping-cart"></i>Add to cart
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/recommend3.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart">
-										<i class="fa fa-shopping-cart"></i>Add to cart
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-				<i class="fa fa-angle-left"></i>
-			</a>
-			<a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-				<i class="fa fa-angle-right"></i>
-			</a>
-		</div>
-	</div> -->
-</div>
+</div> --%>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/stock.js?ver=1"></script>
 <script type="text/javascript">
 (function() {

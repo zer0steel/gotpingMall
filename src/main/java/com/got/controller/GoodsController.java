@@ -1,33 +1,31 @@
 package com.got.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.got.service.goods.CategoryService;
 import com.got.service.goods.GoodsService;
 import com.got.util.ModelAndView;
-import com.got.vo.goods.CategoryVO;
 
 @Controller
 public class GoodsController {
 	
-	@Autowired private GoodsService gs;
-	@Autowired private CategoryService cs;
+	@Inject private GoodsService goodsService;
+	@Inject private CategoryService categoryService;
 	
 	@RequestMapping("goods/list.yo")
-	public ModelAndView list(CategoryVO c) {
+	public ModelAndView list(Integer c_no) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("goods", gs.getWithCategory(c));
-		cs.setEnumsInMAV(mav);
+		mav.addObject("goods", goodsService.getWithC_no(c_no));
 		return mav.setViewPage("goods/list.jsp");
 	}
 	
 	@RequestMapping("goods/detail.yo")
 	public ModelAndView detail(Integer g_no) {
 		ModelAndView mav = new ModelAndView();
-		cs.setEnumsInMAV(mav)
-		.addObject("g", gs.detail(g_no));
+		mav.addObject("g", goodsService.detail(g_no));
 		return mav.setViewPage("goods/detail.jsp");
 	}
 	
