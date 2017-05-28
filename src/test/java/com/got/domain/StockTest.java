@@ -1,6 +1,8 @@
 package com.got.domain;
 
 
+import javax.inject.Inject;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.controller.RsaController;
+import com.got.mapper.goods.StockMapper;
 import com.got.service.MemberService;
 import com.got.vo.member.MemberVO;
 
@@ -17,6 +20,12 @@ import com.got.vo.member.MemberVO;
 @ContextConfiguration(locations = {
 		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
 		"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class ShippingReceivingTest {
+public class StockTest {
 	
+	@Inject StockMapper stockMapper;
+	
+	@Test
+	public void select() {
+//		System.out.println(stockMapper.selectOneExtendsGoods(47));
+	}
 }

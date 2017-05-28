@@ -15,16 +15,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.service.MemberService;
 import com.got.service.MileageService;
-import com.got.service.OrderService;
+import com.got.service.deal.OrderService;
 import com.got.util.CommonUtil;
 import com.got.util.ModelAndView;
 import com.got.vo.MileageVO;
-import com.got.vo.OrderDetailVO;
-import com.got.vo.PaymentVO;
-import com.got.vo.list.OrderDetailListContainer;
+import com.got.vo.deal.DealDetailVO;
+import com.got.vo.deal.OrderVO;
+import com.got.vo.deal.PaymentVO;
+import com.got.vo.list.DealDetailListContainer;
 import com.got.vo.member.MemberVO;
 
 @Controller
@@ -40,31 +42,29 @@ public class OrderController {
 	public ModelAndView purchaseForm(
 			HttpSession session, 
 			@CookieValue(name = "buyList", required = false) String buyListJSON, 
-			OrderDetailListContainer container
+			DealDetailListContainer container
 			) throws UnsupportedEncodingException {
 		log.info("---------------- purchaseForm() ----------------\n");
 		
-		List<OrderDetailVO> list = container.getDetails();
-		if(Objects.isNull(list)) {
-			list = CommonUtil.getVOList(URLDecoder.decode(buyListJSON, "UTF-8"), OrderDetailVO.class);
-			log.debug("로그인페이지 경유해서 들어옴");
-		}
-		log.debug(list);
+		List<DealDetailVO> list = confirmOrderDetail(container.getDetails(), buyListJSON);
 		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("o", os.getBuyList(list));
+		
 		MemberVO m = (MemberVO)session.getAttribute("lm");
 		if(Objects.nonNull(m))
 			mav.addObject("m", ms.detail(m.getM_no()));
 		
-		log.debug(os.getBuyList(list));
-		mav.addObject("o", os.getBuyList(list));
 		return mav.setViewPage("order/form.jsp");
 	}
 	
-	@RequestMapping("order/checkout.yo")
-	public ModelAndView checkout() {
-		ModelAndView mav = new ModelAndView();
-		return mav.setViewPage("order/checkout.jsp");
+	private List<DealDetailVO> confirmOrderDetail(List<DealDetailVO> list, String buyListJSON) throws UnsupportedEncodingException {
+		if(Objects.isNull(list)) {
+			list = CommonUtil.getVOList(URLDecoder.decode(buyListJSON, "UTF-8"), DealDetailVO.class);
+			log.debug("로그인페이지 경유해서 들어옴");
+		}
+		log.debug(list);
+		return list;
 	}
 	
 	@RequestMapping(value = "order/mileageCheck.yo", method = RequestMethod.POST)
@@ -74,10 +74,11 @@ public class OrderController {
 		res.getWriter().print(mileage.checkMileage(m, total_price));
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "order/successCheckout.yo", method = RequestMethod.POST)
-	public void successCheckout(PaymentVO p) {
+	public void successCheckout(OrderVO o, PaymentVO p) {
 		log.info("---------------- successCheckout() ----------------\n");
-		log.debug(p);
+		log.debug("\n" + o + " \n " + p);
 		os.saveCheckoutInfo(p);
 	}
 }

@@ -50,11 +50,12 @@ public class GoodsTest {
 	
 	List<GoodsVO> list;
 	List<GoodsOptionVO> goodsOptions;
-	boolean isSetup = false;
+	boolean isSetup = true;
 	GoodsVO g;
 	
 	@Before
 	public void setup() {
+		list = gs.getAll();
 		int size = goodsMapper.selectAll().size();
 		goodsOptions = VOHelper.createGoodsOptions(
 				optionMapper.selectListWithC_no(	categoryMapper.selectAll().get(0).getC_no()	)
@@ -65,7 +66,6 @@ public class GoodsTest {
 		System.out.println("상품 개수 : " + size++);
 		g.setName("테스트-" + size);
 		isSetup = true;
-		list = gs.getAll();
 	}
 	
 	private GoodsVO createGoods(CategoryVO categoryVO) {
@@ -81,8 +81,8 @@ public class GoodsTest {
 	}
 	
 	@Test
-	public void GoodsServiceInsert() {
-//		gs.enroll(g);
+	public void selectOne() {
+		System.out.println(list.get(0).getG_no());
 	}
 	
 	@Test

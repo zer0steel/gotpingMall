@@ -49,9 +49,7 @@ $(function() {
 							animation: "slide",
 							controlNav: "thumbnails"
 						});
-						$('.imgZoom').elevateZoom({
-							scrollZoom : true
-						});
+						$('.imgZoom').elevateZoom();
 						</script>
 					</div>	
 					<div class="col-md-7 single-top-right">
@@ -155,7 +153,7 @@ $(function() {
 <form action="${pageContext.request.contextPath }/order/form.yo" class="form-horizontal" id="form-option-select">
 	<div id="selectOption"></div>
 </form> --%>
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/stock.js?ver=2"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/stock.js?ver=3"></script>
 <script type="text/javascript">
 (function() {
 	var optCnt = goods.selectOption({

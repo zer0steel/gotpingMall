@@ -15,9 +15,9 @@ public class MileageService {
 	public int checkMileage(MileageVO useMileage, int total_price) {
 		MileageVO m = mileageMapper.selectCurrMileage(useMileage.getM_no());
 		if(m.getCurr_mileage() - useMileage.getChange_amount() < 0)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(m.getCurr_mileage() + " - " + useMileage.getChange_amount() + " < 0");
 		if(total_price - useMileage.getChange_amount() < 0)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(total_price + " - " + useMileage.getChange_amount() + " < 0");
 		return total_price - useMileage.getChange_amount();
 	}
 }

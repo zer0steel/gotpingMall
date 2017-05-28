@@ -1,4 +1,4 @@
-package com.got.vo;
+package com.got.vo.deal;
 
 import java.sql.Timestamp;
 
@@ -8,6 +8,7 @@ public class PaymentVO {
 	private Integer o_no;
 	private int price, use_mileage;
 	private Timestamp regdate;
+	private OrderVO order;
 	
 	public String getP_no() {
 		return p_no;
@@ -56,6 +57,18 @@ public class PaymentVO {
 	}
 	public void setRegdate(Timestamp regdate) {
 		this.regdate = regdate;
+	}
+	public OrderVO getOrder() {
+		return order;
+	}
+	public void setOrder(OrderVO order) {
+		this.order = order;
+	}
+	@Override
+	public String toString() {
+		return "PaymentVO [p_no=" + p_no + ", status=" + status + ", p_way=" + p_way + ", p_way_detail=" + p_way_detail
+				+ ", o_no=" + o_no + ", price=" + price + ", use_mileage=" + use_mileage + ", regdate=" + regdate
+				+ ", order=" + order + "]";
 	}
 	
 }

@@ -20,8 +20,7 @@ public class MemberVO {
 	private Grade grade;
 	private boolean loginSuccess = false;
 	
-	private Address addr;
-	private static final String SEPARATOR_CHAR = "/ ";
+	private AddressVO addr;
 	
 	private int mileage;
 	private List<MileageVO> milList;
@@ -66,23 +65,13 @@ public class MemberVO {
 	}
 	public String getAddr() {
 		if(Objects.nonNull(addr)) {
-			String[] str = new String[3];
-			str[0] = addr.getPostCode();
-			str[1] = addr.getBase();
-			str[2] = addr.getExtra();
-			return String.join(SEPARATOR_CHAR, str);
+			return this.getAddress().getAddr();
 		}
 		return new String();
 	}
 	public void setAddr(String addr) {
-		Iterator<String> iter = Arrays.asList(addr.split(SEPARATOR_CHAR)).iterator();
-		this.addr = new Address();
-		if(iter.hasNext())
-			this.addr.setPostCode(iter.next());
-		if(iter.hasNext())
-			this.addr.setBase(iter.next());
-		if(iter.hasNext())
-			this.addr.setExtra(iter.next());
+		this.addr = new AddressVO();
+		this.addr.setAddr(addr);
 	}
 	public int getGrade() {
 		return grade.getCode();
@@ -103,7 +92,7 @@ public class MemberVO {
 		this.join_date = join_date;
 	}
 	
-	public Address getAddress() {
+	public AddressVO getAddress() {
 		return this.addr;
 	}
 	
@@ -146,42 +135,6 @@ public class MemberVO {
 		this.mgList = mgList;
 	}
 
-	public class Address {
-		String postCode;
-		String base;
-		String extra;
-		
-		@Override
-		public String toString() {
-			return "Address [postCode=" + postCode + ", base=" + base + ", extra=" + extra + "]";
-		}
-
-		public String getPostCode() {
-			return postCode;
-		}
-
-		public void setPostCode(String postCode) {
-			this.postCode = postCode;
-		}
-
-		public String getBase() {
-			return base;
-		}
-
-		public void setBase(String base) {
-			this.base = base;
-		}
-
-		public String getExtra() {
-			return extra;
-		}
-
-		public void setExtra(String extra) {
-			this.extra = extra;
-		}
-		
-	}
-	
 	public boolean isEqualsPwd(String rsaPwd, PrivateKey privateKey) {
 		Objects.requireNonNull(rsaPwd);
 		Objects.requireNonNull(privateKey);

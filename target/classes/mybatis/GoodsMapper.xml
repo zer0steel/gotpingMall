@@ -4,16 +4,29 @@
 <mapper namespace="com.got.mapper.goods.GoodsMapper">
 	<resultMap type="com.got.vo.file.GoodsImageVO" id="goodsImg">
 		<id column="f_no" property="f_no"/>
+		<result column="real_name" property="real_name"/>
 		<result column="save_name" property="save_name"/>
 		<result column="save_path" property="save_path"/>
+		<result column="location" property="location"/>
 	</resultMap>
 	
 	<resultMap type="com.got.vo.goods.GoodsVO" id="goods">
 		<id column="g_no" property="g_no"/>
+		<id column="c_no" property="c_no"/>
+		<result column="name" property="name"/>
+		<result column="detail" property="detail"/>
 		<result column="purchase_price" property="purchase_price"/>
 		<result column="sell_price" property="sell_price"/>
 		<result column="discount_rate" property="discount_rate"/>
-		<result column="name" property="name"/>
+		<result column="saving_mileage" property="saving_mileage"/>
+		<result column="status_code" property="status_code"/>
+	</resultMap>
+	
+	<resultMap type="com.got.vo.goods.GoodsVO" id="goodsWithMainImg" extends="goods">
 		<association property="mainImg" resultMap="goodsImg" />
+	</resultMap>
+	
+	<resultMap type="com.got.vo.goods.GoodsVO" id="goodsWithImgs" extends="goods">
+		<association property="images" resultMap="goodsImg" />
 	</resultMap>
 </mapper>

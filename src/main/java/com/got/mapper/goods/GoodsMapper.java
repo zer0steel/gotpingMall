@@ -41,7 +41,9 @@ public interface GoodsMapper {
 	@Select("SELECT * FROM goods g, category c WHERE g.c_no = c.c_no")
 	public List<GoodsVO> selectAll();
 	
-	@Select("SELECT * FROM goods g, category c WHERE g.c_no = c.c_no AND g.g_no = #{g_no}")
+	@Select("SELECT * FROM goods g, category c, files f, goods_image gi "
+			+ "WHERE g.c_no = c.c_no AND f.f_no = gi.f_no AND g.g_no = gi.g_no AND g.g_no = #{g_no}")
+	@ResultMap("goodsWithImgs")
 	public GoodsVO selectOne(Integer g_no);
 	
 	@Select("SELECT * FROM goods g, category c WHERE g.c_no = c.c_no AND c.c_no = #{c_no} AND is_deleted = 'false'")
@@ -50,11 +52,12 @@ public interface GoodsMapper {
 	
 	final String SELECT_LIST_WITH_C_NO = "SELECT g.*, f.save_path, f.save_name "
 			+ "FROM goods g, category c, files f, goods_Image gi "
-			+ "WHERE status_code = #{status.code } AND g.g_no = gi.g_no AND f.f_no = gi.f_no AND gi.location = 'main' AND g.c_no = c.c_no AND c.c_no IN ("
+			+ "WHERE g.g_no = gi.g_no AND f.f_no = gi.f_no AND  g.c_no = c.c_no AND is_deleted = 'false' "
+			+ "AND gi.location = 'main' AND status_code = #{status.code } AND c.c_no IN ("
 			+ "SELECT c_no FROM category WHERE super_no = #{c_no } OR c_no = #{c_no } OR c_no IN ("
 			+ "SELECT sub.c_no FROM category super, category sub WHERE sub.levels = 3 AND sub.super_no = super.c_no AND super.super_no = #{c_no })	)";
 	@Select(SELECT_LIST_WITH_C_NO)
-	@ResultMap("goods")
+	@ResultMap("goodsWithMainImg")
 	public List<GoodsVO> selectListWithC_no(@Param("c_no") Integer c_no, @Param("status") GoodsStatus status);
 	
 }

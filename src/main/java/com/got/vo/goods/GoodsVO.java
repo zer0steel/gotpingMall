@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.got.enums.GoodsStatus;
+import com.got.vo.deal.DealVO;
 import com.got.vo.file.GoodsImageVO;
 
 public class GoodsVO extends CategoryVO {
@@ -12,20 +13,20 @@ public class GoodsVO extends CategoryVO {
 	private int stock, purchase_price, sell_price, saving_mileage, discount_price;
 	private double discount_rate;
 	private String name, detail;
-	private GoodsStatus status;
 	private GoodsImageVO mainImg;
 	private List<GoodsImageVO> images;
-	private List<GoodsManagmentVO> history;
+	private List<DealVO> history;
 	private List<GoodsOptionVO> goodsOptions = new ArrayList<>();
 	private List<StockVO> stocks;
+	private GoodsStatus status;
 	
 	@Override
 	public String toString() {
 		return "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
 				+ sell_price + ", saving_mileage=" + saving_mileage + ", discount_price=" + discount_price
 				+ ", discount_rate=" + discount_rate + ", name=" + name + ", detail=" + detail + ", status=" + status
-				+ ", mainImg=" + mainImg + ", images=" + images + ", GoodsManagmentVO=" + history + ", goodsOptions="
-				+ goodsOptions + ", stocks=" + stocks + "]";
+				+ ", mainImg=" + mainImg + ", images=" + images + ", history=" + history + ", goodsOptions="
+				+ goodsOptions + ", stocks=" + stocks + ", toString()=" + super.toString() + "]";
 	}
 
 	public GoodsVO() {}
@@ -80,7 +81,6 @@ public class GoodsVO extends CategoryVO {
 
 	public void setSell_price(int sell_price) {
 		this.sell_price = sell_price;
-		setDiscount_price();
 	}
 
 	public int getDiscount_rate() {
@@ -89,7 +89,6 @@ public class GoodsVO extends CategoryVO {
 
 	public void setDiscount_rate(double discount_rate) {
 		this.discount_rate = discount_rate;
-		setDiscount_price();
 	}
 
 	public int getSaving_mileage() {
@@ -101,6 +100,8 @@ public class GoodsVO extends CategoryVO {
 	}
 
 	public int getStatus_code() {
+		if(Objects.isNull(status))
+			return 0;
 		return status.getCode();
 	}
 
@@ -116,11 +117,11 @@ public class GoodsVO extends CategoryVO {
 		this.status = status;
 	}
 
-	public List<GoodsManagmentVO> getHistory() {
+	public List<DealVO> getHistory() {
 		return history;
 	}
 
-	public void setHistory(List<GoodsManagmentVO> history) {
+	public void setHistory(List<DealVO> history) {
 		this.history = history;
 	}
 
@@ -130,12 +131,6 @@ public class GoodsVO extends CategoryVO {
 
 	public void setImages(List<GoodsImageVO> images) {
 		this.images = images;
-		if( Objects.nonNull(images) )
-			for(GoodsImageVO img : images)
-				if("main".equals(img.getLocation())) {
-					this.mainImg = img;
-					break;
-				}
 	}
 
 	public void updateStock(int amount) {
@@ -143,6 +138,11 @@ public class GoodsVO extends CategoryVO {
 	}
 
 	public GoodsImageVO getMainImg() {
+		if(Objects.isNull(mainImg) && Objects.nonNull(images))
+			for(GoodsImageVO img : images)
+				if("main".equals(img.getLocation()))
+					return img;
+		
 		return mainImg;
 	}
 
@@ -158,15 +158,6 @@ public class GoodsVO extends CategoryVO {
 		this.goodsOptions = goodsOptions;
 	}
 
-	public int getDiscount_price() {
-		return discount_price;
-	}
-
-	public void setDiscount_price() {
-		double rate = (100 - this.discount_rate) / 100;
-		this.discount_price = (int)(this.sell_price * rate);
-	}
-
 	public List<StockVO> getStocks() {
 		return stocks;
 	}
@@ -176,9 +167,8 @@ public class GoodsVO extends CategoryVO {
 	}
 	
 	public int getRealPrice() {
-		return this.discount_rate == 0 ?
-				this.sell_price :
-				this.discount_price;
+		double rate = (100 - this.discount_rate) / 100;
+		return (int)(this.sell_price * rate);
 	}
 
 	public void setExtraCost(List<StockVO> dbDataStocks) {

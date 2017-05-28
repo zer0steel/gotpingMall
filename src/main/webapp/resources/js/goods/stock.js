@@ -37,8 +37,9 @@ goods.selectOption = (function() {
 				dataType : 'json'
 			});
 		}(setting.g_no)).done(info => {
+			console.log(info)
 			optInfo = info;
-			createSelectTag(setting, info.options);
+			createTag(setting);
 			addEvent(setting.$root.find('select'), setting.onStockChange);
 		});
 		
@@ -88,39 +89,84 @@ goods.selectOption = (function() {
 		return stockCount;
 	}
 	
-	var createSelectTag = function(setting, options) {
-		let $root = setting.$root
-		options.forEach( (o, idx) => {
-			let $select = $('<select />').addClass('select-option')
-			.append(	$('<option />').html('(필수) 선택하세요.').attr('selected', true).val(DEFAULT_OPTION).css('display','none')	);
+	var createTag = function(setting) {
+		let options = optInfo.options;
+		(function($root) {
 			
-			for(var d of o.details) {
-				let optText = d.value;
-				var $option = $('<option />').val(d.value);
-				if(Number(d.extra_cost) !== 0) {
-					optText += "  (추가금액 : " + d.extra_cost + " 원)"; 
-					$option.data(ATTR.DATA.EXTRA_COST, d.extra_cost);
-				}
-				$option.data('text', optText).html(optText).appendTo( $select );
-				if( idx >= 1)
-					$option.css('display','none');
-			}
-			if(setting.useFormGroup) {
-				$('<div />').addClass('form-group').append(
-						$('<label />').addClass('control-label col-md-2').html(o.o_name),
-						$('<div />').addClass('col-md-9').append( $select.addClass('form-control') )
-				).appendTo( $root );
+			if($.isEmptyObject(options)) {
+				createSelectedListContainer().appendTo($root);
+				createInputTag($root);
 			}
 			else {
-				$('<ul />').append(
-					$('<li />').text(o.o_name).append($select),
-					$('<div />').addClass('clearfix'))
-					.appendTo($root);
+				createSelectTag($root, ($select, optName) => {
+					let $wrapperTag = setting.useFormGroup ? 
+						createFormGroup($select, optName) : 
+						createWrapperTag($select, optName);
+					$wrapperTag.appendTo($root);
+				});
+				createSelectedListContainer().appendTo($root);
 			}
-		})
-		$table = $('<table />').addClass('table').css('max-width', '90%');
-		$('<div />').attr('id','selectedOptions').css({'max-height':'150px', 'overflow-y':'scroll'})
-		.append( $table ).appendTo( $root );
+			
+		}(setting.$root))
+		
+		function createInputTag($root) {
+			let opt = optInfo.stocks[0];
+			$('<tr />').addClass(ATTR.CLASS.SELECT_OPTION).data(ATTR.DATA.OPTION_INFO, opt).append(
+				$('<td />').html('수량 : &nbsp;&nbsp;&nbsp;'),
+				$('<td />').append(
+					$('<input />').attr({'type':'number','name':'details[' + arraySize + '].change_amount'}).css('width','50px').val(1),
+					$('<input />').attr({'type':'hidden','name':'details[' + arraySize + '].stock.g_no'}).val(opt.g_no),
+					$('<input />').attr({'type':'hidden','name':'details[' + arraySize + '].stock.s_no'}).val(opt.s_no)
+				),
+				$('<td />').addClass(ATTR.CLASS.PRICE).data('price', goodsPrice).setPriceInHtml(goodsPrice)
+			).appendTo( $table );
+			arraySize++;
+		}
+		
+		function createSelectTag($root, appendToSuper) {
+			options.forEach((opt, idx) => {
+				let $select = $('<select />').addClass('select-option')
+				.append($('<option />').html('(필수) 선택하세요.').attr('selected', true).val(DEFAULT_OPTION).css('display','none')	);
+				
+				for(var d of opt.details) {
+					let $option = createOption(d);
+					if( idx >= 1)
+						$option.css('display','none');
+					
+					$option.appendTo($select);
+				}
+				
+				appendToSuper($select, opt.o_name);
+			});
+		}
+		
+		function createOption(optionDetail) {
+			let optText = optionDetail.value;
+			var $option = $('<option />').val(optionDetail.value);
+			if(Number(optionDetail.extra_cost) !== 0) {
+				optText += "  (추가금액 : " + d.extra_cost + " 원)"; 
+				$option.data(ATTR.DATA.EXTRA_COST, d.extra_cost);
+			}
+			return $option.data('text', optText).html(optText);
+		}
+		
+		function createSelectedListContainer() {
+			$table = $('<table />').addClass('table').css('max-width', '90%');
+			return $('<div />').attr('id','selectedOptions').css({'max-height':'150px', 'overflow-y':'scroll'})
+			.append($table);
+		}
+		
+		function createFormGroup($select, optName) {
+			return $('<div />').addClass('form-group').append(
+				$('<label />').addClass('control-label col-md-2').html(optName),
+				$('<div />').addClass('col-md-9').append( $select.addClass('form-control') ));
+		}
+		
+		function createWrapperTag($select, optName) {
+			return $('<ul />').append(
+					$('<li />').text(optName).append($select),
+					$('<div />').addClass('clearfix'));
+		}
 	}
 	
 	var createSelectedList = function($selectTags, onStockChange) {
@@ -136,9 +182,9 @@ goods.selectOption = (function() {
 			$('<td />').html(opt.combination + ' &nbsp;&nbsp;').data('combination', opt.combination),
 			$('<td />').append(
 				$('<input />').attr({'type':'number','name':'details[' + arraySize + '].change_amount'}).css('width','50px').val(1),
-				$('<input />').attr({'type':'hidden','name':'details[' + arraySize + '].g_no'}).val(opt.g_no),
-				$('<input />').attr({'type':'hidden','name':'details[' + arraySize + '].s_no'}).val(opt.s_no),
-				$('<input />').attr({'type':'hidden','name':'details[' + arraySize + '].combination'}).val(opt.combination)
+				$('<input />').attr({'type':'hidden','name':'details[' + arraySize + '].stock.g_no'}).val(opt.g_no),
+				$('<input />').attr({'type':'hidden','name':'details[' + arraySize + '].stock.s_no'}).val(opt.s_no),
+				$('<input />').attr({'type':'hidden','name':'details[' + arraySize + '].stock.combination'}).val(opt.combination)
 			),
 			$('<td />').addClass(ATTR.CLASS.PRICE).data('price', price).setPriceInHtml(price),
 			$('<td />').html($('<p />').text('X').addClass('deleteChoice').css('cursor','pointer'))

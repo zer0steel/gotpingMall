@@ -1,49 +1,49 @@
-package com.got.vo.goods;
+package com.got.vo.deal;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.got.enums.ManagementCategory;
+import com.got.enums.DealCategory;
 
-public class GoodsManagmentVO {
-	private Integer gc_no;
-	private ManagementCategory category;
+public class DealVO {
+	private Integer d_no;
+	private DealCategory category;
 	private String detail;
 	private int change_amount, total_price;
 	private Timestamp regdate;
-	private List<ControlDetailVO> details;
+	private List<DealDetailVO> details;
 	
 	@Override
 	public String toString() {
-		return "GoodsManagmentVO [gc_no=" + gc_no + ", category=" + category + ", detail=" + detail + ", change_amount="
+		return "GoodsManagmentVO [d_no=" + d_no + ", category=" + category + ", detail=" + detail + ", change_amount="
 				+ change_amount + ", total_price=" + total_price + ", regdate=" + regdate + ", details=" + details
 				+ "]";
 	}
-	public List<ControlDetailVO> getDetails() {
+	public List<DealDetailVO> getDetails() {
 		return details;
 	}
-	public void setDetails(List<ControlDetailVO> details) {
+	public void setDetails(List<DealDetailVO> details) {
 		this.details = details;
 	}
-	public Integer getGc_no() {
-		return gc_no;
+	public Integer getD_no() {
+		return d_no;
 	}
-	public void setGc_no(Integer gc_no) {
-		this.gc_no = gc_no;
+	public void setD_no(Integer d_no) {
+		this.d_no = d_no;
 	}
 	public int getCategory() {
 		return category.getCode();
 	}
 
-	public ManagementCategory getEnumCategory() {
+	public DealCategory getEnumCategory() {
 		return category;
 	}
 
 	public void setCategory(int code) {
-		this.category = ManagementCategory.of(code);
+		this.category = DealCategory.of(code);
 	}
 
-	public void setEnumCategory(ManagementCategory category) {
+	public void setEnumCategory(DealCategory category) {
 		this.category = category;
 	}
 	public String getDetail() {

@@ -1,6 +1,6 @@
 package com.got.vo.file;
 
-public class GoodsImageVO extends FileVO{
+public class GoodsImageVO extends FileVO {
 	
 	private int g_no;
 	private String location;
@@ -18,6 +18,6 @@ public class GoodsImageVO extends FileVO{
 	}
 	@Override
 	public String toString() {
-		return "GoodsImgVO [g_no=" + g_no + ", location=" + location + "]";
+		return "GoodsImageVO [g_no=" + g_no + ", location=" + location + ", toString()=" + super.toString() + "]";
 	}
 }

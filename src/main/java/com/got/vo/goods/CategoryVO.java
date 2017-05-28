@@ -2,6 +2,7 @@ package com.got.vo.goods;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.got.enums.Level;
 

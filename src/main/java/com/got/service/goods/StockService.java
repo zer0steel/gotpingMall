@@ -47,6 +47,7 @@ public class StockService {
 	
 	private List<StockVO> createStockVO() {
 		StockVO s = new StockVO();
+		s.setCombination("기본옵션");
 		s.setAmount(0);
 		s.setExtra_cost(0);
 		List<StockVO> list = new ArrayList<>();

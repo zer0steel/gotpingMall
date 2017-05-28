@@ -6,19 +6,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.got.service.goods.GoodsManagmentService;
+import com.got.service.deal.DealService;
 import com.got.util.ModelAndView;
-import com.got.vo.goods.GoodsManagmentVO;
+import com.got.vo.deal.DealVO;
 
 @Controller
-public class GoodsManagmentController {
+public class DealController {
 	
-	@Inject private GoodsManagmentService managmentService;
+	@Inject private DealService dealService;
 	
 	@RequestMapping(value = "admin/goods/insertStock.yo", method = RequestMethod.POST)
-	public ModelAndView insertSubmit(Integer g_no, GoodsManagmentVO managmentVO) {
+	public ModelAndView insertSubmit(Integer g_no, DealVO managmentVO) {
 		ModelAndView mav = new ModelAndView();
-		managmentService.addHistoryAndStocks(managmentVO);
+		dealService.addHistoryAndStocks(managmentVO);
 		mav.setViewName("redirect:/admin/goods/detail.yo?g_no=" + g_no);
 		return mav;
 	}

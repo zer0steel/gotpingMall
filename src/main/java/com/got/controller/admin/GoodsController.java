@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.got.enums.GoodsStatus;
-import com.got.enums.ManagementCategory;
+import com.got.enums.DealCategory;
 import com.got.service.goods.CategoryService;
 import com.got.service.goods.GoodsService;
 import com.got.util.ModelAndView;
@@ -48,7 +48,7 @@ public class GoodsController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("g",gs.detailAndSRHistory(g_no))
 		.addObject("status", GoodsStatus.values())
-		.addObject("hc", ManagementCategory.values());
+		.addObject("hc", DealCategory.values());
 		return mav.setAdminViewPage("goods/detail.jsp");
 	}
 	

@@ -21,7 +21,7 @@ import com.got.service.MemberService;
 import com.got.util.CommonUtil;
 import com.got.util.ModelAndView;
 import com.got.util.RSA;
-import com.got.vo.list.OrderDetailListContainer;
+import com.got.vo.list.DealDetailListContainer;
 import com.got.vo.member.MemberVO;
 
 @Controller("memberController")
@@ -48,7 +48,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("purchaseLogin.yo")
-	public ModelAndView purchaseLoginForm(HttpServletResponse res, OrderDetailListContainer container) throws UnsupportedEncodingException {
+	public ModelAndView purchaseLoginForm(HttpServletResponse res, DealDetailListContainer container) throws UnsupportedEncodingException {
 		log.info("--------------- purchaseLoginForm() ---------------");
 		log.debug(container.getDetails());
 		

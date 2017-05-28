@@ -35,6 +35,7 @@ public class MemberTest {
 		m.setEnumGrade(Grade.ADMIN);
 		m.setName("장영철");
 		m.setEmail("test@test.yo");
+		m.setAddr("05099/ 서울 광진구 자양동 606-10/ 5층");
 		m.setPwd(BCrypt.hashpw("1234", BCrypt.gensalt(12)));
 		MemberVO m2 = memberMapper.selectOneWithId(m.getId());
 		if(m2 == null) {

@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.got.enums.ManagementCategory;
+import com.got.enums.DealCategory;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
