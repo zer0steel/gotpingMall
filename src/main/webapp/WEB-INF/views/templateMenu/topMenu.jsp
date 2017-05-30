@@ -91,7 +91,7 @@ var isLogin = function() {
 	return $('#id').val() ? true : false;
 }
 
-var getContextPath = function() {
-	return $('#pageContextPath').val();
+var path = function() {
+	return location.protocol + "//" + location.host + "/controller/";
 }
 </script>

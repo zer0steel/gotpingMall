@@ -1,5 +1,7 @@
 package com.got.domain;
 
+import java.math.BigDecimal;
+
 import javax.inject.Inject;
 
 import org.junit.Before;
@@ -42,7 +44,7 @@ public class MemberTest {
 			memberMapper.insert(m);
 			MileageVO mileage = new MileageVO();
 			mileage.setM_no(m.getM_no());
-			mileage.setChange_amount(10000000);
+			mileage.setChange_amount(BigDecimal.valueOf(10000000));
 			mileage.setReason("오픈기념 천만포인트 행사");
 			mileageMapper.insert(mileage);
 		}
@@ -56,7 +58,7 @@ public class MemberTest {
 		MileageVO mileage = new MileageVO();
 		mileage.setM_no(m.getM_no());
 		mileage.setReason("테스트");
-		mileage.setChange_amount(-700);
+		mileage.setChange_amount(BigDecimal.valueOf(-700));
 		mileageMapper.insert(mileage);
 	}
 	

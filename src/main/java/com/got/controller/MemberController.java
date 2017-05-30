@@ -70,9 +70,9 @@ public class MemberController {
 		PrivateKey privateKey = (PrivateKey)session.getAttribute(RSA.PRIVATE_KEY);
 		session.removeAttribute(RSA.PRIVATE_KEY);
 		MemberVO m = s.login(id, pwd, privateKey);
-		if(m.isLoginSuccess()) 
+		if(m.isLogin()) 
 			session.setAttribute("lm", m);
-		res.getWriter().print(m.isLoginSuccess());
+		res.getWriter().print(m.isLogin());
 	}
 	
 	@RequestMapping("logout.yo")

@@ -1,0 +1,34 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.got.mapper.deal.DealMapper">
+
+	<resultMap type="com.got.vo.goods.GoodsVO" id="goodsMap">
+		<id property="g_no" column="g_no"/>
+		<result property="saving_mileage" column="saving_mileage"/>
+	</resultMap>
+
+	<resultMap type="com.got.vo.goods.StockVO" id="stockMap">
+		<id property="s_no" column="s_no"/>
+		<association property="goods" resultMap="goodsMap"></association>
+	</resultMap>
+	
+	<resultMap type="com.got.vo.deal.DealDetailVO" id="detailsMap">
+		<id property="dd_no" column="dd_no"/>
+		<result property="change_amount" column="change_amount"/>
+		<result property="remain_stock" column="remain_stock"/>
+		<result property="unit_price" column="unit_price"/>
+		<result property="d_no" column="d_no"/>
+		<association property="stock" resultMap="stockMap" />
+	</resultMap>
+	
+	<resultMap type="com.got.vo.deal.DealVO" id="dealMap">
+		<id property="d_no" column="d_no"/>
+		<result property="category" column="category"/>
+		<result property="detail" column="detail"/>
+		<result property="total_change_amount" column="total_change_amount"/>
+		<result property="total_price" column="total_price"/>
+		<result property="regdate" column="regdate"/>
+		<association property="details" resultMap="detailsMap" />
+	</resultMap>
+</mapper>

@@ -3,9 +3,13 @@ package com.got.mapper.deal;
 import org.apache.ibatis.annotations.Insert;
 import org.springframework.stereotype.Repository;
 
+import com.got.vo.deal.OrderVO;
+
 @Repository
 public interface OrderMapper {
 	
-	@Insert("")
-	public int insert();
+	@Insert("INSERT INTO orders(d_no, m_no, buyer, buyer_email, order_password, recipient, addr, message)"
+			+ "VALUES(#{d_no}, #{m_no, jdbcType=INTEGER }, #{buyer }, #{buyer_email }, #{order_password, jdbcType=VARCHAR },"
+			+ "#{recipient }, #{address.addr }, #{message, jdbcType=VARCHAR } )")
+	public int insert(OrderVO o);
 }

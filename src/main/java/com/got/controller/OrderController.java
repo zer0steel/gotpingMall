@@ -2,6 +2,7 @@ package com.got.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.service.MemberService;
 import com.got.service.MileageService;
+import com.got.service.PaymentService;
 import com.got.service.deal.OrderService;
 import com.got.util.CommonUtil;
 import com.got.util.ModelAndView;
@@ -35,6 +37,7 @@ public class OrderController {
 	@Inject private MemberService ms;
 	@Inject private OrderService os;
 	@Inject private MileageService mileage;
+	@Inject private PaymentService payService;
 	
 	private Logger log = Logger.getLogger(OrderController.class);
 	
@@ -68,7 +71,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "order/mileageCheck.yo", method = RequestMethod.POST)
-	public void mileageCheck(HttpServletResponse res, MileageVO m, int total_price) throws IOException {
+	public void mileageCheck(HttpServletResponse res, MileageVO m, BigDecimal total_price) throws IOException {
 		log.info("---------------- mileageCheck() ----------------\n");
 		log.debug(m);
 		res.getWriter().print(mileage.checkMileage(m, total_price));
@@ -78,7 +81,7 @@ public class OrderController {
 	@RequestMapping(value = "order/successCheckout.yo", method = RequestMethod.POST)
 	public void successCheckout(OrderVO o, PaymentVO p) {
 		log.info("---------------- successCheckout() ----------------\n");
-		log.debug("\n" + o + " \n " + p);
-		os.saveCheckoutInfo(p);
+		log.debug("\n" + o + "\n" + p);
+		payService.saveCheckout(p, o);
 	}
 }

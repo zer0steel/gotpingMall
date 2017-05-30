@@ -21,7 +21,7 @@
 <!-- NProgress -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
 <!-- Custom Theme Style -->
-<link href="${pageContext.request.contextPath}/resources/build/css/custom.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/template/admin/css/custom.min.css" rel="stylesheet">
 
 </head>
 <body class="nav-md">
@@ -53,7 +53,8 @@
 <!-- NProgress -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
 <!-- Custom Theme Scripts -->
-<script src="${pageContext.request.contextPath}/resources/build/js/custom.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/template/admin/js/custom.min.js"></script>
+
 <script src="${pageContext.request.contextPath}/resources/js/commonUtil.js?ver=1"></script>
 </body>
 </html>

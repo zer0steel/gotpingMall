@@ -1,5 +1,6 @@
 package com.got.vo.member;
 
+import java.math.BigDecimal;
 import java.security.PrivateKey;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class MemberVO {
 	
 	private AddressVO addr;
 	
-	private int mileage;
+	private BigDecimal mileage;
 	private List<MileageVO> milList;
 	private List<MemberGradeVO> mgList;
 	
@@ -91,27 +92,22 @@ public class MemberVO {
 	public void setJoin_date(Timestamp join_date) {
 		this.join_date = join_date;
 	}
-	
+	public void setAddress(AddressVO address) {
+		this.addr = address;
+	}
 	public AddressVO getAddress() {
 		return this.addr;
 	}
 	
-	public void setLogin() {
-		this.loginSuccess = true;
-		this.name = null;
-		this.pwd = null;
-		this.addr = null;
-	}
-	
-	public boolean isLoginSuccess() {
+	public boolean isLogin() {
 		return this.loginSuccess;
 	}
 
-	public int getMileage() {
+	public BigDecimal getMileage() {
 		return mileage;
 	}
 
-	public void setMileage(int mileage) {
+	public void setMileage(BigDecimal mileage) {
 		this.mileage = mileage;
 	}
 	
@@ -133,6 +129,13 @@ public class MemberVO {
 
 	public void setMgList(List<MemberGradeVO> mgList) {
 		this.mgList = mgList;
+	}
+	
+	public void setLogin() {
+		this.loginSuccess = true;
+		this.name = null;
+		this.pwd = null;
+		this.addr = null;
 	}
 
 	public boolean isEqualsPwd(String rsaPwd, PrivateKey privateKey) {

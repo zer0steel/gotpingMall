@@ -1,5 +1,6 @@
 package com.got.vo.deal;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -9,14 +10,15 @@ public class DealVO {
 	private Integer d_no;
 	private DealCategory category;
 	private String detail;
-	private int change_amount, total_price;
+	private BigDecimal total_price;
+	private int total_change_amount;
 	private Timestamp regdate;
 	private List<DealDetailVO> details;
 	
 	@Override
 	public String toString() {
-		return "GoodsManagmentVO [d_no=" + d_no + ", category=" + category + ", detail=" + detail + ", change_amount="
-				+ change_amount + ", total_price=" + total_price + ", regdate=" + regdate + ", details=" + details
+		return "DealVO [d_no=" + d_no + ", category=" + category + ", detail=" + detail + ", total_price=" + total_price
+				+ ", total_change_amount=" + total_change_amount + ", regdate=" + regdate + ", details=" + details
 				+ "]";
 	}
 	public List<DealDetailVO> getDetails() {
@@ -52,16 +54,10 @@ public class DealVO {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
-	public int getChange_amount() {
-		return change_amount;
-	}
-	public void setChange_amount(int change_amount) {
-		this.change_amount = change_amount;
-	}
-	public int getTotal_price() {
+	public BigDecimal getTotal_price() {
 		return total_price;
 	}
-	public void setTotal_price(int total_price) {
+	public void setTotal_price(BigDecimal total_price) {
 		this.total_price = total_price;
 	}
 	public Timestamp getRegdate() {
@@ -69,5 +65,11 @@ public class DealVO {
 	}
 	public void setRegdate(Timestamp regdate) {
 		this.regdate = regdate;
+	}
+	public int getTotal_change_amount() {
+		return total_change_amount;
+	}
+	public void setTotal_change_amount(int total_change_amount) {
+		this.total_change_amount = total_change_amount;
 	}
 }

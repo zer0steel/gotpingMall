@@ -10,9 +10,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @JsonFormat(shape = Shape.OBJECT)
 public enum Level {
-	BIG(1, "대분류"), 
-	MIDDLE(2, "중분류"), 
-	SMALL(3, "소분류");
+	BIG(1, "대분류"), MIDDLE(2, "중분류"), SMALL(3, "소분류");
 	
 	private static final Map<Integer, Level> map = new HashMap<>();
 	static {

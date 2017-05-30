@@ -119,12 +119,12 @@
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="sr" items="${g.history }">
+					<c:forEach var="d" items="${g.history }">
 						<tr>
-							<td>${sr.enumCategory.korName }</td>
-							<td>${sr.change_amount }</td>
-							<td>${sr.regdate }</td>
-							<td>${sr.detail }</td>
+							<td>${d.enumCategory.korName }</td>
+							<td>${d.total_change_amount }</td>
+							<td>${d.regdate }</td>
+							<td>${d.detail }</td>
 						</tr>
 					</c:forEach>
 					</tbody>

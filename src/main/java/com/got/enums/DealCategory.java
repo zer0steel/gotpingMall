@@ -36,7 +36,7 @@ public enum DealCategory {
 	}
 	
 	public boolean isMinusStockCategory() {
-		return (this == SELL || this == LOSS_DESTROYED || this == FREE || this == OTHER_DECREASE);
+		return (this == CREATE_ORDER || this == SELL || this == LOSS_DESTROYED || this == FREE || this == OTHER_DECREASE);
 	}
 	
 	private static final Map<Integer, DealCategory> map = new HashMap<>();

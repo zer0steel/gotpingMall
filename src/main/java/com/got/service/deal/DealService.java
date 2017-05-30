@@ -26,7 +26,7 @@ public class DealService {
 	private Logger log = Logger.getLogger(DealService.class);
 	
 	public List<DealVO> getAll() {
-		return dealMapper.selectAll();
+		return null;//dealMapper.selectAll();
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public class DealService {
 	public Integer addHistory(DealVO dealVO) {
 		dealMapper.insert(dealVO);
 		dealVO.getDetails().forEach(vo -> {
-			vo.setup(dealVO);
+			vo.setD_no(dealVO.getD_no());
 			detailMapper.insertNotUpdateStock(vo.getStock().getS_no(), vo);
 		});
 		return dealVO.getD_no();
@@ -57,7 +57,7 @@ public class DealService {
 	public Integer insertNewDeal(OrderVO o) {
 		DealVO deal = new DealVO();
 		deal.setEnumCategory(DealCategory.CREATE_ORDER);
-		deal.setChange_amount(o.getChange_amount());
+		deal.setTotal_change_amount(o.getTotal_change_amount());
 		deal.setTotal_price(o.getTotal_price());
 		deal.setDetails(o.getDetails());
 		return addHistory(deal);
@@ -75,5 +75,18 @@ public class DealService {
 	
 	public String getRecentHistoryWithJSON(int g_no) {
 		return CommonUtil.convertToJSON(getRecentHistory(g_no));
+	}
+	
+	@Transactional
+	public DealVO updateStock(DealVO d, DealCategory category) {
+		d.setEnumCategory(category);
+		dealMapper.updateOne(d);
+		d.getDetails().forEach(vo -> {
+			log.debug(vo);
+			vo.setup(d);
+			detailMapper.updateStock(vo.getDd_no(), vo.getStock().getS_no());
+			stockMapper.updateStock(vo);
+		});
+		return d;
 	}
 }

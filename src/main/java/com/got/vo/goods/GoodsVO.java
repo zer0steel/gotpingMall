@@ -10,8 +10,8 @@ import com.got.vo.file.GoodsImageVO;
 
 public class GoodsVO extends CategoryVO {
 	private Integer g_no;
-	private int stock, purchase_price, sell_price, saving_mileage, discount_price;
-	private double discount_rate;
+	private int stock, purchase_price, sell_price, discount_price;
+	private double discount_rate, saving_mileage;
 	private String name, detail;
 	private GoodsImageVO mainImg;
 	private List<GoodsImageVO> images;
@@ -91,11 +91,11 @@ public class GoodsVO extends CategoryVO {
 		this.discount_rate = discount_rate;
 	}
 
-	public int getSaving_mileage() {
+	public double getSaving_mileage() {
 		return saving_mileage;
 	}
 
-	public void setSaving_mileage(int saving_mileage) {
+	public void setSaving_mileage(double saving_mileage) {
 		this.saving_mileage = saving_mileage;
 	}
 

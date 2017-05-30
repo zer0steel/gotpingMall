@@ -30,6 +30,7 @@ $("#btn-login").click(function() {
 	login(id, pwd);
 });
 
+console.log(path() + "order/form.yo");
 function login(id, pwd) {
 	if(lengthCheck(id, pwd)) {
 		myRsa.encrypt(pwd).then(function(securedPwd) {
@@ -38,8 +39,8 @@ function login(id, pwd) {
 				type : "post",
 				data : {id:id, pwd:securedPwd}
 			}).done(function(result) {
-				if(result == "true") 
-					location.href = getContextPath() + "/order/form.yo";
+				if(result == "true")
+					location.href = path() + "order/form.yo";
 				else 
 					alert("아이디나 비밀번호가 올바르지 않습니다.");
 			}).fail(function(err) {
