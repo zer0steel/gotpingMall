@@ -1,5 +1,6 @@
 package com.got.vo.goods;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,7 +11,8 @@ import com.got.vo.file.GoodsImageVO;
 
 public class GoodsVO extends CategoryVO {
 	private Integer g_no;
-	private int stock, purchase_price, sell_price, discount_price;
+	private BigDecimal purchase_price, sell_price, discount_price;
+	private int stock;
 	private double discount_rate, saving_mileage;
 	private String name, detail;
 	private GoodsImageVO mainImg;
@@ -22,11 +24,11 @@ public class GoodsVO extends CategoryVO {
 	
 	@Override
 	public String toString() {
-		return "GoodsVO [g_no=" + g_no + ", stock=" + stock + ", purchase_price=" + purchase_price + ", sell_price="
-				+ sell_price + ", saving_mileage=" + saving_mileage + ", discount_price=" + discount_price
-				+ ", discount_rate=" + discount_rate + ", name=" + name + ", detail=" + detail + ", status=" + status
-				+ ", mainImg=" + mainImg + ", images=" + images + ", history=" + history + ", goodsOptions="
-				+ goodsOptions + ", stocks=" + stocks + ", toString()=" + super.toString() + "]";
+		return "GoodsVO [g_no=" + g_no + ", purchase_price=" + purchase_price + ", sell_price=" + sell_price
+				+ ", discount_price=" + discount_price + ", stock=" + stock + ", discount_rate=" + discount_rate
+				+ ", saving_mileage=" + saving_mileage + ", name=" + name + ", detail=" + detail + ", mainImg="
+				+ mainImg + ", images=" + images + ", history=" + history + ", goodsOptions=" + goodsOptions
+				+ ", stocks=" + stocks + ", status=" + status + ", toString()=" + super.toString() + "]";
 	}
 
 	public GoodsVO() {}
@@ -67,24 +69,24 @@ public class GoodsVO extends CategoryVO {
 		this.stock = stock;
 	}
 
-	public int getPurchase_price() {
+	public BigDecimal getPurchase_price() {
 		return purchase_price;
 	}
 
-	public void setPurchase_price(int purchase_price) {
+	public void setPurchase_price(BigDecimal purchase_price) {
 		this.purchase_price = purchase_price;
 	}
 
-	public int getSell_price() {
+	public BigDecimal getSell_price() {
 		return sell_price;
 	}
 
-	public void setSell_price(int sell_price) {
+	public void setSell_price(BigDecimal sell_price) {
 		this.sell_price = sell_price;
 	}
 
-	public int getDiscount_rate() {
-		return (int)discount_rate;
+	public double getDiscount_rate() {
+		return discount_rate;
 	}
 
 	public void setDiscount_rate(double discount_rate) {
@@ -166,9 +168,9 @@ public class GoodsVO extends CategoryVO {
 		this.stocks = stocks;
 	}
 	
-	public int getRealPrice() {
+	public BigDecimal getRealPrice() {
 		double rate = (100 - this.discount_rate) / 100;
-		return (int)(this.sell_price * rate);
+		return this.sell_price.multiply(BigDecimal.valueOf(rate));
 	}
 
 	public void setExtraCost(List<StockVO> dbDataStocks) {

@@ -26,6 +26,7 @@ import com.got.util.CommonUtil;
 import com.got.util.ModelAndView;
 import com.got.vo.MileageVO;
 import com.got.vo.deal.DealDetailVO;
+import com.got.vo.deal.DealVO;
 import com.got.vo.deal.OrderVO;
 import com.got.vo.deal.PaymentVO;
 import com.got.vo.list.DealDetailListContainer;
@@ -77,11 +78,14 @@ public class OrderController {
 		res.getWriter().print(mileage.checkMileage(m, total_price));
 	}
 	
-	@ResponseBody
 	@RequestMapping(value = "order/successCheckout.yo", method = RequestMethod.POST)
-	public void successCheckout(OrderVO o, PaymentVO p) {
+	public ModelAndView successCheckout(OrderVO o, PaymentVO p) {
 		log.info("---------------- successCheckout() ----------------\n");
-		log.debug("\n" + o + "\n" + p);
-		payService.saveCheckout(p, o);
+		log.debug(o); log.debug(p);
+		DealVO dealVO = payService.saveCheckout(p, o);
+		System.out.println(dealVO);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("deal", dealVO);
+		return mav.setViewPage("order/completeCheckout.jsp");
 	}
 }

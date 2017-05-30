@@ -1,5 +1,6 @@
 package com.got.vo.goods;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -66,8 +67,8 @@ public class StockVO {
 	}
 	
 	@JsonIgnore
-	public int getRealPrice() {
+	public BigDecimal getRealPrice() {
 		return Objects.nonNull(this.goods) ?
-				this.goods.getRealPrice() + this.extra_cost : 0;
+				this.goods.getRealPrice().add(BigDecimal.valueOf(this.extra_cost)) : BigDecimal.ZERO;
 	}
 }

@@ -71,8 +71,6 @@ public class GoodsTest {
 	private GoodsVO createGoods(CategoryVO categoryVO) {
 		GoodsVO g = new GoodsVO();
 		g.setDetail("내용 테스트");
-		g.setPurchase_price(10000);
-		g.setSell_price(15000);
 		g.setDiscount_rate(10);
 		g.setSaving_mileage(1);
 		g.setStatus(GoodsStatus.FOR_SALE);

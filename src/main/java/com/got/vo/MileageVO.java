@@ -8,34 +8,40 @@ import com.got.enums.MileageCategory;
 import com.got.vo.deal.PaymentVO;
 
 public class MileageVO {
-	private Integer m_no, p_no;
-	private Timestamp m_date;
+	private Integer m_no, p_no, m_pk;
+	private Timestamp regdate;
 	private BigDecimal curr_mileage, change_amount;
 	private String reason;
 	private MileageCategory category;
 	
 	@Override
 	public String toString() {
-		return "MileageVO [m_no=" + m_no + ", m_date=" + m_date + ", curr_mileage=" + curr_mileage + ", change_amount="
-				+ change_amount + ", reason=" + reason + ", p_no=" + p_no + "]";
+		return "MileageVO [m_no=" + m_no + ", p_no=" + p_no + ", m_pk=" + m_pk + ", regdate=" + regdate
+				+ ", curr_mileage=" + curr_mileage + ", change_amount=" + change_amount + ", reason=" + reason
+				+ ", category=" + category + "]";
 	}
 	
 	public MileageVO() {}
 	public MileageVO(Integer m_no) {
 		this.m_no = m_no;
 	}
-	
+	public Integer getM_pk() {
+		return m_pk;
+	}
+	public void setM_pk(Integer m_pk) {
+		this.m_pk = m_pk;
+	}
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
 	public Integer getM_no() {
 		return m_no;
 	}
 	public void setM_no(Integer m_no) {
 		this.m_no = m_no;
-	}
-	public Timestamp getM_date() {
-		return m_date;
-	}
-	public void setM_date(Timestamp m_date) {
-		this.m_date = m_date;
 	}
 	public BigDecimal getCurr_mileage() {
 		return curr_mileage;

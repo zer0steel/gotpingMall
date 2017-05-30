@@ -30,9 +30,9 @@ public class MileageService {
 	
 	public void insertHistory(PaymentVO pay, List<DealDetailVO> details, Integer m_no) {
 		Objects.requireNonNull(m_no);
-		if(pay.isUseMileage()) {
+		if(pay.isUseMileage())
 			insertHistory(m_no, pay.getP_no(), pay.getUse_mileage(), MileageCategory.USE);
-		}
+
 		BigDecimal saveMileageAmount = calculateSaveMileageAmount(details, pay.getPay_amount());
 		insertHistory(m_no, pay.getP_no(), saveMileageAmount, MileageCategory.SAVE);
 	}
@@ -42,7 +42,7 @@ public class MileageService {
 		for(DealDetailVO detail : details) {
 			totalSaveRate += detail.getStock().getGoods().getSaving_mileage();
 		}
-		double saveRate = totalSaveRate / details.size();
+		double saveRate = (totalSaveRate / details.size()) / 100;
 		return pay_amount.multiply(BigDecimal.valueOf(saveRate));
 	}
 	

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- FlexSlider -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/flexslider.min.css" type="text/css" media="screen" />
 <%-- <script src="${pageContext.request.contextPath }/resources/template/mall/js/imagezoom.js?ver=1"></script> --%>
@@ -72,7 +73,11 @@ $(function() {
 							<c:if test="${g.discount_rate > 0 }">
 								<p style="text-decoration: line-through;">${g.sell_price } 원</p>
 							</c:if>
-							<h5 class="item_price"><span id="goodsPrice">${g.realPrice }</span> 원</h5>
+							<h5 class="item_price">
+								<span id="goodsPrice">
+									<fmt:formatNumber value="${g.realPrice }" groupingUsed="true"/>
+								</span> 원
+							</h5>
 							<p>나중에 상품 내용 여기다 로드할것</p>
 							
 							<div class="available">
@@ -159,7 +164,7 @@ $(function() {
 	var optCnt = goods.selectOption({
 		g_no : $('#g_no').val(),
 		$root : $('#selectOption'),
-		goodsPrice : $('#goodsPrice').text()
+		goodsPrice : '${g.realPrice }'
 	}).getSelectedOptionCount;
 	
 	

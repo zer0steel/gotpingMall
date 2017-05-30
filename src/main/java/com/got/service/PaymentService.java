@@ -1,7 +1,5 @@
 package com.got.service;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.got.enums.DealCategory;
-import com.got.enums.MileageCategory;
 import com.got.enums.PaymentStatus;
 import com.got.mapper.deal.DealMapper;
 import com.got.mapper.deal.OrderMapper;
@@ -20,9 +17,6 @@ import com.got.util.IamportUtil;
 import com.got.vo.deal.DealVO;
 import com.got.vo.deal.OrderVO;
 import com.got.vo.deal.PaymentVO;
-import com.got.vo.member.MemberVO;
-import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 
 @Service
@@ -35,32 +29,38 @@ public class PaymentService {
 	@Inject private OrderMapper orderMapper;
 	
 	@Transactional
-	public void saveCheckout(PaymentVO pay, OrderVO order) {
+	public DealVO saveCheckout(PaymentVO pay, OrderVO order) {
 		DealVO d = dealMapper.selectOneWithDetails(order.getD_no());
-		if(pay.isViaImptCheckout()) {
-			Payment imptPay = IamportUtil.getCheckoutData(pay.getImpt_id());
-			try {
-				validationCheck(imptPay, d, pay);
-			} catch(IllegalArgumentException e) {
-				// 환불절차 나중에 코딩
-				throw e;
-			}
-			pay.setImptData(imptPay);
-		}
+		if(pay.isViaImptCheckout())
+			pay = setupIamportData(pay,d);
+		
 		pay.setEnumStatus(PaymentStatus.COMPLETE);
 		order.setDealVO(d);
 		
 		insertCheckout(pay, order);
 		dealService.updateStock(d, DealCategory.SELL);
+		
+		if(Objects.nonNull(order.getM_no()))
+			mileageService.insertHistory(pay, d.getDetails(), order.getM_no());
+		return d; 
+	}
+	
+	private PaymentVO setupIamportData(PaymentVO pay, DealVO d) {
+		Payment imptPay = IamportUtil.getCheckoutData(pay.getImpt_id());
+		try {
+			validationCheck(imptPay, d, pay);
+		} catch(IllegalArgumentException e) {
+			// 환불절차 나중에 코딩
+			throw e;
+		}
+		pay.setImptData(imptPay);
+		return pay;
 	}
 	
 	@Transactional
 	private void insertCheckout(PaymentVO pay, OrderVO order) {
-		paymentMapper.insert(pay, order.getD_no());
 		orderMapper.insert(order);
-		
-		if(Objects.nonNull(order.getM_no()))
-			mileageService.insertHistory(pay, order.getDetails(), order.getM_no());
+		paymentMapper.insert(pay, order.getD_no());
 	}
 
 	private void validationCheck(Payment pay, DealVO deal, PaymentVO pVO) throws IllegalArgumentException{

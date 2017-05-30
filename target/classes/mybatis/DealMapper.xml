@@ -5,6 +5,8 @@
 
 	<resultMap type="com.got.vo.goods.GoodsVO" id="goodsMap">
 		<id property="g_no" column="g_no"/>
+		<result property="sell_price" column="sell_price"/>
+		<result property="discount_rate" column="discount_rate"/>
 		<result property="saving_mileage" column="saving_mileage"/>
 	</resultMap>
 

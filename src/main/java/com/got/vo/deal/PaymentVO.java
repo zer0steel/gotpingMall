@@ -17,7 +17,7 @@ public class PaymentVO {
 
 	private Integer p_no, o_no;
 	private String p_way, p_way_detail, impt_id, receipt_url;
-	private BigDecimal pay_amount, use_mileage;
+	private BigDecimal pay_amount = BigDecimal.ZERO, use_mileage = BigDecimal.ZERO;
 	private Timestamp pay_date;
 	private OrderVO order;
 	private PaymentStatus status;

@@ -10,9 +10,10 @@ import com.got.vo.deal.PaymentVO;
 @Repository
 public interface PaymentMapper {
 	
-	@Insert("INSERT INTO payment(p_no, d_no, impt_id, pay_amount, use_mileage, status, p_way, p_way_detail, pay_date) "
+	@Insert("INSERT INTO payment(p_no, d_no, impt_id, pay_amount, use_mileage, status, p_way, p_way_detail, pay_date, receipt_url) "
 			+ "VALUES(#{p_no }, #{d_no }, #{vo.impt_id, jdbcType=VARCHAR }, #{vo.pay_amount }, #{vo.use_mileage }, "
-			+ "#{vo.status.code }, #{vo.p_way,jdbcType=VARCHAR }, #{vo.p_way_detail, jdbcType=VARCHAR }, #{vo.pay_date })")
+			+ "#{vo.status.code }, #{vo.p_way,jdbcType=VARCHAR }, #{vo.p_way_detail, jdbcType=VARCHAR }, "
+			+ "NVL(#{vo.pay_date, jdbcType=TIMESTAMP }, sysdate), #{vo.receipt_url, jdbcType=VARCHAR } )")
 	@SelectKey(statement = "SELECT p_no.NEXTVAL FROM DUAL", before = true, resultType = int.class, keyProperty = "p_no")
 	public int insert(@Param("vo") PaymentVO paymentVO, @Param("d_no") Integer d_no);
 }

@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.enums.Grade;
+import com.got.enums.MileageCategory;
 import com.got.mapper.MileageMapper;
 import com.got.mapper.member.MemberMapper;
 import com.got.service.MemberService;
@@ -30,7 +31,7 @@ public class MemberTest {
 	@Inject MemberMapper memberMapper;
 	@Inject MileageMapper mileageMapper;
 	
-	@Before
+	@Test
 	public void createAdmin() {
 		MemberVO m = new MemberVO();
 		m.setId("admin");
@@ -42,36 +43,38 @@ public class MemberTest {
 		MemberVO m2 = memberMapper.selectOneWithId(m.getId());
 		if(m2 == null) {
 			memberMapper.insert(m);
-			MileageVO mileage = new MileageVO();
-			mileage.setM_no(m.getM_no());
-			mileage.setChange_amount(BigDecimal.valueOf(10000000));
-			mileage.setReason("오픈기념 천만포인트 행사");
-			mileageMapper.insert(mileage);
+			m2 = m;
 		}
 		else
 			System.out.println("이미 만들어놧음");
-	}
-
-	@Test
-	public void insertMileage() {
-		MemberVO m = memberMapper.selectOneWithId("admin");
+		
 		MileageVO mileage = new MileageVO();
-		mileage.setM_no(m.getM_no());
-		mileage.setReason("테스트");
-		mileage.setChange_amount(BigDecimal.valueOf(-700));
+		mileage.setM_no(m2.getM_no());
+		mileage.setChange_amount(BigDecimal.valueOf(10000000));
+		mileage.setEnumCategory(MileageCategory.SAVE);
+		mileage.setReason("오픈기념 천만포인트 행사");
 		mileageMapper.insert(mileage);
 	}
-	
-	@Test
-	public void txTest() {
-		MemberVO m = new MemberVO();
-		m.setId("admin666");
-		m.setEnumGrade(Grade.ADMIN);
-		m.setName("장영철");
-		m.setEmail("test@test.yo");
-		m.setPwd("1234");
-		ms.join(m, null);
-	}
-	
-	
+//
+//	@Test
+//	public void insertMileage() {
+//		MemberVO m = memberMapper.selectOneWithId("admin");
+//		MileageVO mileage = new MileageVO();
+//		mileage.setM_no(m.getM_no());
+//		mileage.setReason("테스트");
+//		mileage.setChange_amount(BigDecimal.valueOf(-700));
+//		mileage.setEnumCategory(MileageCategory.USE);
+//		mileageMapper.insert(mileage);
+//	}
+//	
+//	@Test
+//	public void txTest() {
+//		MemberVO m = new MemberVO();
+//		m.setId("admin666");
+//		m.setEnumGrade(Grade.ADMIN);
+//		m.setName("장영철");
+//		m.setEmail("test@test.yo");
+//		m.setPwd("1234");
+//		ms.join(m, null);
+//	}
 }

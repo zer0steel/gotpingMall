@@ -69,8 +69,9 @@
 							</c:if>
 						</li>
 						</c:forEach>
-						<li class="grid"><a href="typo.html">Blog</a></li>
-						<li class="grid"><a href="contact.html">Contact</a></li>
+						<li class="grid">
+							<a href="${pageContext.request.contextPath }/test.yo">Test</a>
+						</li>
 					</ul>
 				</div>
 				<div class="clearfix"></div>

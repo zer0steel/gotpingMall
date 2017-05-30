@@ -1,5 +1,6 @@
 package com.got.vo.deal;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import com.got.vo.member.AddressVO;
@@ -70,5 +71,12 @@ public class OrderVO extends DealVO {
 	}
 	public void setDealVO(DealVO d) {
 		super.setTotal_price(d.getTotal_price());
+	}
+	
+	public void addTotalPrice(BigDecimal price) {
+		super.setTotal_price(super.getTotal_price().add(price));
+	}
+	public void addTotalAmount(int changeAmount) {
+		super.setTotal_change_amount(super.getTotal_change_amount() + changeAmount);
 	}
 }

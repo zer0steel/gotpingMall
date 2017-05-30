@@ -3,6 +3,7 @@ package com.got.vo.deal;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 import com.got.enums.DealCategory;
 
@@ -10,7 +11,7 @@ public class DealVO {
 	private Integer d_no;
 	private DealCategory category;
 	private String detail;
-	private BigDecimal total_price;
+	private BigDecimal total_price = BigDecimal.ZERO;
 	private int total_change_amount;
 	private Timestamp regdate;
 	private List<DealDetailVO> details;

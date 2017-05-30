@@ -13,7 +13,7 @@
 					<input type="password" name="pwd" id="input-pwd" placeholder="비밀번호" required class="form-control input-lg"/>
 					<button type="button" id="btn-login" class="btn btn-lg btn-primary btn-block">로그인</button>
 					<br>
-					<p>아직도 회원이 아니십니까? -> <a href="agreement.yo">지금 바로 회원가입 하기!</a></p>
+					<p>아직도 회원이 아니십니까? -> <a href="${pageContext.request.contextPath }/agreement.yo">지금 바로 회원가입 하기!</a></p>
 					<p>비밀번호를 까먹으셨습니까?!! -> <a href="#">비밀번호 찾으러 가기!</a></p>
 				</form>
 			</section>
