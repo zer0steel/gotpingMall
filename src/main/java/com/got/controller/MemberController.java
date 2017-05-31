@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.service.MemberService;
-import com.got.util.CommonUtil;
+import com.got.util.JSONUtil;
 import com.got.util.ModelAndView;
 import com.got.util.RSA;
 import com.got.vo.list.DealDetailListContainer;
@@ -52,7 +52,7 @@ public class MemberController {
 		log.info("--------------- purchaseLoginForm() ---------------");
 		log.debug(container.getDetails());
 		
-		String jsonString = CommonUtil.convertToJSON(container.getDetails());
+		String jsonString = JSONUtil.convertToJSON(container.getDetails());
 		Cookie c = new Cookie("buyList", URLEncoder.encode(jsonString, "UTF-8"));
 		res.addCookie(c);
 		

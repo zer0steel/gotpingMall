@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.got.mapper.goods.StockMapper;
-import com.got.util.CommonUtil;
+import com.got.util.JSONUtil;
 import com.got.vo.goods.GoodsOptionVO;
 import com.got.vo.goods.GoodsVO;
 import com.got.vo.goods.StockVO;
@@ -33,7 +33,7 @@ public class StockService {
 	}
 	
 	public String getJSONList(Integer g_no) {
-		return CommonUtil.convertToJSON(getList(g_no));
+		return JSONUtil.convertToJSON(getList(g_no));
 	}
 	
 	public List<StockVO> createOptionStocks(List<GoodsOptionVO> list) {

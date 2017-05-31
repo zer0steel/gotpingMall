@@ -14,7 +14,7 @@
 			<div class="col-md-6 col-md-offset-3">
 				<p align="center" class="greeting">G-MALL을 이용해 주셔서 감사합니다.</p>
 				<c:if test="${not empty lm }">
-					<p align="center">주문하신 내역은 나의 쇼핑정보에서 다시 확인이 가능합니다.</p>
+					<p align="center">주문하신 내역은 주문조회에서 다시 확인이 가능합니다.</p>
 				</c:if>
 				<br />
 				<table class="table">
@@ -25,24 +25,30 @@
 					</thead>
 					<tbody>
 						<tr>
+							<td>주문번호</td>
+							<td>${payment.order_uid }</td>
+						</tr>
+						<tr>
 							<td>결제방법</td>
-							<td>값 입력</td>
+							<td>${payment.p_way.kor }</td>
 						</tr>
 						<tr>
 							<td>상품금액</td>
-							<td>값 입력</td>
+							<td>${payment.order.total_price }</td>
 						</tr>
 						<tr>
 							<td>배송비</td>
-							<td>값 입력</td>
+							<td>무료</td>
 						</tr>
+						<c:if test="${not empty lm }">
 						<tr>
-							<td>할인금액</td>
-							<td>값 입력</td>
+							<td>마일리지 할인</td>
+							<td>${payment.order.use_mileage }</td>
 						</tr>
+						</c:if>
 						<tr>
 							<td>결제금액</td>
-							<td>값 입력</td>
+							<td>${payment.pay_amount }</td>
 						</tr>
 					</tbody>
 				</table>

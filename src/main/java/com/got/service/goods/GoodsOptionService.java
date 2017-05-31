@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.got.mapper.goods.GoodsOptionMapper;
 import com.got.mapper.goods.OptionMapper;
 import com.got.mapper.goods.StockMapper;
-import com.got.util.CommonUtil;
+import com.got.util.JSONUtil;
 import com.got.vo.goods.GoodsOptionVO;
 import com.got.vo.goods.GoodsVO;
 import com.got.vo.goods.OptionVO;
@@ -63,6 +63,6 @@ public class GoodsOptionService {
 		Map<String, Object> map = new HashMap<>();
 		map.put("options", goodsOptionMapper.selectListWithG_no(g_no));
 		map.put("stocks", stockMapper.selectListWithG_no(g_no));
-		return CommonUtil.convertToJSON(map);
+		return JSONUtil.convertToJSON(map);
 	}
 }

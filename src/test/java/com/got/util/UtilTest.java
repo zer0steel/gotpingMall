@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.got.enums.Level;
-import com.got.util.CommonUtil;
+import com.got.util.JSONUtil;
 import com.got.vo.file.GoodsImageVO;
 import com.got.vo.goods.CategoryVO;
 
@@ -24,7 +24,7 @@ import com.got.vo.goods.CategoryVO;
 public class UtilTest {
 	@Test
 	public void json() {
-		CommonUtil util = new CommonUtil();
+		JSONUtil util = new JSONUtil();
 		String[] json = {"{\"f_no\":180","\"save_name\":-1984378105","\"real_name\":\"2013_ans.zip\"","\"location\":\"main\"}"};
 		String[] json2 = {"{\"f_no\":180,\"save_name\":-1984378105,\"real_name\":\"2013_ans.zip\",\"location\":\"main\"},",
 				"{\"f_no\":181,\"save_name\":-1984376599,\"real_name\":\"dogSound.jpeg\",\"location\":\"main\"},",
@@ -32,10 +32,10 @@ public class UtilTest {
 				"{\"f_no\":181,\"save_name\":-1984376599,\"real_name\":\"dogSound.jpeg\",\"location\":\"main\"},",
 				"{\"f_no\":181,\"save_name\":-1984376599,\"real_name\":\"dogSound.jpeg\",\"location\":\"main\"},",
 				"{\"f_no\":182,\"save_name\":-1984375109,\"real_name\":\"car1.jpg\",\"location\":\"main\"}"};
-		List<GoodsImageVO> list = CommonUtil.getVO(json, GoodsImageVO.class);
+		List<GoodsImageVO> list = JSONUtil.getVO(json, GoodsImageVO.class);
 		list.stream().forEach(vo -> System.out.println(vo));
 		System.out.println("=----------------------------=");
-		List<GoodsImageVO> list2 = CommonUtil.getVO(json2, GoodsImageVO.class);
+		List<GoodsImageVO> list2 = JSONUtil.getVO(json2, GoodsImageVO.class);
 		list2.stream().forEach(vo -> System.out.println(vo));
 	}
 	

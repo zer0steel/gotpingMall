@@ -29,24 +29,36 @@ public class PaymentService {
 	@Inject private OrderMapper orderMapper;
 	
 	@Transactional
-	public DealVO saveCheckout(PaymentVO pay, OrderVO order) {
+	public PaymentVO saveCheckout(PaymentVO pay, OrderVO order) {
 		DealVO d = dealMapper.selectOneWithDetails(order.getD_no());
 		if(pay.isViaImptCheckout())
 			pay = setupIamportData(pay,d);
+		else
+			pay.setOrder_uid(createOrder_uid());
 		
-		pay.setEnumStatus(PaymentStatus.COMPLETE);
 		order.setDealVO(d);
+		pay.setEnumStatus(PaymentStatus.COMPLETE);
+		pay.setOrder(order);
 		
 		insertCheckout(pay, order);
 		dealService.updateStock(d, DealCategory.SELL);
 		
 		if(Objects.nonNull(order.getM_no()))
 			mileageService.insertHistory(pay, d.getDetails(), order.getM_no());
-		return d; 
+		
+		return pay; 
+	}
+	
+	private String createOrder_uid() {
+		while(true) {
+			String uid = String.valueOf(System.currentTimeMillis());
+			if(Objects.isNull(paymentMapper.selectOneWith_Uid(uid)))
+				return uid;
+		}
 	}
 	
 	private PaymentVO setupIamportData(PaymentVO pay, DealVO d) {
-		Payment imptPay = IamportUtil.getCheckoutData(pay.getImpt_id());
+		Payment imptPay = IamportUtil.getCheckoutData(pay.getOrder_uid());
 		try {
 			validationCheck(imptPay, d, pay);
 		} catch(IllegalArgumentException e) {

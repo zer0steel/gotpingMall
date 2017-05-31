@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.got.service.goods.GoodsOptionService;
-import com.got.util.CommonUtil;
+import com.got.util.JSONUtil;
 import com.got.vo.goods.OptionVO;
 
 @Controller("adminGoodsOptionController")
@@ -41,6 +41,6 @@ public class GoodsOptionController {
 	@ResponseBody
 	@RequestMapping(value = "admin/goods/option/get.yo", produces = "application/json; charset=UTF-8")
 	public String get(int c_no) {
-		return CommonUtil.convertToJSON(gos.getOptions(c_no));
+		return JSONUtil.convertToJSON(gos.getOptions(c_no));
 	}
 }

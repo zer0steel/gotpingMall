@@ -12,7 +12,7 @@ import com.got.enums.DealCategory;
 import com.got.mapper.deal.DealDetailMapper;
 import com.got.mapper.deal.DealMapper;
 import com.got.mapper.goods.StockMapper;
-import com.got.util.CommonUtil;
+import com.got.util.JSONUtil;
 import com.got.vo.deal.DealVO;
 import com.got.vo.deal.OrderVO;
 
@@ -74,7 +74,7 @@ public class DealService {
 	}
 	
 	public String getRecentHistoryWithJSON(int g_no) {
-		return CommonUtil.convertToJSON(getRecentHistory(g_no));
+		return JSONUtil.convertToJSON(getRecentHistory(g_no));
 	}
 	
 	@Transactional

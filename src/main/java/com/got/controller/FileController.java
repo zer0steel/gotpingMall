@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.got.service.FileService;
-import com.got.util.CommonUtil;
+import com.got.util.JSONUtil;
 import com.got.vo.file.FileVO;
 
 @Controller
@@ -26,6 +26,6 @@ public class FileController {
 	public String uploadFile(HttpSession session, MultipartFile file) {
 		tempPath = session.getServletContext().getRealPath(SIMPLE_SAVE_PATH);
 		FileVO f = s.saveFileInTempPath(tempPath, file);
-		return CommonUtil.convertToJSON(f);
+		return JSONUtil.convertToJSON(f);
 	}
 }

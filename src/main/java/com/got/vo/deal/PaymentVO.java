@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.got.enums.MileageCategory;
+import com.got.enums.PayWay;
 import com.got.enums.PaymentStatus;
 import com.got.vo.MileageVO;
 import com.siot.IamportRestClient.response.Payment;
@@ -16,36 +17,20 @@ import com.siot.IamportRestClient.response.Payment;
 public class PaymentVO {
 
 	private Integer p_no, o_no;
-	private String p_way, p_way_detail, impt_id, receipt_url;
+	private String p_way_detail, order_uid, receipt_url;
 	private BigDecimal pay_amount = BigDecimal.ZERO, use_mileage = BigDecimal.ZERO;
 	private Timestamp pay_date;
+	
 	private OrderVO order;
-	private PaymentStatus status;
 	private Mileage mileage;
+	private PaymentStatus status;
+	private PayWay p_way;
 	
 	public Integer getP_no() {
 		return p_no;
 	}
 	public void setP_no(Integer p_no) {
 		this.p_no = p_no;
-	}
-	public PaymentStatus getStatus() {
-		return status;
-	}
-	public void setImptStatus(String imptStatus) {
-		this.status = PaymentStatus.of(imptStatus);
-	}
-	public void setStatus(int code) {
-		this.status = PaymentStatus.of(code);
-	}
-	public void setEnumStatus(PaymentStatus status) {
-		this.status = status;
-	}
-	public String getP_way() {
-		return p_way;
-	}
-	public void setP_way(String p_way) {
-		this.p_way = p_way;
 	}
 	public String getP_way_detail() {
 		return p_way_detail;
@@ -77,11 +62,11 @@ public class PaymentVO {
 	public void setOrder(OrderVO order) {
 		this.order = order;
 	}
-	public String getImpt_id() {
-		return impt_id;
+	public String getOrder_uid() {
+		return order_uid;
 	}
-	public void setImpt_id(String impt_id) {
-		this.impt_id = impt_id;
+	public void setOrder_uid(String order_uid) {
+		this.order_uid = order_uid;
 	}
 	public Timestamp getPay_date() {
 		return pay_date;
@@ -95,10 +80,38 @@ public class PaymentVO {
 	public void setReceipt_url(String receipt_url) {
 		this.receipt_url = receipt_url;
 	}
+	public PaymentStatus getStatus() {
+		return status;
+	}
+	public void setImptStatus(String imptStatus) {
+		this.status = PaymentStatus.of(imptStatus);
+	}
+	public void setStatus(int code) {
+		this.status = PaymentStatus.of(code);
+	}
+	public void setEnumStatus(PaymentStatus status) {
+		this.status = status;
+	}
+	public PayWay getP_way() {
+		if(Objects.isNull(p_way) && isPayFullMileage()) {
+			p_way = PayWay.ALL_MILEAGE;
+		}
+		return p_way;
+	}
+	public void setP_way(int code) {
+		this.p_way = PayWay.of(code);
+	}
+	public void setEnumP_way(PayWay p_way) {
+		this.p_way = p_way;
+	}
+	private boolean isPayFullMileage() {
+		return this.order.getTotal_price().subtract(this.use_mileage).intValue() == 0;
+	}
+	
 	@Override
 	public String toString() {
 		return "PaymentVO [p_no=" + p_no + ", o_no=" + o_no + ", p_way=" + p_way + ", p_way_detail=" + p_way_detail
-				+ ", impt_id=" + impt_id + ", pay_amount=" + pay_amount + ", use_mileage=" + use_mileage + ", pay_date="
+				+ ", impt_id=" + order_uid + ", pay_amount=" + pay_amount + ", use_mileage=" + use_mileage + ", pay_date="
 				+ pay_date + ", order=" + order + ", status=" + status + ", mileage=" + mileage + "]";
 	}
 	
@@ -123,7 +136,7 @@ public class PaymentVO {
 	public void setImptData(Payment payment) {
 		this.receipt_url = payment.getReceiptUrl();
 		this.p_way_detail = payment.getCardName();
-		this.p_way = payment.getPayMethod();
+		this.p_way = PayWay.of(payment.getPayMethod());
 		this.pay_date = Timestamp.from(Instant.ofEpochMilli(payment.getPaidAt().getTime()));
 	}
 	
@@ -132,7 +145,7 @@ public class PaymentVO {
 	}
 	
 	public boolean isViaImptCheckout() {
-		return Objects.nonNull(this.impt_id);
+		return Objects.nonNull(this.order_uid);
 	}
 
 	private class Mileage {

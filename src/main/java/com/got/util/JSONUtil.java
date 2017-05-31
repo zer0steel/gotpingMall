@@ -13,9 +13,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-public class CommonUtil {
+public class JSONUtil {
 	
-	private static Logger log = Logger.getLogger(CommonUtil.class);
+	private static Logger log = Logger.getLogger(JSONUtil.class);
 	
 	public static String convertToJSON(Object obj) {
 		ObjectMapper mapper = new ObjectMapper();

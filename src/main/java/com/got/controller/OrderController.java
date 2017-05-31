@@ -22,7 +22,7 @@ import com.got.service.MemberService;
 import com.got.service.MileageService;
 import com.got.service.PaymentService;
 import com.got.service.deal.OrderService;
-import com.got.util.CommonUtil;
+import com.got.util.JSONUtil;
 import com.got.util.ModelAndView;
 import com.got.vo.MileageVO;
 import com.got.vo.deal.DealDetailVO;
@@ -64,7 +64,7 @@ public class OrderController {
 	
 	private List<DealDetailVO> confirmOrderDetail(List<DealDetailVO> list, String buyListJSON) throws UnsupportedEncodingException {
 		if(Objects.isNull(list)) {
-			list = CommonUtil.getVOList(URLDecoder.decode(buyListJSON, "UTF-8"), DealDetailVO.class);
+			list = JSONUtil.getVOList(URLDecoder.decode(buyListJSON, "UTF-8"), DealDetailVO.class);
 			log.debug("로그인페이지 경유해서 들어옴");
 		}
 		log.debug(list);
@@ -82,10 +82,16 @@ public class OrderController {
 	public ModelAndView successCheckout(OrderVO o, PaymentVO p) {
 		log.info("---------------- successCheckout() ----------------\n");
 		log.debug(o); log.debug(p);
-		DealVO dealVO = payService.saveCheckout(p, o);
-		System.out.println(dealVO);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("deal", dealVO);
+		mav.addObject("payment", payService.saveCheckout(p, o));
 		return mav.setViewPage("order/completeCheckout.jsp");
+	}
+	
+	@RequestMapping(value = "order/orderList.yo")
+	public ModelAndView orderList() {
+		log.info("---------------- orderList() ----------------\n");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewPage("order/orderList.jsp");
+		return mav;
 	}
 }

@@ -42,7 +42,7 @@ public class CheckoutTest {
 	@Test
 	public void test() {
 		PaymentVO p = new PaymentVO();
-		p.setImpt_id(test_uid2);
+		p.setOrder_uid(test_uid2);
 		p.setUse_mileage(BigDecimal.valueOf(44500));
 		p.setPay_amount(BigDecimal.valueOf(500));
 		

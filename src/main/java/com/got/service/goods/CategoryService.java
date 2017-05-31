@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.got.enums.Level;
 import com.got.mapper.goods.CategoryMapper;
 import com.got.mapper.goods.OptionMapper;
-import com.got.util.CommonUtil;
+import com.got.util.JSONUtil;
 import com.got.util.ModelAndView;
 import com.got.vo.goods.CategoryVO;
 import com.got.vo.goods.LevelVO;

@@ -27,6 +27,7 @@
 								<a href="${pageContext.request.contextPath }/logout.yo" class="label">로그아웃</a>
 							</c:otherwise>
 						</c:choose>
+						<a href="${pageContext.request.contextPath }/order/orderList.yo" class="label">주문 목록</a>
 						<a href="${pageContext.request.contextPath }/admin.yo" class="label">관리자 페이지</a>
 						<div class="clearfix"></div>
 					</div>

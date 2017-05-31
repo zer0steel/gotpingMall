@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.service.goods.CategoryService;
-import com.got.util.CommonUtil;
+import com.got.util.JSONUtil;
 import com.got.util.ModelAndView;
 import com.got.vo.goods.CategoryVO;
 
@@ -50,6 +50,6 @@ public class CategoryController {
 			method = RequestMethod.POST, 
 			produces = "application/json; charset=UTF-8")
 	public String detailCategory(Integer c_no) {
-		return CommonUtil.convertToJSON(cs.getCategoryWithOption(c_no));
+		return JSONUtil.convertToJSON(cs.getCategoryWithOption(c_no));
 	}
 }
