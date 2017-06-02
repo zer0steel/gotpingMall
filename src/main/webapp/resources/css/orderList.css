@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+.well ul {
+	list-style: none;
+}
+
+.well ul li {
+	display: inline-block;
+	margin-right: 20px;
+}
+.titMonth{
+	display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+.titMonth > h4 {
+	position: relative;
+    display: inline-block;
+	text-align: center;
+}
+.titMonth > h4:BEFORE,
+.titMonth > h4:AFTER {
+	content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 1px;
+    background: blue;
+}
+.titMonth > h4:BEFORE {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.titMonth > h4:AFTER {
+    left: 100%;
+    margin-left: 15px;
+}

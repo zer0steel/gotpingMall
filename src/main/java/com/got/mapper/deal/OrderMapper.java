@@ -8,8 +8,8 @@ import com.got.vo.deal.OrderVO;
 @Repository
 public interface OrderMapper {
 	
-	@Insert("INSERT INTO orders(d_no, m_no, buyer, buyer_email, order_password, recipient, addr, message)"
-			+ "VALUES(#{d_no}, #{m_no, jdbcType=INTEGER }, #{buyer }, #{buyer_email }, #{order_password, jdbcType=VARCHAR },"
+	@Insert("INSERT INTO orders(d_no, m_no, buyer, buyer_email, recipient, addr, message)"
+			+ "VALUES(#{d_no}, #{m_no, jdbcType=INTEGER }, #{buyer }, #{buyer_email }, "
 			+ "#{recipient }, #{address.addr }, #{message, jdbcType=VARCHAR } )")
 	public int insert(OrderVO o);
 }

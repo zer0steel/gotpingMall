@@ -1,0 +1,46 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.got.mapper.deal.PaymentMapper">
+
+	<resultMap type="com.got.vo.deal.OrderVO" id="orderMap" extends="com.got.mapper.deal.DealMapper.dealMap">
+		<id property="m_no" column="m_no"/>
+		<result property="buyer" column="buyer"/>
+		<result property="buyer_email" column="buyer_email"/>
+		<result property="recipient" column="recipient"/>
+		<result property="addr" column="addr"/>
+		<result property="message" column="message"/>
+	</resultMap>
+	
+	<resultMap type="com.got.vo.deal.PaymentVO" id="paymentMap">
+		<id column="p_no" property="p_no"/>
+		<result column="pay_amount" property="pay_amount"/>
+		<result column="use_mileage" property="use_mileage"/>
+		<result column="status" property="status"/>
+		<result column="pay_date" property="pay_date"/>
+		<result column="p_way" property="p_way"/>
+		<result column="p_way_detail" property="p_way_detail"/>
+		<result column="order_uid" property="order_uid"/>
+		<result column="receipt_url" property="receipt_url"/>
+	</resultMap>
+	
+	<resultMap type="com.got.vo.deal.OrderVO" id="orderWithDealDetailMap" extends="orderMap">
+		<association property="details" resultMap="com.got.mapper.deal.DealMapper.detailWithStockMap"/>
+	</resultMap>
+	
+	<resultMap type="com.got.vo.deal.PaymentVO" id="payAndGoodsMap" extends="paymentMap">
+		<association property="order" resultMap="orderWithDealDetailMap"/>
+	</resultMap>
+	
+	<select id="selectListM_no" resultMap="paymentMap">
+		SELECT * FROM payment p, orders o, deal d 
+		WHERE p.d_no = o.d_no AND o.d_no = d.d_no AND o.m_no = #{m_no }
+		<if test="search.startDate != null and search.endDate != null">
+			AND TO_CHAR(pay_date, 'yyyy.mm.dd') 
+			BETWEEN TO_DATE(#{search.startDate }, 'yyyy.mm.dd') 
+			AND TO_DATE(#{search.endDate }, 'yyyy.mm.dd') 
+		</if>
+		ORDER BY p_no DESC
+	</select>
+	
+</mapper>

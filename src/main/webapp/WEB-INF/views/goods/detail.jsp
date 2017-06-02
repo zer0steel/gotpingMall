@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- FlexSlider -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/flexslider.min.css" type="text/css" media="screen" />
-<%-- <script src="${pageContext.request.contextPath }/resources/template/mall/js/imagezoom.js?ver=1"></script> --%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/jquery.flexslider.min.js"></script>
 <script type="application/javascript">
@@ -141,24 +140,7 @@ $(function() {
 		</div>
 	</div>
 </div>
-		
-<%-- <input type="hidden" id="g_no" value="${g.g_no }">
-<h2>${g.name }</h2>
-<span>
-	<c:choose>
-		<c:when test="${g.discount_rate > 0}">
-		<p style="text-decoration: line-through;">${g.sell_price } 원</p>
-		<span id="goodsPrice" data-goods_price="${g.discount_price }">${g.discount_price } 원</span>
-		</c:when>
-		<c:otherwise>
-		<span id="goodsPrice" data-goods_price="${g.sell_price }">${g.sell_price } 원</span>
-		</c:otherwise>
-	</c:choose>
-</span>
-<form action="${pageContext.request.contextPath }/order/form.yo" class="form-horizontal" id="form-option-select">
-	<div id="selectOption"></div>
-</form> --%>
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/stock.js?ver=3"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/goods/stock.js?ver=1"></script>
 <script type="text/javascript">
 (function() {
 	var optCnt = goods.selectOption({
@@ -173,14 +155,7 @@ $(function() {
 			alert('선택된 상품이 없습니다.');
 			return;
 		}
-		let $form = $('#form-option-select');
-		if(isLogin()) {
-			$form.submit();
-		}
-		else {
-			let url = location.protocol + "//" + location.host + '/controller/purchaseLogin.yo';
-			$form.attr('action', url).submit();
-		}
+		$('#form-option-select').submit();
 	});
 }());
 </script>

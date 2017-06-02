@@ -27,18 +27,20 @@ public interface DealMapper {
 		
 	@Select("SELECT * FROM deal d, deal_detail dd, stock s, goods g "
 			+ "WHERE d.d_no = #{d_no} AND d.d_no = dd.d_no AND dd.s_no = s.s_no AND s.g_no = g.g_no")
-	@ResultMap("dealMap")
+	@ResultMap("dealAndDetailsMap")
 	public DealVO selectOneWithDetails(Integer d_no);
 	
 	//------------------------------------------
 	
-	final String INSERT = "INSERT INTO deal(d_no, category, detail, total_change_amount, total_price, regdate) "
-			+ "VALUES(#{d_no }, #{category }, #{detail, jdbcType=VARCHAR }, #{total_change_amount }, #{total_price }, sysdate)";
+	final String INSERT = "INSERT INTO deal(d_no, category, d_name, detail, total_change_amount, total_price, regdate) "
+			+ "VALUES(#{d_no }, #{category }, #{d_name, jdbcType=VARCHAR }, #{detail, jdbcType=VARCHAR }, "
+			+ "#{total_change_amount }, #{total_price }, sysdate)";
 	
 	@Insert(INSERT)
 	@SelectKey(statement = "SELECT d_no.NEXTVAL FROM DUAL", keyProperty = "d_no", resultType = int.class, before = true)
 	public int insert(DealVO dealVO);
 	
-	@Update("UPDATE deal SET category = #{category }, detail = #{detail, jdbcType=VARCHAR } WHERE d_no = #{d_no }")
+	@Update("UPDATE deal SET category = #{category }, d_name = #{d_name, jdbcType=VARCHAR }, "
+			+ "detail = #{detail, jdbcType=VARCHAR } WHERE d_no = #{d_no }")
 	public int updateOne(DealVO dealVO);
 }

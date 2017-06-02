@@ -1,5 +1,6 @@
 package com.got.service;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import com.got.mapper.deal.OrderMapper;
 import com.got.mapper.deal.PaymentMapper;
 import com.got.service.deal.DealService;
 import com.got.util.IamportUtil;
+import com.got.vo.SearchVO;
 import com.got.vo.deal.DealVO;
 import com.got.vo.deal.OrderVO;
 import com.got.vo.deal.PaymentVO;
@@ -28,14 +30,23 @@ public class PaymentService {
 	@Inject private PaymentMapper paymentMapper;
 	@Inject private OrderMapper orderMapper;
 	
+	public List<PaymentVO> getCheckoutList(Integer m_no, SearchVO s) {
+		return paymentMapper.selectListM_no(Objects.requireNonNull(m_no), s);
+	}
+	
+	public PaymentVO getCheckout(String order_uid) {
+		return paymentMapper.selectOneWith_Uid(Objects.requireNonNull(order_uid));
+	}
+	
 	@Transactional
-	public PaymentVO saveCheckout(PaymentVO pay, OrderVO order) {
+	public PaymentVO saveCheckout(PaymentVO pay, OrderVO order, String d_name) {
 		DealVO d = dealMapper.selectOneWithDetails(order.getD_no());
 		if(pay.isViaImptCheckout())
 			pay = setupIamportData(pay,d);
 		else
 			pay.setOrder_uid(createOrder_uid());
 		
+		d.setD_name(d_name);
 		order.setDealVO(d);
 		pay.setEnumStatus(PaymentStatus.COMPLETE);
 		pay.setOrder(order);
@@ -49,6 +60,12 @@ public class PaymentService {
 		return pay; 
 	}
 	
+	@Transactional
+	private void insertCheckout(PaymentVO pay, OrderVO order) {
+		orderMapper.insert(order);
+		paymentMapper.insert(pay, order.getD_no());
+	}
+
 	private String createOrder_uid() {
 		while(true) {
 			String uid = String.valueOf(System.currentTimeMillis());
@@ -69,12 +86,6 @@ public class PaymentService {
 		return pay;
 	}
 	
-	@Transactional
-	private void insertCheckout(PaymentVO pay, OrderVO order) {
-		orderMapper.insert(order);
-		paymentMapper.insert(pay, order.getD_no());
-	}
-
 	private void validationCheck(Payment pay, DealVO deal, PaymentVO pVO) throws IllegalArgumentException{
 		String d_no = pay.getCustomData().substring(1, pay.getCustomData().length() - 1);
 		if(Integer.parseInt(d_no) != deal.getD_no())

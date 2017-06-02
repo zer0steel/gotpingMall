@@ -1,8 +1,5 @@
-/**
- * 
- */
-window.onload = function() {
-	var checkId = false, checkPwd = false, checkName = false, checkEmail = false;
+(function() {
+	document.write('<script type="text/javascript" src="' + PATH + 'resources/js/rsa/rsaUtil.js"></script>');
 	const MESSAGE = {
 		OK : "사용 가능합니다.",
 		ERROR : "잠시후 다시 시도해 주세요.",
@@ -15,6 +12,7 @@ window.onload = function() {
 		CHECK_FAIL_PWD : "비밀번호가 일치하지 않습니다.",
 		BLANK : "필수 입력 항목"
 	};
+	var checkId = false, checkPwd = false, checkName = false, checkEmail = false;
 	
 	$("#input-id").focusout(function() {
 		var id = $(this).val();
@@ -94,10 +92,10 @@ window.onload = function() {
 		if(	inputValueCheck() ) {
 			var addr = getFullAddr();
 			$("#hidden-addr").val(addr);
-			myRsa.encrypt( $("#input-pwd").val() ).then(function(securedPwd) {
+			encryptValue($("#input-pwd").val()).then(encryptedPwd => {
 				$("#hidden-pwd").val(securedPwd);
 				$("#form-join").submit();
-			});
+			})
 		}
 	});
 	
@@ -124,4 +122,4 @@ window.onload = function() {
 		else
 			return true;
 	}
-}
+}())

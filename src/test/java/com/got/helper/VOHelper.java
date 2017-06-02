@@ -1,4 +1,4 @@
-package com.got.vo;
+package com.got.helper;
 
 import java.util.ArrayList;
 import java.util.Arrays;

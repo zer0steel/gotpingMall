@@ -44,6 +44,7 @@ public class MemberController {
 	@RequestMapping("login.yo")
 	public ModelAndView loginForm() {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("uri", "front.yo");
 		return mav.setViewPage("member/login.jsp");
 	}
 	
@@ -57,7 +58,8 @@ public class MemberController {
 		res.addCookie(c);
 		
 		ModelAndView mav = new ModelAndView();
-		return mav.setViewPage("member/purchaseLogin.jsp");
+		mav.addObject("uri", "form.yo");
+		return mav.setViewPage("member/login.jsp");
 	}
 	
 	@ResponseBody

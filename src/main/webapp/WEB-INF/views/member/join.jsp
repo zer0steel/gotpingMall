@@ -3,12 +3,6 @@
 <style>
 #search_goods{display: none;}
 </style>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="resources/js/member/addrFinder.js"></script>
-
-<script type="text/javascript" src="resources/js/member/validation_checker.js"></script>
-<script type="text/javascript" src="resources/js/rsa/myRsa.js"></script>
-<script type="text/javascript" src="resources/js/member/memberForm.js"></script>
 <div class="container">
 	<div class="row">
 		<div class="col-md-4"></div>
@@ -44,3 +38,9 @@
 		<div class="col-md-4"></div>
 	</div>
 </div>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="resources/js/member/addrFinder.js"></script>
+
+<script type="text/javascript" src="resources/js/member/validation_checker.js"></script>
+<script type="text/javascript" src="resources/js/member/memberForm.js"></script>

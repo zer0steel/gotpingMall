@@ -1,22 +1,19 @@
-package com.got.domain;
+package com.got.test.select;
 
 
 import javax.inject.Inject;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.got.controller.RsaController;
+import com.got.helper.TestUtil;
 import com.got.mapper.deal.DealDetailMapper;
 import com.got.mapper.deal.DealMapper;
 import com.got.mapper.goods.StockMapper;
-import com.got.service.MemberService;
-import com.got.vo.deal.DealVO;
-import com.got.vo.member.MemberVO;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,13 +26,14 @@ public class DealTest {
 	@Inject DealDetailMapper detailMapper;
 	@Inject DealMapper dealMapper;
 	
+	@After
+	public void print() {
+		System.out.println();
+	}
+	
 	@Test
-	public void update() {
+	public void select() {
+		TestUtil.printMethod("select");
 		System.out.println(dealMapper.selectOneWithDetails(61));
-//		DealVO d = new DealVO();
-//		d.setD_no(20);
-//		d.setCategory(2);
-//		d.setDetail("ddd");
-//		dealMapper.updateOne(d);
 	}
 }

@@ -1,4 +1,4 @@
-package com.got.domain;
+package com.got.test;
 
 
 import javax.inject.Inject;

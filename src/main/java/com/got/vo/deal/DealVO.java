@@ -10,7 +10,7 @@ import com.got.enums.DealCategory;
 public class DealVO {
 	private Integer d_no;
 	private DealCategory category;
-	private String detail;
+	private String d_name, detail;
 	private BigDecimal total_price = BigDecimal.ZERO;
 	private int total_change_amount;
 	private Timestamp regdate;
@@ -72,5 +72,11 @@ public class DealVO {
 	}
 	public void setTotal_change_amount(int total_change_amount) {
 		this.total_change_amount = total_change_amount;
+	}
+	public String getD_name() {
+		return d_name;
+	}
+	public void setD_name(String d_name) {
+		this.d_name = d_name;
 	}
 }

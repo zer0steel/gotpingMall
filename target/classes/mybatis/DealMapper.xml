@@ -24,6 +24,14 @@
 		<association property="stock" resultMap="stockMap" />
 	</resultMap>
 	
+	<resultMap type="com.got.vo.deal.DealDetailVO" id="dealDetailMap">
+		<id property="dd_no" column="dd_no"/>
+		<id property="d_no" column="d_no"/>
+		<result property="change_amount" column="change_amount"/>
+		<result property="remain_stock" column="remain_stock"/>
+		<result property="unit_price" column="unit_price"/>
+	</resultMap>
+	
 	<resultMap type="com.got.vo.deal.DealVO" id="dealMap">
 		<id property="d_no" column="d_no"/>
 		<result property="category" column="category"/>
@@ -31,6 +39,14 @@
 		<result property="total_change_amount" column="total_change_amount"/>
 		<result property="total_price" column="total_price"/>
 		<result property="regdate" column="regdate"/>
-		<association property="details" resultMap="detailsMap" />
+		<result property="d_name" column="d_name"/>
+	</resultMap>
+	
+	<resultMap type="com.got.vo.deal.DealDetailVO" id="detailWithStockMap" extends="dealDetailMap">
+		<association property="stock" resultMap="com.got.mapper.goods.StockMapper.stockWithGoodsMap"/>
+	</resultMap>
+	
+	<resultMap type="com.got.vo.deal.DealVO" id="dealAndDetailsMap" extends="dealMap">
+		<association property="details" resultMap="detailWithStockMap"/>
 	</resultMap>
 </mapper>

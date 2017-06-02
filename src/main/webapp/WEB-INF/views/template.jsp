@@ -23,6 +23,8 @@
 	<script type="application/javascript" src="${pageContext.request.contextPath }/resources/template/mall/js/memenu.js"></script>
 	
 	<script type="application/x-javascript">
+	const PATH = location.protocol + "//" + location.host + "/controller/";
+	
 	addEventListener("load", function() {
 		setTimeout(hideURLbar, 0);
 		}, false); 
@@ -40,15 +42,9 @@
 	<jsp:include page="templateMenu/slideAD.jsp"></jsp:include>
 </c:if>
 <section>
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-9 padding-right">
-				<jsp:include page="${viewPage }"></jsp:include>
-			</div>
-		</div>
-	</div>
+	<jsp:include page="${viewPage }"></jsp:include>
+	<div class="clearfix"></div>
 </section>
-<div class="clearfix"></div>
 <jsp:include page="templateMenu/footer.jsp"></jsp:include>
 </body>
 </html>

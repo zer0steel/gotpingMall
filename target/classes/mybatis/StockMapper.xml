@@ -1,0 +1,16 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.got.mapper.goods.StockMapper">
+	<resultMap type="com.got.vo.goods.StockVO" id="stockMap">
+		<id column="s_no" property="s_no"/>
+		<id column="g_no" property="g_no"/>
+		<result column="combination" property="combination"/>
+		<result column="amount" property="amount"/>
+		<result column="extra_cost" property="extra_cost"/>
+	</resultMap>
+	
+	<resultMap type="com.got.vo.goods.StockVO" id="stockWithGoodsMap" extends="stockMap">
+		<association property="goods" resultMap="com.got.mapper.goods.GoodsMapper.goodsWithMainImgMap"/>
+	</resultMap>
+</mapper>

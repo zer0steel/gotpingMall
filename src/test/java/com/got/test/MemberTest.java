@@ -1,4 +1,4 @@
-package com.got.domain;
+package com.got.test;
 
 import java.math.BigDecimal;
 

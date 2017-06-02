@@ -68,6 +68,7 @@ ul li img{
 		 			<input type="hidden" name="d_no" value="${o.d_no }">
 		 			<input type="hidden" name="m_no" value="${m.m_no }">
 					<input type="hidden" name="total_price" value="${o.total_price }" data-total-price="${o.total_price }">
+					<input type="hidden" name="d_name">
 					<div class="row">
 						<div class="col-md-1"></div>
 						<div class="col-md-10 panel panel-default">
@@ -267,6 +268,7 @@ ul li img{
 		
 		let checkoutData = getFormData( $('form') );
 		checkoutData.name = getGoodsName();
+		$('input[name=d_name]').val(checkoutData.name);
 		prepareCheckout(checkoutData);
 	});
 	

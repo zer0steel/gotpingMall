@@ -1,11 +1,15 @@
 package com.got.mapper.deal;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.springframework.stereotype.Repository;
 
+import com.got.vo.SearchVO;
 import com.got.vo.deal.PaymentVO;
 
 @Repository
@@ -21,6 +25,12 @@ public interface PaymentMapper {
 	@Select("SELECT * FROM payment WHERE p_no = #{p_no }")
 	public PaymentVO selectOneWithP_no(Integer p_no);
 	
-	@Select("SELECT * FROM payment WHERE order_uid = #{order_uid }")
+	@Select("SELECT * FROM payment p, deal d, deal_detail dd, stock s, goods g, goods_image gi, files f "
+			+ "WHERE p.d_no = d.d_no AND d.d_no = dd.d_no AND dd.s_no = s.s_no AND s.g_no = g.g_no "
+			+ "AND g.g_no = gi.g_no AND gi.f_no = f.f_no AND gi.location = 'main' "
+			+ "AND order_uid = #{order_uid }")
+	@ResultMap("payAndGoodsMap")
 	public PaymentVO selectOneWith_Uid(String order_uid);
+	
+	public List<PaymentVO> selectListM_no(@Param("m_no") Integer m_no, @Param("search") SearchVO s);
 }

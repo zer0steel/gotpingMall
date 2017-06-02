@@ -3,6 +3,7 @@ package com.got.vo.deal;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ import com.siot.IamportRestClient.response.Payment;
 
 public class PaymentVO {
 
-	private Integer p_no, o_no;
+	private Integer p_no;
 	private String p_way_detail, order_uid, receipt_url;
 	private BigDecimal pay_amount = BigDecimal.ZERO, use_mileage = BigDecimal.ZERO;
 	private Timestamp pay_date;
@@ -37,12 +38,6 @@ public class PaymentVO {
 	}
 	public void setP_way_detail(String p_way_detail) {
 		this.p_way_detail = p_way_detail;
-	}
-	public Integer getO_no() {
-		return o_no;
-	}
-	public void setO_no(Integer o_no) {
-		this.o_no = o_no;
 	}
 	public BigDecimal getPay_amount() {
 		return pay_amount;
@@ -68,8 +63,9 @@ public class PaymentVO {
 	public void setOrder_uid(String order_uid) {
 		this.order_uid = order_uid;
 	}
-	public Timestamp getPay_date() {
-		return pay_date;
+	public String getPay_date() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+		return dateFormat.format(pay_date);
 	}
 	public void setPay_date(Timestamp pay_date) {
 		this.pay_date = pay_date;
@@ -107,12 +103,17 @@ public class PaymentVO {
 	private boolean isPayFullMileage() {
 		return this.order.getTotal_price().subtract(this.use_mileage).intValue() == 0;
 	}
+	public String getMonth() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM");
+		return dateFormat.format(pay_date);
+	}
 	
 	@Override
 	public String toString() {
-		return "PaymentVO [p_no=" + p_no + ", o_no=" + o_no + ", p_way=" + p_way + ", p_way_detail=" + p_way_detail
-				+ ", impt_id=" + order_uid + ", pay_amount=" + pay_amount + ", use_mileage=" + use_mileage + ", pay_date="
-				+ pay_date + ", order=" + order + ", status=" + status + ", mileage=" + mileage + "]";
+		return "PaymentVO [p_no=" + p_no + ", p_way_detail=" + p_way_detail + ", order_uid="
+				+ order_uid + ", receipt_url=" + receipt_url + ", pay_amount=" + pay_amount + ", use_mileage="
+				+ use_mileage + ", pay_date=" + pay_date + ", order=" + order + ", mileage=" + mileage + ", status="
+				+ status + ", p_way=" + p_way + "]";
 	}
 	
 	public MileageVO getMileage(MileageCategory category) {

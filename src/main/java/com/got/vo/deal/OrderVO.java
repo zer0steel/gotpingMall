@@ -7,12 +7,12 @@ import com.got.vo.member.AddressVO;
 
 public class OrderVO extends DealVO {
 	private Integer m_no;
-	private String recipient, message, buyer, buyer_email, order_password;
+	private String recipient, message, buyer, buyer_email;
 	private AddressVO addr;
 	@Override
 	public String toString() {
 		return "OrderVO [m_no=" + m_no + ", recipient=" + recipient + ", message=" + message + ", buyer=" + buyer
-				+ ", buyer_email=" + buyer_email + ", order_password=" + order_password + ", addr=" + addr
+				+ ", buyer_email=" + buyer_email + ", addr=" + addr
 				+ ", toString()=" + super.toString() + "]";
 	}
 	public Integer getM_no() {
@@ -44,12 +44,6 @@ public class OrderVO extends DealVO {
 	}
 	public void setBuyer_email(String buyer_email) {
 		this.buyer_email = buyer_email;
-	}
-	public String getOrder_password() {
-		return order_password;
-	}
-	public void setOrder_password(String order_password) {
-		this.order_password = order_password;
 	}
 	public void setAddr(AddressVO addr) {
 		this.addr = addr;

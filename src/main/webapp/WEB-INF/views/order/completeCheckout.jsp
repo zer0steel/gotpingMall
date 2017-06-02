@@ -26,15 +26,15 @@
 					<tbody>
 						<tr>
 							<td>주문번호</td>
-							<td>${payment.order_uid }</td>
+							<td>${pay.order_uid }</td>
 						</tr>
 						<tr>
 							<td>결제방법</td>
-							<td>${payment.p_way.kor }</td>
+							<td>${pay.p_way.kor }</td>
 						</tr>
 						<tr>
 							<td>상품금액</td>
-							<td>${payment.order.total_price }</td>
+							<td>${pay.order.total_price }</td>
 						</tr>
 						<tr>
 							<td>배송비</td>
@@ -43,12 +43,12 @@
 						<c:if test="${not empty lm }">
 						<tr>
 							<td>마일리지 할인</td>
-							<td>${payment.order.use_mileage }</td>
+							<td>${pay.use_mileage }</td>
 						</tr>
 						</c:if>
 						<tr>
 							<td>결제금액</td>
-							<td>${payment.pay_amount }</td>
+							<td>${pay.pay_amount }</td>
 						</tr>
 					</tbody>
 				</table>

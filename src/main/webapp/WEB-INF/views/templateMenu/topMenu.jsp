@@ -16,7 +16,7 @@
 				<div class="col-md-6 top-header-left">
 					<div class="cart box_1">
 						<c:choose>
-							<c:when test="${lm == null }">
+							<c:when test="${empty lm }">
 								<a href="${pageContext.request.contextPath }/agreement.yo" class="label">회원가입</a>
 								<a href="${pageContext.request.contextPath }/login.yo" class="label">로그인</a>
 								<a href="${pageContext.request.contextPath }/loginTest.yo?" class="label" id="test">테스트 로그인</a>

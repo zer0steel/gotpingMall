@@ -1,4 +1,4 @@
-package com.got.domain;
+package com.got.test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

@@ -1,4 +1,4 @@
-package com.got.domain;
+package com.got.test.select;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -6,17 +6,22 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.got.helper.TestUtil;
+import com.got.mapper.deal.PaymentMapper;
 import com.got.service.ImportService;
 import com.got.service.PaymentService;
+import com.got.vo.SearchVO;
 import com.got.vo.deal.OrderVO;
 import com.got.vo.deal.PaymentVO;
 import com.siot.IamportRestClient.IamportClient;
@@ -38,31 +43,16 @@ public class CheckoutTest {
 	String test_uid2 = "imp_034941102107";
 	
 	@Inject private PaymentService paymentService;
-	
-	@Test
-	public void test() {
-		PaymentVO p = new PaymentVO();
-		p.setOrder_uid(test_uid2);
-		p.setUse_mileage(BigDecimal.valueOf(44500));
-		p.setPay_amount(BigDecimal.valueOf(500));
-		
-		OrderVO o = new OrderVO();
-		o.setD_no(116);
-		paymentService.saveCheckout(p, o);
-	}
-	
-	@Test
-	public void check() {
-		Payment res = CLIENT.paymentByImpUid(test_uid).getResponse();
-		System.out.println(res.getCardName());
-		System.out.println(res.getPayMethod());
-		System.out.println(res.getReceiptUrl());
-		System.out.println(res.getStatus());
+	@Inject private PaymentMapper payMapper;
 
+	@After
+	public void printAfter() {
+		System.out.println();
 	}
 	
 	@Test
 	public void dateFormat() {
+		TestUtil.printMethod("dateFormat");
 		Payment res = CLIENT.paymentByImpUid(test_uid).getResponse();
 		Date paidAt = res.getPaidAt();
 		System.out.println(paidAt);
@@ -70,4 +60,27 @@ public class CheckoutTest {
 		System.out.println(timestamp);
 	}
 	
+	@Test
+	public void selectList() {
+		TestUtil.printMethod("selectList");
+		List<PaymentVO> list = paymentService.getCheckoutList(60, new SearchVO());
+		list.stream().forEach(System.out::println);
+	}
+	
+	@Test
+	public void selectOne() {
+		TestUtil.printMethod("selectOne");
+		PaymentVO pay = paymentService.getCheckout("1496295435083");
+		System.out.println(pay);
+	}
+	
+	@Test
+	public void search() {
+		TestUtil.printMethod("search");
+		SearchVO s = new SearchVO();
+		s.setStartDate("2017.06.01");
+		s.setEndDate("2017.06.01");
+		List<PaymentVO> list = paymentService.getCheckoutList(60, s);
+		list.stream().forEach(System.out::println);
+	}
 }

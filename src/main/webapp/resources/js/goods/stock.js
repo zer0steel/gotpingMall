@@ -65,20 +65,27 @@ goods.selectOption = (function() {
 		};
 	}
 	
-	var optionSearch = function( selectedCombination ) {
+	var optionSearch = function( selectedOption ) {
 		let extraCost = 0;
-		let selectedOption = selectedCombination.map(opt => {
-			extraCost += opt.extraCost;
-			return opt.value
-		}).join(' ');
+		if(typeof selectedOption !== 'string')
+			selectedOption = createSelectedOptionText();
 		
 		let stocks = optInfo.stocks;
-		for(var s of stocks)
+		for(var s of stocks) {
 			if(s.combination === selectedOption) {
 				s.extraCost = extraCost;
 				return s;
 			}
+		}
+		
 		return false;
+		
+		function createSelectedOptionText() {
+			return selectedOption.map(opt => {
+				extraCost += opt.extraCost;
+				return opt.value
+			}).join(' ');
+		}
 	}
 	
 	var getStockCount = function() {
@@ -138,16 +145,23 @@ goods.selectOption = (function() {
 				
 				appendToSuper($select, opt.o_name);
 			});
-		}
-		
-		function createOption(optionDetail) {
-			let optText = optionDetail.value;
-			var $option = $('<option />').val(optionDetail.value);
-			if(Number(optionDetail.extra_cost) !== 0) {
-				optText += "  (추가금액 : " + d.extra_cost + " 원)"; 
-				$option.data(ATTR.DATA.EXTRA_COST, d.extra_cost);
+			
+			function createOption(optionDetail, callback) {
+				let optText = optionDetail.value;
+				var $option = $('<option />').val(optionDetail.value);
+				
+				if(optionSearch(optText).amount === 0) {
+					optText += "  (품절)"; 
+					$option.attr('disabled', true);
+				}
+				else {
+					if(Number(optionDetail.extra_cost) !== 0) {
+						optText += "  (추가금액 : " + optionDetail.extra_cost + " 원)"; 
+						$option.data(ATTR.DATA.EXTRA_COST, optionDetail.extra_cost);
+					}
+				}
+				return $option.data('text', optText).html(optText);
 			}
-			return $option.data('text', optText).html(optText);
 		}
 		
 		function createSelectedListContainer() {
