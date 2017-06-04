@@ -32,7 +32,11 @@
 		<association property="order" resultMap="orderWithDealDetailMap"/>
 	</resultMap>
 	
-	<select id="selectListM_no" resultMap="paymentMap">
+	<resultMap type="com.got.vo.deal.PaymentVO" id="payWithOrderMap" extends="paymentMap">
+		<association property="order" resultMap="orderMap"/>
+	</resultMap>
+	
+	<select id="selectListM_no" resultMap="payWithOrderMap">
 		SELECT * FROM payment p, orders o, deal d 
 		WHERE p.d_no = o.d_no AND o.d_no = d.d_no AND o.m_no = #{m_no }
 		<if test="search.startDate != null and search.endDate != null">

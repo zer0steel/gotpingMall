@@ -29,15 +29,12 @@ public class DealService {
 		return null;//dealMapper.selectAll();
 	}
 	
-	/**
-	 * @param dealVO
-	 * @return d_no primary ket
-	 */
 	@Transactional
 	public Integer addHistoryAndStocks(DealVO dealVO) {
 		dealMapper.insert(dealVO);
 		dealVO.getDetails().forEach(vo -> {
 			vo.setup(dealVO);
+			vo.setUnit_price(vo.getStock().getRealPrice());
 			detailMapper.insert(vo.getStock().getS_no(), vo);
 			stockMapper.updateStock(vo);
 		});
@@ -49,6 +46,7 @@ public class DealService {
 		dealMapper.insert(dealVO);
 		dealVO.getDetails().forEach(vo -> {
 			vo.setD_no(dealVO.getD_no());
+			vo.setUnit_price(vo.getStock().getRealPrice());
 			detailMapper.insertNotUpdateStock(vo.getStock().getS_no(), vo);
 		});
 		return dealVO.getD_no();
@@ -84,7 +82,7 @@ public class DealService {
 		d.getDetails().forEach(vo -> {
 			log.debug(vo);
 			vo.setup(d);
-			detailMapper.updateStock(vo.getDd_no(), vo.getStock().getS_no());
+			detailMapper.updateStock(vo, vo.getStock().getS_no());
 			stockMapper.updateStock(vo);
 		});
 		return d;

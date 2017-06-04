@@ -94,7 +94,7 @@
 
 <div class="row">
 	<div class="col-md-6">
-		<jsp:include page="include/shippingReceivingForm.jsp"></jsp:include>
+		<jsp:include page="include/dealForm.jsp"></jsp:include>
 	</div>
 	
 	<div class="col-md-6">

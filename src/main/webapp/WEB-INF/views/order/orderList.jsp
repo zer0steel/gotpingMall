@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/orderList.css">
 <div class="pages" id="pages">
@@ -43,7 +44,7 @@
 						<ul>
 							<li>${pay.pay_amount } 원</li>
 							<li> | </li>
-							<li> ${pay.pay_date } </li>
+							<li><fmt:formatDate value="${pay.pay_date }" pattern="yyyy.MM.dd"/></li>
 						</ul>
 						<p>${pay.status.kor }</p>
 					</div>
@@ -54,7 +55,7 @@
 </div>
 
 <div class="modal fade" id="order-detail" role="dialog">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 
 		<!-- Modal content-->
 		<div class="modal-content">

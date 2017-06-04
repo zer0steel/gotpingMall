@@ -16,9 +16,9 @@ public class DealController {
 	@Inject private DealService dealService;
 	
 	@RequestMapping(value = "admin/goods/insertStock.yo", method = RequestMethod.POST)
-	public ModelAndView insertSubmit(Integer g_no, DealVO managmentVO) {
+	public ModelAndView insertSubmit(Integer g_no, DealVO deal) {
 		ModelAndView mav = new ModelAndView();
-		dealService.addHistoryAndStocks(managmentVO);
+		dealService.addHistoryAndStocks(deal);
 		mav.setViewName("redirect:/admin/goods/detail.yo?g_no=" + g_no);
 		return mav;
 	}

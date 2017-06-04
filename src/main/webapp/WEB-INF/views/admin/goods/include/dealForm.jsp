@@ -33,7 +33,7 @@
 						수량
 					</label>
 					<div class="col-md-6 col-sm-6 col-xs-12">
-						<input type="number" name="change_amount" class="form-control" required>
+						<input type="number" name="total_change_amount" class="form-control" required>
 					</div>
 				</div>
 				

@@ -1,10 +1,13 @@
 package com.got.vo.deal;
 
+import java.math.BigDecimal;
+
 import com.got.vo.goods.StockVO;
 
 public class DealDetailVO {
 	private Integer dd_no, d_no;
-	private int change_amount, remain_stock, unit_price;
+	private int change_amount, remain_stock;
+	private BigDecimal unit_price;
 	private StockVO stock;
 	
 	@Override
@@ -41,10 +44,10 @@ public class DealDetailVO {
 		if(dealVO.getEnumCategory().isMinusStockCategory())
 			this.change_amount = Math.negateExact(this.change_amount);
 	}
-	public int getUnit_price() {
+	public BigDecimal getUnit_price() {
 		return unit_price;
 	}
-	public void setUnit_price(int unit_price) {
+	public void setUnit_price(BigDecimal unit_price) {
 		this.unit_price = unit_price;
 	}
 	public StockVO getStock() {

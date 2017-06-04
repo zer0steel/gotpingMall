@@ -30,7 +30,7 @@ public enum MileageCategory {
 		return code;
 	}
 
-	public String getKorName() {
+	public String getKor() {
 		return kor;
 	}
 	

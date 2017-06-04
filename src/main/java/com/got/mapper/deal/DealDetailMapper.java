@@ -25,6 +25,9 @@ public interface DealDetailMapper {
 	@Insert(INSERT_NOT_UPDATE_STOCK)
 	public int insertNotUpdateStock(@Param("s_no") Integer s_no, @Param("vo") DealDetailVO dd);
 	
-	@Update("UPDATE deal_detail SET remain_stock = (" + StockMapper.SELECT_ONE_AMOUNT + ") + change_amount WHERE dd_no = #{dd_no }")
-	public int updateStock(@Param("dd_no") Integer dd_no, @Param("s_no") Integer s_no);
+	@Update("UPDATE deal_detail SET "
+			+ "remain_stock = (" + StockMapper.SELECT_ONE_AMOUNT + ") + #{detail.change_amount }, "
+			+ "change_amount = #{detail.change_amount } "
+			+ "WHERE dd_no = #{detail.dd_no }")
+	public int updateStock(@Param("detail") DealDetailVO detailVO, @Param("s_no") Integer s_no);
 }

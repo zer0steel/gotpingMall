@@ -2,11 +2,8 @@ package com.got.vo.deal;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.got.enums.MileageCategory;
@@ -63,9 +60,8 @@ public class PaymentVO {
 	public void setOrder_uid(String order_uid) {
 		this.order_uid = order_uid;
 	}
-	public String getPay_date() {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-		return dateFormat.format(pay_date);
+	public Timestamp getPay_date() {
+		return pay_date;
 	}
 	public void setPay_date(Timestamp pay_date) {
 		this.pay_date = pay_date;

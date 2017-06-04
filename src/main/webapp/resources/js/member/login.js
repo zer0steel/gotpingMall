@@ -7,13 +7,9 @@ var loginUtil = (function() {
 		return loginUtil;
 	}
 	
-	var path = function() {
-		return location.protocol + "//" + location.host + "/controller/";
-	}
-	
 	var requestLogin = function(id,pwd) {
 		return $.ajax({
-			url : path() + "login.yo",
+			url : PATH + "login.yo",
 			type : "post",
 			data : {id:id, pwd:pwd}
 		});
