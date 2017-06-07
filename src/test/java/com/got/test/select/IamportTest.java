@@ -1,5 +1,6 @@
 package com.got.test.select;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Date;
@@ -28,7 +29,7 @@ import com.siot.IamportRestClient.response.Payment;
 @ContextConfiguration(locations = {
 		"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml",
 		"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class CheckoutTest {
+public class IamportTest {
 	
 	private static final String KEY = "6804401102834731";
 	private static final String API = "T5NM4DtLvvg0zq8CGZV8MhiJzvdUAjAuoogt1JexevxOWFqCFlLsC3bbzp6aIGE75UA6EOETkcHgR7Tx";
@@ -47,52 +48,12 @@ public class CheckoutTest {
 	}
 	
 	@Test
-	public void dateFormat() {
-		TestUtil.printMethod("dateFormat");
-		Payment res = CLIENT.paymentByImpUid(test_uid).getResponse();
-		Date paidAt = res.getPaidAt();
-		System.out.println(paidAt);
-		Timestamp timestamp = Timestamp.from(Instant.ofEpochMilli(paidAt.getTime()));
-		System.out.println(timestamp);
+	public void payResult() {
+		TestUtil.printMethod("payResult");
+		Payment res = CLIENT.paymentByImpUid(test_uid3).getResponse();
+		System.out.println(res.getAmount());
+		System.out.println(res.getAmount().add(BigDecimal.ZERO).equals(BigDecimal.valueOf(1000)));
+		System.out.println(new PaymentVO().getUse_mileage());
 	}
 	
-	@Test
-	public void selectList() {
-		TestUtil.printMethod("selectList");
-		List<PaymentVO> list = paymentService.getCheckoutList(60, new SearchVO());
-		list.stream().forEach(System.out::println);
-	}
-	
-	@Test
-	public void selectList2() {
-		TestUtil.printMethod("selectList2");
-		List<PaymentVO> list = paymentService.getCheckoutList(OrderStatus.CHECKOUT_COMPLETE);
-		list.stream().forEach(System.out::println);
-	}
-	
-	@Test
-	public void selectOne() {
-		TestUtil.printMethod("selectOne");
-		PaymentVO pay = paymentService.getCheckout("1496295435083");
-		System.out.println(pay);
-	}
-	
-	@Test
-	public void search() {
-		TestUtil.printMethod("search");
-		SearchVO s = new SearchVO();
-		s.setStartDate("2017.06.01");
-		s.setEndDate("2017.06.01");
-		List<PaymentVO> list = paymentService.getCheckoutList(60, s);
-		list.stream().forEach(System.out::println);
-	}
-	
-	@Test
-	public void searchWithEmailAndUid() {
-		//test@test.yo
-		//1496573786132
-		TestUtil.printMethod("searchWithEmailAndUid");
-		PaymentVO paymentVO = payMapper.selectOneEmailAndUid(null, "1496573786132");
-		System.out.println(paymentVO);
-	}
 }

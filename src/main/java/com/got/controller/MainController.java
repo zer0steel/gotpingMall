@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.got.mapper.deal.DealMapper;
 import com.got.service.goods.CategoryService;
+import com.got.service.goods.GoodsService;
 import com.got.util.ModelAndView;
 import com.got.vo.deal.DealVO;
 
@@ -15,10 +16,12 @@ import com.got.vo.deal.DealVO;
 public class MainController {
 	
 	@Inject private DealMapper mapper;
+	@Inject private GoodsService goodsService;
 	
 	@RequestMapping("front.yo")
 	public ModelAndView front() {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("goods", goodsService.getWeeklyBest());
 		return mav.setViewPage("front.jsp");
 	}
 	

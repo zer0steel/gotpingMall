@@ -22,7 +22,7 @@ import com.got.vo.goods.StockVO;
 @Service
 public class GoodsService {
 	
-	@Inject private DealService managmentService;
+	@Inject private DealService dealService;
 	
 	@Inject private StockService stockService;
 	@Inject private GoodsOptionService goodsOptionService;
@@ -36,6 +36,10 @@ public class GoodsService {
 		return goodsMapper.selectAll();
 	}
 	
+	public List<GoodsVO> getWeeklyBest() {
+		return goodsMapper.selectListWeeklySellAmount();
+	}
+	
 	public List<GoodsVO> getWithC_no(Integer c_no) {
 		Objects.requireNonNull(c_no);
 		return goodsMapper.selectListWithC_no(c_no, GoodsStatus.FOR_SALE);
@@ -46,9 +50,9 @@ public class GoodsService {
 	 * @param goods_no
 	 * @return goodsVO
 	 */
-	public GoodsVO detailAndSRHistory(Integer g_no) {
+	public GoodsVO detailAndDealHistory(Integer g_no) {
 		GoodsVO g = detail(g_no);
-		g.setHistory(managmentService.getRecentHistory(g_no));
+		g.setHistory(dealService.getRecentHistory(g_no));
 		return g;
 	}
 	
@@ -87,4 +91,5 @@ public class GoodsService {
 		Objects.requireNonNull(g.getG_no());
 		goodsMapper.updateOne(g);
 	}
+
 }

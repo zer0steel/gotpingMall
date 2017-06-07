@@ -1,6 +1,8 @@
 package com.got.test;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -31,13 +33,13 @@ public class MemberTest {
 	@Inject MemberMapper memberMapper;
 	@Inject MileageMapper mileageMapper;
 	
-	@Test
+//	@Test
 	public void createAdmin() {
 		MemberVO m = new MemberVO();
 		m.setId("admin");
 		m.setEnumGrade(Grade.ADMIN);
 		m.setName("장영철");
-		m.setEmail("test@test.yo");
+		m.setEmail("dudcjf98@naver.com");
 		m.setAddr("05099/ 서울 광진구 자양동 606-10/ 5층");
 		m.setPwd(BCrypt.hashpw("1234", BCrypt.gensalt(12)));
 		MemberVO m2 = memberMapper.selectOneWithId(m.getId());
@@ -55,7 +57,7 @@ public class MemberTest {
 		mileage.setReason("오픈기념 천만포인트 행사");
 		mileageMapper.insert(mileage);
 	}
-//
+
 //	@Test
 //	public void insertMileage() {
 //		MemberVO m = memberMapper.selectOneWithId("admin");
@@ -66,6 +68,23 @@ public class MemberTest {
 //		mileage.setEnumCategory(MileageCategory.USE);
 //		mileageMapper.insert(mileage);
 //	}
+	
+	@Test
+	public void mileageTest() {
+		BigDecimal[] goodsPrice = {BigDecimal.valueOf(26000), BigDecimal.valueOf(7000), BigDecimal.valueOf(9000)};
+		BigDecimal totalPrice = Arrays.asList(goodsPrice).stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+		System.out.println("총 가격 : " + totalPrice);
+		double[] savingMileage = {0.10, 0.05, 0.01};
+		BigDecimal payAmount2 = BigDecimal.ZERO;
+		BigDecimal payAmount = BigDecimal.valueOf(10000);
+		for(int i = 0; i < goodsPrice.length; i++) {
+			BigDecimal percent = goodsPrice[i].divide(totalPrice, 2, RoundingMode.HALF_UP);
+			BigDecimal unitPrice = payAmount.multiply(percent);
+			BigDecimal mileageAmount = unitPrice.multiply(BigDecimal.valueOf(savingMileage[i]));
+			System.out.println("실제 상품에 지불된 금액 : " + unitPrice);
+			System.out.println(mileageAmount);
+		}
+	}
 //	
 //	@Test
 //	public void txTest() {

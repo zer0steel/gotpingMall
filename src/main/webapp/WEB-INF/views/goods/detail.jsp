@@ -3,7 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- FlexSlider -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/flexslider.min.css" type="text/css" media="screen" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/elevatezoom/3.0.8/jquery.elevatezoom.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.6.3/jquery.flexslider.min.js"></script>
 <script type="application/javascript">
 $(function() {
@@ -38,7 +37,7 @@ $(function() {
 								<li data-thumb="${pageContext.request.contextPath }/${i.save_path}/${i.save_name}">
 									<div class="thumb-image">
 										<img src="${pageContext.request.contextPath }/${i.save_path}/${i.save_name}" 
-										data-zoom-image="${pageContext.request.contextPath }/${i.save_path}/${i.save_name}" class="img-responsive imgZoom" alt="실패"/>
+										data-zoom-image="${pageContext.request.contextPath }/${i.save_path}/${i.save_name}" class="img-responsive" alt="실패"/>
 									</div>
 								</li>
 								</c:forEach>

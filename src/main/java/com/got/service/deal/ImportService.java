@@ -1,4 +1,4 @@
-package com.got.service;
+package com.got.service.deal;
 
 import org.springframework.stereotype.Service;
 

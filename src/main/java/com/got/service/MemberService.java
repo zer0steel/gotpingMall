@@ -1,5 +1,6 @@
 package com.got.service;
 
+import java.math.BigDecimal;
 import java.security.PrivateKey;
 import java.util.List;
 import java.util.Objects;
@@ -68,7 +69,8 @@ public class MemberService {
 	public MemberVO detail(Integer m_no) {
 		Objects.requireNonNull(m_no);
 		MemberVO m = memberMapper.selectOneWithM_no(m_no);
-		m.setMileage(mileageMapper.selectCurrMileage(m_no).getCurr_mileage());
+		MileageVO mileage = mileageMapper.selectCurrMileage(m_no);
+		m.setMileage(Objects.nonNull(mileage) ? mileage.getCurr_mileage() : BigDecimal.ZERO);
 		return m;
 	}
 	

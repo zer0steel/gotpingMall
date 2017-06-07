@@ -24,7 +24,7 @@ public enum DealCategory {
 		return code;
 	}
 
-	public String getKorName() {
+	public String getKor() {
 		return korName;
 	}
 	

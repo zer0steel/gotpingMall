@@ -72,17 +72,17 @@
 			</tr>
 			<tr>
 				<td>총 상품 금액</td>
-				<td>${pay.order.total_price }</td>
+				<td>${pay.order.total_price } 원</td>
 			</tr>
 			<c:if test="${not empty lm }">
 			<tr>
 				<td>마일리지 사용량</td>
-				<td>${pay.use_mileage }</td>
+				<td>${pay.use_mileage } 원</td>
 			</tr>
 			</c:if>
 			<tr>
 				<td>결제하신금액</td>
-				<td>${pay.pay_amount }</td>
+				<td>${pay.pay_amount } 원</td>
 			</tr>
 		</table>
 	</div>

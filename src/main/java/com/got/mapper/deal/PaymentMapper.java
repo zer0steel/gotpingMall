@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.springframework.stereotype.Repository;
 
+import com.got.enums.OrderStatus;
 import com.got.vo.SearchVO;
 import com.got.vo.deal.PaymentVO;
 
@@ -16,7 +17,7 @@ import com.got.vo.deal.PaymentVO;
 public interface PaymentMapper {
 
 	@Insert("INSERT INTO payment(p_no, d_no, order_uid, pay_amount, use_mileage, status, p_way, p_way_detail, pay_date, receipt_url) "
-			+ "VALUES(#{p_no }, #{d_no }, #{vo.order_uid, jdbcType=VARCHAR }, #{vo.pay_amount }, #{vo.use_mileage }, "
+			+ "VALUES(#{p_no }, #{d_no }, #{vo.order_uid, jdbcType=VARCHAR }, #{vo.pay_amount }, #{vo.use_mileage, jdbcType=DECIMAL }, "
 			+ "#{vo.status.code }, #{vo.p_way.code, jdbcType=VARCHAR }, #{vo.p_way_detail, jdbcType=VARCHAR }, "
 			+ "NVL(#{vo.pay_date, jdbcType=TIMESTAMP }, sysdate), #{vo.receipt_url, jdbcType=VARCHAR } )")
 	@SelectKey(statement = "SELECT p_no.NEXTVAL FROM DUAL", before = true, resultType = int.class, keyProperty = "p_no")
@@ -32,5 +33,12 @@ public interface PaymentMapper {
 	@ResultMap("payAndGoodsMap")
 	public PaymentVO selectOneWith_Uid(String order_uid);
 	
+	@Select("SELECT * FROM payment p, orders o WHERE p.d_no = o.d_no AND order_uid = #{order_uid } AND buyer_email = #{buyer_email, jdbcType=VARCHAR }")
+	public PaymentVO selectOneEmailAndUid(@Param("buyer_email") String email, @Param("order_uid") String order_uid);
+	
 	public List<PaymentVO> selectListM_no(@Param("m_no") Integer m_no, @Param("search") SearchVO s);
+
+	@Select("SELECT * FROM payment p, orders o, deal d WHERE p.d_no = o.d_no AND o.d_no = d.d_no AND status = ${status.code } ORDER BY p_no DESC")
+	@ResultMap("payWithOrderMap")
+	public List<PaymentVO> selectList(@Param("status") OrderStatus status);
 }

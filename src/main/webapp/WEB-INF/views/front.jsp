@@ -1,119 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--product-starts-->
+<h2 style="text-align: center;">WEEKLY BEST</h2>
 <div class="product"> 
 	<div class="container">
 		<div class="product-top">
-			<div class="product-one">
-				<div class="col-md-3 product-left">
-					<div class="product-main simpleCart_shelfItem">
-						<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="${pageContext.request.contextPath }/resources/template/mall/images/p-1.png" alt="" /></a>
-						<div class="product-bottom">
-							<h3>Smart Watches</h3>
-							<p>Explore Now</p>
-							<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-						</div>
-						<div class="srch">
-							<span>-50%</span>
-						</div>
+		<c:forEach var="g" items="${goods }">
+			<div class="col-md-3 product-left">
+				<div class="product-main simpleCart_shelfItem">
+				
+					<a href="${pageContext.request.contextPath }/goods/detail.yo?g_no=${g.g_no}" class="mask">
+						<img class="img-responsive zoom-img" src="${pageContext.request.contextPath }/${g.mainImg.save_path }/${g.mainImg.save_name }" alt="" />
+					</a>
+					<div class="product-bottom">
+						<h3>${g.name }</h3>
+						<p>Explore Now</p>
+						<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">${g.realPrice }</span></h4>
 					</div>
-				</div>
-				<div class="col-md-3 product-left">
-					<div class="product-main simpleCart_shelfItem">
-						<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="${pageContext.request.contextPath }/resources/template/mall/images/p-2.png" alt="" /></a>
-						<div class="product-bottom">
-							<h3>Smart Watches</h3>
-							<p>Explore Now</p>
-							<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-						</div>
-						<div class="srch">
-							<span>-50%</span>
-						</div>
+					<c:if test="${g.discount_rate > 0 }">
+					<div class="srch">
+						<span>-${g.discount_rate }%</span>
 					</div>
+					</c:if>
 				</div>
-				<div class="col-md-3 product-left">
-					<div class="product-main simpleCart_shelfItem">
-						<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="${pageContext.request.contextPath }/resources/template/mall/images/p-3.png"  alt="" /></a>
-						<div class="product-bottom">
-							<h3>Smart Watches</h3>
-							<p>Explore Now</p>
-							<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-						</div>
-						<div class="srch">
-							<span>-50%</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 product-left">
-					<div class="product-main simpleCart_shelfItem">
-						<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="${pageContext.request.contextPath }/resources/template/mall/images/p-4.png" alt="" /></a>
-						<div class="product-bottom">
-							<h3>Smart Watches</h3>
-							<p>Explore Now</p>
-							<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-						</div>
-						<div class="srch">
-							<span>-50%</span>
-						</div>
-					</div>
-				</div>
-				<div class="clearfix"></div>
 			</div>
-			<div class="product-one">
-				<div class="col-md-3 product-left">
-					<div class="product-main simpleCart_shelfItem">
-						<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="${pageContext.request.contextPath }/resources/template/mall/images/p-5.png" alt="" /></a>
-						<div class="product-bottom">
-							<h3>Smart Watches</h3>
-							<p>Explore Now</p>
-							<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-						</div>
-						<div class="srch">
-							<span>-50%</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 product-left">
-					<div class="product-main simpleCart_shelfItem">
-						<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="${pageContext.request.contextPath }/resources/template/mall/images/p-6.png" alt="" /></a>
-						<div class="product-bottom">
-							<h3>Smart Watches</h3>
-							<p>Explore Now</p>
-							<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-						</div>
-						<div class="srch">
-							<span>-50%</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 product-left">
-					<div class="product-main simpleCart_shelfItem">
-						<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="${pageContext.request.contextPath }/resources/template/mall/images/p-7.png" alt="" /></a>
-						<div class="product-bottom">
-							<h3>Smart Watches</h3>
-							<p>Explore Now</p>
-							<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-						</div>
-						<div class="srch">
-							<span>-50%</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 product-left">
-					<div class="product-main simpleCart_shelfItem">
-						<a href="single.html" class="mask"><img class="img-responsive zoom-img" src="${pageContext.request.contextPath }/resources/template/mall/images/p-8.png" alt="" /></a>
-						<div class="product-bottom">
-							<h3>Smart Watches</h3>
-							<p>Explore Now</p>
-							<h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-						</div>
-						<div class="srch">
-							<span>-50%</span>
-						</div>
-					</div>
-				</div>
-				<div class="clearfix"></div>
-			</div>					
+		</c:forEach>
 		</div>
+		
 	</div>
 </div>
 	<!--product-end-->

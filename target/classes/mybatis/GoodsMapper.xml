@@ -15,7 +15,14 @@
 		<result column="location" property="location"/>
 	</resultMap>
 	
-	<resultMap type="com.got.vo.goods.GoodsVO" id="goodsMap">
+	<resultMap type="com.got.vo.goods.CategoryVO" id="categoryMap">
+		<id column="c_no" property="c_no"/>
+		<result column="super_no" property="super_no"/>
+		<result column="title" property="title"/>
+		<result column="levels" property="levels"/>
+	</resultMap>
+	
+	<resultMap type="com.got.vo.goods.GoodsVO" id="goodsMap" extends="categoryMap">
 		<id property="g_no" column="g_no"/>
 		<result property="name" column="name"/>
 		<result property="detail" column="detail"/>
@@ -28,9 +35,11 @@
 	
 	<resultMap type="com.got.vo.goods.GoodsVO" id="goodsWithMainImgMap" extends="goodsMap">
 		<association property="mainImg" resultMap="goodsImgMap" />
+		<association property="stocks" resultMap="com.got.mapper.goods.StockMapper.stockMap" />
 	</resultMap>
 	
 	<resultMap type="com.got.vo.goods.GoodsVO" id="goodsWithImgsMap" extends="goodsMap">
 		<association property="images" resultMap="goodsImgMap" />
+		<association property="stocks" resultMap="com.got.mapper.goods.StockMapper.stockMap" />
 	</resultMap>
 </mapper>

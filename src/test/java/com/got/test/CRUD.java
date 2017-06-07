@@ -5,12 +5,10 @@ import javax.inject.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.got.enums.DealCategory;
 import com.got.mapper.CommonsMapper;
 
 @WebAppConfiguration
@@ -26,7 +24,7 @@ public class CRUD {
 		mapper.deleteAll("mileage");
 		mapper.deleteAll("payment");
 		mapper.deleteAll("orders");
-		mapper.deleteAll("member_grade");
-		mapper.deleteAll("member");
+//		mapper.deleteAll("member_grade");
+//		mapper.deleteAll("member");
 	}
 }

@@ -50,13 +50,20 @@ public class GoodsTest {
 	@Test
 	public void selectOne() {
 		TestUtil.printMethod("selectOne");
-		System.out.println(goodsMapper.selectOne(list.get(0).getG_no()));
+		System.out.println(goodsMapper.selectOne(list.get(2).getG_no()));
 	}
 	
 	@Test
 	public void selectList() {
 		TestUtil.printMethod("selectList");
 		goodsMapper.selectListWithC_no(categories.get(0).getC_no(), GoodsStatus.FOR_SALE)
+		.forEach(System.out::println);
+	}
+	
+	@Test
+	public void selectList2() {
+		TestUtil.printMethod("selectList2");
+		goodsMapper.selectListWeeklySellAmount()
 		.forEach(System.out::println);
 	}
 }

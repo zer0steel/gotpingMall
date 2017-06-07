@@ -11,6 +11,7 @@ import com.got.enums.GoodsStatus;
 import com.got.enums.DealCategory;
 import com.got.service.goods.CategoryService;
 import com.got.service.goods.GoodsService;
+import com.got.util.CommonUtil;
 import com.got.util.ModelAndView;
 import com.got.vo.goods.GoodsVO;
 
@@ -46,7 +47,7 @@ public class GoodsController {
 	@RequestMapping("admin/goods/detail.yo")
 	public ModelAndView detailGoods(Integer g_no) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("g",gs.detailAndSRHistory(g_no))
+		mav.addObject("g",gs.detailAndDealHistory(g_no))
 		.addObject("status", GoodsStatus.values())
 		.addObject("hc", DealCategory.values());
 		return mav.setAdminViewPage("goods/detail.jsp");
@@ -54,6 +55,8 @@ public class GoodsController {
 	
 	@RequestMapping(value = "admin/goods/update.yo", method = RequestMethod.POST)
 	public ModelAndView updateGoods(GoodsVO g) {
+		log.info(CommonUtil.getInfoString("updateGoods"));
+		log.debug(g);
 		gs.update(g);
 		return new ModelAndView("redirect:/admin/goods/detail.yo?g_no=" + g.getG_no());
 	}

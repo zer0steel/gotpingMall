@@ -1,6 +1,7 @@
 package com.got.vo.deal;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import com.got.vo.goods.StockVO;
 
@@ -41,11 +42,12 @@ public class DealDetailVO {
 	}
 	public void setup(DealVO dealVO) {
 		this.d_no = dealVO.getD_no();
-		if(dealVO.getEnumCategory().isMinusStockCategory())
+		if(dealVO.getCategory().isMinusStockCategory())
 			this.change_amount = Math.negateExact(this.change_amount);
 	}
 	public BigDecimal getUnit_price() {
 		return unit_price;
+//		return Objects.nonNull(unit_price) ? unit_price : calcurateRealPrice();
 	}
 	public void setUnit_price(BigDecimal unit_price) {
 		this.unit_price = unit_price;
@@ -55,5 +57,9 @@ public class DealDetailVO {
 	}
 	public void setStock(StockVO stock) {
 		this.stock = stock;
+	}
+	
+	private BigDecimal calcurateRealPrice() {
+		return BigDecimal.valueOf(stock.getExtra_cost()).add(stock.getGoods().getRealPrice());
 	}
 }

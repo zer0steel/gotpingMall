@@ -46,9 +46,9 @@ $(function () {
 				<figure class="effect-bubba">
 					<img class="img-responsive" src="${pageContext.request.contextPath }/resources/template/mall/images/abt-1.jpg" alt=""/>
 					<figcaption>
-						<h2>Nulla maximus nunc</h2>
-						<p>In sit amet sapien eros Integer dolore magna aliqua</p>	
-					</figcaption>			
+						<h2>오픈 기념 이벤트</h2>
+						<p>지금 가입하시면 마일리지 천만포인트를 쏩니다!</p>	
+					</figcaption>
 				</figure>
 			</div>
 			<div class="col-md-4 about-left">

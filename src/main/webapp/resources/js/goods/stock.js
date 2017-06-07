@@ -150,7 +150,7 @@ goods.selectOption = (function() {
 				let optText = optionDetail.value;
 				var $option = $('<option />').val(optionDetail.value);
 				
-				if(optionSearch(optText).amount === 0) {
+				if(!updateMode && optionSearch(optText).amount === 0) {
 					optText += "  (품절)"; 
 					$option.attr('disabled', true);
 				}

@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.service.MemberService;
+import com.got.util.CommonUtil;
 import com.got.util.JSONUtil;
 import com.got.util.ModelAndView;
 import com.got.util.RSA;
@@ -42,10 +44,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping("login.yo")
-	public ModelAndView loginForm() {
+	public ModelAndView loginForm(
+			@RequestParam(defaultValue = "front.yo") String uri, 
+			@RequestParam(defaultValue = "member/login.jsp") String jspPage) {
+		log.info(CommonUtil.getInfoString("loginForm"));
+		log.debug(uri + " / " + jspPage);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("uri", "front.yo");
-		return mav.setViewPage("member/login.jsp");
+		mav.addObject("uri", uri);
+		return mav.setViewPage(jspPage);
 	}
 	
 	@RequestMapping("purchaseLogin.yo")

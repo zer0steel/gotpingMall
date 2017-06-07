@@ -1,6 +1,7 @@
 package com.got.service.deal;
 
 import java.util.List;
+import java.util.Locale.Category;
 
 import javax.inject.Inject;
 
@@ -13,6 +14,7 @@ import com.got.mapper.deal.DealDetailMapper;
 import com.got.mapper.deal.DealMapper;
 import com.got.mapper.goods.StockMapper;
 import com.got.util.JSONUtil;
+import com.got.vo.deal.DealDetailVO;
 import com.got.vo.deal.DealVO;
 import com.got.vo.deal.OrderVO;
 
@@ -26,19 +28,37 @@ public class DealService {
 	private Logger log = Logger.getLogger(DealService.class);
 	
 	public List<DealVO> getAll() {
-		return null;//dealMapper.selectAll();
+		return dealMapper.selectAll();
 	}
 	
 	@Transactional
 	public Integer addHistoryAndStocks(DealVO dealVO) {
 		dealMapper.insert(dealVO);
-		dealVO.getDetails().forEach(vo -> {
-			vo.setup(dealVO);
-			vo.setUnit_price(vo.getStock().getRealPrice());
-			detailMapper.insert(vo.getStock().getS_no(), vo);
-			stockMapper.updateStock(vo);
-		});
+		List<DealDetailVO> details = dealVO.getDetails();
+		if(details.size() == 1) {
+			DealDetailVO detail = details.get(0);
+			detail.setChange_amount(dealVO.getTotal_change_amount());
+			insertAndUpdateStock(detail, dealVO);
+		}
+		else{
+			int total_amount = 0;
+			for(DealDetailVO detail : details) {
+				total_amount += detail.getChange_amount();
+				insertAndUpdateStock(detail, dealVO);
+			}
+			if(dealVO.getTotal_change_amount() != total_amount)
+				throw new IllegalArgumentException("입고 수량이 서로 다름 : dealVO.total_change_amount = " + dealVO.getTotal_change_amount() + " || detail 합계 = " + total_amount);
+		}
+		
 		return dealVO.getD_no();
+	}
+	
+	@Transactional
+	private void insertAndUpdateStock(DealDetailVO detail, DealVO dealVO) {
+		detail.setup(dealVO);
+		detail.setUnit_price(detail.getStock().getRealPrice());
+		detailMapper.insert(detail.getStock().getS_no(), detail);
+		stockMapper.updateStock(detail);
 	}
 	
 	@Transactional
@@ -68,7 +88,7 @@ public class DealService {
 	 * @return
 	 */
 	public List<DealVO> getRecentHistory(Integer g_no) {
-		return dealMapper.selectListWithOS_no(g_no, DETAIL_GOODS_SHOW_HISTORY_COUNT);
+		return dealMapper.selectListWithOS_no(g_no, DETAIL_GOODS_SHOW_HISTORY_COUNT, DealCategory.CREATE_ORDER);
 	}
 	
 	public String getRecentHistoryWithJSON(int g_no) {

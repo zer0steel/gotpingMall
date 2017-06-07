@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
 ul li img{
 	vertical-align:top; display:block; float:left;
@@ -15,6 +16,7 @@ ul li img{
 			<h2>CHECKOUT</h2>
 		</div>
 		<div class="ckeckout-top">
+			<fmt:parseNumber var="totalPrice" value="${o.total_price }" integerOnly="true"/>
 			<div class="cart-items">
 				<h3>주문상품</h3>
 				<table class="table">
@@ -36,7 +38,7 @@ ul li img{
 							</td>
 							<td class="name">
 								<strong class="goodsName" style="font-size: 20px;">${d.stock.goods.name }</strong>
-								<c:if test="${not empty d.stock.combination }">
+								<c:if test="${d.stock.combination ne '기본옵션' }">
 								<p class="option">
 									<img src="${pageContext.request.contextPath }/resources/images/small/basket_option.gif">
 									&nbsp;${d.stock.combination }
@@ -44,13 +46,13 @@ ul li img{
 								</c:if>
 							</td>
 							<td>
-								<p>${d.stock.realPrice } 원</p>
+								<p><fmt:parseNumber value="${d.stock.realPrice }" integerOnly="true" /> 원</p>
 							</td>
 							<td>
 								${d.change_amount } 개
 							</td>
 							<td>
-								${d.stock.realPrice * d.change_amount } 원
+								<fmt:parseNumber value="${d.stock.realPrice * d.change_amount }" integerOnly="true" /> 원
 							</td>
 						</tr>
 						</c:forEach>
@@ -59,35 +61,33 @@ ul li img{
 						<tr>
 							<td colspan="3"></td>
 							<td></td>
-							<td>${o.total_price } 원</td>
+							<td>${totalPrice } 원</td>
 						</tr>
 					</tfoot>
 				</table>
-				
 				<form class="form-horizontal" action="successCheckout.yo" method="post" id="form-checkout">
 		 			<input type="hidden" name="d_no" value="${o.d_no }">
 		 			<input type="hidden" name="m_no" value="${m.m_no }">
-					<input type="hidden" name="total_price" value="${o.total_price }" data-total-price="${o.total_price }">
+					<input type="hidden" name="total_price" value="${totalPrice }" data-total-price="${totalPrice }">
 					<input type="hidden" name="d_name">
+					
+					<br />
 					<div class="row">
 						<div class="col-md-1"></div>
-						<div class="col-md-10 panel panel-default">
+						<div class="col-md-10">
 							<h3>구매자 정보</h3>
 							<br>
 							
 							<input type="text" name="buyer" class="form-control input" data-label="이름" value="${m.name }">
 							<input type="text" name="buyer_email" class="form-control input" data-label="이메일" value="${m.email }">
-							<c:if test="${m == null }">
-								<input type="password" class="form-control input" data-label="구매비밀번호">
-								<input type="password" name="order_password" class="form-control input" data-label="비밀번호확인">
-							</c:if>
 						</div>
 						<div class="col-md-1"></div>
 					</div>
 					
+					<br />
 					<div class="row">
 						<div class="col-md-1"></div>
-						<div class="col-md-10 panel panel-default">
+						<div class="col-md-10">
 							<div style="display: inline;">
 								<h3>배송 정보</h3>
 							</div>
@@ -110,9 +110,10 @@ ul li img{
 						<div class="col-md-1"></div>
 					</div>
 					
+					<br />
 					<div class="row">
 						<div class="col-md-1"></div>
-						<div class="col-md-10 panel panel-default">
+						<div class="col-md-10">
 							<div class="row">
 								<div class="table-responsive">
 									<table class="table table-checkout">
@@ -162,7 +163,15 @@ ul li img{
 							<div class="row">
 								<div class="col-md-2"></div>
 								<div class="col-md-8" style="text-align: center;">
-									 <h3>결제 금액 : <span id="final-price" style="font-size: 30px; color: red;">${o.total_price }</span> 원</h3>
+									 <h3>결제 금액 : <span id="final-price" style="font-size: 30px; color: red;">${totalPrice }</span> 원</h3>
+								</div>
+								<div class="col-md-2"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-2"></div>
+								<div class="col-md-8" style="text-align: center;">
+									신용 카드 : <input type="radio" name="pay_way" value="card">
+									핸드폰 : <input type="radio" name="pay_way" value="phone">
 								</div>
 								<div class="col-md-2"></div>
 							</div>
@@ -185,7 +194,7 @@ ul li img{
 <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/member/addrFinder.js?"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/order/import.js?var=1"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/order/import.js?var=2"></script>
 <script>
 (function() {
 	(function applyDesign(){
@@ -268,6 +277,7 @@ ul li img{
 		
 		let checkoutData = getFormData( $('form') );
 		checkoutData.name = getGoodsName();
+		console.log(checkoutData);
 		$('input[name=d_name]').val(checkoutData.name);
 		prepareCheckout(checkoutData);
 	});

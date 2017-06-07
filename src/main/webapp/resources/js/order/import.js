@@ -11,6 +11,8 @@ var openCheckout = (function($form) {
 			alert('상품명을 가져올수 없습니다');
 		else if(!checkoutInfo.total_price)
 			alert('금액이 ' + MSG);
+		else if(!checkoutInfo.pay_way)
+			alert('결제수단이 선택되지 않았습니다.');
 //		else if(!checkoutInfo.email)
 //			alert('상품명을 가져올수 없습니다');
 		else if(!checkoutInfo.buyer)
@@ -45,6 +47,7 @@ var openCheckout = (function($form) {
 		
 		checkoutInfo.address = checkoutInfo['address.base'] + " " + checkoutInfo['address.extra'];
 		IMP.request_pay({
+			pay_method : checkoutInfo.pay_way,
 			merchant_uid : 'merchant_' + new Date().getTime(),
 			name : checkoutInfo.name,
 			amount : checkoutInfo.total_price,
@@ -56,9 +59,8 @@ var openCheckout = (function($form) {
 		}, function(rsp) {
 			if (rsp.success) {
 				$form.append(
-					createHiddenTag('impt_id', rsp.imp_uid),
-					createHiddenTag('pay_amount', rsp.paid_amount),
-					createHiddenTag('imptStatus', rsp.status)
+					createHiddenTag('order_uid', rsp.imp_uid),
+					createHiddenTag('pay_amount', rsp.paid_amount)
 				).submit();
 			} else {
 				var msg = '결제에 실패하였습니다.';

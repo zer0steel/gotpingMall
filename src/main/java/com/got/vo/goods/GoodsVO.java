@@ -166,6 +166,7 @@ public class GoodsVO extends CategoryVO {
 
 	public void setStocks(List<StockVO> stocks) {
 		this.stocks = stocks;
+		this.stock = stocks.stream().mapToInt(vo -> vo.getAmount()).sum();
 	}
 	
 	public BigDecimal getRealPrice() {

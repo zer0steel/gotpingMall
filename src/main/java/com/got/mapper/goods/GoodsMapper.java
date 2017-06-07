@@ -18,9 +18,9 @@ import com.got.vo.goods.GoodsVO;
 @Repository
 public interface GoodsMapper {
 	final String INSERT = "INSERT INTO goods(g_no, c_no, name, detail, " +
-			"purchase_price, sell_price, discount_rate, saving_mileage, status_code, is_deleted)" +
+			"purchase_price, sell_price, discount_rate, saving_mileage, status_code, is_deleted, regdate)" +
 			"VALUES(#{g_no}, #{c_no}, #{name}, #{detail, jdbcType=VARCHAR}, " +
-			"#{purchase_price}, #{sell_price}, #{discount_rate}, #{saving_mileage}, #{status_code}, 'false')";
+			"#{purchase_price}, #{sell_price}, #{discount_rate}, #{saving_mileage}, #{status_code}, 'false', sysdate)";
 	
 	@Insert(INSERT)
 	@SelectKey(statement = "SELECT g_no.nextval FROM DUAL", keyProperty = "g_no", resultType = int.class, before = true)
@@ -38,11 +38,11 @@ public interface GoodsMapper {
 	@Delete("DELETE FROM goods")
 	public int deleteAll();
 	
-	@Select("SELECT * FROM goods g, category c WHERE g.c_no = c.c_no")
+	@Select("SELECT * FROM goods g, category c, (SELECT g_no, SUM(amount) AS STOCK FROM stock GROUP BY g_no) s WHERE g.c_no = c.c_no AND s.g_no = g.g_no")
 	public List<GoodsVO> selectAll();
 	
-	@Select("SELECT * FROM goods g, category c, files f, goods_image gi "
-			+ "WHERE g.c_no = c.c_no AND f.f_no = gi.f_no AND g.g_no = gi.g_no AND g.g_no = #{g_no}")
+	@Select("SELECT * FROM goods g, category c, files f, goods_image gi, stock s "
+			+ "WHERE g.c_no = c.c_no AND f.f_no = gi.f_no AND g.g_no = gi.g_no AND s.g_no = g.g_no AND g.g_no = #{g_no}")
 	@ResultMap("goodsWithImgsMap")
 	public GoodsVO selectOne(Integer g_no);
 	
@@ -59,5 +59,13 @@ public interface GoodsMapper {
 	@Select(SELECT_LIST_WITH_C_NO)
 	@ResultMap("goodsWithMainImgMap")
 	public List<GoodsVO> selectListWithC_no(@Param("c_no") Integer c_no, @Param("status") GoodsStatus status);
+	
+	@Select("SELECT g.* FROM "
+			+ "(SELECT s_no, SUM(dd.change_amount) AS sellAmount FROM deal d, deal_detail dd "
+			+ "WHERE d.category = 3 AND d.d_no = dd.d_no "
+			+ "AND TO_CHAR(d.regdate, 'yyyy.MM.dd') BETWEEN TO_CHAR(sysdate - 7, 'yyyy.MM.dd') AND TO_CHAR(sysdate, 'yyyy.MM.dd') GROUP BY s_no) "
+			+ "r, stock s, goods_v g WHERE r.s_no = s.s_no AND s.g_no = g.g_no ORDER BY sellAmount")
+	@ResultMap("goodsWithMainImgMap")
+	public List<GoodsVO> selectListWeeklySellAmount();
 	
 }

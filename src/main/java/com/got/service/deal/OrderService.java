@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.got.enums.DealCategory;
 import com.got.enums.MileageCategory;
-import com.got.enums.PaymentStatus;
+import com.got.enums.OrderStatus;
 import com.got.mapper.deal.OrderMapper;
 import com.got.mapper.deal.PaymentMapper;
 import com.got.mapper.goods.GoodsMapper;

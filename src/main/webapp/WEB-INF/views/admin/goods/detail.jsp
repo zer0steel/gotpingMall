@@ -103,7 +103,7 @@
 				<h2>최근 변동 상황</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li>
-						<a class="collapse-link" id="detail-collapse"><i class="fa fa-chevron-up"></i></a>
+						<a class="collapse-link" id="detail-collapse"><i class="fa fa-chevron-up" ></i></a>
 					</li>
 				</ul>
 				<div class="clearfix"></div>
@@ -121,7 +121,7 @@
 					<tbody>
 					<c:forEach var="d" items="${g.history }">
 						<tr>
-							<td>${d.enumCategory.korName }</td>
+							<td>${d.category.kor }</td>
 							<td>${d.total_change_amount }</td>
 							<td>${d.regdate }</td>
 							<td>${d.detail }</td>

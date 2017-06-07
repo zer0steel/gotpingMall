@@ -31,24 +31,22 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="x_content">
-			<table id="srTable" class="table table-striped table-bordered">
+			<table id="dTable" class="table table-striped table-bordered">
 				<thead>
 					<tr>
 						<th>분류</th>
-						<th>상품명</th>
+						<th>상품</th>
 						<th>변동량</th>
-						<th>변동후 재고량</th>
 						<th>변동일</th>
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach var="sr" items="${list }">
+				<c:forEach var="d" items="${list }">
 					<tr>
-						<td>${sr.enumCategory.korName }</td>
-						<td><a href="${pageContext.request.contextPath }/admin/goods/detail.yo?g_no=${sr.g_no }"><%-- ${sr.name } --%></a></td>
-						<td>${sr.amount } 개</td>
-						<td>${sr.change_stock } 개</td>
-						<td>${sr.regdate }</td>
+						<td>${d.category.kor }</td>
+						<td><a href="${pageContext.request.contextPath }/admin/deal/detail.yo?d_no=${d.d_no }">${d.d_name }</a></td>
+						<td>${d.total_change_amount } 개</td>
+						<td>${d.regdate }</td>
 					</tr>
 				</c:forEach>
 				</tbody>

@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import com.got.enums.MileageCategory;
 import com.got.enums.PayWay;
-import com.got.enums.PaymentStatus;
+import com.got.enums.OrderStatus;
 import com.got.vo.MileageVO;
 import com.siot.IamportRestClient.response.Payment;
 
@@ -16,13 +16,17 @@ public class PaymentVO {
 
 	private Integer p_no;
 	private String p_way_detail, order_uid, receipt_url;
-	private BigDecimal pay_amount = BigDecimal.ZERO, use_mileage = BigDecimal.ZERO;
+	private BigDecimal pay_amount, use_mileage;
 	private Timestamp pay_date;
 	
 	private OrderVO order;
-	private Mileage mileage;
-	private PaymentStatus status;
+	private OrderStatus status;
 	private PayWay p_way;
+	
+	public PaymentVO() {
+		this.pay_amount = BigDecimal.ZERO;
+		this.use_mileage = BigDecimal.ZERO;
+	}
 	
 	public Integer getP_no() {
 		return p_no;
@@ -46,7 +50,7 @@ public class PaymentVO {
 		return use_mileage;
 	}
 	public void setUse_mileage(BigDecimal use_mileage) {
-		this.use_mileage = use_mileage;
+		this.use_mileage = Objects.nonNull(use_mileage) ? use_mileage : BigDecimal.ZERO;
 	}
 	public OrderVO getOrder() {
 		return order;
@@ -72,16 +76,16 @@ public class PaymentVO {
 	public void setReceipt_url(String receipt_url) {
 		this.receipt_url = receipt_url;
 	}
-	public PaymentStatus getStatus() {
+	public OrderStatus getStatus() {
 		return status;
 	}
 	public void setImptStatus(String imptStatus) {
-		this.status = PaymentStatus.of(imptStatus);
+		this.status = OrderStatus.of(imptStatus);
 	}
 	public void setStatus(int code) {
-		this.status = PaymentStatus.of(code);
+		this.status = OrderStatus.of(code);
 	}
-	public void setEnumStatus(PaymentStatus status) {
+	public void setEnumStatus(OrderStatus status) {
 		this.status = status;
 	}
 	public PayWay getP_way() {
@@ -106,28 +110,9 @@ public class PaymentVO {
 	
 	@Override
 	public String toString() {
-		return "PaymentVO [p_no=" + p_no + ", p_way_detail=" + p_way_detail + ", order_uid="
-				+ order_uid + ", receipt_url=" + receipt_url + ", pay_amount=" + pay_amount + ", use_mileage="
-				+ use_mileage + ", pay_date=" + pay_date + ", order=" + order + ", mileage=" + mileage + ", status="
-				+ status + ", p_way=" + p_way + "]";
-	}
-	
-	public MileageVO getMileage(MileageCategory category) {
-		if(category == MileageCategory.SAVE) {
-			return this.mileage.getSave();
-		}
-		else {
-			return this.mileage.getUse();
-		}
-	}
-	
-	public void setMileage(MileageVO mileageVO) {
-		if(mileageVO.getCategory() == MileageCategory.SAVE) {
-			mileage.setSave(mileageVO);
-		}
-		else {
-			mileage.setUse(mileageVO);
-		}
+		return "PaymentVO [p_no=" + p_no + ", p_way_detail=" + p_way_detail + ", order_uid=" + order_uid
+				+ ", receipt_url=" + receipt_url + ", pay_amount=" + pay_amount + ", use_mileage=" + use_mileage
+				+ ", pay_date=" + pay_date + ", order=" + order + ", status=" + status + ", p_way=" + p_way + "]";
 	}
 	
 	public void setImptData(Payment payment) {
@@ -138,27 +123,10 @@ public class PaymentVO {
 	}
 	
 	public boolean isUseMileage() {
-		return this.use_mileage.intValue() > 0;
+		return Objects.isNull(this.use_mileage) ? false : this.use_mileage.intValue() > 0;
 	}
 	
 	public boolean isViaImptCheckout() {
 		return Objects.nonNull(this.order_uid);
-	}
-
-	private class Mileage {
-		MileageVO save;
-		MileageVO use;
-		public MileageVO getSave() {
-			return save;
-		}
-		public void setSave(MileageVO save) {
-			this.save = save;
-		}
-		public MileageVO getUse() {
-			return use;
-		}
-		public void setUse(MileageVO use) {
-			this.use = use;
-		}
 	}
 }

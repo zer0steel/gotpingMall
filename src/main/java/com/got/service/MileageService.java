@@ -1,6 +1,7 @@
 package com.got.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,16 +35,21 @@ public class MileageService {
 			insertHistory(m_no, pay.getP_no(), pay.getUse_mileage(), MileageCategory.USE);
 
 		BigDecimal saveMileageAmount = calculateSaveMileageAmount(details, pay.getPay_amount());
-		insertHistory(m_no, pay.getP_no(), saveMileageAmount, MileageCategory.SAVE);
+		if(!saveMileageAmount.equals(BigDecimal.ZERO))
+			insertHistory(m_no, pay.getP_no(), saveMileageAmount, MileageCategory.SAVE);
 	}
 	
 	private BigDecimal calculateSaveMileageAmount(List<DealDetailVO> details, BigDecimal pay_amount) {
-		double totalSaveRate = 0;
+		if(pay_amount.equals(BigDecimal.ZERO))
+			return BigDecimal.ZERO;
+		
+		BigDecimal totalSavingMileage = BigDecimal.ZERO;
 		for(DealDetailVO detail : details) {
-			totalSaveRate += detail.getStock().getGoods().getSaving_mileage();
+			BigDecimal percent = detail.getUnit_price().divide(pay_amount, 2, RoundingMode.HALF_UP);
+			BigDecimal unitPrice = pay_amount.multiply(percent);
+			totalSavingMileage = unitPrice.multiply(BigDecimal.valueOf(detail.getStock().getGoods().getSaving_mileage()));
 		}
-		double saveRate = (totalSaveRate / details.size()) / 100;
-		return pay_amount.multiply(BigDecimal.valueOf(saveRate));
+		return totalSavingMileage;
 	}
 	
 	public void insertHistory(Integer m_no, Integer p_no, BigDecimal mileageChangeAmount, MileageCategory category) {

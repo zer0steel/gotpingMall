@@ -41,7 +41,17 @@
 							<li><a href="${pageContext.request.contextPath}/admin/goods/list.yo">상품 목록</a></li>
 							<li><a href="${pageContext.request.contextPath}/admin/goods/insert.yo">상품 등록</a></li>
 							<li><a href="${pageContext.request.contextPath}/admin/goods/category.yo">분류 / 옵션 관리</a></li>
-							<li><a href="${pageContext.request.contextPath}/admin/goods/sr/list.yo">재고 변동 내역</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/deal/list.yo">재고 변동 내역</a></li>
+						</ul>
+					</li>
+					<li>
+						<a>
+							<i class="fa fa-table"></i>주문 관리 
+							<span class="fa fa-chevron-down"></span>
+						</a>
+						<ul class="nav child_menu">
+							<li><a href="${pageContext.request.contextPath}/admin/order/newList.yo">신규 주문</a></li>
+							<li><a href="${pageContext.request.contextPath}/admin/order/list.yo">전체 주문 목록</a></li>
 						</ul>
 					</li>
 					<li>
@@ -51,15 +61,6 @@
 						</a>
 						<ul class="nav child_menu">
 							<li><a href="${pageContext.request.contextPath}/admin/member/list.yo">회원 관리</a></li>
-						</ul>
-					</li>
-					<li>
-						<a>
-							<i class="fa fa-table"></i>추가 예정 
-							<span class="fa fa-chevron-down"></span>
-						</a>
-						<ul class="nav child_menu">
-							<li><a href="#">추가 예정 </a></li>
 						</ul>
 					</li>
 					<li>

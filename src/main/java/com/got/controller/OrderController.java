@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.service.MemberService;
 import com.got.service.MileageService;
-import com.got.service.PaymentService;
 import com.got.service.deal.OrderService;
+import com.got.service.deal.PaymentService;
 import com.got.util.JSONUtil;
 import com.got.util.ModelAndView;
 import com.got.vo.MileageVO;
@@ -100,6 +100,22 @@ public class OrderController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pay", payService.getCheckout(order_uid));
 		mav.setViewName("order/include/orderDetailTable");
+		return mav;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "order/checkOrder.yo")
+	public boolean checkOrder(String email, String order_uid) {
+		log.info("---------------- checkOrder() ----------------\n");
+		return payService.checkOrder(email, order_uid);
+	}
+	
+	@RequestMapping(value = "order/orderDetail.yo")
+	public ModelAndView orderDetail(String order_uid) {
+		log.info("---------------- orderDetail() ----------------\n");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("pay", payService.getCheckout(order_uid));
+		mav.setViewPage("order/orderDetail.jsp");
 		return mav;
 	}
 	

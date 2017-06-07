@@ -22,4 +22,11 @@ public class DealController {
 		mav.setViewName("redirect:/admin/goods/detail.yo?g_no=" + g_no);
 		return mav;
 	}
+	
+	@RequestMapping(value = "admin/deal/list.yo")
+	public ModelAndView list() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", dealService.getAll());
+		return mav.setAdminViewPage("deal/list.jsp");
+	}
 }

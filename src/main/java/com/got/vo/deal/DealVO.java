@@ -34,11 +34,7 @@ public class DealVO {
 	public void setD_no(Integer d_no) {
 		this.d_no = d_no;
 	}
-	public int getCategory() {
-		return category.getCode();
-	}
-
-	public DealCategory getEnumCategory() {
+	public DealCategory getCategory() {
 		return category;
 	}
 

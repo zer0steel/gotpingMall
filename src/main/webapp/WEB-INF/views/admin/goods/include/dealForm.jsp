@@ -21,8 +21,8 @@
 					<div class="col-md-6 col-sm-6 col-xs-12">
 						<select name="category" class="form-control" id="hc" required>
 							<option value="0">눌러서 선택하세요</option>
-							<c:forEach var="c" items="${hc }">
-								<option value="${c.code }">${c.korName }</option>
+							<c:forEach var="c" items="${hc }" begin="1">
+								<option value="${c.code }">${c.kor }</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -104,7 +104,7 @@
 		</div>
 	</div>
 </form>
-<script src="${pageContext.request.contextPath }/resources/js/goods/stock.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/goods/stock.js?ver=2"></script>
 <script type="text/javascript">
 (function() {
 	var $stockTable = $('.table-stock');
@@ -143,7 +143,7 @@
 			alert("분류는 필수 입력사항 입니다.")
 			return false;
 		}
-		if($("input[name=change_amount]").val().length == 0) {
+		if($("input[name=total_change_amount]").val().length == 0) {
 			alert("수량은 필수 입력사항 입니다.")
 			return false;
 		}
@@ -162,7 +162,7 @@
 	var openModal = function() {
 		option.setGoodsPrice($('input[name=price]').val());
 		$("#totalInput").val(0);
-		$("#totalExpect").val($("input[name=change_amount]").val());
+		$("#totalExpect").val($("input[name=total_change_amount]").val());
 		$("#stockModal").modal();
 	}
 	
