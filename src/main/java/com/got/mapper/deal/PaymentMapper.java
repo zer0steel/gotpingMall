@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.got.enums.OrderStatus;
@@ -38,7 +39,6 @@ public interface PaymentMapper {
 	
 	public List<PaymentVO> selectListM_no(@Param("m_no") Integer m_no, @Param("search") SearchVO s);
 
-	@Select("SELECT * FROM payment p, orders o, deal d WHERE p.d_no = o.d_no AND o.d_no = d.d_no AND status = ${status.code } ORDER BY p_no DESC")
-	@ResultMap("payWithOrderMap")
-	public List<PaymentVO> selectList(@Param("status") OrderStatus status);
+	@Update("UPDATE payment SET status = #{status.code } WHERE p_no = #{p_no }")
+	public int updateStatus(@Param("p_no") Integer p_no, @Param("status") OrderStatus status);
 }

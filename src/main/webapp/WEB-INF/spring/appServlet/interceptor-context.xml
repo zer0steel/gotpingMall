@@ -14,6 +14,12 @@
 			<mvc:exclude-mapping path="/resources/**" />
 			<beans:bean id="commonInterceptor" class="com.got.interceptor.CommonInterceptor"></beans:bean>
 		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/admin.yo" />
+			<mvc:mapping path="/admin/**" />
+			<beans:bean id="adminCheckInterceptor" class="com.got.interceptor.AdminCheckInterceptor"></beans:bean>
+		</mvc:interceptor>
 
 		<mvc:interceptor>
 			<mvc:mapping path="/order/form.yo"/>

@@ -1,7 +1,10 @@
 package com.got.service.deal;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -11,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.got.enums.DealCategory;
 import com.got.enums.OrderStatus;
+import com.got.mapper.ViewMapper;
 import com.got.mapper.deal.DealMapper;
 import com.got.mapper.deal.OrderMapper;
 import com.got.mapper.deal.PaymentMapper;
@@ -32,6 +36,7 @@ public class PaymentService {
 	@Inject private DealMapper dealMapper;
 	@Inject private PaymentMapper paymentMapper;
 	@Inject private OrderMapper orderMapper;
+	@Inject private ViewMapper viewMapper;
 	
 	private Logger log = Logger.getLogger(PaymentService.class);
 	
@@ -39,8 +44,13 @@ public class PaymentService {
 		return paymentMapper.selectListM_no(Objects.requireNonNull(m_no), s);
 	}
 	
-	public List<PaymentVO> getCheckoutList(OrderStatus status) {
-		return paymentMapper.selectList(status);
+	public List<PaymentVO> getCheckoutList(OrderStatus...status) {
+		List<Integer> codes = Arrays.asList(status).stream().map(os -> os.getCode()).collect(Collectors.toList());
+		return viewMapper.selectListOrder(codes);
+	}
+	
+	public List<PaymentVO> getNewOrders() {
+		return getCheckoutList(OrderStatus.CHECKOUT_COMPLETE, OrderStatus.DELIVERY_READY);
 	}
 	
 	public PaymentVO getCheckout(String order_uid) {
@@ -109,5 +119,9 @@ public class PaymentService {
 
 	public boolean checkOrder(String email, String order_uid) {
 		return Objects.nonNull(paymentMapper.selectOneEmailAndUid(email, order_uid));
+	}
+
+	public boolean updateStatus(Integer p_no, OrderStatus status) {
+		return paymentMapper.updateStatus(p_no, status) == 1;
 	}
 }
