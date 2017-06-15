@@ -13,10 +13,24 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="x_content">
+			<form action="updateStatus.yo" method="post" id="updateStatusForm">
+				<div class="form-group">
+					<div class="col-md-2 input-group">
+						<select class="form-control">
+						<c:forEach var="s" items="${status }">
+							<option value="${s.code }">${s.kor }</option>
+						</c:forEach>
+						</select>
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-info">일괄 적용</button>
+						</span>
+					</div>
+				</div>
+			</form>
 			<table id="memberTable" class="table table-striped table-bordered">
 				<thead>
 					<tr>
-						<th><input type="checkbox"></th>
+						<th><input type="checkbox" id="allSelect"></th>
 						<th>주문일</th>
 						<th>주문번호</th>
 						<th>주문자명</th>
@@ -29,7 +43,7 @@
 				<tbody>
 				<c:forEach var="p" items="${pay }">
 					<tr>
-						<td><input type="checkbox"></td>
+						<td><input type="checkbox" class="orderCheckBox" value="${p.p_no }"></td>
 						<td>${p.pay_date }</td>
 						<td>${p.order_uid }</td>
 						<td>${p.order.buyer }</td>
@@ -55,6 +69,57 @@
 </div>
 <script>
 (function() {
+	$('#allSelect').click(function() {
+		if($(this).is(':checked'))
+			$('.orderCheckBox').prop('checked', true);
+		else
+			$('.orderCheckBox').prop('checked', false);
+	});
+	
+	function getJSON(p_no, statusCode) {
+		return {
+			p_no : (p_no instanceof Array) ? p_no : [p_no], 
+			statusCode : statusCode
+		}
+	}
+	
+	function requestUpdateStatus(data) {
+		return $.ajax({
+			url : 'updateStatus.yo',
+			type : 'post',
+			data : data
+		});
+	}
+	
+	(function($form) {
+		$form.submit(function() {
+			return confirmUpdate($form.find('option:selected'));
+		})
+		
+		var confirmUpdate = function($selectedOption) {
+			let $orders = $('.orderCheckBox:checked');
+			if($orders.length === 0) {
+				alert('선택된 주문이 없습니다.')
+				return false;
+			}
+			let alertText = '선택된 주문들의 상태를 ' + $selectedOption.text() + '(으)로 바꿉니다. 계속하시겠습니까?';
+			if(confirm(alertText)) {
+				let pNoList = getCheckedOrder($orders);
+				updateStatus(pNoList, $selectedOption.val());
+				return false;
+			}
+			return false;
+		}
+		
+		var getCheckedOrder = function($orders) {
+			let pNoList = [];
+			$orders.each(function(i) {
+				pNoList.push($(this).val());
+			})
+			return pNoList;
+		}
+	}($('#updateStatusForm')))
+	
 	$('.btn-update').click(function() {
 		let statusCode = $(this).parents('tr').find('select').val();
 		let p_no = $(this).val();
@@ -62,19 +127,11 @@
 	});
 	
 	var updateStatus = function(p_no, statusCode) {
-		requestUpdateStatus(p_no, statusCode).done(function(result) {
-			result === true ? location.href = 'newList.yo' : alert('수정에 실패했습니다.');
+		requestUpdateStatus(getJSON(p_no, statusCode)).done(function(result) {
+			result === true ? location.href = 'list.yo' : alert('수정에 실패했습니다.');
 		}).fail(function(err) {
-			let errWindow = window.open('','','width=600, height=600')
-			errWindow.document.querySelector('body').innerHTML = err.responseText;
-		});
-	}
-	
-	var requestUpdateStatus = function(p_no, statusCode) {
-		return $.ajax({
-			url : 'updateStatus.yo',
-			type : 'post',
-			data : {p_no : p_no, status : statusCode}
+			alert('에러발생')
+			showErr(err);
 		});
 	}
 }());

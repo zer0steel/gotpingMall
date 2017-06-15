@@ -16,9 +16,9 @@ var loginUtil = (function() {
 	}
 	
 	var validationCheck = function(id, pwd) {
-		if(id.length === 0)
+		if(!id)
 			alert("아이디를 입력해 주세요.");
-		else if(pwd.length === 0)
+		else if(!pwd)
 			alert("비밀번호를 입력해 주세요.");
 		else
 			return true;

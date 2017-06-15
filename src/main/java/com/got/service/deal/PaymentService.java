@@ -121,7 +121,7 @@ public class PaymentService {
 		return Objects.nonNull(paymentMapper.selectOneEmailAndUid(email, order_uid));
 	}
 
-	public boolean updateStatus(Integer p_no, OrderStatus status) {
-		return paymentMapper.updateStatus(p_no, status) == 1;
+	public boolean updateStatus(Integer[] p_no, OrderStatus status) {
+		return paymentMapper.updateStatus(p_no, status) > 0;
 	}
 }

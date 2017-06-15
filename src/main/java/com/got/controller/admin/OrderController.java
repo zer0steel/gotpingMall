@@ -1,11 +1,19 @@
 package com.got.controller.admin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
+
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.got.enums.OrderStatus;
@@ -37,7 +45,7 @@ public class OrderController {
 	
 	@ResponseBody
 	@RequestMapping(value = "admin/order/updateStatus.yo", method = RequestMethod.POST)
-	public boolean updateStatus(PaymentVO pay) {
-		return payService.updateStatus(pay.getP_no(), pay.getStatus());
+	public boolean updateStatus(@RequestParam("p_no[]") Integer[] p_no, int statusCode) {
+		return payService.updateStatus(p_no, OrderStatus.of(statusCode));
 	}
 }

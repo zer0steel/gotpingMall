@@ -1,3 +1,8 @@
+function showErr(err) {
+	let errWindow = window.open('', '', 'width=600, height=600');
+	errWindow.document.querySelector('body').innerHTML = err.responseText;
+}
+
 (function(cssClass) {
 	$('.form-control.input').each(function() {
 		let label = $(this).data('label');

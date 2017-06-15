@@ -50,4 +50,8 @@
 		BETWEEN TO_DATE(#{search.startDate }, 'yyyy.mm.dd') 
 		AND TO_DATE(#{search.endDate }, 'yyyy.mm.dd') 
 	</sql>
+	
+	<update id="updateStatus">
+		UPDATE payment SET status = #{status.code } WHERE p_no IN (<foreach collection="p_no" separator="," item="p_no" >#{p_no }</foreach>)
+	</update>
 </mapper>

@@ -55,6 +55,6 @@
 <!-- Custom Theme Scripts -->
 <script src="${pageContext.request.contextPath}/resources/template/admin/js/custom.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/resources/js/commonUtil.js?ver=1"></script>
+<script src="${pageContext.request.contextPath}/resources/js/commonUtil.js?ver=2"></script>
 </body>
 </html>

@@ -39,6 +39,5 @@ public interface PaymentMapper {
 	
 	public List<PaymentVO> selectListM_no(@Param("m_no") Integer m_no, @Param("search") SearchVO s);
 
-	@Update("UPDATE payment SET status = #{status.code } WHERE p_no = #{p_no }")
-	public int updateStatus(@Param("p_no") Integer p_no, @Param("status") OrderStatus status);
+	public int updateStatus(@Param("p_no") Integer[] p_no, @Param("status") OrderStatus status);
 }

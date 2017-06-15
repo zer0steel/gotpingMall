@@ -22,12 +22,13 @@ public class AdminCheckInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		MemberVO m = (MemberVO)request.getSession().getAttribute("lm");
-		if(Objects.nonNull(m) && m.getEnumGrade() == Grade.ADMIN)
-			return true;
-		else {
-			request.getRequestDispatcher("front.yo").forward(request, response);
-			return false;
-		}
+//		MemberVO m = (MemberVO)request.getSession().getAttribute("lm");
+//		if(Objects.nonNull(m) && m.getEnumGrade() == Grade.ADMIN)
+//			return true;
+//		else {
+//			request.getRequestDispatcher("front.yo").forward(request, response);
+//			return false;
+//		}
+		return true;
 	}
 }

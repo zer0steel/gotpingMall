@@ -1,5 +1,7 @@
 package com.got.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -24,5 +26,5 @@ public interface VisitStatsMapper {
 	public VisitStatsVO selectOneToday();
 	
 	@Select("SELECT * FROM visit_stats WHERE day BETWEEN #{startDate } AND #{endDate }")
-	public VisitStatsVO selectListPeriod(SearchVO s);
+	public List<VisitStatsVO> selectListPeriod(SearchVO s);
 }

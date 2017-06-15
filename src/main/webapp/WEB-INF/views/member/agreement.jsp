@@ -9,7 +9,7 @@
 		<div class="col-md-4">
 			<h2>약관 동의</h2>
 			<div class="form-control" style="overflow: scroll; height: 100px;">
-				물건 사도 물건이 안갈수도 있음
+				약관1
 			</div>
 			<label for="cBox-terms1">
 				<input type="checkbox" id="cBox-terms1">GOTPINGMALL 서비스 이용약관 동의(필수)
@@ -17,15 +17,17 @@
 			<br />
 			<br />
 			<div class="form-control" style="overflow: scroll; height: 100px;">
-				너의 정보는 나의 것이다.<br>
-				비밀번호는 암호화되어 안전하게 보관되니 관리자도 모름.
+				약관2<br />
+				비밀번호는 암호화되어 안전하게 보관되니 관리자도 모릅니다.
 			</div>
 			<label for="cBox-terms2">
 				<input type="checkbox" id="cBox-terms2">개인정보 수집 및 이용 동의(필수)
 			</label>
 			<br />
 			<br />
-			<button id="btn-agree" class="btn btn-success form-control">동의</button>
+			<button id="btn-agree" class="btn btn-info form-control">동의</button>
+			<br />
+			<br />
 		</div>
 		<div class="col-md-4"></div>
 	</div>

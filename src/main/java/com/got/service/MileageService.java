@@ -47,7 +47,8 @@ public class MileageService {
 		for(DealDetailVO detail : details) {
 			BigDecimal percent = detail.getUnit_price().divide(pay_amount, 2, RoundingMode.HALF_UP);
 			BigDecimal unitPrice = pay_amount.multiply(percent);
-			totalSavingMileage = unitPrice.multiply(BigDecimal.valueOf(detail.getStock().getGoods().getSaving_mileage()));
+			BigDecimal saveRate = BigDecimal.valueOf(detail.getStock().getGoods().getSaving_mileage());
+			totalSavingMileage = totalSavingMileage.add(unitPrice.multiply(saveRate));
 		}
 		return totalSavingMileage;
 	}

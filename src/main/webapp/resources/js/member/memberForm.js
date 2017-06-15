@@ -93,12 +93,11 @@
 			var addr = getFullAddr();
 			$("#hidden-addr").val(addr);
 			encryptValue($("#input-pwd").val()).then(encryptedPwd => {
-				$("#hidden-pwd").val(securedPwd);
+				$("#hidden-pwd").val(encryptedPwd);
 				$("#form-join").submit();
 			})
 		}
 	});
-	
 	
 	function inputValueCheck() {
 		if(!checkId && $("#input-id").val().length == 0) {

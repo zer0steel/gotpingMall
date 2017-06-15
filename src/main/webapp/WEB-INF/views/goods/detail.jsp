@@ -148,7 +148,6 @@ $(function() {
 		goodsPrice : '${g.realPrice }'
 	}).getSelectedOptionCount;
 	
-	
 	$('#btn-buy').click(function() {
 		if(optCnt() < 1) {
 			alert('선택된 상품이 없습니다.');
