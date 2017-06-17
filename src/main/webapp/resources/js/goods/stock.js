@@ -135,13 +135,12 @@ goods.selectOption = (function() {
 				let $select = $('<select />').addClass('select-option')
 				.append($('<option />').html('(필수) 선택하세요.').attr('selected', true).val(DEFAULT_OPTION).css('display','none')	);
 				
-				for(var d of opt.details) {
-					let $option = createOption(d);
+				$select.append(map(opt.details, detail => {
+					let $option = createOption(detail);
 					if( idx >= 1)
 						$option.css('display','none');
-					
-					$option.appendTo($select);
-				}
+					return $option;
+				}))
 				
 				appendToSuper($select, opt.o_name);
 			});

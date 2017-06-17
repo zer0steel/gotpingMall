@@ -112,11 +112,7 @@
 		}
 		
 		var getCheckedOrder = function($orders) {
-			let pNoList = [];
-			$orders.each(function(i) {
-				pNoList.push($(this).val());
-			})
-			return pNoList;
+			return map($orders, orderCheckbox => orderCheckbox.value);
 		}
 	}($('#updateStatusForm')))
 	
