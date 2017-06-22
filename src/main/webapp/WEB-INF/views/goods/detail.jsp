@@ -48,14 +48,13 @@ $(function() {
 							animation: "slide",
 							controlNav: "thumbnails"
 						});
-						$('.imgZoom').elevateZoom();
 						</script>
 					</div>	
 					<div class="col-md-7 single-top-right">
 						<div class="single-para simpleCart_shelfItem">
 							<input type="hidden" id="g_no" value="${g.g_no }">
 							<h2>${g.name }</h2>
-							<div class="star-on">
+							<!-- <div class="star-on">
 								<ul class="star-footer">
 									<li><a href="#"><i></i></a></li>
 									<li><a href="#"><i></i></a></li>
@@ -64,10 +63,10 @@ $(function() {
 									<li><a href="#"><i></i></a></li>
 								</ul>
 								<div class="review">
-									<a href="#"> 1 customer review </a>
+									<a href="#"></a>
 								</div>
 								<div class="clearfix"></div>
-							</div>
+							</div> -->
 							<c:if test="${g.discount_rate > 0 }">
 								<p style="text-decoration: line-through;">${g.sell_price } 원</p>
 							</c:if>
@@ -76,19 +75,18 @@ $(function() {
 									<fmt:formatNumber value="${g.realPrice }" groupingUsed="true"/>
 								</span> 원
 							</h5>
-							<p>나중에 상품 내용 여기다 로드할것</p>
 							
 							<div class="available">
 								<form action="${pageContext.request.contextPath }/order/form.yo" id="form-option-select">
 									<div id="selectOption"></div>
 								</form>
 							</div>
-							<ul class="tag-men">
+							<!-- <ul class="tag-men">
 								<li><span>TAG</span>
 								<span class="women1">: Women,</span></li>
 								<li><span>SKU</span>
 								<span class="women1">: CK09</span></li>
-							</ul>
+							</ul> -->
 							<a href="#" class="add-cart item_add">장바구니</a>
 							<a href="#" class="add-cart item_add" id="btn-buy">구매하기</a>
 						</div>
@@ -97,33 +95,12 @@ $(function() {
 				</div>
 				<div class="tabs">
 					<ul class="menu_drop">
-						<li class="item1"><a href="#"><img src="${pageContext.request.contextPath }/resources/template/mall/images/arrow.png" alt="">Description</a>
+						<li class="item1"><a href="#"><img src="${pageContext.request.contextPath }/resources/template/mall/images/arrow.png" alt="">상세 설명</a>
 							<ul>
-								<li class="subitem1"><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a></li>
-								<li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
-								<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
+								<li class="subitem1"><a href="#">${g.detail }</a></li>
 							</ul>
 						</li>
-						<li class="item2"><a href="#"><img src="${pageContext.request.contextPath }/resources/template/mall/images/arrow.png" alt="">Additional information</a>
-							<ul>
-							    <li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
-								<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
-							</ul>
-						</li>
-						<li class="item3"><a href="#"><img src="${pageContext.request.contextPath }/resources/template/mall/images/arrow.png" alt="">Reviews (10)</a>
-							<ul>
-								<li class="subitem1"><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a></li>
-								<li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
-								<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
-							</ul>
-						</li>
-						<li class="item4"><a href="#"><img src="${pageContext.request.contextPath }/resources/template/mall/images/arrow.png" alt="">Helpful Links</a>
-							<ul>
-							    <li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>
-								<li class="subitem3"><a href="#">Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes </a></li>
-							</ul>
-						</li>
-						<li class="item5"><a href="#"><img src="${pageContext.request.contextPath }/resources/template/mall/images/arrow.png" alt="">Make A Gift</a>
+						<li class="item3"><a href="#"><img src="${pageContext.request.contextPath }/resources/template/mall/images/arrow.png" alt="">상품평 (추가예정)</a>
 							<ul>
 								<li class="subitem1"><a href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</a></li>
 								<li class="subitem2"><a href="#"> Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore</a></li>

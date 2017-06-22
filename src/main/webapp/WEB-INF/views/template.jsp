@@ -3,11 +3,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title> ---- GOTPING MALL ---- </title>
+    <title> ---- GODPING MALL ---- </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath }/resources/template/mall/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath }/resources/template/mall/css/memenu.css" rel="stylesheet">
@@ -21,6 +19,7 @@
 	<script type="application/javascript" src="https://cdn.jsdelivr.net/jquery.easydropdown/2.1.4/jquery.easydropdown.min.js"></script>
 	<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/simplecartjs/3.0.5/simplecart.min.js"></script>
 	<script type="application/javascript" src="${pageContext.request.contextPath }/resources/template/mall/js/memenu.js"></script>
+	<script type="application/javascript" src="${pageContext.request.contextPath }/resources/js/commonUtil.js"></script>
 	
 	<script type="application/x-javascript">
 	const PATH = location.protocol + "//" + location.host + "/controller/";

@@ -38,7 +38,7 @@
 	</div>
 	<!--start-logo-->
 	<div class="logo">
-		<a href="${pageContext.request.contextPath }/front.yo"><h1>GOT-PING MALL</h1></a>
+		<a href="${pageContext.request.contextPath }/front.yo"><h1>GOD-PING MALL</h1></a>
 	</div>
 	<!--start-logo-->
 	<!--bottom-header-->
