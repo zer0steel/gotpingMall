@@ -3,6 +3,7 @@ package com.got.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +22,12 @@ public class FileController {
 	
 	@Inject private FileService s;
 	
+	private static final Logger log = Logger.getLogger(FileController.class);
+	
 	@ResponseBody
 	@RequestMapping(value = "file/upload.yo", method = RequestMethod.POST)
 	public String uploadFile(HttpSession session, MultipartFile file) {
+		log.info("uploadFile");
 		tempPath = session.getServletContext().getRealPath(SIMPLE_SAVE_PATH);
 		FileVO f = s.saveFileInTempPath(tempPath, file);
 		return JSONUtil.convertToJSON(f);

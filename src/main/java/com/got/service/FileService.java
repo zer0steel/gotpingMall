@@ -53,9 +53,4 @@ public class FileService {
 		else
 			throw new RuntimeException("삭제 실패, 확인바람");
 	}
-	
-	public List<GoodsImageVO> setupImages(String folderName, List<GoodsImageVO> tempImages) {
-		Objects.requireNonNull(tempImages);
-		return FileUtil.moveToSavePath(folderName, tempImages);
-	}
 }

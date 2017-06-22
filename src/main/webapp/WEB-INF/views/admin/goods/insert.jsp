@@ -1,70 +1,104 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css" rel="stylesheet">
-<div class="page-title">
-	<div class="title_left">
-		<h3>상품 등록</h3>
-	</div>
-</div>
-<br />
 <div class="clearfix"></div>
-<form id="goods-form" class="form-horizontal form-label-left" action="insert.yo" method="post" data-parsley-validate>
-	<div class="col-md-6">
-		<div class="x_panel">
-			<div class="x_title">
-				<h2>상품 정보</h2>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<div id="select" class="form-group"></div><br>
-				<input type="hidden" name="c_no">
-				<input type="text" name="name" class="form-control input" data-label="상품명" required>
-				<input type="number" name="purchase_price" class="form-control input" data-label="매입가격" required>
-				<input type="number" name="sell_price"  class="form-control input" data-label="판매가격" required>
-				<input type="number" name="discount_rate"  class="form-control input" data-label="할인율 (%)" min="0" max="100" required>
-				<input type="number" name="saving_mileage"  class="form-control input" data-label="마일리지 적립율 (%)" min="0" max="100" required>
-				<div class="form-group">
-					<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-						<button type="reset" class="btn btn-primary">입력 초기화</button>
-						<button type="button" class="btn btn-success" id="btn-enroll">등록</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-md-6">
-		<div class="x_panel">
-			<div class="x_title">
-				<h2>옵션 목록</h2>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<table class="table table-striped table-bordered" id="table-option"></table>
-			</div>
-		</div>
-	</div>
-</form>
-<div class="col-md-6">
+<div class="col-md-12">
 	<div class="x_panel">
 		<div class="x_title">
-			<h2>상품 이미지</h2>
+			<h2>상품 등록</h2>
 			<div class="clearfix"></div>
 		</div>
 		<div class="x_content">
-			<form action="${pageContext.request.contextPath}/file/upload.yo"
-			class="dropzone" id="uploadFile" enctype="multipart/form-data" method="post" data-paramName="file">
+			<form id="goods-form" class="form-horizontal form-label-left" action="insert.yo" method="post" data-parsley-validate>
+			
+				<div class="row">
+					
+					<div class="col-md-6">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>분류 및 옵션 선택</h2>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<div id="select" class="form-group"></div><br>
+								<table class="table table-striped table-bordered" id="table-option"></table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-6">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>상품 이미지</h2>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<div id="uploadFile" class="dropzone"></div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>상품 정보</h2>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<input type="hidden" name="c_no">
+								<input type="text" name="name" class="form-control input" data-label="상품명" required>
+								<input type="number" name="purchase_price" class="form-control input" data-label="매입가격" required>
+								<input type="number" name="sell_price"  class="form-control input" data-label="판매가격" required>
+								<input type="number" name="discount_rate"  class="form-control input" data-label="할인율 (%)" min="0" max="100" required>
+								<input type="number" name="saving_mileage"  class="form-control input" data-label="마일리지 적립율 (%)" min="0" max="100" required>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-6">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>상세 설명</h2>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<textarea rows="" cols="" name="detail"></textarea>
+								<input type="file" id="uploadImg" multiple style="display: none;">
+								<div id="contentImage" class="dropzone"></div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" class="btn btn-info btn-lg btn-block" id="btn-enroll">등록</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
 </div>
 
-	
+
 <script src="${pageContext.request.contextPath }/resources/js/goods/category.js?ver=2"></script>
 <script src="${pageContext.request.contextPath }/resources/js/goods/goodsOption.js?ver=1"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/lib/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
 (function() {
+	var myTiny = tinymce.init({
+		selector : 'textarea',
+		height : 250,
+		menubar : false,
+		plugins : 'image imagetools',
+		toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+		language : 'ko_KR',
+	});
+	
 	goods.category({
 		$root : $('#select'),
 		selectSize : 4,
@@ -101,6 +135,7 @@
 		}
 		if( !checkEmptyField() )
 			return;
+		
 		$("#goods-form").submit();
 	});
 
@@ -131,26 +166,54 @@
 	var	isFirst = true;
 	var fileCount = 0;
 	$("#uploadFile").dropzone({
+		url : '/controller/file/upload.yo',
 		init : function() {
 			this.on("success", function(file, fileInfo) {
-				delete fileInfo.save_path;
-				delete fileInfo.regdate;
 				if( isFirst ) {
 					fileInfo.location = "main";
 					isFirst = false;
 				}
 				else
 					fileInfo.location = "main_sub";
-				console.log(fileInfo);
-				$("#goods-form").append(
-					$("<input />").attr({'type':'text', 'name':'images[' + fileCount + '].f_no'}).val(fileInfo.f_no),
-					$("<input />").attr({'type':'text', 'name':'images[' + fileCount + '].location'}).val(fileInfo.location),
-					$("<input />").attr({'type':'text', 'name':'images[' + fileCount + '].save_name'}).val(fileInfo.save_name)
-				);
+				
+				addFileInfoTag(fileInfo);
 				fileCount++;
 			});
 		}
 	});
+	
+	$("#contentImage").dropzone({
+		url : '/controller/file/upload.yo',
+		init : function() {
+			this.on("success", function(file, fileInfo) {
+				fileInfo.location = "content";
+				addFileInfoTag(fileInfo);
+				fileCount++;
+			});
+			
+			this.on("addedfile", function(file) {
+				file.previewElement.addEventListener("click", function() {
+					let fiieJSON = JSON.parse(file.xhr.response);
+					let reader = new FileReader();
+					let tempPath = '/controller/resources/upload/temp/' + fiieJSON.save_name;
+					let savePath = '/controller/resources/upload/content/' + fiieJSON.save_name;
+			        reader.onload = function (e) {
+			        	tinyMCE.activeEditor.execCommand( 'mceInsertContent', false, "<img src='" + tempPath + "'/>");
+			        }
+			        
+			        reader.readAsDataURL(file);
+				});
+			});
+		}
+	});
+	
+	var addFileInfoTag = function(fileInfo) {
+		$("#goods-form").append(
+			$("<input />").attr({'type':'hidden', 'name':'images[' + fileCount + '].f_no'}).val(fileInfo.f_no),
+			$("<input />").attr({'type':'hidden', 'name':'images[' + fileCount + '].location'}).val(fileInfo.location),
+			$("<input />").attr({'type':'hidden', 'name':'images[' + fileCount + '].save_name'}).val(fileInfo.save_name)
+		);
+	}
 })();
 
 const CSS_CLASS = {

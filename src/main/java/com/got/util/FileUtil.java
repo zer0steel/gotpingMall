@@ -18,7 +18,7 @@ public class FileUtil {
 	private static final Logger log = Logger.getLogger(FileUtil.class);
 	
 	public static FileVO saveFileInTempPath(String path, MultipartFile file) {
-		checkTempFolder(path);
+		checkFolder(path);
 		File saveFile = createFile(path);
 		
 		try {
@@ -48,26 +48,22 @@ public class FileUtil {
 		throw new IllegalArgumentException("파일 삭제 실패. save_name : " + save_name + " | path : " + path);
 	}
 
-	public static <T extends FileVO> List<T> moveToSavePath(String folderName, List<T> list) {
+	public static <T extends FileVO> T moveToSavePath(String folderName, T file) {
 		String tempPath = FileController.tempPath;
 		String savePath = tempPath.substring(0, tempPath.lastIndexOf(File.separator) + 1) + folderName;
-		String simplePath = simpleSavePath(savePath);
 		
-		File saveDir = new File(savePath);
-		if( !saveDir.exists() )
-			saveDir.mkdirs();
+		checkFolder(savePath);
 		
-		for(T fileVO : list) {
-			File tempFile = new File(tempPath + File.separator + fileVO.getSave_name());
-			File saveFile = new File(savePath + File.separator + fileVO.getSave_name());
-			fileVO.setSave_path(simplePath);
-			if( !tempFile.renameTo(saveFile) ) {
-				log.fatal("파일 위치 변경 실패");
-				log.fatal("파일명 : " + tempFile.getName());
-				throw new RuntimeException();
-			}
+		File tempFile = new File(tempPath + File.separator + file.getSave_name());
+		File saveFile = new File(savePath + File.separator + file.getSave_name());
+		if( !tempFile.renameTo(saveFile) ) {
+			log.fatal("파일 위치 변경 실패");
+			log.fatal("파일명 : " + tempFile.getName());
+			throw new RuntimeException();
 		}
-		return list;
+		
+		file.setSave_path(simpleSavePath(savePath));
+		return file;
 	}
 	
 	private static String simpleSavePath(String path) {
@@ -77,7 +73,7 @@ public class FileUtil {
 		return path.substring(index, path.length()).replace("\\", "/");
 	}
 	
-	private static void checkTempFolder(String path) {
+	private static void checkFolder(String path) {
 		File dir = new File(path);
 		if(!dir.exists())
 			dir.mkdirs();

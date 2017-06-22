@@ -67,12 +67,13 @@ public class GoodsService {
 	@Transactional
 	public void enroll(GoodsVO g) {
 		g.setStatus(GoodsStatus.STAND_BY);
+		g.setDetail(g.getDetail().replaceAll("(?<=/resources/upload/)temp", "content"));
 		goodsMapper.insert(g);
 		Objects.nonNull(g.getG_no());
 		g.setGoodsOptions(goodsOptionService.filteringEmptyArray(g.getGoodsOptions()));
 		goodsOptionService.insertGoodsOption(g);
 		stockService.insertStock(g);
-		goodsImageService.insertGoodsImage(g);
+		goodsImageService.insertGoodsImage(g.getImages(), g.getG_no());
 	}
 	
 	/**
